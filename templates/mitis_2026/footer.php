@@ -67,7 +67,7 @@ if (!$isExcludedPage && !$is404Error): ?>
             <!-- Колонка 1: Логотип и контакты -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="/images/gerb_kirov_it.png" 
+                    <img src="<?=SITE_TEMPLATE_PATH?>/images/gerb_kirov_it.png" 
                          alt="Логотип" 
                          class="footer-logo">
                     <div class="ms-3">
@@ -202,7 +202,7 @@ if (!$isExcludedPage && !$is404Error): ?>
         																				"COMPOSITE_FRAME_MODE" => "A",
         																				"COMPOSITE_FRAME_TYPE" => "AUTO",
         																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => "/include/address.php"
+        																				"PATH" => SITE_TEMPLATE_PATH ."/include/address.php"
     																				)
 																				);
 					?>, <?
@@ -215,7 +215,7 @@ if (!$isExcludedPage && !$is404Error): ?>
         																				"COMPOSITE_FRAME_MODE" => "A",
         																				"COMPOSITE_FRAME_TYPE" => "AUTO",
         																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => "/include/postal.php"
+        																				"PATH" => SITE_TEMPLATE_PATH ."/include/postal.php"
     																				)
 																				);
 					?>
@@ -239,7 +239,7 @@ if (!$isExcludedPage && !$is404Error): ?>
         																				"COMPOSITE_FRAME_MODE" => "A",
         																				"COMPOSITE_FRAME_TYPE" => "AUTO",
         																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => "/include/phone.php"
+        																				"PATH" => SITE_TEMPLATE_PATH . "/include/phone.php"
     																				)
 																				);
 					?></div>
@@ -264,7 +264,7 @@ if (!$isExcludedPage && !$is404Error): ?>
         																				"COMPOSITE_FRAME_MODE" => "A",
         																				"COMPOSITE_FRAME_TYPE" => "AUTO",
         																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => "/include/email.php"
+        																				"PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
     																				)
 																				);
 					?></div>

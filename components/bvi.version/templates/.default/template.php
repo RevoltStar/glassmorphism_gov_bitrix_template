@@ -8,6 +8,8 @@ $this->addExternalCss($templateFolder . '/dist/css/bvi.min.css');
 
 // 2. ПОДКЛЮЧАЕМ СКРИПТ ПЛАГИНА 
 $this->addExternalJs($templateFolder . '/dist/js/bvi.min.js');
+$this->addExternalJs($templateFolder . '/bvi-accessibility.js');
+$this->addExternalCss($templateFolder . '/bvi-accessibility.css');
 
 // 3. ИНИЦИАЛИЗИРУЕМ ПЛАГИН.
 Bitrix\Main\Page\Asset::getInstance()->addString(
@@ -58,10 +60,10 @@ Bitrix\Main\Page\Asset::getInstance()->addString(
     }
 </style>
 <!-- 4. ВЫВОДИМ КНОПКУ, КОТОРАЯ БУДЕТ ОТВЕЧАТЬ ЗА ОТКРЫТИЕ ПАНЕЛИ -->
-<div style="text-align: right; margin: 10px 0;" class="bvi-component-container">
-    <a href="#" class="vision-btn bvi-open" aria-label="Версия для слабовидящих">
+<div style="text-align: right; margin: 10px 0; width: 100%;" class="bvi-component-container">
+    <button type="button" class="vision-btn bvi-open" style="width: 100%;" aria-label="Версия для слабовидящих">
         <i class="bi bi-eye-fill me-2" aria-hidden="true"></i>
         <span class="d-none d-sm-inline">Версия для слабовидящих</span>
         <span class="d-inline d-sm-none">Слабовидящим</span>
-    </a>
+    </button>
 </div>

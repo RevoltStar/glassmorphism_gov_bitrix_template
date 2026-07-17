@@ -13,12 +13,12 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 	<!-- Фолбэк для старых браузеров -->
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<?
-		/*$APPLICATION->SetPageProperty(
+		$APPLICATION->SetPageProperty(
     	'canonical',
     	get_canonical_link(["PAGEN_1", "PAGEN_2"])
-	);*/
+	);
 	?>
-		<?/*
+		<?
 					$APPLICATION->IncludeComponent(
 					"bitrix:main.include",
 					"",
@@ -28,9 +28,9 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 						"COMPOSITE_FRAME_MODE" => "A",	// Голосование шаблона компонента по умолчанию
 						"COMPOSITE_FRAME_TYPE" => "AUTO",	// Содержимое компонента
 						"EDIT_TEMPLATE" => "",	// Шаблон области по умолчанию
-						"PATH" => "/include/schema_org.php"
+						"PATH" => SITE_TEMPLATE_PATH ."/include/schema_org.php"
 					)
-					);*/
+					);
 				?>
 
 	<? $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-5.3.0.min.css"); ?>
@@ -61,7 +61,7 @@ left&region=33000000000&platform=default_iframe"></script>
                 <!-- Кнопка слабовидящих -->
 					<?
 									$APPLICATION->IncludeComponent(
-    									"bvi2.version", // Пространство имен и имя компонента
+    									"bvi.version", // Пространство имен и имя компонента
     									".default",          // Имя шаблона
     									array()              // Параметры (пустой массив, так как их нет)
 									);
@@ -82,7 +82,7 @@ left&region=33000000000&platform=default_iframe"></script>
                     array(
                         "AREA_FILE_SHOW" => "file",
                         "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => "/include/phone_e164.php"
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/phone_e164.php"
                     )
                 );?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-telephone-fill" aria-hidden="true"></i>
@@ -92,7 +92,7 @@ left&region=33000000000&platform=default_iframe"></script>
                     array(
                         "AREA_FILE_SHOW" => "file",
                         "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => "/include/phone.php"
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/phone.php"
                     )
                 );?></span>
                 </a>
@@ -103,7 +103,7 @@ left&region=33000000000&platform=default_iframe"></script>
                     array(
                         "AREA_FILE_SHOW" => "file",
                         "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => "/include/email.php"
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
                     )
                 );?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-envelope-fill" aria-hidden="true"></i>
@@ -113,7 +113,7 @@ left&region=33000000000&platform=default_iframe"></script>
                     array(
                         "AREA_FILE_SHOW" => "file",
                         "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => "/include/email.php"
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
                     )
                 );?></span>
                 </a>
@@ -144,7 +144,7 @@ left&region=33000000000&platform=default_iframe"></script>
         <div class="row align-items-center">
             <div class="col-auto">
                 <a href="/" class="logo-link" aria-label="На главную">
-                    <img src="/images/gerb_kirov_it.png" 
+                    <img src="<?=SITE_TEMPLATE_PATH?>/images/gerb_kirov_it.png" 
                          alt="Герб Кировской области — официальный символ региона" 
                          class="ministry-logo"
                          width="80"
@@ -171,7 +171,7 @@ left&region=33000000000&platform=default_iframe"></script>
             <div class="col-auto d-none d-md-block text-end">
                 <div class="decorative-elements" aria-hidden="true">
 					<a href="https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva">
-						<img src="/images/economics_of_data.png" alt="Символ проекта Экономика данных и цифровая трансформация государства">
+						<img src="<?=SITE_TEMPLATE_PATH?>/images/economics_of_data.png" alt="Символ проекта Экономика данных и цифровая трансформация государства">
 					</a>
                     <div class="mt-2 fw-semibold" style="color: #1e3a5f; font-size: 0.95rem;">
                         <i class="bi bi-geo-alt me-1" style="color: #3498db;" aria-hidden="true"></i>
