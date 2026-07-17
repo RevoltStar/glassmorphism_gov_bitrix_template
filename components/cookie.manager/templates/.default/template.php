@@ -17,6 +17,7 @@ use Bitrix\Main\Localization\Loc;
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 $wrapId = 'cookie_' . $arResult['ID'];
+$yandexMetrikaId = max(0, (int)get_info('yandex_metrika_id', 0));
 $styleBtn = $styleWrap = '';
 if ($arParams['PRESETS'] === 'custom')
 {
@@ -30,8 +31,9 @@ if ($arParams['PRESETS'] === 'custom')
     <div class="widget_cookie__text">
         <?=$arParams['~MESSAGE']?>
         
-        <?if($arParams['SHOW_SETTINGS'] == 'Y'):?>
+        <?if($arParams['SHOW_SETTINGS'] === 'Y' || $arParams['SHOW_PD_CONSENT'] === 'Y'):?>
         <div class="cookie-settings" style="margin-top: 15px;">
+            <?if($arParams['SHOW_SETTINGS'] === 'Y'):?>
             <div class="cookie-option">
                 <input type="checkbox" id="cookie_session_<?=$wrapId?>" checked="" disabled="">
                 <label for="cookie_session_<?=$wrapId?>">
@@ -39,11 +41,20 @@ if ($arParams['PRESETS'] === 'custom')
                 </label>
             </div>
             <div class="cookie-option">
-                <input type="checkbox" id="cookie_analytics_<?=$wrapId?>" checked>
+                <input type="checkbox" id="cookie_analytics_<?=$wrapId?>">
                 <label for="cookie_analytics_<?=$wrapId?>">
                     <?=Loc::getMessage("COOKIE_ANALYTICS")?>
                 </label>
             </div>
+            <?endif;?>
+            <?if($arParams['SHOW_PD_CONSENT'] === 'Y'):?>
+            <div class="cookie-option">
+                <input type="checkbox" id="cookie_pd_<?=$wrapId?>">
+                <label for="cookie_pd_<?=$wrapId?>">
+                    <?=Loc::getMessage("COOKIE_PD_CONSENT")?>
+                </label>
+            </div>
+            <?endif;?>
         </div>
         <?endif;?>
     </div>
@@ -63,13 +74,18 @@ if ($arParams['PRESETS'] === 'custom')
     </div>
     
     <script>
+        window.YANDEX_METRIKA_ID = <?=$yandexMetrikaId?>;
+
         const cookie_<?=$wrapId?> = new CookieManager({
             containerId: '<?=$wrapId?>',
             cookieExpireDays: <?=$arParams['EXPIRE_DAYS']?>,
             checkCookieTimeout: <?=$arParams['CHECK_TIMEOUT']?>,
-            cookieName: 'cookie_consent_<?=$wrapId?>',
-            analyticsName: 'analytics_consent_<?=$wrapId?>',
-            showSettings: <?=$arParams['SHOW_SETTINGS'] == 'Y' ? 'true' : 'false'?>
+            cookieName: 'cookie_consent',
+            analyticsName: 'analytics_consent',
+            pdConsentName: 'pd_consent',
+            showSettings: <?=$arParams['SHOW_SETTINGS'] === 'Y' ? 'true' : 'false'?>,
+            showPdConsent: <?=$arParams['SHOW_PD_CONSENT'] === 'Y' ? 'true' : 'false'?>,
+            analyticsScriptSrc: <?=$yandexMetrikaId > 0 ? "'/local/metrika.js'" : "''"?>
         });
     </script>
 </div>

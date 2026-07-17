@@ -34,9 +34,12 @@ class CookieComponent extends \CBitrixComponent
     //
     public function onPrepareComponentParams($arParams): array
     {
-        $arParams['CACHE_TIME']    = (int) $arParams['CACHE_TIME'];
-        $arParams['CHECK_TIMEOUT'] = (int) $arParams['CHECK_TIMEOUT'];
-        $arParams['EXPIRE_DAYS']   = (int) $arParams['EXPIRE_DAYS'];
+        $arParams['CACHE_TIME']    = (int)($arParams['CACHE_TIME'] ?? 0);
+        $arParams['CHECK_TIMEOUT'] = (int)($arParams['CHECK_TIMEOUT'] ?? 0);
+        $arParams['EXPIRE_DAYS']   = (int)($arParams['EXPIRE_DAYS'] ?? 0);
+        $arParams['PRESETS']       = (string)($arParams['PRESETS'] ?? '');
+        $arParams['SHOW_SETTINGS'] = ($arParams['SHOW_SETTINGS'] ?? 'Y') === 'Y' ? 'Y' : 'N';
+        $arParams['SHOW_PD_CONSENT'] = ($arParams['SHOW_PD_CONSENT'] ?? 'N') === 'Y' ? 'Y' : 'N';
 
         $this->setDefault($arParams['PRESETS'], 'style1');
         $this->setDefault($arParams['EXPIRE_DAYS'], 30);

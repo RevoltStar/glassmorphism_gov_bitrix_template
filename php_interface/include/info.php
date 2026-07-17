@@ -38,6 +38,7 @@ const SITE_INFO = [
     'feedback_path' => '/feedback_online/',
     'privacy_policy_path' => '/doc/personal_data_processing_policies/',
     'show_max_robot' => true,
+    'yandex_metrika_id' => 105106588,
 
     // Пути могут быть относительными от корня сайта или абсолютными URL.
     'logo' => '/images/gerb_kirov_it.png',

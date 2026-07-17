@@ -28,6 +28,18 @@ $arComponentParameters = [
             "TYPE"    => "STRING",
             "DEFAULT" => 30,
         ],
+        "SHOW_SETTINGS" => [
+            "PARENT"  => "BASE",
+            "NAME"    => GetMessage("COOKIE_SHOW_SETTINGS"),
+            "TYPE"    => "CHECKBOX",
+            "DEFAULT" => "Y",
+        ],
+        "SHOW_PD_CONSENT" => [
+            "PARENT"  => "BASE",
+            "NAME"    => GetMessage("COOKIE_SHOW_PD_CONSENT"),
+            "TYPE"    => "CHECKBOX",
+            "DEFAULT" => "N",
+        ],
         'CACHE_TIME'    => [
             "PARENT"  => "PARAMS",
             'DEFAULT' => 86400,
@@ -49,4 +61,4 @@ $arComponentParameters = [
     ],
 ];
 
-$arCurrentValues['PRESETS'] = $arCurrentValues['PRESETS'] ?? $_REQUEST["PRESETS"] ?? 'style1';
+$arCurrentValues['PRESETS'] = $arCurrentValues['PRESETS'] ?? 'style1';

@@ -3,6 +3,8 @@ $MESS['COOKIE_MESSAGE'] = 'Сообщение';
 $MESS['COOKIE_MESSAGE_DEFAULT'] = 'Продолжая использовать сайт, вы соглашаетесь с <a href="#">политикой использования</a> файлов cookie.';
 $MESS['COOKIE_CHECK_TIMEOUT'] = 'Таймаут появления (милисек.)';
 $MESS['COOKIE_EXPIRE_DAYS'] = 'Повторный показ уведомления (дней)';
+$MESS['COOKIE_SHOW_SETTINGS'] = 'Показывать выбор аналитических cookie';
+$MESS['COOKIE_SHOW_PD_CONSENT'] = 'Показывать согласие на обработку персональных данных';
 $MESS['COOKIE_COLOR_BORDER'] = 'Цвет рамки';
 $MESS['COOKIE_COLOR_BG'] = 'Цвет фона';
 $MESS['COOKIE_COLOR_BTN'] = 'Цвет кнопки';

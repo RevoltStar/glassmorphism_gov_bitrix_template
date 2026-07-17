@@ -7,6 +7,7 @@ $MESS["SECTION_NAME"] = "Cookie";
 
 $MESS['COOKIE_SESSION'] = 'Необходимые куки (обязательны для работы сайта)';
 $MESS['COOKIE_ANALYTICS'] = 'Аналитические куки (для статистики посещений; необязательные)';
+$MESS['COOKIE_PD_CONSENT'] = 'Согласен на обработку персональных данных';
 $MESS['COOKIE_REJECT'] = 'Отказаться';
 $MESS['COOKIE_ACCEPT'] = 'Принять';
 $MESS['COOKIE_CONFIRM'] = 'OK';
