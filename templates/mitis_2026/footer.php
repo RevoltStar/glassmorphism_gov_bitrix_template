@@ -67,17 +67,17 @@ if (!$isExcludedPage && !$is404Error): ?>
             <!-- Колонка 1: Логотип и контакты -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?=SITE_TEMPLATE_PATH?>/images/gerb_kirov_it.png" 
-                         alt="Логотип" 
+                    <img src="<?=htmlspecialcharsbx((string)get_info('logo'))?>"
+                         alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="footer-logo">
                     <div class="ms-3">
-                        <h5 class="footer-title">Министерство ИТ и связи</h5>
-                        <span class="footer-sub">Кировской области</span>
+                        <h5 class="footer-title"><?=htmlspecialcharsbx((string)get_info('org_short_name'))?></h5>
+                        <span class="footer-sub"><?=htmlspecialcharsbx((string)get_info('region_name_genitive'))?></span>
                     </div>
                 </div>
                 
                 <p class="footer-text">
-                    Официальный сайт Министерства информационных технологий и связи Кировской области. 
+                    <?=htmlspecialcharsbx((string)get_info('org_description'))?>
                     Все материалы сайта доступны по лицензии Creative Commons Attribution.
                 </p>
                 <?
@@ -192,33 +192,8 @@ if (!$isExcludedPage && !$is404Error): ?>
                         </div>
                     </div>
                     <div class="footer-text">
-                        <?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH ."/include/address.php"
-    																				)
-																				);
-					?>, <?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH ."/include/postal.php"
-    																				)
-																				);
-					?>
+                        <?=htmlspecialcharsbx((string)get_info('postal_code'))?>,
+                        <?=htmlspecialcharsbx((string)get_info('address'))?>
                     </div>
                 </div>
                 
@@ -229,20 +204,9 @@ if (!$isExcludedPage && !$is404Error): ?>
                         </div>
                     </div>
                     <div>
-                        <div class="footer-contact-item"><?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH . "/include/phone.php"
-    																				)
-																				);
-					?></div>
+                        <div class="footer-contact-item">
+                            <a href="tel:<?=htmlspecialcharsbx((string)get_info('phone_e164'))?>"><?=htmlspecialcharsbx((string)get_info('phone'))?></a>
+                        </div>
                         <div class="footer-contact-label">приемная</div>
                     </div>
                 </div>
@@ -254,20 +218,9 @@ if (!$isExcludedPage && !$is404Error): ?>
                         </div>
                     </div>
                     <div>
-                        <div class="footer-contact-item"><?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
-    																				)
-																				);
-					?></div>
+                        <div class="footer-contact-item">
+                            <a href="mailto:<?=htmlspecialcharsbx((string)get_info('email'))?>"><?=htmlspecialcharsbx((string)get_info('email'))?></a>
+                        </div>
                         <div class="footer-contact-label">общие вопросы</div>
                     </div>
                 </div>
@@ -279,8 +232,8 @@ if (!$isExcludedPage && !$is404Error): ?>
                         </div>
                     </div>
                     <div>
-                        <div class="footer-contact-item">Пн-Чт: 9:00 – 18:00</div>
-                        <div class="footer-contact-label">перерыв: 12:30-13:18</div>
+                        <div class="footer-contact-item"><?=htmlspecialcharsbx((string)get_info('workdays_primary'))?></div>
+                        <div class="footer-contact-label"><?=htmlspecialcharsbx((string)get_info('lunch_break'))?></div>
                     </div>
                 </div>
 				<div class="d-flex mb-3">
@@ -290,14 +243,14 @@ if (!$isExcludedPage && !$is404Error): ?>
                         </div>
                     </div>
                     <div>
-                        <div class="footer-contact-item">Пт: 9:00 – 17:00</div>
-                        <div class="footer-contact-label">перерыв: 12:30-13:18</div>
+                        <div class="footer-contact-item"><?=htmlspecialcharsbx((string)get_info('workdays_secondary'))?></div>
+                        <div class="footer-contact-label"><?=htmlspecialcharsbx((string)get_info('lunch_break'))?></div>
                     </div>
                 </div>
                 
                 <!-- Кнопка обратной связи -->
 				<div class="d-flex mb-3">
-				<a href="/feedback_online/" class="footer-btn">
+				<a href="<?=htmlspecialcharsbx((string)get_info('feedback_path'))?>" class="footer-btn">
 					<nobr><i class="bi bi-chat-dots"></i> Написать обращение</nobr>
                 </a>
 				</div>
@@ -311,12 +264,14 @@ if (!$isExcludedPage && !$is404Error): ?>
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
                     <span class="footer-text-light">
-                        <i class="bi bi-c-circle me-1" style="color: #3498db;"></i> 1991–2026 Министерство информационных технологий и связи Кировской области
+                        <i class="bi bi-c-circle me-1" style="color: #3498db;"></i>
+                        <?=htmlspecialcharsbx((string)get_info('copyright_year_from'))?>–<?=date('Y')?>
+                        <?=htmlspecialcharsbx((string)get_info('org_full_name'))?>
                     </span>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="/doc/personal_data_processing_policies/" class="footer-bottom-link">Политика конфиденциальности</a>
-                    <a href="/doc/personal_data_processing_policies/" class="footer-bottom-link">Использование cookie</a>
+                    <a href="<?=htmlspecialcharsbx((string)get_info('privacy_policy_path'))?>" class="footer-bottom-link">Политика конфиденциальности</a>
+                    <a href="<?=htmlspecialcharsbx((string)get_info('privacy_policy_path'))?>" class="footer-bottom-link">Использование cookie</a>
                     <span class="footer-dot"></span>
                     <span class="footer-dot footer-dot-secondary"></span>
                 </div>
@@ -339,14 +294,14 @@ if (!$isExcludedPage && !$is404Error): ?>
             </div>
 			<div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end">
-                    <a class="footer-developer" href="https://csr43.ru/" target="_blank" rel="noopener noreferrer">
+                    <a class="footer-developer" href="<?=htmlspecialcharsbx((string)get_info('developer_url'))?>" target="_blank" rel="noopener noreferrer">
                         <span class="footer-developer__logo-wrap">
-                            <img class="footer-developer__logo" src="/images/logo_csr.png" width="48" height="49" alt="Логотип Центра стратегического развития">
+                            <img class="footer-developer__logo" src="<?=htmlspecialcharsbx((string)get_info('developer_logo'))?>" width="48" height="49" alt="Логотип Центра стратегического развития">
                         </span>
                         <span class="footer-developer__content">
                             <span class="footer-developer__label">Сайт разработан</span>
                             <span class="footer-developer__name">
-                                КОГБУ «Центр стратегического развития информационных ресурсов и систем управления»
+                                <?=htmlspecialcharsbx((string)get_info('developer_name'))?>
                             </span>
                         </span>
                     </a>
@@ -357,10 +312,10 @@ if (!$isExcludedPage && !$is404Error): ?>
 </footer>
 <?
 
-$cookie_message = 
-"Сайт Министерства информационных технологий и связи использует файлы cookie для работы и аналитики. 
+$cookie_message =
+"Сайт " . htmlspecialcharsbx((string)get_info('org_name')) . " использует файлы cookie для работы и аналитики.
 <br><br>
-<a target=\"_blank\" href=\"/doc/personal_data_processing_policies/\">Политика обработки персональных данных</a>";
+<a target=\"_blank\" href=\"" . htmlspecialcharsbx((string)get_info('privacy_policy_path')) . "\">Политика обработки персональных данных</a>";
 
 $APPLICATION->IncludeComponent(
 	"cookie.manager",

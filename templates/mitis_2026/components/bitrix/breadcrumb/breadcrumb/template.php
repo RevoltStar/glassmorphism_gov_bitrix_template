@@ -19,13 +19,12 @@ if(!is_array($css) || !in_array("/bitrix/css/main/font-awesome.css", $css))
 }
 
 // Получаем текущий URL для последнего элемента
-$currentUrl = 'https://it.kirovreg.ru' . $APPLICATION->GetCurPage();
+$baseUrl = rtrim((string)get_info('site_url'), '/');
+$currentUrl = $baseUrl . $APPLICATION->GetCurPage();
 
 // Формируем данные для микроразметки BreadcrumbList
 $breadcrumbItems = [];
 $position = 1;
-$baseUrl = 'https://it.kirovreg.ru';
-
 foreach ($arResult as $index => $item) {
     // Формируем абсолютный URL
     if ($index === count($arResult) - 1) {

@@ -18,20 +18,7 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
     	get_canonical_link(["PAGEN_1", "PAGEN_2"])
 	);
 	?>
-		<?
-					$APPLICATION->IncludeComponent(
-					"bitrix:main.include",
-					"",
-					array(
-						"AREA_FILE_SHOW" => "file",	// Показывать включаемую область
-						"AREA_FILE_SUFFIX" => "inc",	// Суффикс имени файла включаемой области
-						"COMPOSITE_FRAME_MODE" => "A",	// Голосование шаблона компонента по умолчанию
-						"COMPOSITE_FRAME_TYPE" => "AUTO",	// Содержимое компонента
-						"EDIT_TEMPLATE" => "",	// Шаблон области по умолчанию
-						"PATH" => SITE_TEMPLATE_PATH ."/include/schema_org.php"
-					)
-					);
-				?>
+	<?php include __DIR__ . '/include/schema_org.php'; ?>
 
 	<? $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-5.3.0.min.css"); ?>
 	<? $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/bootstrap-5.3.0.min.js"); ?>
@@ -45,8 +32,9 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 
 	<? $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/script.js"); ?>
 	<?$APPLICATION->ShowHead();?>
-<script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&position=bottom-
-left&region=33000000000&platform=default_iframe"></script>
+	<?php if ((bool)get_info('show_max_robot', false)): ?>
+		<script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&amp;position=bottom-left&amp;region=33000000000&amp;platform=default_iframe"></script>
+	<?php endif; ?>
 </head>
 <body>
 	<a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
@@ -76,50 +64,18 @@ left&region=33000000000&platform=default_iframe"></script>
 
             <div class="col-md-6 col-lg-7 d-flex justify-content-end align-items-center gap-3">
                 <!-- Контакты -->
-                <a href="tel:<?$APPLICATION->IncludeComponent(
-                    "bitrix:main.include",
-                    "",
-                    array(
-                        "AREA_FILE_SHOW" => "file",
-                        "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => SITE_TEMPLATE_PATH . "/include/phone_e164.php"
-                    )
-                );?>" class="top-contact d-none d-md-flex">
+                <a href="tel:<?=htmlspecialcharsbx((string)get_info('phone_e164'))?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-telephone-fill" aria-hidden="true"></i>
-                    <span class="d-none d-lg-inline"><?$APPLICATION->IncludeComponent(
-                    "bitrix:main.include",
-                    "",
-                    array(
-                        "AREA_FILE_SHOW" => "file",
-                        "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => SITE_TEMPLATE_PATH . "/include/phone.php"
-                    )
-                );?></span>
+                    <span class="d-none d-lg-inline"><?=htmlspecialcharsbx((string)get_info('phone'))?></span>
                 </a>
                 
-                <a href="mailto:<?$APPLICATION->IncludeComponent(
-                    "bitrix:main.include",
-                    "",
-                    array(
-                        "AREA_FILE_SHOW" => "file",
-                        "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
-                    )
-                );?>" class="top-contact d-none d-md-flex">
+                <a href="mailto:<?=htmlspecialcharsbx((string)get_info('email'))?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-envelope-fill" aria-hidden="true"></i>
-                    <span class="d-none d-lg-inline"><?$APPLICATION->IncludeComponent(
-                    "bitrix:main.include",
-                    "",
-                    array(
-                        "AREA_FILE_SHOW" => "file",
-                        "AREA_FILE_SUFFIX" => "inc",
-                        "PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
-                    )
-                );?></span>
+                    <span class="d-none d-lg-inline"><?=htmlspecialcharsbx((string)get_info('email'))?></span>
                 </a>
                 
                 <!-- Поиск -->
-                <form class="d-flex search-form w-100" role="search" action="/search/" method="get">
+                <form class="d-flex search-form w-100" role="search" action="<?=htmlspecialcharsbx((string)get_info('search_path'))?>" method="get">
                     <div class="input-group">
                         <input id="searchInput" 
                                class="form-control" 
@@ -144,8 +100,8 @@ left&region=33000000000&platform=default_iframe"></script>
         <div class="row align-items-center">
             <div class="col-auto">
                 <a href="/" class="logo-link" aria-label="На главную">
-                    <img src="<?=SITE_TEMPLATE_PATH?>/images/gerb_kirov_it.png" 
-                         alt="Герб Кировской области — официальный символ региона" 
+                    <img src="<?=htmlspecialcharsbx((string)get_info('logo'))?>"
+                         alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="ministry-logo"
                          width="80"
                          height="80">
@@ -155,27 +111,27 @@ left&region=33000000000&platform=default_iframe"></script>
             <div class="col">
 				<?php if ($APPLICATION->GetCurPage(false) === "/"): ?>
     			<h1 class="ministry-title">
-        			Министерство информационных технологий и связи
+					<?=htmlspecialcharsbx((string)get_info('org_name'))?>
    				</h1>
 				<?php else: ?>
     			<div class="ministry-title">
-        			Министерство информационных технологий и связи
+					<?=htmlspecialcharsbx((string)get_info('org_name'))?>
     			</div>
 				<?php endif; ?>
                 <div class="ministry-sub">
-                    Кировской области
+                    <?=htmlspecialcharsbx((string)get_info('region_name_genitive'))?>
                 </div>
             </div>
             
             <!-- Декоративные элементы -->
             <div class="col-auto d-none d-md-block text-end">
                 <div class="decorative-elements" aria-hidden="true">
-					<a href="https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva">
-						<img src="<?=SITE_TEMPLATE_PATH?>/images/economics_of_data.png" alt="Символ проекта Экономика данных и цифровая трансформация государства">
+					<a href="<?=htmlspecialcharsbx((string)get_info('national_project_url'))?>">
+						<img src="<?=htmlspecialcharsbx((string)get_info('national_project_logo'))?>" alt="<?=htmlspecialcharsbx((string)get_info('national_project_logo_alt'))?>">
 					</a>
                     <div class="mt-2 fw-semibold" style="color: #1e3a5f; font-size: 0.95rem;">
                         <i class="bi bi-geo-alt me-1" style="color: #3498db;" aria-hidden="true"></i>
-                        Кировская область
+                        <?=htmlspecialcharsbx((string)get_info('region_name'))?>
                     </div>
                 </div>
             </div>
@@ -214,7 +170,7 @@ left&region=33000000000&platform=default_iframe"></script>
 		$APPLICATION->IncludeComponent("bitrix:breadcrumb","breadcrumb",Array(
 			"START_FROM" => "0", 
 			"PATH" => "", 
-			"SITE_ID" => "mi"
+			"SITE_ID" => SITE_ID
 		));
 	?>
 	</div>

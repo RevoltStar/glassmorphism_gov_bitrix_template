@@ -357,7 +357,9 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
 </div>
 <?php
 // Подготовка данных для микроразметки
-$currentUrl = 'https://it.kirovreg.ru' . $APPLICATION->GetCurPage();
+$siteUrl = rtrim((string)get_info('site_url'), '/');
+$currentUrl = $siteUrl . $APPLICATION->GetCurPage();
+$organizationId = $siteUrl . '/#organization';
 
 // Дата публикации в формате ISO 8601
 $datePublished = '';
@@ -376,7 +378,7 @@ if ($arResult['TIMESTAMP_X']) {
 // Описание (обрезаем до 200 символов)
 $description = '';
 if (!empty($arResult['PREVIEW_TEXT'])) {
-    $description = htmlspecialchars(strip_tags($arResult['PREVIEW_TEXT']));
+    $description = trim(htmlspecialchars_decode(strip_tags($arResult['PREVIEW_TEXT'])));
     if (mb_strlen($description) > 200) {
         $description = mb_substr($description, 0, 200) . '...';
     }
@@ -401,7 +403,7 @@ foreach ($galleryFiles as $file) {
         $src = $file['SRC'];
         // Проверяем, нужен ли домен
         if (strpos($src, 'http') !== 0) {
-            $src = 'https://csr43.ru' . $src;
+            $src = $siteUrl . '/' . ltrim($src, '/');
         }
         $imagesForMarkup[] = $src;
     }
@@ -409,7 +411,7 @@ foreach ($galleryFiles as $file) {
 
 // Если нет изображений, используем дефолтное изображение новости
 if (empty($imagesForMarkup)) {
-    $imagesForMarkup[] = 'https://it.kirovreg.ru/images/logo_csr.png';
+    $imagesForMarkup[] = get_info_absolute_url('logo');
 }
 
 // Формируем данные для JSON-LD
@@ -432,11 +434,11 @@ if ($datePublished) {
 
 // Используем ссылку на организацию из header.php
 $jsonLd['author'] = [
-    '@id' => 'https://it.kirovreg.ru/#organization'
+    '@id' => $organizationId
 ];
 
 $jsonLd['publisher'] = [
-    '@id' => 'https://it.kirovreg.ru/#organization'
+    '@id' => $organizationId
 ];
 
 // Изображения
@@ -464,5 +466,14 @@ if ($arResult["SHOW_COUNTER"] && (int)$arResult["SHOW_COUNTER"] > 0) {
 
 <!-- Микроразметка для детальной страницы новости -->
 <script type="application/ld+json">
-<?= json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+<?=json_encode(
+    $jsonLd,
+    JSON_UNESCAPED_UNICODE
+    | JSON_UNESCAPED_SLASHES
+    | JSON_HEX_TAG
+    | JSON_HEX_AMP
+    | JSON_HEX_APOS
+    | JSON_HEX_QUOT
+    | JSON_THROW_ON_ERROR
+)?>
 </script>

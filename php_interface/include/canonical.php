@@ -2,30 +2,26 @@
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
-use Bitrix\Main\SiteTable;
-
 function get_canonical_link(array $allowedParams = []): string
 {
-    static $host;
+    static $origin;
 
-    if ($host === null) {
-        if (defined('SITE_SERVER_NAME') && SITE_SERVER_NAME !== '') {
-            $host = SITE_SERVER_NAME;
-        } else {
-            $site = \Bitrix\Main\SiteTable::getByPrimary(SITE_ID, [
-                'select' => ['SERVER_NAME'],
-            ])->fetch();
+    if ($origin === null) {
+        $siteUrl = rtrim((string)get_info('site_url'), '/');
+        $urlParts = parse_url($siteUrl);
+        $scheme = strtolower((string)($urlParts['scheme'] ?? ''));
+        $host = trim((string)($urlParts['host'] ?? ''));
 
-            $host = trim((string)($site['SERVER_NAME'] ?? ''));
+        if (!in_array($scheme, ['http', 'https'], true) || $host === '') {
+            throw new RuntimeException(
+                'Настройка site_url должна содержать абсолютный HTTP(S)-адрес сайта'
+            );
         }
 
-        $host = preg_replace('~^https?://~i', '', $host);
-        $host = rtrim($host, '/');
+        $origin = $scheme . '://' . $host;
 
-        if ($host === '') {
-            throw new RuntimeException(
-                'Не заполнен SERVER_NAME для сайта ' . SITE_ID
-            );
+        if (isset($urlParts['port'])) {
+            $origin .= ':' . (int)$urlParts['port'];
         }
     }
 
@@ -115,7 +111,7 @@ function get_canonical_link(array $allowedParams = []): string
         $query[$name] = $value;
     }
 
-    $canonical = 'https://' . $host . $path;
+    $canonical = $origin . $path;
 
     if ($query !== []) {
         $canonical .= '?' . http_build_query(
