@@ -1,0 +1,47 @@
+.vision-btn:focus-visible,
+html body .bvi-panel .bvi-link:focus-visible,
+html body .bvi-link-fixed-top:focus-visible {
+    outline: 3px solid #ffbf47 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.35) !important;
+}
+
+.vision-btn {
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+html body .bvi-panel [aria-pressed="true"] {
+    outline: 2px solid currentColor !important;
+    outline-offset: 2px !important;
+}
+
+
+body .bvi-body[data-bvi-theme] input::placeholder,
+body .bvi-body[data-bvi-theme] textarea::placeholder {
+    opacity: 1 !important;
+}
+
+body .bvi-body[data-bvi-theme="white"] input::placeholder,
+body .bvi-body[data-bvi-theme="white"] textarea::placeholder {
+    color: #000000 !important;
+}
+
+body .bvi-body[data-bvi-theme="black"] input::placeholder,
+body .bvi-body[data-bvi-theme="black"] textarea::placeholder {
+    color: #ffffff !important;
+}
+
+body .bvi-body[data-bvi-theme="blue"] input::placeholder,
+body .bvi-body[data-bvi-theme="blue"] textarea::placeholder {
+    color: #063462 !important;
+}
+
+body .bvi-body[data-bvi-theme="brown"] input::placeholder,
+body .bvi-body[data-bvi-theme="brown"] textarea::placeholder {
+    color: #4d4b43 !important;
+}
+
+body .bvi-body[data-bvi-theme="green"] input::placeholder,
+body .bvi-body[data-bvi-theme="green"] textarea::placeholder {
+    color: #a9e44d !important;
+}

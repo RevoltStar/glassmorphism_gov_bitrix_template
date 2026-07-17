@@ -1,0 +1,33 @@
+ /* БАННЕР */
+        .banner-item {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+			    background-clip: padding-box; /* Обрезает фон по padding, не затрагивая border */
+        }
+        .banner-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+            border: 1px solid #3498db;
+        }
+        .banner-overlay {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s;
+            color: #1e3a5f;
+        }
+        .banner-item:hover .banner-overlay {
+            background: rgba(255, 255, 255, 0.85);
+        }

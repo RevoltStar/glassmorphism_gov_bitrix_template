@@ -1,0 +1,296 @@
+/* ========== СТЕКЛЯННЫЙ КОМПОНЕНТ ВАКАНСИЙ ========== */
+
+.glass-vacancies-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Карточка вакансии */
+.glass-vacancy-card {
+    transition: all 0.3s ease;
+}
+
+.glass-vacancy-card-inner {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(52, 152, 219, 0.25);
+    border-radius: 32px;
+    padding: 28px 32px;
+    box-shadow: 0 12px 28px rgba(31, 100, 180, 0.08);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.glass-vacancy-card:hover .glass-vacancy-card-inner {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(52, 152, 219, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px rgba(31, 100, 180, 0.15);
+}
+
+/* Заголовок */
+.glass-vacancy-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+}
+
+.glass-vacancy-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0a3144;
+    margin: 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #1e3a5f, #2980b9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glass-vacancy-badge {
+    background: rgba(52, 152, 219, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(52, 152, 219, 0.25);
+    border-radius: 40px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #2980b9;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Сетка для колонок */
+.glass-vacancy-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+}
+
+.glass-vacancy-col {
+    min-width: 0; /* для корректного обтекания */
+}
+
+/* Секции (обязанности, условия и т.д.) */
+.glass-vacancy-section {
+    height: 100%;
+}
+
+.glass-section-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid #3498db;
+    padding-left: 12px;
+}
+
+.glass-section-heading i {
+    color: #2980b9;
+    font-size: 1.2rem;
+    width: 1.6rem;
+}
+
+.glass-vacancy-list {
+    padding-left: 1.8rem;
+    margin: 0;
+    list-style: none;
+}
+
+.glass-vacancy-list li {
+    position: relative;
+    margin-bottom: 10px;
+    line-height: 1.45;
+    color: #2c6b9e;
+    font-size: 0.95rem;
+}
+
+.glass-vacancy-list li::before {
+    content: "•";
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: absolute;
+    left: -1.2rem;
+    top: -2px;
+}
+
+.glass-vacancy-empty {
+    color: #2c6b9e;
+    font-style: italic;
+    background: rgba(52, 152, 219, 0.08);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+}
+
+/* Блоки местоположения и зарплаты */
+.glass-info-block {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 24px;
+    padding: 14px 20px;
+    transition: all 0.2s;
+}
+
+.glass-info-block:hover {
+    background: white;
+    border-color: rgba(52, 152, 219, 0.4);
+    transform: translateX(3px);
+}
+
+.glass-info-icon {
+    font-size: 1.8rem;
+    color: #2980b9;
+    opacity: 0.8;
+}
+
+.glass-info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2c6b9e;
+    margin-bottom: 2px;
+}
+
+.glass-info-value {
+    font-weight: 600;
+    color: #1e3a5f;
+    font-size: 1rem;
+}
+
+.glass-salary-value {
+    color: #0b5e42;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Нижняя панель */
+.glass-vacancy-action {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.glass-vacancy-date {
+    font-size: 0.85rem;
+    color: #2c6b9e;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.glass-vacancy-btn {
+    background: rgba(52, 152, 219, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    border-radius: 40px;
+    padding: 10px 28px;
+    font-weight: 600;
+    color: #1e3a5f;
+    transition: all 0.3s;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.glass-vacancy-btn:hover {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-color: #3498db;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+}
+
+.glass-vacancy-btn i {
+    margin-right: 6px;
+}
+
+/* Пустое состояние */
+.glass-empty-alert {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 32px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    color: #1e3a5f;
+}
+
+.glass-empty-icon {
+    font-size: 2.8rem;
+    color: #2980b9;
+    opacity: 0.7;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .glass-vacancy-card-inner {
+        padding: 24px;
+    }
+    .glass-vacancy-title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .glass-vacancy-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .glass-vacancy-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .glass-vacancy-title {
+        font-size: 1.4rem;
+    }
+    .glass-info-block {
+        padding: 12px 16px;
+    }
+    .glass-info-icon {
+        font-size: 1.5rem;
+    }
+    .glass-vacancy-action {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .glass-vacancy-btn {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .glass-vacancy-card-inner {
+        padding: 18px;
+    }
+    .glass-section-heading {
+        font-size: 1rem;
+    }
+    .glass-vacancy-list li {
+        font-size: 0.85rem;
+    }
+}

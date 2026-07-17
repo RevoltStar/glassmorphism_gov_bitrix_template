@@ -1,0 +1,14 @@
+        /* ПРОГРЕСС БАР */
+        .progress-glass {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 30px;
+            height: 12px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        .progress-bar-glass {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            border-radius: 30px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+        }

@@ -1,0 +1,109 @@
+/* Основной стеклянный контейнер */
+.glass-breadcrumb {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 60px;
+    padding: 12px 24px;
+    box-shadow: 0 8px 25px rgba(31, 100, 180, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* Эффект при наведении на весь блок */
+.glass-breadcrumb:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(52, 152, 219, 0.35);
+    box-shadow: 0 12px 30px rgba(31, 100, 180, 0.12);
+}
+
+/* Стили для ссылок */
+.glass-breadcrumb-link {
+    color: #1e3a5f;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 40px;
+    transition: all 0.3s;
+    display: inline-block;
+    font-size: 0.95rem;
+}
+
+/* Эффект при наведении на ссылку */
+.glass-breadcrumb-link:hover {
+    background: white;
+    color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+/* Активный элемент (текущая страница) */
+.glass-breadcrumb .breadcrumb-item.active {
+    color: #2980b9;
+    font-weight: 600;
+    padding: 6px 12px;
+    background: rgba(52, 152, 219, 0.1);
+    backdrop-filter: blur(4px);
+    border-radius: 40px;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+/* Разделители */
+.glass-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: #3498db;
+    font-size: 1.2rem;
+    line-height: 1;
+    opacity: 0.6;
+    padding: 0 8px;
+}
+
+/* Альтернативный разделитель */
+.glass-breadcrumb.separator-slash .breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+/* Альтернативный разделитель (точка) */
+.glass-breadcrumb.separator-dot .breadcrumb-item + .breadcrumb-item::before {
+    content: "•";
+    font-size: 1.2rem;
+}
+
+.glass-breadcrumb-hover .breadcrumb-item {
+    transition: transform 0.3s;
+}
+
+.glass-breadcrumb-hover .breadcrumb-item:hover {
+    transform: scale(1.05);
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 768px) {
+    .glass-breadcrumb {
+        padding: 8px 16px;
+        border-radius: 40px;
+    }
+    
+    .glass-breadcrumb-link {
+        font-size: 0.85rem;
+        padding: 4px 8px;
+    }
+
+    .glass-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+        padding: 0 4px;
+    }
+    
+    .glass-breadcrumb .breadcrumb-item.active {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+    }
+    
+    /* На очень маленьких экранах скрываем некоторые пункты */
+    @media (max-width: 480px) {
+        .breadcrumb-item:nth-last-child(2) {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,383 @@
+<?php
+$excludedPages = [
+    '/',
+    '/news',
+    '/news/',
+    '/contacts', 
+    '/contacts/'
+];
+
+$currentPage = $APPLICATION->GetCurPage();
+$isExcludedPage = false;
+
+// Особый случай для корневой страницы
+if ($currentPage === '/') {
+    $isExcludedPage = in_array('/', $excludedPages);
+} else {
+    // Проверяем, начинается ли текущая страница с любого из префиксов
+    foreach ($excludedPages as $excluded) {
+        // Для исключения "/" проверяем отдельно, чтобы не совпало с любым путем
+        if ($excluded === '/') {
+            continue; // "/" уже обработали выше
+        }
+        
+        // Убираем закрывающий слэш для сравнения (если есть)
+        $excludedClean = rtrim($excluded, '/');
+        $currentPageClean = rtrim($currentPage, '/');
+        
+        // Проверяем, начинается ли текущая страница с исключенного префикса
+        if (str_starts_with($currentPageClean, $excludedClean)) {
+            $isExcludedPage = true;
+            break;
+        }
+    }
+}
+$is404Error = defined('ERROR_404');
+
+if (!$isExcludedPage && !$is404Error): ?>
+    </div> <!-- Закрывающий для col-lg-8 -->
+<div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0  side-menu-wrapper">
+        <?$APPLICATION->IncludeComponent(
+            "bitrix:menu",
+            "side",
+            Array(
+                "ALLOW_MULTI_SELECT" => "Y",
+                "CHILD_MENU_TYPE" => "right",
+                "DELAY" => "N",
+                "MAX_LEVEL" => "2",
+                "MENU_CACHE_GET_VARS" => "",
+                "MENU_CACHE_TIME" => "3600",
+                "MENU_CACHE_TYPE" => "N",
+                "MENU_CACHE_USE_GROUPS" => "Y",
+                "ROOT_MENU_TYPE" => "right",
+                "USE_EXT" => "N"
+            )
+        );?>
+    </div> <!-- Закрывающий для col-lg-4 -->
+</div> <!-- Закрывающий для row -->
+<?php endif ?>
+</main>
+<!-- Подвал -->
+<footer class="footer">
+    
+    <!-- Основная информация в подвале -->
+    <div class="container py-5">
+        <div class="row g-4">
+            
+            <!-- Колонка 1: Логотип и контакты -->
+            <div class="col-lg-4 col-md-6">
+                <div class="d-flex align-items-center mb-3">
+                    <img src="/images/gerb_kirov_it.png" 
+                         alt="Логотип" 
+                         class="footer-logo">
+                    <div class="ms-3">
+                        <h5 class="footer-title">Министерство ИТ и связи</h5>
+                        <span class="footer-sub">Кировской области</span>
+                    </div>
+                </div>
+                
+                <p class="footer-text">
+                    Официальный сайт Министерства информационных технологий и связи Кировской области. 
+                    Все материалы сайта доступны по лицензии Creative Commons Attribution.
+                </p>
+                <?
+						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
+							"ROOT_MENU_TYPE" => "social", 
+							"MAX_LEVEL" => "1", 
+							"CHILD_MENU_TYPE" => "social", 
+							"USE_EXT" => "N",
+							"DELAY" => "N",
+							"ALLOW_MULTI_SELECT" => "N",
+							"MENU_CACHE_TYPE" => "N", 
+							"MENU_CACHE_TIME" => "3600", 
+							"MENU_CACHE_USE_GROUPS" => "Y", 
+							"MENU_CACHE_GET_VARS" => "" 
+							)
+						);?>
+            </div>
+
+            <!-- Колонка 2: Быстрые ссылки -->
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6">
+                <h6 class="footer-section-title">
+                    <i class="bi bi-link-45deg"></i> Быстрые ссылки
+                </h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+						<a href="/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Главная
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/doc/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Документы
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/activity/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Деятельность
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/activity/procurement/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Госзакупки
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Открытые данные
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/contacts/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Контакты
+                        </a>
+                    </li>
+					<li class="mb-2">
+						<a href="https://www.kirovreg.ru/max-bots/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Чат-боты MAX
+                        </a>
+                    </li>
+					<li class="mb-2">
+						<a href="https://www.kirovreg.ru/free-wifi/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Бесплатный Wi-Fi
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Колонка 3: Информация -->
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                <h6 class="footer-section-title">
+                    <i class="bi bi-info-circle"></i> Информация
+                </h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+						<a href="/about/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> О министерстве
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/about/structure/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Структура
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/about/vacancy/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Вакансии
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/activity/anti-corruption/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Противодействие коррупции
+                        </a>
+                    </li>
+                    <li class="mb-2">
+						<a href="/sitemap/" class="footer-link">
+                            <i class="bi bi-chevron-right"></i> Карта сайта
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Колонка 4: Контакты и обратная связь -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <h6 class="footer-section-title">
+                    <i class="bi bi-telephone"></i> Контакты
+                </h6>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <div class="footer-contact-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                    </div>
+                    <div class="footer-text">
+                        <?
+																				$APPLICATION->IncludeComponent(
+    																				"bitrix:main.include",
+    																				"",
+    																				array(
+        																				"AREA_FILE_SHOW" => "file",
+        																				"AREA_FILE_SUFFIX" => "inc",
+        																				"COMPOSITE_FRAME_MODE" => "A",
+        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
+        																				"EDIT_TEMPLATE" => "",
+        																				"PATH" => "/include/address.php"
+    																				)
+																				);
+					?>, <?
+																				$APPLICATION->IncludeComponent(
+    																				"bitrix:main.include",
+    																				"",
+    																				array(
+        																				"AREA_FILE_SHOW" => "file",
+        																				"AREA_FILE_SUFFIX" => "inc",
+        																				"COMPOSITE_FRAME_MODE" => "A",
+        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
+        																				"EDIT_TEMPLATE" => "",
+        																				"PATH" => "/include/postal.php"
+    																				)
+																				);
+					?>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <div class="footer-contact-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="footer-contact-item"><?
+																				$APPLICATION->IncludeComponent(
+    																				"bitrix:main.include",
+    																				"",
+    																				array(
+        																				"AREA_FILE_SHOW" => "file",
+        																				"AREA_FILE_SUFFIX" => "inc",
+        																				"COMPOSITE_FRAME_MODE" => "A",
+        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
+        																				"EDIT_TEMPLATE" => "",
+        																				"PATH" => "/include/phone.php"
+    																				)
+																				);
+					?></div>
+                        <div class="footer-contact-label">приемная</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <div class="footer-contact-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="footer-contact-item"><?
+																				$APPLICATION->IncludeComponent(
+    																				"bitrix:main.include",
+    																				"",
+    																				array(
+        																				"AREA_FILE_SHOW" => "file",
+        																				"AREA_FILE_SUFFIX" => "inc",
+        																				"COMPOSITE_FRAME_MODE" => "A",
+        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
+        																				"EDIT_TEMPLATE" => "",
+        																				"PATH" => "/include/email.php"
+    																				)
+																				);
+					?></div>
+                        <div class="footer-contact-label">общие вопросы</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <div class="footer-contact-icon">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="footer-contact-item">Пн-Чт: 9:00 – 18:00</div>
+                        <div class="footer-contact-label">перерыв: 12:30-13:18</div>
+                    </div>
+                </div>
+				<div class="d-flex mb-3">
+                    <div class="me-3">
+                        <div class="footer-contact-icon">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="footer-contact-item">Пт: 9:00 – 17:00</div>
+                        <div class="footer-contact-label">перерыв: 12:30-13:18</div>
+                    </div>
+                </div>
+                
+                <!-- Кнопка обратной связи -->
+				<div class="d-flex mb-3">
+				<a href="/feedback_online/" class="footer-btn">
+					<nobr><i class="bi bi-chat-dots"></i> Написать обращение</nobr>
+                </a>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя часть подвала (копирайт, политика, счетчики) -->
+    <div class="footer-bottom">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <span class="footer-text-light">
+                        <i class="bi bi-c-circle me-1" style="color: #3498db;"></i> 1991–2026 Министерство информационных технологий и связи Кировской области
+                    </span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="/doc/personal_data_processing_policies/" class="footer-bottom-link">Политика конфиденциальности</a>
+                    <a href="/doc/personal_data_processing_policies/" class="footer-bottom-link">Использование cookie</a>
+                    <span class="footer-dot"></span>
+                    <span class="footer-dot footer-dot-secondary"></span>
+                </div>
+            </div>
+            
+            <!-- Дополнительная строка со счетчиками и госсимволикой -->
+            <div class="row mt-2">
+                <div class="col-12 d-flex flex-wrap justify-content-center
+            justify-content-md-end align-items-center gap-2 gap-md-3">
+                    <span class="footer-badge">
+                        <i class="bi bi-eye"></i> 0+ 
+                    </span>
+                    <span class="footer-badge">
+                        <i class="bi bi-activity"></i> Счетчик посещений
+                    </span>
+                    <span class="footer-badge">
+                        <i class="bi bi-shield-check"></i> Госуслуги
+                    </span>
+                </div>
+            </div>
+			<div class="row mt-3">
+                <div class="col-12 d-flex justify-content-end">
+                    <a class="footer-developer" href="https://csr43.ru/" target="_blank" rel="noopener noreferrer">
+                        <span class="footer-developer__logo-wrap">
+                            <img class="footer-developer__logo" src="/images/logo_csr.png" width="48" height="49" alt="Логотип Центра стратегического развития">
+                        </span>
+                        <span class="footer-developer__content">
+                            <span class="footer-developer__label">Сайт разработан</span>
+                            <span class="footer-developer__name">
+                                КОГБУ «Центр стратегического развития информационных ресурсов и систем управления»
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<?
+
+$cookie_message = 
+"Сайт Министерства информационных технологий и связи использует файлы cookie для работы и аналитики. 
+<br><br>
+<a target=\"_blank\" href=\"/doc/personal_data_processing_policies/\">Политика обработки персональных данных</a>";
+
+$APPLICATION->IncludeComponent(
+	"cookie.manager",
+    ".default",
+    array(
+        "CACHE_TIME" => "86400",
+        "CACHE_TYPE" => "A",
+        "CHECK_TIMEOUT" => "3000",
+        "EXPIRE_DAYS" => "365",
+        "MESSAGE" => $cookie_message,
+        "PRESETS" => "style4",
+        "SHOW_SETTINGS" => "Y", // Показывать настройки
+        "SHOW_PD_CONSENT" => "Y" // Показывать согласие на ПДн
+    )
+);
+
+?>
+
+</body>
+</html>

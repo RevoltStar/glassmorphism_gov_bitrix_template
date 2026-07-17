@@ -1,0 +1,122 @@
+/* Базовый контейнер */
+.org-structure {
+    font-family: inherit;
+}
+
+.org-structure__root {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.org-structure__node {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+/* Карточка сотрудника */
+.org-structure__card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef;
+    position: relative;
+}
+
+.org-structure__card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+/* Аватар */
+.org-structure__avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-color: #f8f9fa;
+    flex-shrink: 0;
+	position: relative;
+}
+
+.org-structure__avatar--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+    font-size: 3rem;
+    color: #adb5bd;
+}
+
+/* Информация */
+.org-structure__info {
+    flex-grow: 1;
+}
+
+.org-structure__title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 0.25rem;
+}
+
+.org-structure__description {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Кнопка-переключатель */
+.org-structure__toggle {
+    padding: 0.25rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #6c757d;
+    transition: color 0.2s;
+}
+
+.org-structure__toggle:hover {
+    color: #0d6efd;
+}
+
+.org-structure__toggle i {
+    display: block;
+}
+
+/* Вложенный список (подчинённые) */
+.org-structure__children {
+    list-style: none;
+    padding-left: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 576px) {
+    .org-structure__card {
+        flex-wrap: wrap;
+        padding: 0.75rem;
+    }
+
+    .org-structure__avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .org-structure__title {
+        font-size: 1rem;
+    }
+
+    .org-structure__description {
+        font-size: 0.8rem;
+    }
+
+    .org-structure__children {
+        padding-left: 1rem;
+    }
+}

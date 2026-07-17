@@ -1,0 +1,25 @@
+ /* ПОЛЕЗНЫЕ РЕСУРСЫ */
+        .resource-link {
+            display: block;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 16px;
+            color: #1e3a5f;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+			height: 100%;
+        }
+        .resource-link:hover {
+            background: white;
+            border: 1px solid #3498db;
+            color: #2980b9;
+            transform: translateX(5px);
+        }
+		.resource-link-info-container{
+			display: flex;
+  			flex-direction: column;
+  			justify-content: space-between;
+		}
