@@ -39,6 +39,13 @@ const SITE_INFO = [
     'privacy_policy_path' => '/doc/personal_data_processing_policies/',
     'show_max_robot' => true,
     'yandex_metrika_id' => 105106588,
+    'layout_excluded_pages' => [
+        '/',
+        '/news',
+        '/news/',
+        '/contacts',
+        '/contacts/',
+    ],
 
     // Пути могут быть относительными от корня сайта или абсолютными URL.
     'logo' => '/images/gerb_kirov_it.png',

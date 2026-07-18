@@ -1,11 +1,5 @@
 <?php
-$excludedPages = [
-    '/',
-    '/news',
-    '/news/',
-    '/contacts', 
-    '/contacts/'
-];
+$excludedPages = (array)get_info('layout_excluded_pages', []);
 
 $currentPage = $APPLICATION->GetCurPage();
 $isExcludedPage = false;

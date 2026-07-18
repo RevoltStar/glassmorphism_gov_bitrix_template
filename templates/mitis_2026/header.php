@@ -184,13 +184,7 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 			<h1 class="mb-5"><?=$APPLICATION->ShowTitle()?></h1>
 		<?php endif; ?>
 		<?php
-			$excludedPages = [
-    '/',
-    '/news',
-    '/news/',
-    '/contacts', 
-    '/contacts/'
-];
+			$excludedPages = (array)get_info('layout_excluded_pages', []);
 
 $currentPage = $APPLICATION->GetCurPage();
 $isExcludedPage = false;
