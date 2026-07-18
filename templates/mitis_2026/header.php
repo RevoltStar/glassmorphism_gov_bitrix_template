@@ -73,16 +73,16 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
                 <!-- Контакты -->
                 <a href="<?=htmlspecialcharsbx($headerPhoneUrl)?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-telephone-fill" aria-hidden="true"></i>
-                    <span class="d-none d-lg-inline"><?=htmlspecialcharsbx((string)get_info('phone'))?></span>
+                    <span class="d-none d-xl-inline"><?=htmlspecialcharsbx((string)get_info('phone'))?></span>
                 </a>
 
                 <a href="<?=htmlspecialcharsbx($headerEmailUrl)?>" class="top-contact d-none d-md-flex">
                     <i class="bi bi-envelope-fill" aria-hidden="true"></i>
-                    <span class="d-none d-lg-inline"><?=htmlspecialcharsbx((string)get_info('email'))?></span>
+                    <span class="d-none d-xl-inline"><?=htmlspecialcharsbx((string)get_info('email'))?></span>
                 </a>
 
                 <!-- Поиск -->
-                <form class="d-flex search-form w-100" role="search" action="<?=htmlspecialcharsbx($headerSearchPath)?>" method="get">
+                <form class="d-flex search-form" role="search" action="<?=htmlspecialcharsbx($headerSearchPath)?>" method="get">
                     <div class="input-group">
                         <input id="searchInput"
                                class="form-control"
