@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
+
+    if (!searchInput || !searchButton) {
+        return;
+    }
     
     // Обработчик клика по кнопке
     searchButton.addEventListener('click', function() {
@@ -30,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Fancybox === 'undefined' || typeof Fancybox.bind !== 'function') {
+        return;
+    }
+
     Fancybox.bind('[data-gallery-item]', {
         groupAttr: 'data-fancybox',
         Toolbar: {
