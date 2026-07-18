@@ -18,11 +18,21 @@ $checkTimeout = min(60000, max(0, (int)($arParams['CHECK_TIMEOUT'] ?? 2000)));
 $showSettings = ($arParams['SHOW_SETTINGS'] ?? 'N') === 'Y';
 $yandexMetrikaId = max(0, (int)get_info('yandex_metrika_id', 0));
 $containerIdJson = json_encode($wrapId, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+$message = site_plain_text($arResult['MESSAGE'] ?? '');
+$policyText = site_plain_text($arResult['POLICY_TEXT'] ?? '');
+$policyUrl = site_url($arResult['POLICY_URL'] ?? '', '');
 ?>
 <div class="widget_cookie widget_cookie__<?=htmlspecialcharsbx($preset)?> cookie__hide"
      id="<?=htmlspecialcharsbx($wrapId)?>">
     <div class="widget_cookie__text">
-        <?=$arResult['SAFE_MESSAGE'] ?? ''?>
+        <?=htmlspecialcharsbx($message)?>
+
+        <?php if ($policyText !== '' && $policyUrl !== ''): ?>
+            <br><br>
+            <a target="_blank"
+               rel="noopener noreferrer"
+               href="<?=htmlspecialcharsbx($policyUrl)?>"><?=htmlspecialcharsbx($policyText)?></a>
+        <?php endif; ?>
 
         <?php if ($showSettings): ?>
             <div class="cookie-settings">

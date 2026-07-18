@@ -16,9 +16,9 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php $APPLICATION->ShowTitle();?></title>
 	<!-- Предпочтительно SVG -->
-	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="icon" type="image/svg+xml" href="<?= SITE_TEMPLATE_PATH ?>/images/favicon.svg">
 	<!-- Фолбэк для старых браузеров -->
-	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="<?= SITE_TEMPLATE_PATH ?>/images/favicon.ico">
 	<?php
 		$APPLICATION->SetPageProperty(
     	'canonical',
@@ -107,7 +107,7 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
         <div class="row align-items-center">
             <div class="col-auto">
                 <a href="/" class="logo-link" aria-label="На главную">
-                    <img src="<?=htmlspecialcharsbx($headerLogoUrl)?>"
+                    <img src="<?=SITE_TEMPLATE_PATH .htmlspecialcharsbx($headerLogoUrl)?>"
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="ministry-logo"
                          width="80"
@@ -134,7 +134,7 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
             <div class="col-auto d-none d-md-block text-end">
                 <div class="decorative-elements" aria-hidden="true">
 					<a href="<?=htmlspecialcharsbx($nationalProjectUrl)?>">
-						<img src="<?=htmlspecialcharsbx($nationalProjectLogo)?>" alt="<?=htmlspecialcharsbx((string)get_info('national_project_logo_alt'))?>">
+						<img src="<?=SITE_TEMPLATE_PATH . htmlspecialcharsbx($nationalProjectLogo)?>" alt="<?=htmlspecialcharsbx((string)get_info('national_project_logo_alt'))?>">
 					</a>
                     <div class="mt-2 fw-semibold" style="color: #1e3a5f; font-size: 0.95rem;">
                         <i class="bi bi-geo-alt me-1" style="color: #3498db;" aria-hidden="true"></i>

@@ -44,7 +44,7 @@ if (!$isExcludedPage && !$is404Error): ?>
             <!-- Колонка 1: Логотип и контакты -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?=htmlspecialcharsbx($footerLogoUrl)?>"
+                    <img src="<?=SITE_TEMPLATE_PATH . htmlspecialcharsbx($footerLogoUrl)?>"
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="footer-logo">
                     <div class="ms-3">
@@ -273,7 +273,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                 <div class="col-12 d-flex justify-content-end">
                     <a class="footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
                         <span class="footer-developer__logo-wrap">
-                            <img class="footer-developer__logo" src="<?=htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
+                            <img class="footer-developer__logo" src="<?=SITE_TEMPLATE_PATH . htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
                         </span>
                         <span class="footer-developer__content">
                             <span class="footer-developer__label">Сайт разработан</span>
@@ -289,10 +289,8 @@ if (!$isExcludedPage && !$is404Error): ?>
 </footer>
 <?php
 
-$cookie_message =
-htmlspecialcharsbx((string)get_info('org_name')) . " использует файлы cookie для работы и аналитики.
-<br><br>
-<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"" . htmlspecialcharsbx($privacyPolicyUrl) . "\">Политика обработки персональных данных</a>";
+$cookieMessage = site_plain_text(get_info('org_name'))
+    . ' использует файлы cookie для работы и аналитики.';
 
 $APPLICATION->IncludeComponent(
 	"cookie.manager",
@@ -302,7 +300,9 @@ $APPLICATION->IncludeComponent(
         "CACHE_TYPE" => "A",
         "CHECK_TIMEOUT" => "3000",
         "EXPIRE_DAYS" => "365",
-        "MESSAGE" => $cookie_message,
+        "MESSAGE" => $cookieMessage,
+        "POLICY_URL" => $privacyPolicyUrl,
+        "POLICY_TEXT" => "Политика обработки персональных данных",
         "PRESETS" => "style4",
         "SHOW_SETTINGS" => "Y" // Показывать настройки
     )

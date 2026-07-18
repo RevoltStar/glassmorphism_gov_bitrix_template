@@ -19,9 +19,16 @@ class CookieComponent extends \CBitrixComponent
             $arParams['PRESETS'] = 'style1';
         }
 
-        $message = $arParams['~MESSAGE'] ?? $arParams['MESSAGE'] ?? '';
-        $arParams['MESSAGE'] = site_string($message);
-        $arParams['~MESSAGE'] = $arParams['MESSAGE'];
+        $arParams['MESSAGE'] = site_plain_text(
+            $arParams['~MESSAGE'] ?? $arParams['MESSAGE'] ?? ''
+        );
+        $arParams['POLICY_TEXT'] = site_plain_text(
+            $arParams['~POLICY_TEXT'] ?? $arParams['POLICY_TEXT'] ?? ''
+        );
+        $arParams['POLICY_URL'] = site_url(
+            $arParams['~POLICY_URL'] ?? $arParams['POLICY_URL'] ?? '',
+            ''
+        );
 
         return $arParams;
     }
@@ -37,8 +44,13 @@ class CookieComponent extends \CBitrixComponent
 
     protected function getResult(): void
     {
-        $message = site_string($this->arParams['MESSAGE'] ?? '');
-        $this->arResult['ID'] = md5($message);
-        $this->arResult['SAFE_MESSAGE'] = site_safe_html($message);
+        $message = site_plain_text($this->arParams['MESSAGE'] ?? '');
+        $policyText = site_plain_text($this->arParams['POLICY_TEXT'] ?? '');
+        $policyUrl = site_url($this->arParams['POLICY_URL'] ?? '', '');
+
+        $this->arResult['ID'] = md5($message . "\0" . $policyText . "\0" . $policyUrl);
+        $this->arResult['MESSAGE'] = $message;
+        $this->arResult['POLICY_TEXT'] = $policyText;
+        $this->arResult['POLICY_URL'] = $policyUrl;
     }
 }

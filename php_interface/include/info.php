@@ -37,7 +37,7 @@ const SITE_INFO = [
     'search_path' => '/search/',
     'feedback_path' => '/feedback_online/',
     'privacy_policy_path' => '/doc/personal_data_processing_policies/',
-    'show_max_robot' => true,
+    'show_max_robot' => false,
     'yandex_metrika_id' => 105106588,
     'gosuslugi_widget_id' => 215882,
     'gosuslugi_org_id' => 494,
@@ -50,8 +50,8 @@ const SITE_INFO = [
     ],
 
     // Пути могут быть относительными от корня сайта или абсолютными URL.
-    'logo' => '/images/gerb_kirov_it.png',
-    'national_project_logo' => '/images/economics_of_data.png',
+    'logo' => '/images/gerb_kirov.png',
+    'national_project_logo' => '/images/national_project.png',
     'national_project_logo_alt' => 'Символ проекта «Экономика данных и цифровая трансформация государства»',
     'national_project_url' => 'https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva',
 

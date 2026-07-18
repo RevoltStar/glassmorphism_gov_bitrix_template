@@ -14,6 +14,18 @@ $arComponentParameters = [
             "COLS"    => 50,
             "DEFAULT" => GetMessage("COOKIE_MESSAGE_DEFAULT"),
         ],
+        "POLICY_URL" => [
+            "PARENT"  => "BASE",
+            "NAME"    => GetMessage("COOKIE_POLICY_URL"),
+            "TYPE"    => "STRING",
+            "DEFAULT" => "#",
+        ],
+        "POLICY_TEXT" => [
+            "PARENT"  => "BASE",
+            "NAME"    => GetMessage("COOKIE_POLICY_TEXT"),
+            "TYPE"    => "STRING",
+            "DEFAULT" => GetMessage("COOKIE_POLICY_TEXT_DEFAULT"),
+        ],
         "CHECK_TIMEOUT" => [
             "PARENT"  => "BASE",
             "NAME"    => GetMessage("COOKIE_CHECK_TIMEOUT"),
