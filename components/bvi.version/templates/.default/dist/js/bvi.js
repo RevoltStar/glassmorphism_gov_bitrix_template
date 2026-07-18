@@ -1917,7 +1917,9 @@
               var resume = document.querySelectorAll('.bvi-speech-resume');
               var stop = document.querySelectorAll('.bvi-speech-stop');
 
-              _this4._speech(text.textContent, text, true);
+              // Этот код включает подсветку произносимого текста.
+              // _this4._speech(text.textContent, text, true);
+              _this4._speech(text.textContent);
 
               play.forEach(function (element) {
                 return element.classList.remove('disabled');
