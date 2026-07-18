@@ -4,6 +4,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 }
 
 $this->setFrameMode(true);
+$arResult = is_array($arResult ?? null)
+    ? array_values(array_filter($arResult, 'is_array'))
+    : [];
 
 if (!function_exists('customMenuNormalizePath')) {
     function customMenuNormalizePath($url)
@@ -93,7 +96,7 @@ if (!function_exists('customMenuGetActiveIndex')) {
                 continue;
             }
 
-            $itemLink = trim((string)$item['LINK']);
+            $itemLink = trim(site_string($item['LINK'] ?? ''));
 
             if ($itemLink === '' || $itemLink === '#') {
                 continue;
@@ -185,8 +188,9 @@ if (!function_exists('customMenuGetItemId')) {
         $index = isset($item['__INDEX']) ? (int)$item['__INDEX'] : 0;
         $level = isset($item['__LEVEL']) ? (int)$item['__LEVEL'] : 1;
 
-        $rawId = !empty($item['ID'])
-            ? $item['ID'] . '_' . $index . '_lvl_' . $level
+        $itemId = site_string($item['ID'] ?? '');
+        $rawId = $itemId !== ''
+            ? $itemId . '_' . $index . '_lvl_' . $level
             : 'idx_' . $index . '_lvl_' . $level;
 
         return customMenuMakeSafeId($rawId);
@@ -196,11 +200,12 @@ if (!function_exists('customMenuGetItemId')) {
 if (!function_exists('customMenuGetIconHtml')) {
     function customMenuGetIconHtml(array $item)
     {
-        if (empty($item['PARAMS']['ICON'])) {
+        $icon = $item['PARAMS']['ICON'] ?? null;
+        if (!is_string($icon) || trim($icon) === '') {
             return '';
         }
 
-        $iconClass = htmlspecialcharsbx($item['PARAMS']['ICON']);
+        $iconClass = htmlspecialcharsbx(site_css_classes($icon));
 
         return '<i class="' . $iconClass . ' me-2" aria-hidden="true"></i>';
     }
@@ -327,7 +332,7 @@ if (!function_exists('customMenuRenderPanelItems')) {
         foreach ($items as $item) {
             $hasChildren = !empty($item['CHILDREN']);
             $stateClass = customMenuGetStateClass($item, $activeIndex);
-            $safeText = htmlspecialcharsbx($item['TEXT']);
+            $safeText = htmlspecialcharsbx(site_string($item['TEXT'] ?? ''));
             $iconHtml = customMenuGetIconHtml($item);
 
             if ($hasChildren) {
@@ -343,7 +348,7 @@ if (!function_exists('customMenuRenderPanelItems')) {
                 </li>
                 <?php
             } else {
-                $safeLink = htmlspecialcharsbx($item['LINK']);
+                $safeLink = htmlspecialcharsbx(site_url($item['LINK'] ?? null));
                 ?>
                 <li class="justify-content-center">
                     <a class="dropdown-item <?= $stateClass ?> text-wrap"
@@ -369,7 +374,7 @@ if (!function_exists('customMenuRenderPanelTemplates')) {
             $panelId = 'menu-panel-' . customMenuGetItemId($item);
             ?>
             <template id="<?= htmlspecialcharsbx($panelId) ?>">
-                <?php customMenuRenderPanelItems($item['CHILDREN'], $activeIndex, true, $item['TEXT']); ?>
+                <?php customMenuRenderPanelItems($item['CHILDREN'], $activeIndex, true, site_string($item['TEXT'] ?? '')); ?>
             </template>
             <?php
 
@@ -406,7 +411,7 @@ $activeIndex = customMenuGetActiveIndex($arResult);
             $hasChildren = !empty($topItem['CHILDREN']);
             $topId = customMenuGetItemId($topItem);
             $topStateClass = customMenuGetStateClass($topItem, $activeIndex);
-            $safeText = htmlspecialcharsbx($topItem['TEXT']);
+            $safeText = htmlspecialcharsbx(site_string($topItem['TEXT'] ?? ''));
             $iconHtml = customMenuGetIconHtml($topItem);
             ?>
 
@@ -414,7 +419,7 @@ $activeIndex = customMenuGetActiveIndex($arResult);
                 <?php
                 $initialPanelIds = customMenuGetInitialPanelIdsForTop($topItem, $activeIndex);
                 $initialPanelJson = htmlspecialcharsbx(
-                    json_encode($initialPanelIds, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                    json_encode($initialPanelIds, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE)
                 );
                 ?>
 
@@ -442,7 +447,7 @@ $activeIndex = customMenuGetActiveIndex($arResult);
             <?php else: ?>
                 <li class="nav-item justify-content-center">
                     <a class="nav-link <?= $topStateClass ?> text-wrap"
-                       href="<?= htmlspecialcharsbx($topItem['LINK']) ?>">
+                       href="<?=htmlspecialcharsbx(site_url($topItem['LINK'] ?? null))?>">
                         <?= $iconHtml ?>
                         <span><?= $safeText ?></span>
                     </a>

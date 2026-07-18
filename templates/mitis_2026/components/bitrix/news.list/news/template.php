@@ -1,35 +1,58 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
 $this->setFrameMode(true);
+$arResult = is_array($arResult ?? null) ? $arResult : [];
+$arParams = is_array($arParams ?? null) ? $arParams : [];
+$newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
+	? $arResult['NEWS_CATEGORIES']
+	: [];
 ?>
-<?if($arParams["DISPLAY_TOP_PAGER"]):?>
-	<?=$arResult["NAV_STRING"]?><br />
-<?endif;?>
-<?php if (($arParams["SHOW_CATEGORY_FILTER"] ?? "N") === "Y" && !empty($arResult["NEWS_CATEGORIES"])): ?>
+<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? 'N') === 'Y'):?>
+	<?=$arResult["NAV_STRING"] ?? ''?><br />
+<?php endif;?>
+<?php if (($arParams["SHOW_CATEGORY_FILTER"] ?? "N") === "Y" && $newsCategories !== []): ?>
 	<nav class="news-category-filter mb-4" aria-label="Фильтр новостей по рубрикам">
 		<a href="/news/" class="news-category-filter__item<?=empty($arParams["CATEGORY_CODE"]) ? " is-active" : ""?>">
 			Все новости
 		</a>
-		<?php foreach ($arResult["NEWS_CATEGORIES"] as $category): ?>
-			<a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/"
-			   class="news-category-filter__item<?=($arParams["CATEGORY_CODE"] === $category["XML_ID"]) ? " is-active" : ""?>">
-				<?=htmlspecialcharsbx($category["VALUE"])?>
+		<?php foreach ($newsCategories as $category):
+			if (!is_array($category)) {
+				continue;
+			}
+			$categoryXmlId = site_string($category['XML_ID'] ?? '');
+			$categoryValue = site_string($category['VALUE'] ?? '');
+			if ($categoryXmlId === '' || $categoryValue === '') {
+				continue;
+			}
+		?>
+			<a href="/news/category/<?=rawurlencode($categoryXmlId)?>/"
+			   class="news-category-filter__item<?=(site_string($arParams["CATEGORY_CODE"] ?? '') === $categoryXmlId) ? " is-active" : ""?>">
+				<?=htmlspecialcharsbx($categoryValue)?>
 			</a>
 		<?php endforeach; ?>
 	</nav>
 <?php endif; ?>
-<?if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])):?>
-	<?
+<?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])):?>
+	<?php
 	//Массив названий месяцев (в родительном падеже) для поля даты
 	$months = [1=>'января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 	$galleryId = 'news-list-' . $this->randString();
 	?>
 	<div class="row g-4">
-	<?foreach($arResult["ITEMS"] as $key=>$news):?>
-		<?
-		$gallerySrc = $news['DETAIL_PICTURE']['SRC'] ?? ($news['PREVIEW_PICTURE']['SRC'] ?? '/images/image_not_found.jpg');
-		$galleryCaption = $news['NAME'];
+	<?php foreach($arResult["ITEMS"] as $key=>$news):?>
+		<?php
+		if (!is_array($news)) {
+            continue;
+        }
+        $detailPageUrl = site_url($news['DETAIL_PAGE_URL'] ?? null);
+        $previewPictureSrc = site_url($news['PREVIEW_PICTURE']['SRC'] ?? null, '/images/image_not_found.jpg');
+        $gallerySrc = site_url($news['DETAIL_PICTURE']['SRC'] ?? null, $previewPictureSrc);
+		$galleryCaption = site_string($news['~NAME'] ?? $news['NAME'] ?? '');
 		?>
-		<div class="col-lg-4 <?if($key==0 && count($arResult["ITEMS"])%2!=0):?>col-md-12<?else:?>col-md-6<?endif?>">
+		<div class="col-lg-4 <?php if($key==0 && count($arResult["ITEMS"])%2!=0):?>col-md-12<?php else:?>col-md-6<?php endif?>">
 				<div class="news-card gallery-media">
 					<!-- Кнопка увеличения для FancyBox (вне ссылки!) -->
 					<a href="<?=htmlspecialcharsbx($gallerySrc)?>" class="gallery-expand-button mt-2 me-2"
@@ -38,32 +61,33 @@ $this->setFrameMode(true);
 					   aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $galleryCaption)?>">
 						<i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
 					</a>
-					
+
 					<!-- Ссылка на детальную страницу с изображением -->
-					<a href="<?= htmlspecialchars($news['DETAIL_PAGE_URL']) ?>" class="news-img-link">
+					<a href="<?=htmlspecialcharsbx($detailPageUrl)?>" class="news-img-link">
 						<div class="news-img">
 							<!-- Единое изображение: видимое + источник для FancyBox -->
-							<img src="<?=$news['PREVIEW_PICTURE']['SRC'] ? htmlspecialchars($news['PREVIEW_PICTURE']['SRC']) : '/images/image_not_found.jpg' ?>"
+							<img src="<?=htmlspecialcharsbx($previewPictureSrc)?>"
 								 class="news-img-object"
-								 alt="<?= htmlspecialchars($news['PREVIEW_PICTURE']['ALT'] ?? $news['NAME']) ?>" 
+								 alt="<?=htmlspecialcharsbx(site_string($news['PREVIEW_PICTURE']['ALT'] ?? $galleryCaption))?>"
 								 loading="lazy">
 							<?php
-								$d = strtotime($news['ACTIVE_FROM_X']);
+								$d = strtotime(site_string($news['ACTIVE_FROM_X'] ?? ''));
 							?>
 							<span class="news-date">
                                 <i class="bi bi-calendar3 me-1"></i>
-                                <?= date('d', $d) . ' ' . $months[(int)date('m', $d)] . ' ' . date('Y', $d) . ' года' ?>
+                                <?php if ($d !== false): ?><?=htmlspecialcharsbx(date('d', $d) . ' ' . ($months[(int)date('m', $d)] ?? '') . ' ' . date('Y', $d) . ' года')?><?php endif; ?>
                             </span>
 						</div>
 					</a>
-					
+
                     <div class="p-4">
 						<?php
 						$categoryValues = (array)($news["PROPERTIES"]["category"]["VALUE"] ?? array());
 						$categoryXmlIds = (array)($news["PROPERTIES"]["category"]["VALUE_XML_ID"] ?? array());
 						$newsCategories = array();
 						foreach ($categoryValues as $categoryIndex => $categoryValue) {
-							$categoryXmlId = $categoryXmlIds[$categoryIndex] ?? "";
+							$categoryValue = site_string($categoryValue);
+							$categoryXmlId = site_string($categoryXmlIds[$categoryIndex] ?? '');
 							if ($categoryValue === false || $categoryValue === null || $categoryValue === "" || $categoryXmlId === "") {
 								continue;
 							}
@@ -86,22 +110,22 @@ $this->setFrameMode(true);
 								<span class="news-category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
 							</div>
 						<?php endif; ?>
-						<a class="news-name text-decoration-none" href="<?= htmlspecialchars($news['DETAIL_PAGE_URL']) ?>">
-							<h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialchars($news['NAME'], ENT_XML1 | ENT_QUOTES, 'UTF-8', false);?></h5>
+						<a class="news-name text-decoration-none" href="<?=htmlspecialcharsbx($detailPageUrl)?>">
+							<h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($galleryCaption)?></h5>
 						</a>
-                        <p class="mb-3" style="color: #2c6b9e;"><?= htmlspecialchars(mb_strimwidth(strip_tags($news['PREVIEW_TEXT']), 0, 150, '...')) ?></p>
-                        <a href="<?= htmlspecialchars($news['DETAIL_PAGE_URL']) ?>" class="btn btn-outline-primary btn-sm rounded-pill" aria-label="Подробнее о новости <?=htmlspecialchars($news['NAME'], ENT_XML1 | ENT_QUOTES, 'UTF-8', false);?>">Подробнее</a>
+                        <p class="mb-3" style="color: #2c6b9e;"><?=htmlspecialcharsbx(mb_strimwidth(site_plain_text($news['~PREVIEW_TEXT'] ?? $news['PREVIEW_TEXT'] ?? ''), 0, 150, '...'))?></p>
+                        <a href="<?=htmlspecialcharsbx($detailPageUrl)?>" class="btn btn-outline-primary btn-sm rounded-pill" aria-label="Подробнее о новости <?=htmlspecialcharsbx($galleryCaption)?>">Подробнее</a>
                     </div>
                 </div>
             </div>
-	<?endforeach?>
+	<?php endforeach?>
 	</div>
-<?else:?>
+<?php else:?>
 	<div class="news-empty-state" role="status">
 		<i class="bi bi-info-circle me-2" aria-hidden="true"></i>
 		Новостей по указанным критериям не найдено
 	</div>
-<?endif?>
-<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
-	<br /><?=$arResult["NAV_STRING"]?>
-<?endif;?>
+<?php endif?>
+<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? 'N') === 'Y'):?>
+	<br /><?=$arResult["NAV_STRING"] ?? ''?>
+<?php endif;?>

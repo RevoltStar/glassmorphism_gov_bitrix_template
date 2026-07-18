@@ -1,21 +1,29 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 $this->setFrameMode(true);
 ?>
 
-<?php if(!empty($arResult["ITEMS"])):?>
+<?php
+$items = is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [];
+if ($items !== []):
+?>
 	<?php $galleryId = 'flip-banner-' . $this->randString(); ?>
 	<div class="banner-grid">
-		<?php foreach ($arResult["ITEMS"] as $key=>$banner): 
+		<?php foreach ($items as $key=>$banner):
 			// Определяем изображение для галереи
-			$galleryImage = $banner['PREVIEW_PICTURE']['SRC'] ?? "/images/image_not_found.jpg";
-			
+			if (!is_array($banner)) {
+                continue;
+            }
+            $galleryImage = site_url($banner['PREVIEW_PICTURE']['SRC'] ?? null, '/images/image_not_found.jpg');
+
 			// Получаем детальную картинку для галереи (если есть)
-			$detailImage = $banner['DETAIL_PICTURE']['SRC'] ?? $galleryImage;
-			
+			$detailImage = site_url($banner['DETAIL_PICTURE']['SRC'] ?? null, $galleryImage);
+
 			// Формируем подпись для галереи
-			$caption = $banner["NAME"];
-			if (!empty($banner["PREVIEW_TEXT"])) {
-				$caption .= " - " . strip_tags($banner["PREVIEW_TEXT"]);
+			$name = site_string($banner['~NAME'] ?? $banner['NAME'] ?? '');
+			$description = site_plain_text($banner['~PREVIEW_TEXT'] ?? $banner['PREVIEW_TEXT'] ?? '');
+			$caption = $name;
+			if ($description !== '') {
+				$caption .= " - " . $description;
 			}
 		?>
 			<div class="gallery-media">
@@ -28,20 +36,20 @@ $this->setFrameMode(true);
 					<i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
 				</a>
 				<!-- Основная ссылка карточки (теперь оборачивает весь контент) -->
-				<a href="<?=htmlspecialchars($banner['PROPERTIES']['LINK']['VALUE'] ?: "#")?>"
+				<a href="<?=htmlspecialcharsbx(site_url($banner['PROPERTIES']['LINK']['VALUE'] ?? null))?>"
 				   class="glass-flip-card"
-				   aria-label="<?=htmlspecialchars($banner["NAME"])?>"
+				   aria-label="<?=htmlspecialcharsbx($name)?>"
 				   title="Перейти по ссылке">
 					<div class="glass-flip-card-inner">
-						<div class="glass-flip-front" 
-							 style="background-image: url('<?=htmlspecialchars($galleryImage)?>');">
+						<div class="glass-flip-front"
+							 style="background-image: url(<?=htmlspecialcharsbx(site_css_url($galleryImage, '/images/image_not_found.jpg'))?>);">
 							<div class="front-icon">
 								<i class="bi bi-building"></i>
 							</div>
 						</div>
 						<div class="glass-flip-back">
-							<div class="banner-title"><?=htmlspecialchars($banner["NAME"])?></div>
-							<div class="banner-desc"><?=htmlspecialchars($banner["PREVIEW_TEXT"] ?? '', ENT_NOQUOTES)?></div>
+							<div class="banner-title"><?=htmlspecialcharsbx($name)?></div>
+							<div class="banner-desc"><?=htmlspecialcharsbx($description)?></div>
 						</div>
 					</div>
 				</a>

@@ -1,14 +1,32 @@
-<!-- Социальные сети -->
-<div class="d-flex gap-2 mt-3">
-	<?foreach($arResult as $arItem):?>
-		<a href="<?=htmlspecialchars($arItem['LINK'])?>" class="text-decoration-none" target="_blank">
-        	<div class="social-icon">
-            	<img
-					src="<?=htmlspecialchars($arItem['PARAMS']['IMAGE'])?>"
-					alt="Логотип <?=htmlspecialchars($arItem['TEXT'])?>"
-					title="Перейти в группу Министерства информационных технологий в <?=htmlspecialchars($arItem['TEXT'])?>"
-				>
-            </div>
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
+$items = is_array($arResult ?? null) ? $arResult : [];
+?>
+<div class="social-icons d-flex gap-2">
+    <?php foreach ($items as $item): ?>
+        <?php
+        if (!is_array($item)) {
+            continue;
+        }
+
+        $link = site_url($item['LINK'] ?? null);
+        $image = site_url($item['PARAMS']['IMAGE'] ?? null, '');
+        $text = site_string($item['TEXT'] ?? '');
+        if ($link === '#' || $image === '') {
+            continue;
+        }
+        ?>
+        <a href="<?=htmlspecialcharsbx($link)?>"
+           class="text-decoration-none"
+           target="_blank"
+           rel="noopener noreferrer">
+            <img class="social-icon"
+                 src="<?=htmlspecialcharsbx($image)?>"
+                 alt="Логотип <?=htmlspecialcharsbx($text)?>"
+                 title="Перейти в группу Министерства информационных технологий в <?=htmlspecialcharsbx($text)?>">
         </a>
-	<?endforeach?>
+    <?php endforeach; ?>
 </div>

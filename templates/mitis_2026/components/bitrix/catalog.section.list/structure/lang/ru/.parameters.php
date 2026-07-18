@@ -1,4 +1,4 @@
-<?
+<?php
 $MESS["CPT_BCSL_VIEW_MODE_LIST"] = "Многоуровневый список";
 $MESS["CPT_BCSL_VIEW_MODE_LINE"] = "Список";
 $MESS["CPT_BCSL_VIEW_MODE_TEXT"] = "Текст";

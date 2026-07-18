@@ -19,7 +19,7 @@ if (!in_array($cacheType, ['A', 'Y', 'N'], true)) {
 }
 
 $section = $sectionId > 0
-    ? CIBlockSection::GetList([], ['ID' => $sectionId, 'IBLOCK_ID' => 18], false, ['ID'])->Fetch()
+    ? CIBlockSection::GetList([], ['ID' => $sectionId, 'IBLOCK_ID' => 18, 'CHECK_PERMISSIONS' => 'Y'], false, ['ID'])->Fetch()
     : false;
 
 if (!$section) {

@@ -3,9 +3,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 use Bitrix\Main\Localization\Loc;
 
+$arResult = is_array($arResult ?? null) ? $arResult : [];
+$arParams = is_array($arParams ?? null) ? $arParams : [];
+
 // Получение ID текущей новости
-$currentNewsId = $arResult['ID'];
-$currentDate = $arResult['ACTIVE_FROM'] ?: $arResult['DATE_CREATE'];
+$currentNewsId = max(0, (int)($arResult['ID'] ?? 0));
+$iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
 
 // Получение соседних новостей
 $navNews = array(
@@ -13,24 +16,25 @@ $navNews = array(
     'NEXT' => false
 );
 
-$res = CIBlockElement::GetList(
+$res = ($currentNewsId > 0 && $iblockId > 0) ? CIBlockElement::GetList(
     array(
         "ACTIVE_FROM" => "DESC",
         "SORT" => "ASC",
         "ID" => "DESC"
     ),
     array(
-        "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+        "IBLOCK_ID" => $iblockId,
         "ACTIVE" => "Y",
-        "ACTIVE_DATE" => "Y"
+        "ACTIVE_DATE" => "Y",
+        "CHECK_PERMISSIONS" => "Y"
     ),
     false,
     false,
     array("ID", "NAME", "DETAIL_PAGE_URL", "ACTIVE_FROM")
-);
+) : false;
 
 $newsList = array();
-while ($ob = $res->GetNextElement()) {
+while (is_object($res) && ($ob = $res->GetNextElement())) {
     $newsFields = $ob->GetFields();
     $newsList[] = $newsFields;
 }
@@ -42,7 +46,7 @@ foreach ($newsList as $index => $news) {
         $foundCurrent = true;
         continue;
     }
-    
+
     if ($foundCurrent) {
         // Это следующая новость (новости после текущей)
         if (!$navNews['NEXT']) {
@@ -55,55 +59,76 @@ foreach ($newsList as $index => $news) {
 }
 
 // Обработка файлов
-$additionalFiles = $arResult['PROPERTIES']['additional_files'];
+$additionalFiles = is_array($arResult['PROPERTIES']['additional_files'] ?? null)
+    ? $arResult['PROPERTIES']['additional_files']
+    : [];
 $downloadFiles = [];
 $galleryFiles = [];
+$newsName = site_string($arResult['~NAME'] ?? $arResult['NAME'] ?? '');
 
 // Добавляем DETAIL_PICTURE в начало галереи
-if (!empty($arResult['DETAIL_PICTURE']) && isset($arResult['DETAIL_PICTURE']['SRC'])) {
-    // Если DETAIL_PICTURE уже массив (обработанный Bitrix)
+if (!empty($arResult['DETAIL_PICTURE'])) {
     if (is_array($arResult['DETAIL_PICTURE'])) {
         $detailPicture = $arResult['DETAIL_PICTURE'];
-        $detailPicture['FANCYBOX_NAME'] = $arResult['NAME'] . ' (детальное изображение)';
-        array_unshift($galleryFiles, $detailPicture);
+        $detailPicture['SRC'] = site_url($detailPicture['SRC'] ?? null, '');
+        if ($detailPicture['SRC'] !== '') {
+            $detailPicture['FANCYBOX_NAME'] = $newsName . ' (детальное изображение)';
+            array_unshift($galleryFiles, $detailPicture);
+        }
     } else {
-        // Если это ID файла
-        $detailPicture = CFile::GetFileArray($arResult['DETAIL_PICTURE']);
-        if ($detailPicture) {
-            $detailPicture['FANCYBOX_NAME'] = $arResult['NAME'] . ' (детальное изображение)';
+        $detailPictureId = filter_var($arResult['DETAIL_PICTURE'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $detailPicture = $detailPictureId !== false ? CFile::GetFileArray($detailPictureId) : false;
+        if (is_array($detailPicture)) {
+            $detailPicture['SRC'] = site_url($detailPicture['SRC'] ?? null, '');
+        }
+        if (is_array($detailPicture) && $detailPicture['SRC'] !== '') {
+            $detailPicture['FANCYBOX_NAME'] = $newsName . ' (детальное изображение)';
             array_unshift($galleryFiles, $detailPicture);
         }
     }
 }
 // Добавляем PREVIEW_PICTURE в начало галереи
-if (!empty($arResult['PREVIEW_PICTURE']) && isset($arResult['PREVIEW_PICTURE']['SRC'])) {
-    // Если PREVIEW_PICTURE уже массив (обработанный Bitrix)
+if (!empty($arResult['PREVIEW_PICTURE'])) {
     if (is_array($arResult['PREVIEW_PICTURE'])) {
         $previewPicture = $arResult['PREVIEW_PICTURE'];
-        $previewPicture['FANCYBOX_NAME'] = $arResult['NAME'] . ' (анонс)';
-        array_unshift($galleryFiles, $previewPicture);
+        $previewPicture['SRC'] = site_url($previewPicture['SRC'] ?? null, '');
+        if ($previewPicture['SRC'] !== '') {
+            $previewPicture['FANCYBOX_NAME'] = $newsName . ' (анонс)';
+            array_unshift($galleryFiles, $previewPicture);
+        }
     } else {
-        // Если это ID файла
-        $previewPicture = CFile::GetFileArray($arResult['PREVIEW_PICTURE']);
-        if ($previewPicture) {
-            $previewPicture['FANCYBOX_NAME'] = $arResult['NAME'] . ' (анонс)';
+        $previewPictureId = filter_var($arResult['PREVIEW_PICTURE'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $previewPicture = $previewPictureId !== false ? CFile::GetFileArray($previewPictureId) : false;
+        if (is_array($previewPicture)) {
+            $previewPicture['SRC'] = site_url($previewPicture['SRC'] ?? null, '');
+        }
+        if (is_array($previewPicture) && $previewPicture['SRC'] !== '') {
+            $previewPicture['FANCYBOX_NAME'] = $newsName . ' (анонс)';
             array_unshift($galleryFiles, $previewPicture);
         }
     }
 }
 
 // Обрабатываем дополнительные файлы
-if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
-    foreach ($additionalFiles['VALUE'] as $key => $fileId) {
+if (!empty($additionalFiles['VALUE'])) {
+    foreach (site_string_list($additionalFiles['VALUE']) as $fileId) {
+        $fileId = filter_var($fileId, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($fileId === false) {
+            continue;
+        }
         $fileInfo = CFile::GetFileArray($fileId);
-        if ($fileInfo) {
-            $fileExtension = strtolower(GetFileExtension($fileInfo['FILE_NAME']));
-            
+        if (is_array($fileInfo)) {
+            $fileInfo['SRC'] = site_url($fileInfo['SRC'] ?? null, '');
+            if ($fileInfo['SRC'] === '') {
+                continue;
+            }
+            $fileExtension = strtolower(GetFileExtension(site_string($fileInfo['FILE_NAME'] ?? '')));
+
             if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'mp4', 'avi', 'mov', 'webm'])) {
                 if(!empty($fileInfo['DESCRIPTION'])){
-                    $fileInfo["FANCYBOX_NAME"] = $fileInfo['DESCRIPTION'];
+                    $fileInfo["FANCYBOX_NAME"] = site_string($fileInfo['DESCRIPTION']);
                 }else{
-                    $fileInfo["FANCYBOX_NAME"] = $arResult['NAME'];
+                    $fileInfo["FANCYBOX_NAME"] = $newsName;
                 }
                 $galleryFiles[] = $fileInfo;
             } else {
@@ -117,15 +142,15 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
 <div class="news-detail glass-container">
     <div class="glass-card p-4 p-lg-5 mb-4">
 		 <!-- Заголовок новости -->
-        <h1 class="news-title mb-3"><?= htmlspecialcharsbx($arResult["NAME"]) ?></h1>
+        <h1 class="news-title mb-3"><?=htmlspecialcharsbx($newsName)?></h1>
         <!-- Мета-информация -->
         <div class="news-meta d-flex flex-wrap align-items-center gap-3 mb-4">
             <span class="glass-badge">
-                <i class="bi bi-calendar3 me-1" style="color: #2980b9;"></i> <?= $arResult["DISPLAY_ACTIVE_FROM"] ?>
+                <i class="bi bi-calendar3 me-1" style="color: #2980b9;"></i> <?=htmlspecialcharsbx(site_string($arResult["DISPLAY_ACTIVE_FROM"] ?? ''))?>
             </span>
             <?php if ($arResult["SHOW_COUNTER"]): ?>
                 <span class="glass-badge">
-                    <i class="bi bi-eye me-1" style="color: #2980b9;"></i> <?= $arResult["SHOW_COUNTER"] ?> просмотров
+                    <i class="bi bi-eye me-1" style="color: #2980b9;"></i> <?=max(0, (int)$arResult["SHOW_COUNTER"])?> просмотров
                 </span>
             <?php endif; ?>
         </div>
@@ -137,7 +162,8 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
             $categoryXmlIds = (array)($arResult['PROPERTIES']['category']['VALUE_XML_ID'] ?? array());
             $newsCategories = array();
             foreach ($categoryValues as $categoryIndex => $categoryValue) {
-                $categoryXmlId = $categoryXmlIds[$categoryIndex] ?? "";
+                $categoryValue = site_string($categoryValue);
+                $categoryXmlId = site_string($categoryXmlIds[$categoryIndex] ?? '');
                 if ($categoryValue === false || $categoryValue === null || $categoryValue === "" || $categoryXmlId === "") {
                     continue;
                 }
@@ -165,30 +191,30 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                 <?php if ($arResult['PREVIEW_TEXT']): ?>
                     <div class="news-preview glass-preview mb-4 bvi-speech">
                         <i class="bi bi-quote me-2" style="color: #3498db;"></i>
-                        <?= $arResult['PREVIEW_TEXT'] ?>
+                        <?=site_safe_html($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT'])?>
                     </div>
                 <?php endif; ?>
 
                 <!-- Детальный текст -->
                 <article class="news-content mb-5 bvi-speech">
-                    <?= $arResult["DETAIL_TEXT"] ?>
+                    <?=site_safe_html($arResult['~DETAIL_TEXT'] ?? $arResult['DETAIL_TEXT'] ?? '')?>
                 </article>
-                
+
                 <!-- Поделиться в соцсетях (дополнительно) -->
                 <div class="share-block d-flex align-items-center gap-3 mt-4 pt-4" style="border-top: 1px solid rgba(52,152,219,0.2);">
                     <span style="color: #1e3a5f; font-weight: 600;">Оставайтесь с нами:</span>
-                    <?
+                    <?php
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
-							"ROOT_MENU_TYPE" => "social", 
-							"MAX_LEVEL" => "1", 
-							"CHILD_MENU_TYPE" => "social", 
+							"ROOT_MENU_TYPE" => "social",
+							"MAX_LEVEL" => "1",
+							"CHILD_MENU_TYPE" => "social",
 							"USE_EXT" => "N",
 							"DELAY" => "N",
 							"ALLOW_MULTI_SELECT" => "N",
-							"MENU_CACHE_TYPE" => "N", 
-							"MENU_CACHE_TIME" => "3600", 
-							"MENU_CACHE_USE_GROUPS" => "Y", 
-							"MENU_CACHE_GET_VARS" => "" 
+							"MENU_CACHE_TYPE" => "N",
+							"MENU_CACHE_TIME" => "3600",
+							"MENU_CACHE_USE_GROUPS" => "Y",
+							"MENU_CACHE_GET_VARS" => ""
 							)
 						);?>
                 </div>
@@ -206,10 +232,10 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                         <div class="row g-2">
                             <?php foreach ($galleryFiles as $index => $file): ?>
                                 <?php
-                                $fileExtension = strtolower(GetFileExtension($file['FILE_NAME']));
+                                $fileExtension = strtolower(GetFileExtension(site_string($file['FILE_NAME'] ?? '')));
                                 $isVideo = in_array($fileExtension, ['mp4', 'avi', 'mov', 'webm']);
-                                $thumbnailSrc = $isVideo ? 
-                                    '/bitrix/templates/mitis_2026/components/bitrix/news.detail/detail/images/video-thumbnail.jpg' : 
+                                $thumbnailSrc = $isVideo ?
+                                    '/bitrix/templates/mitis_2026/components/bitrix/news.detail/detail/images/video-thumbnail.jpg' :
                                     $file['SRC'];
                                 ?>
 
@@ -249,10 +275,10 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                                     <div class="d-flex align-items-center">
                                         <div class="file-icon me-3">
                                             <?php
-                                            $fileExtension = strtolower(GetFileExtension($file['FILE_NAME']));
+                                            $fileExtension = strtolower(GetFileExtension(site_string($file['FILE_NAME'] ?? '')));
                                             $iconClass = 'bi-file-earmark';
                                             $colorClass = 'text-primary';
-                                            
+
                                             switch ($fileExtension) {
                                                 case 'pdf':
                                                     $iconClass = 'bi-file-earmark-pdf';
@@ -279,10 +305,10 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                                             <i class="bi <?= $iconClass ?> <?= $colorClass ?> fs-3"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <div class="fw-bold small" style="color: #1e3a5f;"><?= htmlspecialchars($file['ORIGINAL_NAME']) ?></div>
-                                            <div class="text-muted extra-small"><?= CFile::FormatSize($file['FILE_SIZE']) ?></div>
+                                             <div class="fw-bold small" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($file['ORIGINAL_NAME'] ?? ''))?></div>
+                                             <div class="text-muted extra-small"><?=htmlspecialcharsbx(CFile::FormatSize(max(0, (int)($file['FILE_SIZE'] ?? 0))))?></div>
                                         </div>
-                                        <a href="<?= $file['SRC'] ?>" download class="glass-download-btn ms-2">
+                                        <a href="<?=htmlspecialcharsbx(site_url($file['SRC'] ?? null, ''))?>" download class="glass-download-btn ms-2">
                                             <i class="bi bi-download"></i>
                                         </a>
                                     </div>
@@ -291,7 +317,7 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                         </div>
                     </section>
                 <?php endif; ?>
-                
+
                 <!-- Навигация между новостями -->
                 <section class="glass-card p-4">
                     <h5 class="section-title-mini mb-3">
@@ -299,14 +325,14 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                     </h5>
                     <div class="d-grid gap-3">
                         <?php if (!empty($navNews['PREV'])): ?>
-                            <a href="<?= $navNews['PREV']['DETAIL_PAGE_URL'] ?>" class="glass-nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['PREV']['DETAIL_PAGE_URL'] ?? null))?>" class="glass-nav-link">
                                 <div class="d-flex align-items-center">
                                     <div class="nav-icon me-3">
                                         <i class="bi bi-arrow-left-circle-fill" style="color: #3498db; font-size: 1.5rem;"></i>
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="small text-muted">К более актуальной новости</div>
-                                        <div class="fw-bold" style="color: #1e3a5f;"><?= $navNews['PREV']['NAME'] ?></div>
+                                        <div class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($navNews['PREV']['~NAME'] ?? $navNews['PREV']['NAME'] ?? ''))?></div>
                                     </div>
                                 </div>
                             </a>
@@ -325,11 +351,11 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
                         <?php endif; ?>
 
                         <?php if (!empty($navNews['NEXT'])): ?>
-                            <a href="<?= $navNews['NEXT']['DETAIL_PAGE_URL'] ?>" class="glass-nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['NEXT']['DETAIL_PAGE_URL'] ?? null))?>" class="glass-nav-link">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 text-end me-3">
                                         <div class="small text-muted">К предыдущей новости</div>
-                                        <div class="fw-bold" style="color: #1e3a5f;"><?= $navNews['NEXT']['NAME'] ?></div>
+                                        <div class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($navNews['NEXT']['~NAME'] ?? $navNews['NEXT']['NAME'] ?? ''))?></div>
                                     </div>
                                     <div class="nav-icon">
                                         <i class="bi bi-arrow-right-circle-fill" style="color: #3498db; font-size: 1.5rem;"></i>
@@ -357,28 +383,31 @@ if (!empty($additionalFiles['VALUE']) && is_array($additionalFiles['VALUE'])) {
 </div>
 <?php
 // Подготовка данных для микроразметки
-$siteUrl = rtrim((string)get_info('site_url'), '/');
+$siteUrl = rtrim(site_url(get_info('site_url'), '', ['http', 'https'], false), '/');
 $currentUrl = $siteUrl . $APPLICATION->GetCurPage();
 $organizationId = $siteUrl . '/#organization';
 
 // Дата публикации в формате ISO 8601
 $datePublished = '';
-if ($arResult['ACTIVE_FROM']) {
-    $datePublished = date('c', strtotime($arResult['ACTIVE_FROM']));
-} elseif ($arResult['DATE_CREATE']) {
-    $datePublished = date('c', strtotime($arResult['DATE_CREATE']));
+$activeFromTimestamp = strtotime(site_string($arResult['ACTIVE_FROM'] ?? ''));
+$dateCreateTimestamp = strtotime(site_string($arResult['DATE_CREATE'] ?? ''));
+if ($activeFromTimestamp !== false) {
+    $datePublished = date('c', $activeFromTimestamp);
+} elseif ($dateCreateTimestamp !== false) {
+    $datePublished = date('c', $dateCreateTimestamp);
 }
 
 // Дата модификации
 $dateModified = $datePublished;
-if ($arResult['TIMESTAMP_X']) {
-    $dateModified = date('c', strtotime($arResult['TIMESTAMP_X']));
+$modifiedTimestamp = strtotime(site_string($arResult['TIMESTAMP_X'] ?? ''));
+if ($modifiedTimestamp !== false) {
+    $dateModified = date('c', $modifiedTimestamp);
 }
 
 // Описание (обрезаем до 200 символов)
 $description = '';
 if (!empty($arResult['PREVIEW_TEXT'])) {
-    $description = trim(htmlspecialchars_decode(strip_tags($arResult['PREVIEW_TEXT'])));
+    $description = site_plain_text($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT']);
     if (mb_strlen($description) > 200) {
         $description = mb_substr($description, 0, 200) . '...';
     }
@@ -388,19 +417,22 @@ if (!empty($arResult['PREVIEW_TEXT'])) {
 $articleSections = [];
 if (!empty($arResult['PROPERTIES']['category']['VALUE'])) {
     if (is_array($arResult['PROPERTIES']['category']['VALUE'])) {
-        $articleSections = $arResult['PROPERTIES']['category']['VALUE'];
+        $articleSections = site_string_list($arResult['PROPERTIES']['category']['VALUE']);
     } else {
-        $articleSections = [$arResult['PROPERTIES']['category']['VALUE']];
+        $articleSections = site_string_list($arResult['PROPERTIES']['category']['VALUE']);
     }
 }
 
 // Только изображения для микроразметки (без видео)
 $imagesForMarkup = [];
 foreach ($galleryFiles as $file) {
-    $fileExtension = strtolower(GetFileExtension($file['FILE_NAME']));
+    $fileExtension = strtolower(GetFileExtension(site_string($file['FILE_NAME'] ?? '')));
     // Только изображения для schema.org
     if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'])) {
-        $src = $file['SRC'];
+        $src = site_url($file['SRC'] ?? null, '');
+        if ($src === '') {
+            continue;
+        }
         // Проверяем, нужен ли домен
         if (strpos($src, 'http') !== 0) {
             $src = $siteUrl . '/' . ltrim($src, '/');
@@ -411,14 +443,17 @@ foreach ($galleryFiles as $file) {
 
 // Если нет изображений, используем дефолтное изображение новости
 if (empty($imagesForMarkup)) {
-    $imagesForMarkup[] = get_info_absolute_url('logo');
+    $defaultImage = site_url(get_info_absolute_url('logo'), '', ['http', 'https'], false);
+    if ($defaultImage !== '') {
+        $imagesForMarkup[] = $defaultImage;
+    }
 }
 
 // Формируем данные для JSON-LD
 $jsonLd = [
     '@context' => 'https://schema.org',
     '@type' => 'NewsArticle',
-    'headline' => $arResult['NAME'],
+    'headline' => $newsName,
     'url' => $currentUrl,
     'mainEntityOfPage' => [
         '@type' => 'WebPage',
@@ -474,6 +509,6 @@ if ($arResult["SHOW_COUNTER"] && (int)$arResult["SHOW_COUNTER"] > 0) {
     | JSON_HEX_AMP
     | JSON_HEX_APOS
     | JSON_HEX_QUOT
-    | JSON_THROW_ON_ERROR
+    | JSON_INVALID_UTF8_SUBSTITUTE
 )?>
 </script>

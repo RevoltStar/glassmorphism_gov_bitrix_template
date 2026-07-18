@@ -1,81 +1,111 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
 $this->setFrameMode(true);
 
-// Построение дерева
-function buildTree($sections, $parentId = null) {
-    $tree = [];
-    foreach ($sections as $section) {
-        $sectionParent = $section['IBLOCK_SECTION_ID'] ?? null;
-        if ($sectionParent === $parentId) {
-            $children = buildTree($sections, $section['ID']);
-            if (!empty($children)) {
+if (!function_exists('mitisBuildSectionTree')) {
+    function mitisBuildSectionTree(array $sections, int $parentId = 0, array $path = []): array
+    {
+        $tree = [];
+        foreach ($sections as $section) {
+            if (!is_array($section)) {
+                continue;
+            }
+
+            $sectionId = max(0, (int)($section['ID'] ?? 0));
+            $sectionParentId = max(0, (int)($section['IBLOCK_SECTION_ID'] ?? 0));
+            if ($sectionId === 0 || $sectionParentId !== $parentId || isset($path[$sectionId])) {
+                continue;
+            }
+
+            $childPath = $path;
+            $childPath[$sectionId] = true;
+            $children = mitisBuildSectionTree($sections, $sectionId, $childPath);
+            if ($children !== []) {
                 $section['CHILDREN'] = $children;
             }
             $tree[] = $section;
         }
+
+        return $tree;
     }
-    return $tree;
 }
 
-$treeSections = buildTree($arResult['SECTIONS']);
-$galleryId = 'org-structure-' . $this->randString();
+if (!function_exists('mitisRenderSectionNode')) {
+    function mitisRenderSectionNode(
+        array $section,
+        array $result,
+        CBitrixComponentTemplate $componentTemplate,
+        string $galleryId
+    ): string {
+        $sectionId = max(0, (int)($section['ID'] ?? 0));
+        $hasChildren = !empty($section['CHILDREN']) && is_array($section['CHILDREN']);
+        $editId = site_string($componentTemplate->GetEditAreaId($sectionId));
+        $avatarSrc = site_url($section['PICTURE']['SRC'] ?? null, '');
+        $avatarCssUrl = site_css_url($avatarSrc, '');
+        $position = site_string($result['POSITION'][$sectionId] ?? '');
+        $name = site_string($section['~NAME'] ?? $section['NAME'] ?? '');
+        $depth = max(0, (int)($section['DEPTH_LEVEL'] ?? 0));
 
-if (!empty($treeSections)) {
-?>
-<div class="content__org-structure org-structure">
-    <ul class="org-structure__root">
-        <? foreach ($treeSections as $section): ?>
-            <?= renderNode($section, $arResult, $this, $galleryId) ?>
-        <? endforeach; ?>
-    </ul>
-</div>
-<?php
-}
-
-// Рекурсивная функция отрисовки узла
-function renderNode($section, $arResult, $componentTemplate, $galleryId) {
-    ob_start();
-    $hasChildren = !empty($section['CHILDREN']);
-    $editId = $componentTemplate->GetEditAreaId($section['ID']);
-    $avatarSrc = $section['PICTURE']['SRC'] ?? '';
-    $position = htmlspecialcharsbx($arResult['POSITION'][$section['ID']] ?? '');
-    $name = htmlspecialcharsbx($section['NAME']);
-    ?>
-    <li class="org-structure__node" data-depth="<?= (int)$section['DEPTH_LEVEL'] ?>">
-        <div class="org-structure__card" id="<?= $editId ?>">
-            <? if ($avatarSrc): ?>
-                <div class="org-structure__avatar gallery-media" style="background-image: url('<?=htmlspecialcharsbx($avatarSrc)?>');">
-					<a href="<?=htmlspecialcharsbx($avatarSrc)?>" class="gallery-expand-button me-2 mt-2"
-					   data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
-					   data-gallery-caption="<?=$name?>" data-type="image"
-					   aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $section['NAME'])?>">
-						<i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
-					</a>
-				</div>
-            <? else: ?>
-                <div class="org-structure__avatar org-structure__avatar--placeholder">
-                    <i class="bi bi-person-circle"></i>
+        ob_start();
+        ?>
+        <li class="org-structure__node" data-depth="<?=$depth?>">
+            <div class="org-structure__card" id="<?=htmlspecialcharsbx($editId)?>">
+                <?php if ($avatarSrc !== ''): ?>
+                    <div class="org-structure__avatar gallery-media"
+                         style="background-image: url(<?=htmlspecialcharsbx($avatarCssUrl)?>);">
+                        <a href="<?=htmlspecialcharsbx($avatarSrc)?>"
+                           class="gallery-expand-button me-2 mt-2"
+                           data-gallery-item
+                           data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
+                           data-gallery-caption="<?=htmlspecialcharsbx($name)?>"
+                           data-type="image"
+                           aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $name)?>">
+                            <i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="org-structure__avatar org-structure__avatar--placeholder">
+                        <i class="bi bi-person-circle" aria-hidden="true"></i>
+                    </div>
+                <?php endif; ?>
+                <div class="org-structure__info">
+                    <div class="org-structure__title"><?=htmlspecialcharsbx($name)?></div>
+                    <div class="org-structure__description"><?=htmlspecialcharsbx($position)?></div>
                 </div>
-            <? endif; ?>
-            <div class="org-structure__info">
-                <div class="org-structure__title"><?= $name ?></div>
-                <div class="org-structure__description"><?= $position ?></div>
+                <?php if ($hasChildren): ?>
+                    <button class="org-structure__toggle btn btn-link" aria-label="Раскрыть/скрыть">
+                        <i class="bi bi-dash-circle" aria-hidden="true"></i>
+                    </button>
+                <?php endif; ?>
             </div>
-            <? if ($hasChildren): ?>
-                <button class="org-structure__toggle btn btn-link" aria-label="Раскрыть/скрыть">
-                    <i class="bi bi-dash-circle"></i>
-                </button>
-            <? endif; ?>
-        </div>
-        <? if ($hasChildren): ?>
-            <ul class="org-structure__children">
-                <? foreach ($section['CHILDREN'] as $child): ?>
-                    <?= renderNode($child, $arResult, $componentTemplate, $galleryId) ?>
-                <? endforeach; ?>
-            </ul>
-        <? endif; ?>
-    </li>
-    <?php
-    return ob_get_clean();
+            <?php if ($hasChildren): ?>
+                <ul class="org-structure__children">
+                    <?php foreach ($section['CHILDREN'] as $child): ?>
+                        <?php if (is_array($child)): ?>
+                            <?=mitisRenderSectionNode($child, $result, $componentTemplate, $galleryId)?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </li>
+        <?php
+        return (string)ob_get_clean();
+    }
 }
+
+$sections = $arResult['SECTIONS'] ?? [];
+$treeSections = is_array($sections) ? mitisBuildSectionTree($sections) : [];
+$galleryId = 'org-structure-' . $this->randString();
 ?>
+<?php if ($treeSections !== []): ?>
+    <div class="content__org-structure org-structure">
+        <ul class="org-structure__root">
+            <?php foreach ($treeSections as $section): ?>
+                <?=mitisRenderSectionNode($section, $arResult, $this, $galleryId)?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

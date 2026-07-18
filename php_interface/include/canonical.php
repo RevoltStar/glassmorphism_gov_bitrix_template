@@ -25,8 +25,17 @@ function get_canonical_link(array $allowedParams = []): string
         }
     }
 
-    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $requestUri = is_string($_SERVER['REQUEST_URI'] ?? null)
+        ? $_SERVER['REQUEST_URI']
+        : '/';
+    if (preg_match('/[\x00-\x1F\x7F]/', $requestUri)) {
+        $requestUri = '/';
+    }
     $path = parse_url($requestUri, PHP_URL_PATH) ?: '/';
+
+    if (!is_string($path) || !str_starts_with($path, '/')) {
+        $path = '/';
+    }
 
     $path = preg_replace('~/+~', '/', $path);
     $path = preg_replace('~/index\.php$~i', '/', $path);
@@ -122,5 +131,7 @@ function get_canonical_link(array $allowedParams = []): string
         );
     }
 
-    return $canonical;
+    return filter_var($canonical, FILTER_VALIDATE_URL) !== false
+        ? $canonical
+        : $origin . '/';
 }

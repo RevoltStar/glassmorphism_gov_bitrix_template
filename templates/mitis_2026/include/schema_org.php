@@ -4,7 +4,23 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
-$siteUrl = rtrim((string)get_info('site_url'), '/');
+$siteUrl = rtrim(site_url(get_info('site_url'), '', ['http', 'https'], false), '/');
+if ($siteUrl === '') {
+    return;
+}
+
+$logoUrl = site_url(get_info_absolute_url('logo'), '', ['http', 'https'], false);
+$searchPath = site_url(get_info('search_path'), '/search/');
+$searchUrl = site_is_external_http_url($searchPath)
+    ? $searchPath
+    : $siteUrl . '/' . ltrim($searchPath, '/');
+$socialLinks = [];
+foreach (site_string_list(get_info('social_links', [])) as $socialLink) {
+    $socialLink = site_url($socialLink, '', ['http', 'https'], false);
+    if ($socialLink !== '') {
+        $socialLinks[] = $socialLink;
+    }
+}
 $organizationId = $siteUrl . '/#organization';
 $websiteId = $siteUrl . '/#website';
 
@@ -17,7 +33,7 @@ $schema = [
             'name' => get_info('org_full_name'),
             'alternateName' => get_info('org_alternate_names'),
             'url' => $siteUrl . '/',
-            'logo' => get_info_absolute_url('logo'),
+            'logo' => $logoUrl,
             'description' => get_info('org_description'),
             'address' => [
                 '@type' => 'PostalAddress',
@@ -34,7 +50,7 @@ $schema = [
                 'email' => get_info('email'),
                 'availableLanguage' => ['Russian'],
             ],
-            'sameAs' => get_info('social_links'),
+            'sameAs' => $socialLinks,
             'areaServed' => [
                 '@type' => 'State',
                 'name' => get_info('region_name'),
@@ -51,7 +67,7 @@ $schema = [
             ],
             'potentialAction' => [
                 '@type' => 'SearchAction',
-                'target' => $siteUrl . rtrim((string)get_info('search_path'), '/') . '/?q={search_term_string}',
+                'target' => rtrim($searchUrl, '/') . '/?q={search_term_string}',
                 'query-input' => 'required name=search_term_string',
             ],
         ],
@@ -66,7 +82,9 @@ $schemaJson = json_encode(
     | JSON_HEX_AMP
     | JSON_HEX_APOS
     | JSON_HEX_QUOT
-    | JSON_THROW_ON_ERROR
+    | JSON_INVALID_UTF8_SUBSTITUTE
 );
 ?>
+<?php if (is_string($schemaJson)): ?>
 <script type="application/ld+json"><?=$schemaJson?></script>
+<?php endif; ?>

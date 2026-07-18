@@ -1,87 +1,89 @@
 <?php
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
 
-// Защита от отсутствия ID инфоблока
-if (empty($arParams["IBLOCK_ID"])) {
-    $arResult["SECTIONS"] = [];
+$iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
+$arResult['SECTIONS'] = [];
+
+if ($iblockId === 0) {
     return;
 }
 
-// Кэширование запросов на 24 часа (если компонент не кэширует сам)
-$cacheTtl = 86400;
-$cacheId = "org_structure_" . $arParams["IBLOCK_ID"];
-$cacheDir = "/org_structure";
-$obCache = new CPHPCache();
+$sections = [];
+$sectionResult = CIBlockSection::GetList(
+    ['LEFT_MARGIN' => 'ASC'],
+    [
+        'IBLOCK_ID' => $iblockId,
+        'SECTION_ID' => false,
+        'ACTIVE' => 'Y',
+        'CHECK_PERMISSIONS' => 'Y',
+    ],
+    false,
+    ['ID', 'NAME', 'CODE', 'UF_*']
+);
 
-if ($obCache->InitCache($cacheTtl, $cacheId, $cacheDir)) {
-    $vars = $obCache->GetVars();
-    $arResult["SECTIONS"] = $vars["sections"];
-} else {
-    $obCache->StartDataCache();
-
-    // 1. Корневые разделы
-    $sections = [];
-    $res = CIBlockSection::GetList(
-        ["LEFT_MARGIN" => "ASC"], // сортировка по дереву (корневые + их вложенность, если нужна)
-        [
-            "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-            "SECTION_ID" => false,
-            "ACTIVE" => "Y"
-        ],
-        false,
-        ["ID", "NAME", "CODE", "UF_*"] // добавьте нужные пользовательские поля
-    );
-    while ($section = $res->Fetch()) {
-        $section["ELEMENTS"] = [];
-        $sections[$section["ID"]] = $section;
+while ($section = $sectionResult->Fetch()) {
+    if (!is_array($section)) {
+        continue;
     }
 
-    if (!empty($sections)) {
-        // 2. Элементы, привязанные к этим разделам
-        $resEl = CIBlockElement::GetList(
-            ["SORT" => "ASC", "NAME" => "ASC"], // сортировка внутри отдела
-            [
-                "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-                "SECTION_ID" => array_keys($sections),
-                "ACTIVE" => "Y"
-            ],
-            false,
-            false,
-            [
-                "ID", "NAME", "IBLOCK_SECTION_ID", "PREVIEW_TEXT", "PREVIEW_PICTURE",
-                "DETAIL_PAGE_URL",
-                "PROPERTY_PHONE",   // унифицируем коды: PHONE
-                "PROPERTY_ADDRESS", // унифицируем коды: ADDRESS
-                "PROPERTY_EMAIL"    // если нужно
-            ]
-        );
-
-        while ($el = $resEl->GetNextElement()) {
-            $fields = $el->GetFields();
-            $props = $el->GetProperties();
-
-            // Приведение множественных свойств к строке
-            foreach (["PHONE", "ADDRESS", "EMAIL"] as $code) {
-                if (!empty($props[$code]["VALUE"])) {
-                    if (is_array($props[$code]["VALUE"])) {
-                        $props[$code]["VALUE"] = implode(", ", $props[$code]["VALUE"]);
-                    }
-                } else {
-                    $props[$code] = ["VALUE" => null];
-                }
-            }
-
-            $fields["PROPERTIES"] = $props;
-            $sectionId = $fields["IBLOCK_SECTION_ID"];
-            if (isset($sections[$sectionId])) {
-                $sections[$sectionId]["ELEMENTS"][] = $fields;
-            }
-        }
+    $sectionId = max(0, (int)($section['ID'] ?? 0));
+    if ($sectionId === 0) {
+        continue;
     }
 
-    $arResult["SECTIONS"] = $sections;
-
-    $obCache->EndDataCache(["sections" => $sections]);
+    $section['ID'] = $sectionId;
+    $section['ELEMENTS'] = [];
+    $sections[$sectionId] = $section;
 }
 
-?>
+if ($sections === []) {
+    return;
+}
+
+$elementResult = CIBlockElement::GetList(
+    ['SORT' => 'ASC', 'NAME' => 'ASC'],
+    [
+        'IBLOCK_ID' => $iblockId,
+        'SECTION_ID' => array_keys($sections),
+        'ACTIVE' => 'Y',
+        'CHECK_PERMISSIONS' => 'Y',
+    ],
+    false,
+    false,
+    [
+        'ID',
+        'NAME',
+        'IBLOCK_SECTION_ID',
+        'PREVIEW_TEXT',
+        'PREVIEW_PICTURE',
+        'DETAIL_PAGE_URL',
+        'PROPERTY_PHONE',
+        'PROPERTY_ADDRESS',
+        'PROPERTY_EMAIL',
+    ]
+);
+
+while ($element = $elementResult->GetNextElement()) {
+    $fields = $element->GetFields();
+    $properties = $element->GetProperties();
+    if (!is_array($fields) || !is_array($properties)) {
+        continue;
+    }
+
+    foreach (['PHONE', 'ADDRESS', 'EMAIL'] as $code) {
+        $properties[$code]['VALUE'] = implode(
+            ', ',
+            site_string_list($properties[$code]['VALUE'] ?? [])
+        );
+    }
+
+    $fields['PROPERTIES'] = $properties;
+    $sectionId = max(0, (int)($fields['IBLOCK_SECTION_ID'] ?? 0));
+    if (isset($sections[$sectionId])) {
+        $sections[$sectionId]['ELEMENTS'][] = $fields;
+    }
+}
+
+$arResult['SECTIONS'] = $sections;

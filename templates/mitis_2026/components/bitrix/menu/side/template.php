@@ -1,84 +1,90 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
-
-<?if (!empty($arResult)):?>
-
-<?
-// Упрощенный подсчет потомков (сохранён)
-$childCount = array();
-
-foreach($arResult as $arItem) {
-    if ($arItem['DEPTH_LEVEL'] == 1) {
-        $childCount[$arItem['TEXT']] = 0;
-    }
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
 }
 
-$currentParent = null;
-foreach($arResult as $key=>$arItem) {
-	/*Не считаем потомки для первого элемента*/
-	/*Предполагаем, что первый пункт меню ссылается на текущую страницу*/
-	if($key==0){
-		continue;
-	}
-    if ($arItem['DEPTH_LEVEL'] == 1) {
-        $currentParent = $arItem['TEXT'];
-		$currentParentLink =  $arItem["LINK"];
-    } elseif ($arItem['DEPTH_LEVEL'] == 2 && $currentParent && $arItem["LINK"]!=$currentParentLink) {
-        $childCount[$currentParent]++;
+$items = $arResult ?? [];
+if (!is_array($items) || $items === []) {
+    return;
+}
+
+$forceDesktop = ($arParams['FORCE_DESKTOP'] ?? 'N') === 'Y';
+$childCount = [];
+$currentParentIndex = null;
+$currentParentLink = null;
+
+foreach ($items as $index => $item) {
+    if (!is_array($item)) {
+        continue;
+    }
+
+    $depth = max(1, (int)($item['DEPTH_LEVEL'] ?? 1));
+    $link = site_url($item['LINK'] ?? null);
+
+    if ($depth === 1) {
+        $currentParentIndex = $index;
+        $currentParentLink = $link;
+        $childCount[$index] = 0;
+    } elseif (
+        $depth === 2
+        && $currentParentIndex !== null
+        && $link !== $currentParentLink
+    ) {
+        $childCount[$currentParentIndex]++;
     }
 }
 ?>
-
-<!-- Мобильный селект (стеклянный) -->
-<select class="side-menu-select glass-select" <?if($arParams['FORCE_DESKTOP']=="Y"):?>style="display:none!important;"<?endif?>>
+<select class="side-menu-select glass-select"
+        <?php if ($forceDesktop): ?>style="display: none !important;"<?php endif; ?>
+        aria-label="Выберите подраздел">
     <option value="">Выберите подраздел...</option>
-    <?foreach($arResult as $arItem):?>
-        <?if($arItem['DEPTH_LEVEL'] == 1):?>
-            <?
-            $text = $arItem['TEXT'];
-            $count = $childCount[$arItem['TEXT']] ?? 0;
-            if ($count > 0) {
-                $text .= ' (' . $count . ')';
-            }
-            
-            $isSelected = $arItem['SELECTED'] && $arItem['LINK'] == $APPLICATION->GetCurPage();
-            ?>
-            <option value="<?=$arItem['LINK']?>" <?if($isSelected):?>selected<?endif?>>
-                <?=$text?>
-            </option>
-        <?endif?>
-    <?endforeach?>
+    <?php foreach ($items as $index => $item): ?>
+        <?php
+        if (!is_array($item) || (int)($item['DEPTH_LEVEL'] ?? 1) !== 1) {
+            continue;
+        }
+
+        $link = site_url($item['LINK'] ?? null);
+        $text = site_string($item['TEXT'] ?? '');
+        $count = $childCount[$index] ?? 0;
+        if ($count > 0) {
+            $text .= ' (' . $count . ')';
+        }
+        $isSelected = !empty($item['SELECTED'])
+            && $link === $APPLICATION->GetCurPage();
+        ?>
+        <option value="<?=htmlspecialcharsbx($link)?>"
+                <?php if ($isSelected): ?>selected<?php endif; ?>><?=htmlspecialcharsbx($text)?></option>
+    <?php endforeach; ?>
 </select>
 
-<!-- Основное меню для десктопов (стеклянные карточки) -->
-<ul class="side-menu glass-side-menu" <?if($arParams['FORCE_DESKTOP']=="Y"):?>style="display:flex!important;"<?endif?>>
-    <?foreach($arResult as $arItem):?>
-        <?
-            $class_ext = "bi bi-arrow-up-right";
-            if (!empty($arItem["PARAMS"]["ICON"])) {
-                $class_ext = " " . $arItem["PARAMS"]["ICON"];
-            }
-        ?>
-        <?if($arItem['DEPTH_LEVEL'] == 1):?>
-            <?
-            $text = $arItem['TEXT'];
-            $count = $childCount[$arItem['TEXT']] ?? 0;
-            if ($count > 0) {
-                $text .= ' (' . $count . ')';
-            }
-            
-            $isSelected = $arItem['SELECTED'] && $arItem['LINK'] == $APPLICATION->GetCurPage();
-            ?>
-            <li class="glass-menu-item <?if($isSelected):?>glass-menu-item--selected<?endif?>">
-                <a href="<?=$arItem['LINK']?>" class="glass-menu-link">
-                    <?if(!empty($class_ext)):?>
-                        <i class="<?=$class_ext?> me-2" aria-hidden="true"></i>
-                    <?endif?>
-                    <?=$text?>
-                    <span class="glass-menu-arrow"></span>
-                </a>
-            </li>
-        <?endif?>
-    <?endforeach?>
-</ul>
+<ul class="side-menu glass-side-menu"
+    <?php if ($forceDesktop): ?>style="display: flex !important;"<?php endif; ?>>
+    <?php foreach ($items as $index => $item): ?>
+        <?php
+        if (!is_array($item) || (int)($item['DEPTH_LEVEL'] ?? 1) !== 1) {
+            continue;
+        }
 
-<?endif?>
+        $link = site_url($item['LINK'] ?? null);
+        $text = site_string($item['TEXT'] ?? '');
+        $count = $childCount[$index] ?? 0;
+        if ($count > 0) {
+            $text .= ' (' . $count . ')';
+        }
+        $icon = site_css_classes(
+            $item['PARAMS']['ICON'] ?? null,
+            'bi bi-arrow-up-right'
+        );
+        $isSelected = !empty($item['SELECTED'])
+            && $link === $APPLICATION->GetCurPage();
+        ?>
+        <li class="glass-menu-item<?=$isSelected ? ' glass-menu-item--selected' : ''?>">
+            <a href="<?=htmlspecialcharsbx($link)?>" class="glass-menu-link">
+                <i class="<?=htmlspecialcharsbx($icon)?> me-2" aria-hidden="true"></i>
+                <?=htmlspecialcharsbx($text)?>
+                <span class="glass-menu-arrow"></span>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>

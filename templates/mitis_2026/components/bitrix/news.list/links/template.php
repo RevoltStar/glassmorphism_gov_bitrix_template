@@ -1,85 +1,122 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-$this->setFrameMode(true);
-?>
-<?if(!empty($arResult['ITEMS'])):?>
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
 
-<?if($arParams["DISPLAY_TOP_PAGER"]):?>
-        <?=$arResult["NAV_STRING"]?><br />
-<?endif;?>
+$this->setFrameMode(true);
+$arResult = is_array($arResult ?? null) ? $arResult : [];
+$arParams = is_array($arParams ?? null) ? $arParams : [];
+?>
+<?php
+$items = $arResult['ITEMS'] ?? [];
+$sectionId = max(0, (int)($arParams['SECTION_ID'] ?? 0));
+$iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
+if (is_array($items) && $items !== []):
+?>
+
+<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? 'N') === 'Y'):?>
+        <?=$arResult["NAV_STRING"] ?? ''?><br />
+<?php endif;?>
 
 <div class="glass-links mt-2 mb-2">
-        <?
+        <?php
         // Получаем информацию о разделе
-        $section = CIBlockSection::GetByID($arParams['SECTION_ID']);
-        if (($arSection = $section->GetNext()) && ($arParams['SHOW_SECTION_NAME']=="Y")):
+        $section = ($sectionId > 0 && $iblockId > 0) ? CIBlockSection::GetList(
+            [],
+            ['ID' => $sectionId, 'IBLOCK_ID' => $iblockId, 'CHECK_PERMISSIONS' => 'Y'],
+            false,
+            ['ID', 'NAME', 'DESCRIPTION']
+        ) : null;
+        if (is_object($section) && ($arSection = $section->Fetch()) && (($arParams['SHOW_SECTION_NAME'] ?? 'N') === "Y")):
         ?>
         <div class="glass-section-header mb-4">
-                <h2 class="glass-section-title h4 mb-2"><?=$arSection['NAME']?></h2>
-                <?if($arSection['DESCRIPTION']):?>
-                        <p class="glass-section-desc text-muted"><?=$arSection['DESCRIPTION']?></p>
-                <?endif;?>
+                <h2 class="glass-section-title h4 mb-2"><?=htmlspecialcharsbx(site_string($arSection['~NAME'] ?? $arSection['NAME'] ?? ''))?></h2>
+                <?php if($arSection['DESCRIPTION']):?>
+                        <p class="glass-section-desc text-muted"><?=htmlspecialcharsbx(site_plain_text($arSection['~DESCRIPTION'] ?? $arSection['DESCRIPTION']))?></p>
+                <?php endif;?>
         </div>
-        <?endif;?>
+        <?php endif;?>
 
         <div class="glass-links-grid">
-    <?foreach($arResult["ITEMS"] as $arItem):
-                $link = $arItem['PROPERTIES']['LINK']['VALUE'] ?? '#';
-                $isExternal = !empty($link) && $link !== '#';
+    <?php foreach($arResult["ITEMS"] as $arItem):
+                if (!is_array($arItem)) {
+                    continue;
+                }
+
+                $link = site_url($arItem['PROPERTIES']['LINK']['VALUE'] ?? null);
+                $hasLink = $link !== '#';
+                $isExternal = $hasLink && site_is_external_http_url($link);
                 $target = $isExternal ? '_blank' : '_self';
                 $rel = $isExternal ? 'noopener noreferrer' : '';
-                
+
                 // Иконка (по умолчанию стрелка наружу)
-                $iconClass = $arItem['PROPERTIES']['ICON']['VALUE'] ?? 'bi-box-arrow-up-right';
-                
+                $iconClass = site_css_classes(
+                    $arItem['PROPERTIES']['ICON']['VALUE'] ?? null,
+                    'bi-box-arrow-up-right'
+                );
+
                 // Описание
-                $description = $arItem['PREVIEW_TEXT'] ?? $arItem['DETAIL_TEXT'] ?? '';
+                $description = site_plain_text(
+                    $arItem['~PREVIEW_TEXT']
+                        ?? $arItem['~DETAIL_TEXT']
+                        ?? $arItem['PREVIEW_TEXT']
+                        ?? $arItem['DETAIL_TEXT']
+                        ?? ''
+                );
+                $name = site_string($arItem['~NAME'] ?? $arItem['NAME'] ?? '');
 
                 // Дата
-                $showDate = $arParams['SHOW_DATE'] !== 'N';
-                $dateField = $arParams['DATE_FIELD'] ?? 'TIMESTAMP_X';
-                $dateValue = $arItem[$dateField] ?? $arItem['TIMESTAMP_X'];
+                $showDate = ($arParams['SHOW_DATE'] ?? 'N') !== 'N';
+                $dateField = site_string($arParams['DATE_FIELD'] ?? 'TIMESTAMP_X', 'TIMESTAMP_X');
+                if (preg_match('/^[A-Z0-9_]+$/D', $dateField) !== 1) {
+                    $dateField = 'TIMESTAMP_X';
+                }
+                $dateValue = site_string(
+                    $arItem[$dateField] ?? $arItem['TIMESTAMP_X'] ?? ''
+                );
+                $timestamp = $dateValue !== '' ? MakeTimeStamp($dateValue) : 0;
     ?>
-        <a href="<?=$link?>" 
-           target="<?=$target?>" 
-           rel="<?=$rel?>" 
-           class="glass-link-card <?=!$isExternal ? 'glass-link-card--disabled' : ''?>"
-           <?if(!$isExternal):?>onclick="return false;"<?endif;?>>
+        <a href="<?=htmlspecialcharsbx($link)?>"
+           target="<?=htmlspecialcharsbx($target)?>"
+           rel="<?=htmlspecialcharsbx($rel)?>"
+           class="glass-link-card <?=!$hasLink ? 'glass-link-card--disabled' : ''?>"
+           <?php if(!$hasLink):?>onclick="return false;"<?php endif;?>>
             <div class="glass-link-card-inner">
                 <div class="glass-link-card-content">
                     <div class="glass-link-icon">
-                        <i class="bi <?=$iconClass?>"></i>
+                        <i class="bi <?=htmlspecialcharsbx($iconClass)?>"></i>
                     </div>
                     <div class="glass-link-info">
-                        <h5 class="glass-link-title"><?=$arItem["NAME"]?></h5>
-                        <?if($description):?>
-                            <p class="glass-link-desc"><?=TruncateText($description, 120)?></p>
-                        <?endif;?>
-                        <?if($showDate && $dateValue && ($arParams['SHOW_UPDATE_DATE']??'Y')!="N"):?>
+                        <h5 class="glass-link-title"><?=htmlspecialcharsbx($name)?></h5>
+                        <?php if($description):?>
+                            <p class="glass-link-desc"><?=htmlspecialcharsbx(TruncateText($description, 120))?></p>
+                        <?php endif;?>
+                        <?php if($showDate && $timestamp > 0 && ($arParams['SHOW_UPDATE_DATE']??'Y')!="N"):?>
                             <div class="glass-link-date">
                                 <i class="bi bi-clock me-1"></i>
-                                Обновлено: <?=FormatDate("d.m.Y H:i", MakeTimeStamp($dateValue))?>
+                                Обновлено: <?=htmlspecialcharsbx(FormatDate("d.m.Y H:i", $timestamp))?>
                             </div>
-                        <?endif;?>
+                        <?php endif;?>
                     </div>
                 </div>
-                <?if($isExternal):?>
+                <?php if($hasLink):?>
                     <div class="glass-link-arrow">
                         <i class="bi bi-arrow-up-right"></i>
                     </div>
-                <?endif;?>
+                <?php endif;?>
             </div>
         </a>
-    <?endforeach;?>
+    <?php endforeach;?>
         </div>
 </div>
 
-<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
+<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? 'N') === 'Y'):?>
         <div class="glass-pagination mt-4">
-                <?=$arResult["NAV_STRING"]?>
+                <?=$arResult["NAV_STRING"] ?? ''?>
         </div>
-<?endif;?>
+<?php endif;?>
 
-<?else:?>
+<?php else:?>
 <div class="glass-empty-alert">
     <div class="glass-empty-icon">
         <i class="bi bi-folder-x"></i>
@@ -89,4 +126,4 @@ $this->setFrameMode(true);
         <span class="small">Ссылки временно недоступны, находятся на обновлении или будут добавлены позже.</span>
     </div>
 </div>
-<?endif;?>
+<?php endif;?>

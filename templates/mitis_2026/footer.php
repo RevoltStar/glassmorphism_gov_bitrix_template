@@ -1,37 +1,20 @@
 <?php
-$excludedPages = (array)get_info('layout_excluded_pages', []);
-
-$currentPage = $APPLICATION->GetCurPage();
-$isExcludedPage = false;
-
-// Особый случай для корневой страницы
-if ($currentPage === '/') {
-    $isExcludedPage = in_array('/', $excludedPages);
-} else {
-    // Проверяем, начинается ли текущая страница с любого из префиксов
-    foreach ($excludedPages as $excluded) {
-        // Для исключения "/" проверяем отдельно, чтобы не совпало с любым путем
-        if ($excluded === '/') {
-            continue; // "/" уже обработали выше
-        }
-        
-        // Убираем закрывающий слэш для сравнения (если есть)
-        $excludedClean = rtrim($excluded, '/');
-        $currentPageClean = rtrim($currentPage, '/');
-        
-        // Проверяем, начинается ли текущая страница с исключенного префикса
-        if (str_starts_with($currentPageClean, $excludedClean)) {
-            $isExcludedPage = true;
-            break;
-        }
-    }
-}
+$excludedPages = get_info('layout_excluded_pages', []);
+$currentPage = site_string($APPLICATION->GetCurPage(), '/');
+$isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
 $is404Error = defined('ERROR_404');
+$footerLogoUrl = site_url(get_info('logo', ''), '');
+$footerPhoneUrl = site_url('tel:' . site_string(get_info('phone_e164', '')), '#', ['tel'], false);
+$footerEmailUrl = site_url('mailto:' . site_string(get_info('email', '')), '#', ['mailto'], false);
+$feedbackUrl = site_url(get_info('feedback_path', ''), '#');
+$privacyPolicyUrl = site_url(get_info('privacy_policy_path', ''), '#');
+$developerUrl = site_url(get_info('developer_url', ''), '#');
+$developerLogoUrl = site_url(get_info('developer_logo', ''), '');
 
 if (!$isExcludedPage && !$is404Error): ?>
     </div> <!-- Закрывающий для col-lg-8 -->
 <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0  side-menu-wrapper">
-        <?$APPLICATION->IncludeComponent(
+        <?php $APPLICATION->IncludeComponent(
             "bitrix:menu",
             "side",
             Array(
@@ -53,15 +36,15 @@ if (!$isExcludedPage && !$is404Error): ?>
 </main>
 <!-- Подвал -->
 <footer class="footer">
-    
+
     <!-- Основная информация в подвале -->
     <div class="container py-5">
         <div class="row g-4">
-            
+
             <!-- Колонка 1: Логотип и контакты -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?=htmlspecialcharsbx((string)get_info('logo'))?>"
+                    <img src="<?=htmlspecialcharsbx($footerLogoUrl)?>"
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="footer-logo">
                     <div class="ms-3">
@@ -69,23 +52,23 @@ if (!$isExcludedPage && !$is404Error): ?>
                         <span class="footer-sub"><?=htmlspecialcharsbx((string)get_info('region_name_genitive'))?></span>
                     </div>
                 </div>
-                
+
                 <p class="footer-text">
                     <?=htmlspecialcharsbx((string)get_info('org_description'))?>
                     Все материалы сайта доступны по лицензии Creative Commons Attribution.
                 </p>
-                <?
+                <?php
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
-							"ROOT_MENU_TYPE" => "social", 
-							"MAX_LEVEL" => "1", 
-							"CHILD_MENU_TYPE" => "social", 
+							"ROOT_MENU_TYPE" => "social",
+							"MAX_LEVEL" => "1",
+							"CHILD_MENU_TYPE" => "social",
 							"USE_EXT" => "N",
 							"DELAY" => "N",
 							"ALLOW_MULTI_SELECT" => "N",
-							"MENU_CACHE_TYPE" => "N", 
-							"MENU_CACHE_TIME" => "3600", 
-							"MENU_CACHE_USE_GROUPS" => "Y", 
-							"MENU_CACHE_GET_VARS" => "" 
+							"MENU_CACHE_TYPE" => "N",
+							"MENU_CACHE_TIME" => "3600",
+							"MENU_CACHE_USE_GROUPS" => "Y",
+							"MENU_CACHE_GET_VARS" => ""
 							)
 						);?>
             </div>
@@ -138,7 +121,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                     </li>
                 </ul>
             </div>
-            
+
             <!-- Колонка 3: Информация -->
             <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                 <h6 class="footer-section-title">
@@ -172,13 +155,13 @@ if (!$isExcludedPage && !$is404Error): ?>
                     </li>
                 </ul>
             </div>
-            
+
             <!-- Колонка 4: Контакты и обратная связь -->
             <div class="col-lg-3 col-md-6 col-12">
                 <h6 class="footer-section-title">
                     <i class="bi bi-telephone"></i> Контакты
                 </h6>
-                
+
                 <div class="d-flex mb-3">
                     <div class="me-3">
                         <div class="footer-contact-icon">
@@ -190,7 +173,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                         <?=htmlspecialcharsbx((string)get_info('address'))?>
                     </div>
                 </div>
-                
+
                 <div class="d-flex mb-3">
                     <div class="me-3">
                         <div class="footer-contact-icon">
@@ -199,12 +182,12 @@ if (!$isExcludedPage && !$is404Error): ?>
                     </div>
                     <div>
                         <div class="footer-contact-item">
-                            <a href="tel:<?=htmlspecialcharsbx((string)get_info('phone_e164'))?>"><?=htmlspecialcharsbx((string)get_info('phone'))?></a>
+                            <a href="<?=htmlspecialcharsbx($footerPhoneUrl)?>"><?=htmlspecialcharsbx((string)get_info('phone'))?></a>
                         </div>
                         <div class="footer-contact-label">приемная</div>
                     </div>
                 </div>
-                
+
                 <div class="d-flex mb-3">
                     <div class="me-3">
                         <div class="footer-contact-icon">
@@ -213,12 +196,12 @@ if (!$isExcludedPage && !$is404Error): ?>
                     </div>
                     <div>
                         <div class="footer-contact-item">
-                            <a href="mailto:<?=htmlspecialcharsbx((string)get_info('email'))?>"><?=htmlspecialcharsbx((string)get_info('email'))?></a>
+                            <a href="<?=htmlspecialcharsbx($footerEmailUrl)?>"><?=htmlspecialcharsbx((string)get_info('email'))?></a>
                         </div>
                         <div class="footer-contact-label">общие вопросы</div>
                     </div>
                 </div>
-                
+
                 <div class="d-flex mb-3">
                     <div class="me-3">
                         <div class="footer-contact-icon">
@@ -241,10 +224,10 @@ if (!$isExcludedPage && !$is404Error): ?>
                         <div class="footer-contact-label"><?=htmlspecialcharsbx((string)get_info('lunch_break'))?></div>
                     </div>
                 </div>
-                
+
                 <!-- Кнопка обратной связи -->
 				<div class="d-flex mb-3">
-				<a href="<?=htmlspecialcharsbx((string)get_info('feedback_path'))?>" class="footer-btn">
+				<a href="<?=htmlspecialcharsbx($feedbackUrl)?>" class="footer-btn">
 					<nobr><i class="bi bi-chat-dots"></i> Написать обращение</nobr>
                 </a>
 				</div>
@@ -264,19 +247,19 @@ if (!$isExcludedPage && !$is404Error): ?>
                     </span>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="<?=htmlspecialcharsbx((string)get_info('privacy_policy_path'))?>" class="footer-bottom-link">Политика конфиденциальности</a>
-                    <a href="<?=htmlspecialcharsbx((string)get_info('privacy_policy_path'))?>" class="footer-bottom-link">Использование cookie</a>
+                    <a href="<?=htmlspecialcharsbx($privacyPolicyUrl)?>" class="footer-bottom-link">Политика конфиденциальности</a>
+                    <a href="<?=htmlspecialcharsbx($privacyPolicyUrl)?>" class="footer-bottom-link">Использование cookie</a>
                     <span class="footer-dot"></span>
                     <span class="footer-dot footer-dot-secondary"></span>
                 </div>
             </div>
-            
+
             <!-- Дополнительная строка со счетчиками и госсимволикой -->
             <div class="row mt-2">
                 <div class="col-12 d-flex flex-wrap justify-content-center
             justify-content-md-end align-items-center gap-2 gap-md-3">
                     <span class="footer-badge">
-                        <i class="bi bi-eye"></i> 0+ 
+                        <i class="bi bi-eye"></i> 0+
                     </span>
                     <span class="footer-badge">
                         <i class="bi bi-activity"></i> Счетчик посещений
@@ -288,9 +271,9 @@ if (!$isExcludedPage && !$is404Error): ?>
             </div>
 			<div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end">
-                    <a class="footer-developer" href="<?=htmlspecialcharsbx((string)get_info('developer_url'))?>" target="_blank" rel="noopener noreferrer">
+                    <a class="footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
                         <span class="footer-developer__logo-wrap">
-                            <img class="footer-developer__logo" src="<?=htmlspecialcharsbx((string)get_info('developer_logo'))?>" width="48" height="49" alt="Логотип Центра стратегического развития">
+                            <img class="footer-developer__logo" src="<?=htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
                         </span>
                         <span class="footer-developer__content">
                             <span class="footer-developer__label">Сайт разработан</span>
@@ -304,12 +287,12 @@ if (!$isExcludedPage && !$is404Error): ?>
         </div>
     </div>
 </footer>
-<?
+<?php
 
 $cookie_message =
-"Сайт " . htmlspecialcharsbx((string)get_info('org_name')) . " использует файлы cookie для работы и аналитики.
+htmlspecialcharsbx((string)get_info('org_name')) . " использует файлы cookie для работы и аналитики.
 <br><br>
-<a target=\"_blank\" href=\"" . htmlspecialcharsbx((string)get_info('privacy_policy_path')) . "\">Политика обработки персональных данных</a>";
+<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"" . htmlspecialcharsbx($privacyPolicyUrl) . "\">Политика обработки персональных данных</a>";
 
 $APPLICATION->IncludeComponent(
 	"cookie.manager",

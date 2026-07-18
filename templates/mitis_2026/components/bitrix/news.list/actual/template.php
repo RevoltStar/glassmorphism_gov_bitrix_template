@@ -1,26 +1,65 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-$this->setFrameMode(true);
-?>
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
 
-<?php if(!empty($arResult["ITEMS"])):?>
-	<div class="row g-4">
-		<?php foreach ($arResult["ITEMS"] as $key=>$actual): ?>
-			<div class="col-md-4">
-				<?
-					$link = "#";
-					if(!empty($actual["PROPERTIES"]["LINK"]["VALUE"])){
-						$link = $actual["PROPERTIES"]["LINK"]["VALUE"];
-					}
-				?>
-				 <a href="<?=$link?>" class="text-decoration-none">
-					 <div class="banner-item" style="background-image: url('<?=$actual['PREVIEW_PICTURE']['SRC']?htmlspecialchars($actual['PREVIEW_PICTURE']['SRC']):"/images/image_not_found.jpg" ?>');">
-                        <div class="banner-overlay">
-                            <h5 class="fw-bold"><?=htmlspecialchars($actual['NAME'])?></h5>
-                            <p class="mb-0 small fw-semibold"><?=htmlspecialchars($actual['PREVIEW_TEXT'])?></p>
-                        </div>
+$this->setFrameMode(true);
+
+$items = $arResult['ITEMS'] ?? [];
+if (!is_array($items) || $items === []) {
+    return;
+}
+
+?>
+<div class="row g-4">
+    <?php foreach ($items as $actual): ?>
+        <?php
+        if (!is_array($actual)) {
+            continue;
+        }
+
+        $link = site_url($actual['PROPERTIES']['LINK']['VALUE'] ?? null);
+
+        $pictureValue = $actual['PREVIEW_PICTURE'] ?? null;
+        $pictureSrc = null;
+        if (is_array($pictureValue)) {
+            $pictureSrc = $pictureValue['SRC'] ?? null;
+        } elseif (
+            is_int($pictureValue)
+            || (is_string($pictureValue) && ctype_digit($pictureValue))
+        ) {
+            $pictureId = (int)$pictureValue;
+            if ($pictureId > 0) {
+                $pictureSrc = CFile::GetPath($pictureId);
+            }
+        }
+
+        $imageSrc = site_url($pictureSrc, '/images/image_not_found.jpg');
+        $cssImageSrc = site_css_url($imageSrc, '/images/image_not_found.jpg');
+
+        $nameValue = $actual['~NAME'] ?? $actual['NAME'] ?? '';
+        $name = is_scalar($nameValue) ? (string)$nameValue : '';
+
+        $previewValue = $actual['~PREVIEW_TEXT']
+            ?? $actual['PREVIEW_TEXT']
+            ?? '';
+        $previewText = is_scalar($previewValue)
+            ? trim(strip_tags((string)$previewValue))
+            : '';
+        ?>
+        <div class="col-md-4">
+            <a href="<?=htmlspecialcharsbx($link)?>"
+               class="text-decoration-none">
+                <div class="banner-item"
+                     style="background-image: url(<?=htmlspecialcharsbx($cssImageSrc)?>);">
+                    <div class="banner-overlay">
+                        <h5 class="fw-bold"><?=htmlspecialcharsbx($name)?></h5>
+                        <?php if ($previewText !== ''): ?>
+                            <p class="mb-0 small fw-semibold"><?=htmlspecialcharsbx($previewText)?></p>
+                        <?php endif; ?>
                     </div>
-                </a>
-			</div>
-		<?endforeach?>
-	</div>
-<?endif?>
+                </div>
+            </a>
+        </div>
+    <?php endforeach; ?>
+</div>

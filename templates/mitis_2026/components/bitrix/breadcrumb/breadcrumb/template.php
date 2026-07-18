@@ -7,8 +7,12 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 global $APPLICATION;
 
 //delayed function must return a string
-if(empty($arResult))
+if (empty($arResult) || !is_array($arResult))
 	return "";
+$arResult = array_values(array_filter($arResult, 'is_array'));
+if ($arResult === []) {
+    return '';
+}
 $strReturn = '';
 
 //we can't use $APPLICATION->SetAdditionalCSS() here because we are inside the buffered function GetNavChain()
@@ -19,29 +23,31 @@ if(!is_array($css) || !in_array("/bitrix/css/main/font-awesome.css", $css))
 }
 
 // Получаем текущий URL для последнего элемента
-$baseUrl = rtrim((string)get_info('site_url'), '/');
-$currentUrl = $baseUrl . $APPLICATION->GetCurPage();
+$baseUrl = rtrim(site_url(get_info('site_url'), '', ['http', 'https'], false), '/');
+$currentPath = site_url($APPLICATION->GetCurPage(), '/');
+$currentUrl = $baseUrl . $currentPath;
 
 // Формируем данные для микроразметки BreadcrumbList
 $breadcrumbItems = [];
 $position = 1;
 foreach ($arResult as $index => $item) {
+    $itemLink = site_url($item['LINK'] ?? null, '/');
     // Формируем абсолютный URL
     if ($index === count($arResult) - 1) {
         // Для последнего элемента используем текущий URL
         $absoluteLink = $currentUrl;
     } else {
-        $absoluteLink = $baseUrl . $item['LINK'];
-        if (strpos($item['LINK'], 'http') === 0) {
-            $absoluteLink = $item['LINK'];
+        $absoluteLink = $baseUrl . $itemLink;
+        if (site_is_external_http_url($itemLink)) {
+            $absoluteLink = $itemLink;
         }
     }
-    
+
     // Для микроразметки используем очищенные заголовки
-    $title = htmlspecialchars_decode($item['TITLE']);
+    $title = htmlspecialchars_decode(site_string($item['TITLE'] ?? ''));
     $title = strip_tags($title);
     $title = trim($title);
-    
+
     $breadcrumbItems[] = [
         'position' => $position,
         'name' => $title,
@@ -62,22 +68,23 @@ $breadcrumbJson = json_encode([
             'item' => $item['item']
         ];
     }, $breadcrumbItems)
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT);
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE);
 
 // HTML для хлебных крошек в стиле образца
 $breadcrumbHtml = '
 <ol class="breadcrumb glass-breadcrumb m-0">';
 
 foreach ($arResult as $index => $item) {
+    $itemTitle = site_string($item['TITLE'] ?? '');
+    $itemLink = site_url($item['LINK'] ?? null);
     if ($index === count($arResult) - 1) {
         // Последний элемент (активный)
-        $lastLink = $item['LINK'] ?: $APPLICATION->GetCurPage();
         $breadcrumbHtml .= '
-    <li class="breadcrumb-item active" aria-current="page">' . htmlspecialchars($item['TITLE']) . '</li>';
+    <li class="breadcrumb-item active" aria-current="page">' . htmlspecialcharsbx($itemTitle) . '</li>';
     } else {
         // Обычные элементы с ссылками
         $breadcrumbHtml .= '
-    <li class="breadcrumb-item"><a href="' . htmlspecialchars($item['LINK']) . '" class="glass-breadcrumb-link">' . htmlspecialchars($item['TITLE']) . '</a></li>';
+    <li class="breadcrumb-item"><a href="' . htmlspecialcharsbx($itemLink) . '" class="glass-breadcrumb-link">' . htmlspecialcharsbx($itemTitle) . '</a></li>';
     }
 }
 

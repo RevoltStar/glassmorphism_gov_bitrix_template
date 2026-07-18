@@ -1,4 +1,4 @@
-<?
+<?php
 $MESS["CPT_BCSL_VIEW_MODE_LINE"] = "List";
 $MESS["CPT_BCSL_VIEW_MODE_TEXT"] = "Text";
 $MESS["CPT_BCSL_VIEW_MODE_TILE"] = "Tile";

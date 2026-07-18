@@ -22,24 +22,10 @@ if (!is_array($items) || $items === []) {
         $rel = '';
         $linkValue = $value['PROPERTIES']['LINK']['VALUE'] ?? null;
 
-        if (is_string($linkValue)) {
-            $linkValue = trim($linkValue);
-            $isInternalLink = preg_match(
-                '~^/(?!/)[^\x00-\x1F\x7F]*$~u',
-                $linkValue
-            ) === 1;
-            $scheme = strtolower((string)parse_url($linkValue, PHP_URL_SCHEME));
-            $isHttpLink = filter_var($linkValue, FILTER_VALIDATE_URL) !== false
-                && in_array($scheme, ['http', 'https'], true);
-
-            if ($isInternalLink || $isHttpLink) {
-                $link = $linkValue;
-            }
-
-            if ($isHttpLink) {
-                $target = '_blank';
-                $rel = 'noopener noreferrer';
-            }
+        $link = site_url($linkValue);
+        if (site_is_external_http_url($link)) {
+            $target = '_blank';
+            $rel = 'noopener noreferrer';
         }
 
         $icon = 'bi bi-arrow-up-right';

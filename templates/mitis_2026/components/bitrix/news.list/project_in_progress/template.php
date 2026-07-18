@@ -1,43 +1,68 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
 $this->setFrameMode(true);
+
+$items = $arResult['ITEMS'] ?? [];
+if (!is_array($items) || $items === []) {
+    return;
+}
+
+$items[] = [
+    'NAME' => 'Посмотреть все проекты',
+    'PREVIEW_TEXT' => 'Нажмите, чтобы перейти',
+    'PROPERTIES' => [
+        'ICON' => ['VALUE' => 'fa fa-arrow-right'],
+        'LINK' => ['VALUE' => '/activity/implemintation-of-regional-projects/'],
+    ],
+];
 ?>
-<?php if(!empty($arResult["ITEMS"])):?>
-	<?
-	//Добавляем фиктивный элемент
-	$arResult["ITEMS"][] = 
-	array(
-		"NAME"=>"Посмотреть все проекты",
-		"PREVIEW_TEXT"=>"Нажмите, чтобы перейти",
-		"PROPERTIES"=>array(
-			"ICON"=>array("VALUE"=>"fa fa-arrow-right"),
-			"LINK"=>array("VALUE"=>"/activity/implemintation-of-regional-projects/")));
-	?>
-	<div class="row g-4">
-		<?php foreach ($arResult["ITEMS"] as $key=>$project): ?>
-			<div class="col-md-6">
-				<a href="<?=htmlspecialchars($project['PROPERTIES']['LINK']['VALUE']?$project['PROPERTIES']['LINK']['VALUE']:"#")?>" class="text-decoration-none">
-				<div class="glass-card d-flex">
+<div class="row g-4">
+    <?php foreach ($items as $project): ?>
+        <?php
+        if (!is_array($project)) {
+            continue;
+        }
+
+        $link = site_url($project['PROPERTIES']['LINK']['VALUE'] ?? null);
+        $icon = site_css_classes(
+            $project['PROPERTIES']['ICON']['VALUE'] ?? null
+        );
+        $name = site_string($project['~NAME'] ?? $project['NAME'] ?? '');
+        $preview = site_plain_text(
+            $project['~PREVIEW_TEXT'] ?? $project['PREVIEW_TEXT'] ?? ''
+        );
+        $badges = site_string_list(
+            $project['PROPERTIES']['BADGES']['VALUE'] ?? []
+        );
+        ?>
+        <div class="col-md-6">
+            <a href="<?=htmlspecialcharsbx($link)?>" class="text-decoration-none">
+                <div class="glass-card d-flex">
                     <div class="me-3">
-						<?php if (!empty($project['PROPERTIES']['ICON']['VALUE'])): ?>
-                        <div class="activity-icon" style="width: 60px; height: 60px;">
-                            <i class="<?=$project['PROPERTIES']['ICON']['VALUE']?>" aria-hidden="true"></i>
-                        </div>
-						 <?php endif; ?>
+                        <?php if ($icon !== ''): ?>
+                            <div class="activity-icon" style="width: 60px; height: 60px;">
+                                <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="w-100">
-                        <h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialchars($project['NAME'], ENT_NOQUOTES)?></h5>
-                        <p style="color: #2c6b9e;"><?= htmlspecialchars($project['PREVIEW_TEXT'], ENT_NOQUOTES) ?></p>
-						<div class="gap-2 d-flex flex-wrap">
-						<?php if (!empty($project['PROPERTIES']['BADGES']["VALUE"])): ?>
-							<?foreach($project['PROPERTIES']['BADGES']["VALUE"] as $line):?>
-                        		<span class="badge main-badge"><?=$line?></span>
-							<?endforeach?>
-						<?endif?>
-						</div>
+                        <h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($name)?></h5>
+                        <?php if ($preview !== ''): ?>
+                            <p style="color: #2c6b9e;"><?=htmlspecialcharsbx($preview)?></p>
+                        <?php endif; ?>
+                        <?php if ($badges !== []): ?>
+                            <div class="gap-2 d-flex flex-wrap">
+                                <?php foreach ($badges as $badge): ?>
+                                    <span class="badge main-badge"><?=htmlspecialcharsbx($badge)?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
-				</a>
-            </div>
-		<?endforeach?>
-	</div>
-<?endif?>
+            </a>
+        </div>
+    <?php endforeach; ?>
+</div>

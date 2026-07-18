@@ -1,72 +1,101 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();?>
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
 
+$sections = $arResult['SECTIONS'] ?? [];
+if (!is_array($sections)) {
+    $sections = [];
+}
+?>
 <div class="glass-org-structure">
-    <? foreach ($arResult["SECTIONS"] as $section): ?>
+    <?php foreach ($sections as $section): ?>
+        <?php
+        if (!is_array($section)) {
+            continue;
+        }
+        $sectionName = site_string($section['~NAME'] ?? $section['NAME'] ?? '');
+        $employees = is_array($section['ELEMENTS'] ?? null) ? $section['ELEMENTS'] : [];
+        ?>
         <div class="glass-department">
-            <h2 class="glass-department__title"><?=htmlspecialcharsbx($section["NAME"])?></h2>
-            
-            <? if (!empty($section["ELEMENTS"])): ?>
+            <h2 class="glass-department__title"><?=htmlspecialcharsbx($sectionName)?></h2>
+
+            <?php if ($employees !== []): ?>
                 <div class="glass-employees-grid">
-                    <? foreach ($section["ELEMENTS"] as $employee): ?>
+                    <?php foreach ($employees as $employee): ?>
+                        <?php
+                        if (!is_array($employee)) {
+                            continue;
+                        }
+
+                        $employeeName = site_string($employee['~NAME'] ?? $employee['NAME'] ?? '');
+                        $position = site_plain_text($employee['~PREVIEW_TEXT'] ?? $employee['PREVIEW_TEXT'] ?? '');
+                        $phone = site_string($employee['PROPERTIES']['PHONE']['VALUE'] ?? '');
+                        $address = site_string($employee['PROPERTIES']['ADDRESS']['VALUE'] ?? '');
+                        $email = site_string($employee['PROPERTIES']['EMAIL']['VALUE'] ?? '');
+                        $emailLink = site_url('mailto:' . $email, '', ['mailto'], false);
+                        $pictureId = max(0, (int)($employee['PREVIEW_PICTURE'] ?? 0));
+                        $photoSrc = '';
+                        if ($pictureId > 0) {
+                            $file = CFile::ResizeImageGet(
+                                $pictureId,
+                                ['width' => 120, 'height' => 120],
+                                BX_RESIZE_IMAGE_EXACT,
+                                true
+                            );
+                            if (is_array($file)) {
+                                $photoSrc = site_url($file['src'] ?? null, '');
+                            }
+                        }
+                        ?>
                         <div class="glass-employee-card">
                             <div class="glass-employee-card__inner">
-                                <? if (!empty($employee["PREVIEW_PICTURE"])): 
-                                    $file = CFile::ResizeImageGet(
-                                        $employee["PREVIEW_PICTURE"],
-                                        ["width" => 120, "height" => 120],
-                                        BX_RESIZE_IMAGE_EXACT,
-                                        true
-                                    ); ?>
+                                <?php if ($photoSrc !== ''): ?>
                                     <div class="glass-employee__photo-wrapper">
-                                        <img src="<?=$file["src"]?>"
-                                             alt="<?=htmlspecialcharsbx($employee["NAME"])?>"
+                                        <img src="<?=htmlspecialcharsbx($photoSrc)?>"
+                                             alt="<?=htmlspecialcharsbx($employeeName)?>"
                                              class="glass-employee__photo"
                                              loading="lazy">
                                     </div>
-                                <? else: ?>
+                                <?php else: ?>
                                     <div class="glass-employee__photo-placeholder">
-                                        <i class="fas fa-user-circle"></i>
+                                        <i class="fas fa-user-circle" aria-hidden="true"></i>
                                     </div>
-                                <? endif; ?>
-                                
+                                <?php endif; ?>
+
                                 <div class="glass-employee__info">
-                                    <div class="glass-employee__name"><?=htmlspecialcharsbx($employee["NAME"])?></div>
-                                    <? if (!empty($employee["PREVIEW_TEXT"])): ?>
-                                        <div class="glass-employee__position"><?=htmlspecialcharsbx($employee["PREVIEW_TEXT"])?></div>
-                                    <? endif; ?>
-                                    
-                                    <? if (!empty($employee["PROPERTIES"]["PHONE"]["VALUE"])): ?>
+                                    <div class="glass-employee__name"><?=htmlspecialcharsbx($employeeName)?></div>
+                                    <?php if ($position !== ''): ?>
+                                        <div class="glass-employee__position"><?=htmlspecialcharsbx($position)?></div>
+                                    <?php endif; ?>
+                                    <?php if ($phone !== ''): ?>
                                         <div class="glass-employee__contact">
-                                            <i class="fas fa-phone-alt glass-contact-icon"></i>
-                                            <span><?=htmlspecialcharsbx($employee["PROPERTIES"]["PHONE"]["VALUE"])?></span>
+                                            <i class="fas fa-phone-alt glass-contact-icon" aria-hidden="true"></i>
+                                            <span><?=htmlspecialcharsbx($phone)?></span>
                                         </div>
-                                    <? endif; ?>
-                                    
-                                    <? if (!empty($employee["PROPERTIES"]["ADDRESS"]["VALUE"])): ?>
+                                    <?php endif; ?>
+                                    <?php if ($address !== ''): ?>
                                         <div class="glass-employee__contact">
-                                            <i class="fas fa-map-marker-alt glass-contact-icon"></i>
-                                            <span><?=htmlspecialcharsbx($employee["PROPERTIES"]["ADDRESS"]["VALUE"])?></span>
+                                            <i class="fas fa-map-marker-alt glass-contact-icon" aria-hidden="true"></i>
+                                            <span><?=htmlspecialcharsbx($address)?></span>
                                         </div>
-                                    <? endif; ?>
-                                    
-                                    <? if (!empty($employee["PROPERTIES"]["EMAIL"]["VALUE"])): ?>
+                                    <?php endif; ?>
+                                    <?php if ($emailLink !== ''): ?>
                                         <div class="glass-employee__contact glass-employee__email">
-                                            <i class="fas fa-envelope glass-contact-icon"></i>
-                                            <a href="mailto:<?=htmlspecialcharsbx($employee["PROPERTIES"]["EMAIL"]["VALUE"])?>">
-                                                <?=htmlspecialcharsbx($employee["PROPERTIES"]["EMAIL"]["VALUE"])?>
-                                            </a>
+                                            <i class="fas fa-envelope glass-contact-icon" aria-hidden="true"></i>
+                                            <a href="<?=htmlspecialcharsbx($emailLink)?>"><?=htmlspecialcharsbx($email)?></a>
                                         </div>
-                                    <? endif; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
-            <? else: ?>
+            <?php else: ?>
                 <p class="glass-department__empty">
-                    <i class="fas fa-users-slash me-2"></i> Нет сотрудников
+                    <i class="fas fa-users-slash me-2" aria-hidden="true"></i> Нет сотрудников
                 </p>
-            <? endif; ?>
+            <?php endif; ?>
         </div>
-    <? endforeach; ?>
+    <?php endforeach; ?>
 </div>
