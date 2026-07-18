@@ -321,8 +321,7 @@ $APPLICATION->IncludeComponent(
         "EXPIRE_DAYS" => "365",
         "MESSAGE" => $cookie_message,
         "PRESETS" => "style4",
-        "SHOW_SETTINGS" => "Y", // Показывать настройки
-        "SHOW_PD_CONSENT" => "Y" // Показывать согласие на ПДн
+        "SHOW_SETTINGS" => "Y" // Показывать настройки
     )
 );
 

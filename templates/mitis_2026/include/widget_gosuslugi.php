@@ -1,3 +1,10 @@
+<?php
+$gosuslugiWidgetId = max(0, (int)get_info('gosuslugi_widget_id', 0));
+
+if ($gosuslugiWidgetId === 0) {
+    return;
+}
+?>
 <script src='https://pos.gosuslugi.ru/bin/script.min.js'></script>
 
 <style>
@@ -182,5 +189,5 @@
 </script>
 
 <script>
-	Widget("https://pos.gosuslugi.ru/form", 215882);
+	Widget("https://pos.gosuslugi.ru/form", <?=$gosuslugiWidgetId?>);
 </script>

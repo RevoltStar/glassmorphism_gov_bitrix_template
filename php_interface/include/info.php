@@ -39,6 +39,8 @@ const SITE_INFO = [
     'privacy_policy_path' => '/doc/personal_data_processing_policies/',
     'show_max_robot' => true,
     'yandex_metrika_id' => 105106588,
+    'gosuslugi_widget_id' => 215882,
+    'gosuslugi_org_id' => 494,
     'layout_excluded_pages' => [
         '/',
         '/news',

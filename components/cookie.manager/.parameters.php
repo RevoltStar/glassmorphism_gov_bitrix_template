@@ -1,19 +1,17 @@
 <?php
-/** @var array $arCurrentValues */
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 {
     die();
 }
 
 $arComponentParameters = [
-    'GROUPS'     => [],
     'PARAMETERS' => [
         "MESSAGE"       => [
             "PARENT"  => "BASE",
             "NAME"    => GetMessage("COOKIE_MESSAGE"),
-            "TYPE"    => "TEXT",  //
-            "ROWS"    => 5,       //
-            "COLS"    => 50,      //
+            "TYPE"    => "TEXT",
+            "ROWS"    => 5,
+            "COLS"    => 50,
             "DEFAULT" => GetMessage("COOKIE_MESSAGE_DEFAULT"),
         ],
         "CHECK_TIMEOUT" => [
@@ -34,12 +32,6 @@ $arComponentParameters = [
             "TYPE"    => "CHECKBOX",
             "DEFAULT" => "Y",
         ],
-        "SHOW_PD_CONSENT" => [
-            "PARENT"  => "BASE",
-            "NAME"    => GetMessage("COOKIE_SHOW_PD_CONSENT"),
-            "TYPE"    => "CHECKBOX",
-            "DEFAULT" => "N",
-        ],
         'CACHE_TIME'    => [
             "PARENT"  => "PARAMS",
             'DEFAULT' => 86400,
@@ -56,9 +48,6 @@ $arComponentParameters = [
                 "style5" => GetMessage('COOKIE_PRESETS_TURQUOISE'),
             ],
             "DEFAULT" => "style1",
-            "REFRESH" => "Y",
         ],
     ],
 ];
-
-$arCurrentValues['PRESETS'] = $arCurrentValues['PRESETS'] ?? 'style1';

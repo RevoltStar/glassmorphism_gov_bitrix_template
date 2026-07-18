@@ -4,13 +4,11 @@ class CookieManager {
             containerId: 'cookieDiv',
             cookieName: 'cookie_consent',
             analyticsName: 'analytics_consent',
-            pdConsentName: 'pd_consent',
             cookieValue: 'accepted',
             rejectedValue: 'rejected',
             cookieExpireDays: 30,
             checkCookieTimeout: 1000,
             showSettings: false,
-            showPdConsent: false,
             analyticsScriptSrc: '',
             ...settings
         };
@@ -38,15 +36,8 @@ class CookieManager {
         document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax${secure}`;
     }
 
-    getCookie(name) {
-        const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const match = document.cookie.match(new RegExp(`(?:^|; )${escapedName}=([^;]*)`));
-
-        return match ? decodeURIComponent(match[1]) : '';
-    }
-
     checkAllConsents() {
-        const decision = this.getCookie(this.settings.cookieName);
+        const decision = getConsentCookie(this.settings.cookieName);
 
         if (decision === '') {
             this.showBanner();
@@ -55,7 +46,7 @@ class CookieManager {
 
         if (
             decision === this.settings.cookieValue
-            && this.getCookie(this.settings.analyticsName) === this.settings.cookieValue
+            && getConsentCookie(this.settings.analyticsName) === this.settings.cookieValue
         ) {
             this.loadAnalytics();
         }
@@ -68,22 +59,17 @@ class CookieManager {
             return;
         }
 
-        this.settings.cookieDiv.style.display = 'flex';
         this.settings.cookieDiv.classList.remove('cookie__hide');
     }
 
-    acceptWithOptions(containerId) {
+    acceptWithOptions() {
         let analyticsAccepted = !this.settings.showSettings;
-        let pdAccepted = false;
 
         if (this.settings.showSettings) {
-            const analyticsCheckbox = document.getElementById(`cookie_analytics_${containerId}`);
+            const analyticsCheckbox = document.getElementById(
+                `cookie_analytics_${this.settings.containerId}`
+            );
             analyticsAccepted = Boolean(analyticsCheckbox && analyticsCheckbox.checked);
-        }
-
-        if (this.settings.showPdConsent) {
-            const pdCheckbox = document.getElementById(`cookie_pd_${containerId}`);
-            pdAccepted = Boolean(pdCheckbox && pdCheckbox.checked);
         }
 
         this.setCookie(
@@ -97,19 +83,10 @@ class CookieManager {
             this.settings.cookieExpireDays
         );
 
-        if (this.settings.showPdConsent) {
-            this.setCookie(
-                this.settings.pdConsentName,
-                pdAccepted ? this.settings.cookieValue : this.settings.rejectedValue,
-                this.settings.cookieExpireDays
-            );
-        }
-
         if (analyticsAccepted) {
             this.loadAnalytics();
         }
 
-        this.dispatchConsentChange();
         this.closeCookieDiv();
     }
 
@@ -125,15 +102,6 @@ class CookieManager {
             this.settings.cookieExpireDays
         );
 
-        if (this.settings.showPdConsent) {
-            this.setCookie(
-                this.settings.pdConsentName,
-                this.settings.rejectedValue,
-                this.settings.cookieExpireDays
-            );
-        }
-
-        this.dispatchConsentChange();
         this.closeCookieDiv();
     }
 
@@ -152,16 +120,6 @@ class CookieManager {
         document.head.appendChild(script);
     }
 
-    dispatchConsentChange() {
-        document.dispatchEvent(new CustomEvent('cookieconsentchange', {
-            detail: {
-                cookie: checkConsent('cookie'),
-                analytics: checkConsent('analytics'),
-                pd: checkConsent('pd')
-            }
-        }));
-    }
-
     closeCookieDiv() {
         if (!this.settings.cookieDiv) {
             return;
@@ -177,41 +135,4 @@ function getConsentCookie(name) {
     const match = document.cookie.match(new RegExp(`(?:^|; )${escapedName}=([^;]*)`));
 
     return match ? decodeURIComponent(match[1]) : '';
-}
-
-function checkConsent(consentType) {
-    const cookieNames = {
-        cookie: 'cookie_consent',
-        analytics: 'analytics_consent',
-        pd: 'pd_consent'
-    };
-    const cookieName = cookieNames[consentType];
-
-    return cookieName
-        ? getConsentCookie(cookieName) === 'accepted'
-        : false;
-}
-
-function bindPdConsentForms() {
-    document.querySelectorAll('form[data-require-pd-consent]').forEach((form) => {
-        if (form.dataset.pdConsentBound === 'true') {
-            return;
-        }
-
-        form.dataset.pdConsentBound = 'true';
-        form.addEventListener('submit', (event) => {
-            if (checkConsent('pd')) {
-                return;
-            }
-
-            event.preventDefault();
-            window.alert('Для отправки формы необходимо согласие на обработку персональных данных.');
-        });
-    });
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bindPdConsentForms, {once: true});
-} else {
-    bindPdConsentForms();
 }

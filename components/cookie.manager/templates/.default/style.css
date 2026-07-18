@@ -23,35 +23,17 @@
 .widget_cookie__style1{
 	border-color:#63aa28
 }
-.widget_cookie__style1 .widget_cookie__btn-close-cookie{
-	background-color:#63aa28
-}
 .widget_cookie__style2{
 	border-color:#f8a91c
-}
-.widget_cookie__style2 .widget_cookie__btn-close-cookie{
-	background-color:#f8a91c
 }
 .widget_cookie__style3{
 	border-color:#e12a2a
 }
-.widget_cookie__style3 .widget_cookie__btn-close-cookie{
-	background-color:#e12a2a
-}
 .widget_cookie__style4{
 	border-color:#0082d1
 }
-.widget_cookie__style4 .widget_cookie__btn-close-cookie{
-	background-color:#0082d1
-}
 .widget_cookie__style5{
 	border-color:#159dba
-}
-.widget_cookie__style5 .widget_cookie__btn-close-cookie{
-	background-color:#159dba
-}
-@media(min-width: 29.99875em){
-	.widget_cookie{width:345px;bottom:30px;right:15px}
 }
 .widget_cookie__text {
     margin: 0;
@@ -64,26 +46,14 @@
 .widget_cookie a{
 	color:var(--theme-b-link)
 }
-.widget_cookie__btn-close-cookie{
-	background-size:100% 100%;
-	width:111px;
-	height:48px;
-	display:inline-block;
-	cursor:pointer;
-	transition:.3s;
-	font-size:13px;
-	line-height:19px
-}
-.widget_cookie .btn-close-cookie:hover{opacity:.5}
 .widget_cookie.cookie__hide{
 	transition-delay:0s;
 	opacity:0 !important;
 	transform:translateY(20px) !important;
-	pointer-events: none !important; /* Добавить эту строку */
-    visibility: hidden !important;    /* Опционально */
+	pointer-events: none !important;
+    visibility: hidden !important;
 }
 
-/* Дополнительные стили для настроек */
 .cookie-settings {
     margin: 12px 0 0 !important;
     padding: 10px;
@@ -91,7 +61,6 @@
 
 .cookie-option {
     margin: 8px 0;
-    align-items: flex-start;
 }
 
 
@@ -117,6 +86,7 @@
 }
 
 .cookie-buttons {
+    display: flex;
     margin-top: 12px !important;
     gap: 10px;
 }
@@ -124,7 +94,6 @@
 .widget_cookie__btn-reject,
 .widget_cookie__btn-accept {
     min-height: 44px;
-    max-width: none;
 }
 
 @media (min-width: 480px) {

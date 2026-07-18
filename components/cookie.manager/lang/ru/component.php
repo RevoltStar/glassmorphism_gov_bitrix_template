@@ -1,2 +1,0 @@
-<?php
-$MESS['COOKIE_CONFIRM'] = 'OK';
