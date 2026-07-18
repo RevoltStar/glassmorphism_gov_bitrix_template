@@ -45,3 +45,11 @@ body .bvi-body[data-bvi-theme="green"] input::placeholder,
 body .bvi-body[data-bvi-theme="green"] textarea::placeholder {
     color: #a9e44d !important;
 }
+
+body.bvi-active .bvi-component-container {
+    display: none;
+}
+body.bvi-active .official-badge{
+	width: 100%;
+	text-align: center;
+}
