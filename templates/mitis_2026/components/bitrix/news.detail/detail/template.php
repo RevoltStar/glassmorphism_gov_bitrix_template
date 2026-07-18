@@ -5,6 +5,15 @@ use Bitrix\Main\Localization\Loc;
 
 $arResult = is_array($arResult ?? null) ? $arResult : [];
 $arParams = is_array($arParams ?? null) ? $arParams : [];
+$properties = is_array($arResult['PROPERTIES'] ?? null) ? $arResult['PROPERTIES'] : [];
+$categoryProperty = is_array($properties['category'] ?? null) ? $properties['category'] : [];
+$categoryValues = (array)($categoryProperty['VALUE'] ?? []);
+$categoryXmlIds = (array)($categoryProperty['VALUE_XML_ID'] ?? []);
+$detailPictureValue = $arResult['DETAIL_PICTURE'] ?? null;
+$previewPictureValue = $arResult['PREVIEW_PICTURE'] ?? null;
+$previewHtml = site_string($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT'] ?? '');
+$hasPreviewText = trim($previewHtml) !== '';
+$showCounter = max(0, (int)($arResult['SHOW_COUNTER'] ?? 0));
 
 // Получение ID текущей новости
 $currentNewsId = max(0, (int)($arResult['ID'] ?? 0));
@@ -59,24 +68,24 @@ foreach ($newsList as $index => $news) {
 }
 
 // Обработка файлов
-$additionalFiles = is_array($arResult['PROPERTIES']['additional_files'] ?? null)
-    ? $arResult['PROPERTIES']['additional_files']
+$additionalFiles = is_array($properties['additional_files'] ?? null)
+    ? $properties['additional_files']
     : [];
 $downloadFiles = [];
 $galleryFiles = [];
 $newsName = site_string($arResult['~NAME'] ?? $arResult['NAME'] ?? '');
 
 // Добавляем DETAIL_PICTURE в начало галереи
-if (!empty($arResult['DETAIL_PICTURE'])) {
-    if (is_array($arResult['DETAIL_PICTURE'])) {
-        $detailPicture = $arResult['DETAIL_PICTURE'];
+if (!empty($detailPictureValue)) {
+    if (is_array($detailPictureValue)) {
+        $detailPicture = $detailPictureValue;
         $detailPicture['SRC'] = site_url($detailPicture['SRC'] ?? null, '');
         if ($detailPicture['SRC'] !== '') {
             $detailPicture['FANCYBOX_NAME'] = $newsName . ' (детальное изображение)';
             array_unshift($galleryFiles, $detailPicture);
         }
     } else {
-        $detailPictureId = filter_var($arResult['DETAIL_PICTURE'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $detailPictureId = filter_var($detailPictureValue, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         $detailPicture = $detailPictureId !== false ? CFile::GetFileArray($detailPictureId) : false;
         if (is_array($detailPicture)) {
             $detailPicture['SRC'] = site_url($detailPicture['SRC'] ?? null, '');
@@ -88,16 +97,16 @@ if (!empty($arResult['DETAIL_PICTURE'])) {
     }
 }
 // Добавляем PREVIEW_PICTURE в начало галереи
-if (!empty($arResult['PREVIEW_PICTURE'])) {
-    if (is_array($arResult['PREVIEW_PICTURE'])) {
-        $previewPicture = $arResult['PREVIEW_PICTURE'];
+if (!empty($previewPictureValue)) {
+    if (is_array($previewPictureValue)) {
+        $previewPicture = $previewPictureValue;
         $previewPicture['SRC'] = site_url($previewPicture['SRC'] ?? null, '');
         if ($previewPicture['SRC'] !== '') {
             $previewPicture['FANCYBOX_NAME'] = $newsName . ' (анонс)';
             array_unshift($galleryFiles, $previewPicture);
         }
     } else {
-        $previewPictureId = filter_var($arResult['PREVIEW_PICTURE'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $previewPictureId = filter_var($previewPictureValue, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         $previewPicture = $previewPictureId !== false ? CFile::GetFileArray($previewPictureId) : false;
         if (is_array($previewPicture)) {
             $previewPicture['SRC'] = site_url($previewPicture['SRC'] ?? null, '');
@@ -148,9 +157,9 @@ if (!empty($additionalFiles['VALUE'])) {
             <span class="glass-badge">
                 <i class="bi bi-calendar3 me-1" style="color: #2980b9;"></i> <?=htmlspecialcharsbx(site_string($arResult["DISPLAY_ACTIVE_FROM"] ?? ''))?>
             </span>
-            <?php if ($arResult["SHOW_COUNTER"]): ?>
+            <?php if ($showCounter > 0): ?>
                 <span class="glass-badge">
-                    <i class="bi bi-eye me-1" style="color: #2980b9;"></i> <?=max(0, (int)$arResult["SHOW_COUNTER"])?> просмотров
+                    <i class="bi bi-eye me-1" style="color: #2980b9;"></i> <?=$showCounter?> просмотров
                 </span>
             <?php endif; ?>
         </div>
@@ -158,8 +167,6 @@ if (!empty($additionalFiles['VALUE'])) {
         <!-- Рубрики -->
         <div class="mb-4 d-flex flex-wrap gap-2">
             <?php
-            $categoryValues = (array)($arResult['PROPERTIES']['category']['VALUE'] ?? array());
-            $categoryXmlIds = (array)($arResult['PROPERTIES']['category']['VALUE_XML_ID'] ?? array());
             $newsCategories = array();
             foreach ($categoryValues as $categoryIndex => $categoryValue) {
                 $categoryValue = site_string($categoryValue);
@@ -188,10 +195,10 @@ if (!empty($additionalFiles['VALUE'])) {
             <!-- Основной контент -->
             <div class="col-lg-8 order-2 order-lg-1">
                 <!-- Анонс -->
-                <?php if ($arResult['PREVIEW_TEXT']): ?>
+                <?php if ($hasPreviewText): ?>
                     <div class="news-preview glass-preview mb-4 bvi-speech">
                         <i class="bi bi-quote me-2" style="color: #3498db;"></i>
-                        <?=site_safe_html($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT'])?>
+                        <?=site_safe_html($previewHtml)?>
                     </div>
                 <?php endif; ?>
 
@@ -406,8 +413,8 @@ if ($modifiedTimestamp !== false) {
 
 // Описание (обрезаем до 200 символов)
 $description = '';
-if (!empty($arResult['PREVIEW_TEXT'])) {
-    $description = site_plain_text($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT']);
+if ($hasPreviewText) {
+    $description = site_plain_text($previewHtml);
     if (mb_strlen($description) > 200) {
         $description = mb_substr($description, 0, 200) . '...';
     }
@@ -415,13 +422,7 @@ if (!empty($arResult['PREVIEW_TEXT'])) {
 
 // Категории
 $articleSections = [];
-if (!empty($arResult['PROPERTIES']['category']['VALUE'])) {
-    if (is_array($arResult['PROPERTIES']['category']['VALUE'])) {
-        $articleSections = site_string_list($arResult['PROPERTIES']['category']['VALUE']);
-    } else {
-        $articleSections = site_string_list($arResult['PROPERTIES']['category']['VALUE']);
-    }
-}
+$articleSections = site_string_list($categoryProperty['VALUE'] ?? []);
 
 // Только изображения для микроразметки (без видео)
 $imagesForMarkup = [];
@@ -490,11 +491,11 @@ if (!empty($articleSections)) {
 }
 
 // Счетчик просмотров
-if ($arResult["SHOW_COUNTER"] && (int)$arResult["SHOW_COUNTER"] > 0) {
+if ($showCounter > 0) {
     $jsonLd['interactionStatistic'] = [
         '@type' => 'InteractionCounter',
         'interactionType' => 'https://schema.org/ViewAction',
-        'userInteractionCount' => (int)$arResult["SHOW_COUNTER"]
+        'userInteractionCount' => $showCounter
     ];
 }
 ?>
