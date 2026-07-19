@@ -262,7 +262,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                         <i class="bi bi-eye"></i> 0+
                     </span>
                     <span class="footer-badge">
-                        <i class="bi bi-activity"></i> Счетчик посещений
+                        <i class="bi bi-activity"></i> Яндекс.Метрика
                     </span>
                     <span class="footer-badge">
                         <i class="bi bi-shield-check"></i> Госуслуги
