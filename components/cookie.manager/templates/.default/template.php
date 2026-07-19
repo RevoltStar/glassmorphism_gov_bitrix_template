@@ -65,7 +65,7 @@ $policyUrl = site_url($arResult['POLICY_URL'] ?? '', '');
             cookieExpireDays: <?=$expireDays?>,
             checkCookieTimeout: <?=$checkTimeout?>,
             showSettings: <?=$showSettings ? 'true' : 'false'?>,
-            analyticsScriptSrc: <?=$yandexMetrikaId > 0 ? "'/local/metrika.js'" : "''"?>
+            analyticsScriptSrc: <?=$yandexMetrikaId > 0 ? "'/local/js/analytics/yandex-metrika.js'" : "''"?>
         });
     </script>
 </div>
