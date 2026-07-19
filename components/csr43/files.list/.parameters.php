@@ -6,20 +6,40 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
+$iblockTypeOptions = ['' => '— Выберите тип инфоблока —'];
+$iblockOptions = ['0' => '— Выберите инфоблок —'];
 $sectionOptions = ['0' => '— Выберите раздел —'];
 
 if (Loader::includeModule('iblock')) {
-    $sectionResult = CIBlockSection::GetList(
-        ['LEFT_MARGIN' => 'ASC'],
-        ['IBLOCK_ID' => 18],
-        false,
-        ['ID', 'NAME', 'DEPTH_LEVEL']
-    );
+    $iblockTypeOptions += CIBlockParameters::GetIBlockTypes();
 
-    while ($section = $sectionResult->Fetch()) {
-        $depth = max(0, (int)$section['DEPTH_LEVEL'] - 1);
-        $prefix = $depth > 0 ? str_repeat('·  ', $depth) : '';
-        $sectionOptions[(string)$section['ID']] = $prefix . trim(strip_tags((string)$section['NAME']));
+    $selectedIblockType = trim((string)($arCurrentValues['IBLOCK_TYPE'] ?? ''));
+    $selectedIblockId = max(0, (int)($arCurrentValues['IBLOCK_ID'] ?? 0));
+
+    if ($selectedIblockType !== '') {
+        $iblockResult = CIBlock::GetList(
+            ['SORT' => 'ASC', 'NAME' => 'ASC'],
+            ['TYPE' => $selectedIblockType, 'ACTIVE' => 'Y']
+        );
+
+        while ($iblock = $iblockResult->Fetch()) {
+            $iblockOptions[(string)$iblock['ID']] = sprintf('[%d] %s', $iblock['ID'], trim(strip_tags((string)$iblock['NAME'])));
+        }
+    }
+
+    if ($selectedIblockId > 0) {
+        $sectionResult = CIBlockSection::GetList(
+            ['LEFT_MARGIN' => 'ASC'],
+            ['IBLOCK_ID' => $selectedIblockId, 'ACTIVE' => 'Y'],
+            false,
+            ['ID', 'NAME', 'DEPTH_LEVEL']
+        );
+
+        while ($section = $sectionResult->Fetch()) {
+            $depth = max(0, (int)$section['DEPTH_LEVEL'] - 1);
+            $prefix = $depth > 0 ? str_repeat('·  ', $depth) : '';
+            $sectionOptions[(string)$section['ID']] = $prefix . trim(strip_tags((string)$section['NAME']));
+        }
     }
 }
 
@@ -31,6 +51,24 @@ $arComponentParameters = [
         ],
     ],
     'PARAMETERS' => [
+        'IBLOCK_TYPE' => [
+            'PARENT' => 'BASE',
+            'NAME' => 'Тип инфоблока',
+            'TYPE' => 'LIST',
+            'VALUES' => $iblockTypeOptions,
+            'DEFAULT' => '',
+            'REFRESH' => 'Y',
+            'ADDITIONAL_VALUES' => 'N',
+        ],
+        'IBLOCK_ID' => [
+            'PARENT' => 'BASE',
+            'NAME' => 'Инфоблок',
+            'TYPE' => 'LIST',
+            'VALUES' => $iblockOptions,
+            'DEFAULT' => '0',
+            'REFRESH' => 'Y',
+            'ADDITIONAL_VALUES' => 'N',
+        ],
         'SECTION_ID' => [
             'PARENT' => 'BASE',
             'NAME' => 'Раздел инфоблока',
@@ -86,4 +124,3 @@ $arComponentParameters = [
         ],
     ],
 ];
-
