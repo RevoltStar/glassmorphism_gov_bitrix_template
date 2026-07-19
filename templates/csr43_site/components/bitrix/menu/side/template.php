@@ -13,6 +13,28 @@ $childCount = [];
 $currentParentIndex = null;
 $currentParentLink = null;
 
+$normalizePath = static function (mixed $url): string {
+    $path = parse_url(site_string($url), PHP_URL_PATH);
+
+    if (!is_string($path) || $path === '') {
+        return '/';
+    }
+
+    $path = '/' . ltrim($path, '/');
+    $path = preg_replace('#/+#', '/', $path);
+    $path = preg_replace('#/index\.php$#', '/', $path);
+
+    return $path === '/' ? '/' : rtrim($path, '/') . '/';
+};
+
+$currentPath = $normalizePath($APPLICATION->GetCurPage(false));
+$activeIndex = null;
+$activeLength = -1;
+$activeIsParent = true;
+$selectedFallbackIndex = null;
+$selectedFallbackLength = -1;
+$selectedFallbackIsParent = true;
+
 foreach ($items as $index => $item) {
     if (!is_array($item)) {
         continue;
@@ -25,6 +47,55 @@ foreach ($items as $index => $item) {
         $currentParentIndex = $index;
         $currentParentLink = $link;
         $childCount[$index] = 0;
+
+        $itemLink = trim(site_string($item['LINK'] ?? ''));
+        if (
+            $itemLink === ''
+            || $itemLink === '#'
+            || preg_match('#^[a-z][a-z0-9+\-.]*://#i', $itemLink)
+        ) {
+            continue;
+        }
+
+        $itemPath = $normalizePath($itemLink);
+        $itemLength = strlen($itemPath);
+        $itemIsParent = !empty($item['IS_PARENT']);
+
+        if (
+            !empty($item['SELECTED'])
+            && (
+                $itemLength > $selectedFallbackLength
+                || (
+                    $itemLength === $selectedFallbackLength
+                    && !$itemIsParent
+                    && $selectedFallbackIsParent
+                )
+            )
+        ) {
+            $selectedFallbackIndex = $index;
+            $selectedFallbackLength = $itemLength;
+            $selectedFallbackIsParent = $itemIsParent;
+        }
+
+        $isPathMatch = $itemPath === '/'
+            ? $currentPath === '/'
+            : $currentPath === $itemPath || str_starts_with($currentPath, $itemPath);
+
+        if (
+            $isPathMatch
+            && (
+                $itemLength > $activeLength
+                || (
+                    $itemLength === $activeLength
+                    && !$itemIsParent
+                    && $activeIsParent
+                )
+            )
+        ) {
+            $activeIndex = $index;
+            $activeLength = $itemLength;
+            $activeIsParent = $itemIsParent;
+        }
     } elseif (
         $depth === 2
         && $currentParentIndex !== null
@@ -33,6 +104,8 @@ foreach ($items as $index => $item) {
         $childCount[$currentParentIndex]++;
     }
 }
+
+$activeIndex ??= $selectedFallbackIndex;
 ?>
 <select class="side-menu-select glass-select"
         <?php if ($forceDesktop): ?>style="display: none !important;"<?php endif; ?>
@@ -50,8 +123,7 @@ foreach ($items as $index => $item) {
         if ($count > 0) {
             $text .= ' (' . $count . ')';
         }
-        $isSelected = !empty($item['SELECTED'])
-            && $link === $APPLICATION->GetCurPage();
+        $isSelected = $index === $activeIndex;
         ?>
         <option value="<?=htmlspecialcharsbx($link)?>"
                 <?php if ($isSelected): ?>selected<?php endif; ?>><?=htmlspecialcharsbx($text)?></option>
@@ -76,11 +148,12 @@ foreach ($items as $index => $item) {
             $item['PARAMS']['ICON'] ?? null,
             'bi bi-arrow-up-right'
         );
-        $isSelected = !empty($item['SELECTED'])
-            && $link === $APPLICATION->GetCurPage();
+        $isSelected = $index === $activeIndex;
         ?>
         <li class="glass-menu-item<?=$isSelected ? ' glass-menu-item--selected' : ''?>">
-            <a href="<?=htmlspecialcharsbx($link)?>" class="glass-menu-link">
+            <a href="<?=htmlspecialcharsbx($link)?>"
+               class="glass-menu-link"
+               <?php if ($isSelected): ?>aria-current="page"<?php endif; ?>>
                 <i class="<?=htmlspecialcharsbx($icon)?> me-2" aria-hidden="true"></i>
                 <?=htmlspecialcharsbx($text)?>
                 <span class="glass-menu-arrow"></span>
