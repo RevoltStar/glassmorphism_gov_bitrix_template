@@ -1,13 +1,12 @@
 .citizen-faq {
-    --faq-blue: #2980b9;
-    --faq-dark: #0a3144;
+    --faq-blue: var(--csr43-color-accent);
+    --faq-dark: var(--csr43-color-heading);
+    --csr43-glass-bg: rgba(255, 255, 255, 0.56);
+    --csr43-glass-border: rgba(52, 152, 219, 0.25);
+    --csr43-glass-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
+    --csr43-glass-blur: 14px;
     overflow: hidden;
-    border: 1px solid rgba(52, 152, 219, 0.25);
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.56);
-    box-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
 }
 
 .citizen-faq__toggle {
@@ -41,17 +40,9 @@
 }
 
 .citizen-faq__heading-icon {
-    display: inline-flex;
-    flex: 0 0 42px;
-    width: 42px;
-    height: 42px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(52, 152, 219, 0.22);
-    border-radius: 14px;
-    background: rgba(52, 152, 219, 0.11);
-    color: var(--faq-blue);
-    font-size: 1.2rem;
+    --csr43-glass-icon-size: 42px;
+    --csr43-glass-icon-radius: 14px;
+    --csr43-glass-icon-font-size: 1.2rem;
 }
 
 .citizen-faq__heading-text {
@@ -97,10 +88,11 @@
 }
 
 .citizen-faq__item {
+    --csr43-glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(237, 248, 255, 0.5));
+    --csr43-glass-border: rgba(52, 152, 219, 0.18);
+    --csr43-glass-shadow: none;
     overflow: hidden;
-    border: 1px solid rgba(52, 152, 219, 0.18);
     border-radius: 18px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(237, 248, 255, 0.5));
 }
 
 .citizen-faq__question {
@@ -174,13 +166,14 @@
 }
 
 .citizen-faq__empty {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.58);
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-shadow: none;
     display: flex;
     align-items: center;
     gap: 0.65rem;
     padding: 1rem;
-    border: 1px solid rgba(52, 152, 219, 0.2);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.58);
     color: #31546f;
 }
 
@@ -217,4 +210,3 @@
         transition: none;
     }
 }
-

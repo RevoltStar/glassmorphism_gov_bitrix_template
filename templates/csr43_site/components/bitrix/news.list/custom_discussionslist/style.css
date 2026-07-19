@@ -1,19 +1,18 @@
 .discussion-list {
-    --discussion-blue: #2980b9;
-    --discussion-dark: #0a3144;
+    --discussion-blue: var(--csr43-color-accent);
+    --discussion-dark: var(--csr43-color-heading);
     --discussion-text: #31546f;
     --discussion-muted: #54758f;
     --discussion-border: rgba(52, 152, 219, 0.24);
+    --csr43-glass-bg: rgba(255, 255, 255, 0.56);
+    --csr43-glass-border: var(--discussion-border);
+    --csr43-glass-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
+    --csr43-glass-blur: 14px;
     margin-top: 1rem;
     padding: 1rem;
     overflow: hidden;
-    border: 1px solid var(--discussion-border);
     border-radius: 26px;
-    background: rgba(255, 255, 255, 0.56);
-    box-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
     color: var(--discussion-text);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
 }
 
 .discussion-list__header {
@@ -27,17 +26,9 @@
 .discussion-list__header-icon,
 .discussion-card__icon,
 .discussion-list-empty__icon {
-    display: inline-flex;
-    flex: 0 0 48px;
-    width: 48px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(52, 152, 219, 0.22);
-    border-radius: 16px;
-    background: rgba(52, 152, 219, 0.11);
-    color: var(--discussion-blue, #2980b9);
-    font-size: 1.25rem;
+    --csr43-glass-icon-size: 48px;
+    --csr43-glass-icon-radius: 16px;
+    --csr43-glass-icon-font-size: 1.25rem;
 }
 
 .discussion-list__heading {
@@ -165,11 +156,11 @@
 }
 
 .discussion-card {
-    padding: 1rem;
-    border: 1px solid rgba(52, 152, 219, 0.2);
-    border-radius: 22px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(237, 248, 255, 0.54));
-    box-shadow: 0 8px 22px rgba(31, 100, 180, 0.07);
+    --csr43-glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(237, 248, 255, 0.54));
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-shadow: 0 8px 22px rgba(31, 100, 180, 0.07);
+    --csr43-glass-radius: 22px;
+    --csr43-glass-padding: 1rem;
 }
 
 .discussion-card[hidden] {
@@ -184,11 +175,9 @@
 }
 
 .discussion-card__icon {
-    flex-basis: 44px;
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    font-size: 1.1rem;
+    --csr43-glass-icon-size: 44px;
+    --csr43-glass-icon-radius: 14px;
+    --csr43-glass-icon-font-size: 1.1rem;
 }
 
 .discussion-card__heading {
@@ -293,32 +282,26 @@
 }
 
 .discussion-file {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.56);
+    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.9);
+    --csr43-glass-border: rgba(52, 152, 219, 0.18);
+    --csr43-glass-border-hover: rgba(52, 152, 219, 0.5);
+    --csr43-glass-shadow: none;
+    --csr43-glass-shadow-hover: 0 10px 22px rgba(31, 100, 180, 0.12);
+    --csr43-glass-radius: 17px;
+    --csr43-glass-padding: 0.72rem;
+    --csr43-glass-hover-translate-y: -2px;
     display: grid;
     min-width: 0;
     grid-template-columns: 44px minmax(0, 1fr) 36px;
     align-items: center;
     gap: 0.7rem;
-    padding: 0.72rem;
     overflow: hidden;
-    border: 1px solid rgba(52, 152, 219, 0.18);
-    border-radius: 17px;
-    background: rgba(255, 255, 255, 0.56);
-    color: var(--discussion-text);
     text-decoration: none;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .discussion-file:hover {
-    border-color: rgba(52, 152, 219, 0.5);
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 10px 22px rgba(31, 100, 180, 0.12);
     color: var(--discussion-text);
-    transform: translateY(-2px);
-}
-
-.discussion-file:focus-visible {
-    outline: 3px solid rgba(41, 128, 185, 0.35);
-    outline-offset: 3px;
 }
 
 .discussion-file__icon,
@@ -394,18 +377,17 @@
 }
 
 .discussion-list-empty {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.56);
+    --csr43-glass-border: rgba(52, 152, 219, 0.24);
+    --csr43-glass-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
+    --csr43-glass-blur: 14px;
     display: flex;
     align-items: center;
     gap: 0.8rem;
     margin-top: 1rem;
     padding: 1rem;
-    border: 1px solid rgba(52, 152, 219, 0.24);
     border-radius: 22px;
-    background: rgba(255, 255, 255, 0.56);
-    box-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
     color: #31546f;
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
 }
 
 .discussion-list-empty strong {
@@ -467,12 +449,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .discussion-list__selector,
-    .discussion-file {
+    .discussion-list__selector {
         transition: none;
-    }
-
-    .discussion-file:hover {
-        transform: none;
     }
 }

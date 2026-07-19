@@ -73,9 +73,9 @@ if ($itemCount % 100 >= 11 && $itemCount % 100 <= 14) {
 ?>
 
 <?php if ($items): ?>
-    <section class="discussion-list" id="<?=$instanceId?>" data-discussions-list>
+    <section class="csr43-glass-surface discussion-list" id="<?=$instanceId?>" data-discussions-list>
         <div class="discussion-list__header">
-            <span class="discussion-list__header-icon" aria-hidden="true">
+            <span class="csr43-glass-icon discussion-list__header-icon" aria-hidden="true">
                 <i class="bi bi-chat-square-text"></i>
             </span>
             <div class="discussion-list__heading">
@@ -155,12 +155,12 @@ if ($itemCount % 100 >= 11 && $itemCount % 100 <= 14) {
                     ['CONFIRM' => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')]
                 );
                 ?>
-                <article class="discussion-card"
+                <article class="csr43-glass-card discussion-card"
                          id="<?=$this->GetEditAreaId($itemId)?>"
                          data-discussion-card="<?=htmlspecialcharsbx((string)$index)?>"
                          hidden>
                     <div class="discussion-card__top">
-                        <span class="discussion-card__icon" aria-hidden="true"><i class="bi bi-megaphone"></i></span>
+                        <span class="csr43-glass-icon discussion-card__icon" aria-hidden="true"><i class="bi bi-megaphone"></i></span>
                         <div class="discussion-card__heading">
                             <span class="discussion-card__eyebrow">Общественное обсуждение</span>
                             <h3 class="discussion-card__title" id="<?=$cardId?>-title"><?=htmlspecialcharsbx($item['NAME'])?></h3>
@@ -192,7 +192,7 @@ if ($itemCount % 100 >= 11 && $itemCount % 100 <= 14) {
                     <?php if ($files): ?>
                         <div class="discussion-card__documents">
                             <?php foreach ($files as $file): ?>
-                                <a class="discussion-file" href="<?=htmlspecialcharsbx($file['src'])?>" download>
+                                <a class="csr43-glass-card csr43-glass-card--interactive discussion-file" href="<?=htmlspecialcharsbx($file['src'])?>" download>
                                     <span class="discussion-file__icon" aria-hidden="true"><i class="bi <?=$file['icon']?>"></i></span>
                                     <span class="discussion-file__content">
                                         <strong class="discussion-file__label"><?=htmlspecialcharsbx($file['label'])?></strong>
@@ -214,8 +214,8 @@ if ($itemCount % 100 >= 11 && $itemCount % 100 <= 14) {
         </div>
     </section>
 <?php else: ?>
-    <div class="discussion-list-empty" role="status">
-        <span class="discussion-list-empty__icon" aria-hidden="true"><i class="bi bi-chat-square"></i></span>
+    <div class="csr43-glass-surface discussion-list-empty" role="status">
+        <span class="csr43-glass-icon discussion-list-empty__icon" aria-hidden="true"><i class="bi bi-chat-square"></i></span>
         <div>
             <strong>Нет активных обсуждений</strong>
             <p>Новые материалы будут опубликованы в этом разделе.</p>

@@ -25,7 +25,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
 
 <div class="container mt-4">
     <?php if ($items): ?>
-        <section class="citizen-faq" aria-labelledby="<?=$instanceId?>-title">
+        <section class="csr43-glass-surface citizen-faq" aria-labelledby="<?=$instanceId?>-title">
             <button class="citizen-faq__toggle collapsed"
                     type="button"
                     data-bs-toggle="collapse"
@@ -33,7 +33,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
                     aria-expanded="false"
                     aria-controls="<?=$contentId?>">
                 <span class="citizen-faq__heading">
-                    <span class="citizen-faq__heading-icon" aria-hidden="true">
+                    <span class="csr43-glass-icon citizen-faq__heading-icon" aria-hidden="true">
                         <i class="bi bi-question-lg"></i>
                     </span>
                     <span class="citizen-faq__heading-text">
@@ -72,7 +72,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
                             ['CONFIRM' => GetMessage('CT_FAQ_ELEMENT_DELETE_CONFIRM')]
                         );
                         ?>
-                        <article class="citizen-faq__item" id="<?=$this->GetEditAreaId($itemId)?>">
+                        <article class="csr43-glass-surface citizen-faq__item" id="<?=$this->GetEditAreaId($itemId)?>">
                             <h3 class="citizen-faq__question" id="<?=$headingId?>">
                                 <button class="citizen-faq__question-button collapsed"
                                         type="button"
@@ -112,7 +112,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
             </div>
         </section>
     <?php else: ?>
-        <div class="citizen-faq__empty" role="status">
+        <div class="csr43-glass-surface citizen-faq__empty" role="status">
             <i class="bi bi-info-circle" aria-hidden="true"></i>
             Часто задаваемые вопросы пока не опубликованы.
         </div>

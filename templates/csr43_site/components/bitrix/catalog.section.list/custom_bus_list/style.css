@@ -1,6 +1,6 @@
 .bus-route-list {
-    --route-blue: #2980b9;
-    --route-blue-dark: #0a3144;
+    --route-blue: var(--csr43-color-accent);
+    --route-blue-dark: var(--csr43-color-heading);
     --route-border: rgba(52, 152, 219, 0.24);
     display: grid;
     min-width: 0;
@@ -10,14 +10,13 @@
 }
 
 .bus-route-list__group {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.55);
+    --csr43-glass-border: var(--route-border);
+    --csr43-glass-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
+    --csr43-glass-blur: 14px;
     min-width: 0;
     padding: 0.9rem;
-    border: 1px solid var(--route-border);
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.55);
-    box-shadow: 0 12px 30px rgba(31, 100, 180, 0.08);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
 }
 
 .bus-route-list__group-header {
@@ -30,17 +29,9 @@
 }
 
 .bus-route-list__group-icon {
-    display: inline-flex;
-    flex: 0 0 42px;
-    width: 42px;
-    height: 42px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(52, 152, 219, 0.22);
-    border-radius: 14px;
-    background: rgba(52, 152, 219, 0.11);
-    color: var(--route-blue);
-    font-size: 1.25rem;
+    --csr43-glass-icon-size: 42px;
+    --csr43-glass-icon-radius: 14px;
+    --csr43-glass-icon-font-size: 1.25rem;
 }
 
 .bus-route-list__group-heading {
@@ -70,32 +61,25 @@
 }
 
 .bus-route-card {
+    --csr43-glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(237, 248, 255, 0.52));
+    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.92);
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-border-hover: rgba(52, 152, 219, 0.55);
+    --csr43-glass-shadow: 0 8px 22px rgba(31, 100, 180, 0.07);
+    --csr43-glass-shadow-hover: 0 13px 28px rgba(31, 100, 180, 0.14);
+    --csr43-glass-radius: 20px;
+    --csr43-glass-padding: 0.78rem;
+    --csr43-glass-hover-translate-y: -3px;
     display: flex;
     min-width: 0;
     min-height: 164px;
     flex-direction: column;
-    padding: 0.78rem;
     overflow: hidden;
-    border: 1px solid rgba(52, 152, 219, 0.2);
-    border-radius: 20px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(237, 248, 255, 0.52));
-    box-shadow: 0 8px 22px rgba(31, 100, 180, 0.07);
-    color: #1e3a5f;
     text-decoration: none;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 a.bus-route-card:hover {
-    border-color: rgba(52, 152, 219, 0.55);
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 13px 28px rgba(31, 100, 180, 0.14);
-    color: #1e3a5f;
-    transform: translateY(-3px);
-}
-
-a.bus-route-card:focus-visible {
-    outline: 3px solid rgba(41, 128, 185, 0.35);
-    outline-offset: 3px;
+    color: var(--csr43-color-text);
 }
 
 .bus-route-card__top {
@@ -254,14 +238,14 @@ a.bus-route-card:focus-visible {
 }
 
 .bus-route-list__empty {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.58);
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
     display: flex;
     align-items: center;
     gap: 0.65rem;
     margin-top: 1rem;
     padding: 1rem;
-    border: 1px solid rgba(52, 152, 219, 0.2);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.58);
     color: #31546f;
 }
 
@@ -288,15 +272,5 @@ a.bus-route-card:focus-visible {
     .bus-route-card__vehicle img {
         max-width: 66px;
         max-height: 50px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .bus-route-card {
-        transition: none;
-    }
-
-    a.bus-route-card:hover {
-        transform: none;
     }
 }

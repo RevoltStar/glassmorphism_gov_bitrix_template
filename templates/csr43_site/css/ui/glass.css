@@ -15,6 +15,7 @@
     --csr43-glass-padding: 25px;
     --csr43-glass-blur: 16px;
     --csr43-glass-transition-duration: 0.3s;
+    --csr43-glass-hover-translate-y: -5px;
 
     --csr43-glass-icon-size: 70px;
     --csr43-glass-icon-radius: 20px;
@@ -71,7 +72,7 @@
     background: var(--csr43-glass-bg-hover);
     border-color: var(--csr43-glass-border-hover);
     box-shadow: var(--csr43-glass-shadow-hover);
-    transform: translateY(-5px);
+    transform: translateY(var(--csr43-glass-hover-translate-y));
 }
 
 .csr43-glass-card--interactive:focus-visible {

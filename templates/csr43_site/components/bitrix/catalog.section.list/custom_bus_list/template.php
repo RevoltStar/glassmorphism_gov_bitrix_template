@@ -123,11 +123,11 @@ foreach ($arResult['SECTIONS'] as $section) {
         $isTrolleybus = mb_stripos((string)$section['NAME'], 'троллейбус') !== false;
         $sectionDomId = 'bus-route-section-' . (int)$section['ID'];
         ?>
-        <section class="bus-route-list__group"
+        <section class="csr43-glass-surface bus-route-list__group"
                  id="<?=htmlspecialcharsbx($this->GetEditAreaId($section['ID']))?>"
                  aria-labelledby="<?=$sectionDomId?>">
             <header class="bus-route-list__group-header">
-                <span class="bus-route-list__group-icon" aria-hidden="true">
+                <span class="csr43-glass-icon bus-route-list__group-icon" aria-hidden="true">
                     <i class="bi <?=$isTrolleybus ? 'bi-lightning-charge' : 'bi-bus-front'?>"></i>
                 </span>
                 <div class="bus-route-list__group-heading">
@@ -160,7 +160,7 @@ foreach ($arResult['SECTIONS'] as $section) {
                     }
                     $vehicleTypeLabel = $vehicleTypeLabels[$route['VEHICLE_TYPE']] ?? 'Тип не указан';
                     ?>
-                    <<?=$tag?> class="bus-route-card"
+                    <<?=$tag?> class="csr43-glass-card<?=$route['MAP_URL'] !== '' ? ' csr43-glass-card--interactive' : ''?> bus-route-card"
                         id="<?=htmlspecialcharsbx($this->GetEditAreaId($route['ID']))?>"<?=$attributes?>>
                         <span class="bus-route-card__top">
                             <span class="bus-route-card__vehicle bus-route-card__vehicle--<?=htmlspecialcharsbx($route['VEHICLE_TYPE'] ?: 'unknown')?>" aria-hidden="true">
@@ -212,7 +212,7 @@ foreach ($arResult['SECTIONS'] as $section) {
     <?php endforeach; ?>
 </div>
 <?php else: ?>
-    <div class="bus-route-list__empty" role="status">
+    <div class="csr43-glass-surface bus-route-list__empty" role="status">
         <i class="bi bi-info-circle" aria-hidden="true"></i>
         Информация о маршрутах временно отсутствует.
     </div>
