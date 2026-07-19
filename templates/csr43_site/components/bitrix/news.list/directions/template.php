@@ -10,10 +10,15 @@ if (!is_array($items) || $items === []) {
     return;
 }
 
+$fallbackDetailPageUrl = site_url(
+    $arParams['FALLBACK_DETAIL_PAGE_URL'] ?? null,
+    '/activity/'
+);
+
 $items[] = [
     'NAME' => 'Посмотреть все направления деятельности',
     'PREVIEW_TEXT' => '',
-    'DETAIL_PAGE_URL' => '/activity/',
+    'DETAIL_PAGE_URL' => $fallbackDetailPageUrl,
     'PROPERTIES' => ['ICON' => ['VALUE' => 'fa fa-arrow-right']],
 ];
 ?>

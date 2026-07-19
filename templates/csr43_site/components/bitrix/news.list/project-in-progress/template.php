@@ -10,12 +10,17 @@ if (!is_array($items) || $items === []) {
     return;
 }
 
+$projectListUrl = site_url(
+    $arParams['PROJECT_LIST'] ?? null,
+    '/activity/implemintation-of-regional-projects/'
+);
+
 $items[] = [
     'NAME' => 'Посмотреть все проекты',
     'PREVIEW_TEXT' => 'Нажмите, чтобы перейти',
     'PROPERTIES' => [
         'ICON' => ['VALUE' => 'fa fa-arrow-right'],
-        'LINK' => ['VALUE' => '/activity/implemintation-of-regional-projects/'],
+        'LINK' => ['VALUE' => $projectListUrl],
     ],
 ];
 ?>
