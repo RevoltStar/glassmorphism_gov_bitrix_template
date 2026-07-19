@@ -15,57 +15,9 @@ $previewHtml = site_string($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT
 $hasPreviewText = trim($previewHtml) !== '';
 $showCounter = max(0, (int)($arResult['SHOW_COUNTER'] ?? 0));
 
-// Получение ID текущей новости
-$currentNewsId = max(0, (int)($arResult['ID'] ?? 0));
-$iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
-
-// Получение соседних новостей
-$navNews = array(
-    'PREV' => false,
-    'NEXT' => false
-);
-
-$res = ($currentNewsId > 0 && $iblockId > 0) ? CIBlockElement::GetList(
-    array(
-        "ACTIVE_FROM" => "DESC",
-        "SORT" => "ASC",
-        "ID" => "DESC"
-    ),
-    array(
-        "IBLOCK_ID" => $iblockId,
-        "ACTIVE" => "Y",
-        "ACTIVE_DATE" => "Y",
-        "CHECK_PERMISSIONS" => "Y"
-    ),
-    false,
-    false,
-    array("ID", "NAME", "DETAIL_PAGE_URL", "ACTIVE_FROM")
-) : false;
-
-$newsList = array();
-while (is_object($res) && ($ob = $res->GetNextElement())) {
-    $newsFields = $ob->GetFields();
-    $newsList[] = $newsFields;
-}
-
-// Поиск предыдущей и следующей новости
-$foundCurrent = false;
-foreach ($newsList as $index => $news) {
-    if ($news['ID'] == $currentNewsId) {
-        $foundCurrent = true;
-        continue;
-    }
-
-    if ($foundCurrent) {
-        // Это следующая новость (новости после текущей)
-        if (!$navNews['NEXT']) {
-            $navNews['NEXT'] = $news;
-        }
-    } else {
-        // Это предыдущая новость (новости до текущей)
-        $navNews['PREV'] = $news;
-    }
-}
+$navNews = is_array($arResult['NAV_NEWS'] ?? null)
+    ? $arResult['NAV_NEWS']
+    : ['PREV' => false, 'NEXT' => false];
 
 // Обработка файлов
 $additionalFiles = is_array($properties['additional_files'] ?? null)
