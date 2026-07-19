@@ -1,13 +1,13 @@
 .national-project__name {
-    color: #1e3a5f;
+    color: var(--csr43-color-text);
 }
 
 .national-project__summary-title {
-    color: #0a3144;
+    color: var(--csr43-color-heading);
 }
 
 .national-project__progress {
-    color: #2980b9;
+    color: var(--csr43-color-accent);
     font-weight: 600;
 }
 
@@ -17,22 +17,14 @@
     font-size: 12px;
 }
 
-.badge.national-project__badge {
-    width: 100%;
-    color: #2980b9;
-    text-align: start;
-    white-space: normal;
-    background: rgba(52, 152, 219, 0.15);
-}
-
 .national-project__summary-icon {
-    color: #3498db;
+    color: var(--csr43-color-accent-light);
 }
 
 .national-project__summary-progress {
-    color: #2980b9;
+    color: var(--csr43-color-accent);
 }
 
 .national-project__summary-description {
-    color: #2c6b9e;
+    color: var(--csr43-color-muted);
 }

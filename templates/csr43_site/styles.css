@@ -10,15 +10,6 @@ html {
             min-height: 100vh;
         }
         
-        /* Базовый стеклянный эффект */
-        .glass {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px rgba(31, 100, 180, 0.08);
-        }
-        
         /* Верхняя панель */
         .header-top {
             background: rgba(255, 255, 255, 0.65);
@@ -221,17 +212,6 @@ html {
             color: #2980b9;
         }
 
-        /* Демо-контент */
-        .glass-card-blue {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(52, 152, 219, 0.25);
-            border-radius: 32px;
-            color: #1e3a5f;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(31, 100, 180, 0.08);
-        }
-        
         /* Адаптивность */
         @media (max-width: 768px) {
             .ministry-title {

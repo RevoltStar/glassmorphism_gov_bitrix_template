@@ -43,7 +43,7 @@ if (!is_array($items) || $items === []) {
         );
         ?>
         <div class="col-md-6">
-            <div class="subordinate-card d-flex align-items-center">
+            <div class="csr43-glass-card csr43-glass-card--interactive csr43-glass-card--stretch subordinate-card d-flex align-items-center">
                 <?php if ($logoSrc !== ''): ?>
                     <div class="subordinate-card__mobile-logo d-block d-md-none">
                         <img
@@ -71,7 +71,7 @@ if (!is_array($items) || $items === []) {
                     <?php if ($badges !== []): ?>
                         <div class="d-flex gap-2 flex-wrap">
                             <?php foreach ($badges as $badge): ?>
-                                <span class="badge sub-badge"><?=htmlspecialcharsbx($badge)?></span>
+                                <span class="badge csr43-glass-badge csr43-glass-badge--block subordinate-card__badge"><?=htmlspecialcharsbx($badge)?></span>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>

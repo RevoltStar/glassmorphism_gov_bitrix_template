@@ -44,28 +44,27 @@ $items[] = [
         );
         ?>
         <div class="col-md-6">
-            <a href="<?=htmlspecialcharsbx($link)?>" class="project-card-link text-decoration-none">
-                <div class="project-card d-flex">
-                    <div class="me-3">
-                        <?php if ($icon !== ''): ?>
-                            <div class="project-card__icon">
-                                <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="w-100">
-                        <h5 class="project-card__title fw-bold"><?=htmlspecialcharsbx($name)?></h5>
-                        <?php if ($preview !== ''): ?>
-                            <p class="project-card__description"><?=htmlspecialcharsbx($preview)?></p>
-                        <?php endif; ?>
-                        <?php if ($badges !== []): ?>
-                            <div class="gap-2 d-flex flex-wrap">
-                                <?php foreach ($badges as $badge): ?>
-                                    <span class="badge project-card__badge"><?=htmlspecialcharsbx($badge)?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+            <a href="<?=htmlspecialcharsbx($link)?>"
+               class="csr43-glass-card csr43-glass-card--interactive csr43-glass-card--stretch project-card d-flex text-decoration-none">
+                <div class="me-3">
+                    <?php if ($icon !== ''): ?>
+                        <div class="csr43-glass-icon project-card__icon">
+                            <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="w-100">
+                    <h5 class="project-card__title fw-bold"><?=htmlspecialcharsbx($name)?></h5>
+                    <?php if ($preview !== ''): ?>
+                        <p class="project-card__description"><?=htmlspecialcharsbx($preview)?></p>
+                    <?php endif; ?>
+                    <?php if ($badges !== []): ?>
+                        <div class="gap-2 d-flex flex-wrap">
+                            <?php foreach ($badges as $badge): ?>
+                                <span class="badge csr43-glass-badge csr43-glass-badge--block project-card__badge"><?=htmlspecialcharsbx($badge)?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </a>
         </div>

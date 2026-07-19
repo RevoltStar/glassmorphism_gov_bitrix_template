@@ -60,7 +60,7 @@ $totalLink = '#';
                 <?php if ($badges !== []): ?>
                     <div class="gap-2 d-flex flex-wrap">
                         <?php foreach ($badges as $badge): ?>
-                            <span class="badge national-project__badge"><?=htmlspecialcharsbx($badge)?></span>
+                            <span class="badge csr43-glass-badge csr43-glass-badge--block national-project__badge"><?=htmlspecialcharsbx($badge)?></span>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>

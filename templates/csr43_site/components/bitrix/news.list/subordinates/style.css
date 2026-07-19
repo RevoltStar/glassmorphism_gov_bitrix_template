@@ -1,21 +1,5 @@
 .subordinate-card {
     position: relative;
-    height: 100%;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(52, 152, 219, 0.25);
-    border-radius: 24px;
-    box-shadow: 0 15px 35px rgba(31, 100, 180, 0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.subordinate-card:hover {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(52, 152, 219, 0.4);
-    box-shadow: 0 20px 40px rgba(31, 100, 180, 0.12);
-    transform: translateY(-5px);
 }
 
 .suborg-icon {
@@ -25,7 +9,7 @@
     width: 80px;
     height: 80px;
     overflow: hidden;
-    color: #2980b9;
+    color: var(--csr43-color-accent);
     background: rgba(255, 255, 255, 0.55);
     border: 1px solid rgba(52, 152, 219, 0.2);
     border-radius: 20px;
@@ -56,11 +40,11 @@
 }
 
 .subordinate-card__title {
-    color: #1e3a5f;
+    color: var(--csr43-color-text);
 }
 
 .subordinate-card__description {
-    color: #2c6b9e;
+    color: var(--csr43-color-muted);
 }
 
 @keyframes playful-blink {
@@ -71,22 +55,7 @@
     100% { transform: scale(1); opacity: 1; }
 }
 
-.badge.sub-badge {
-    width: 100%;
-    color: #2980b9;
-    white-space: normal;
-    background: rgba(52, 152, 219, 0.15);
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .subordinate-card {
-        transition-duration: 0.01ms;
-    }
-
-    .subordinate-card:hover {
-        transform: none;
-    }
-
     .subordinate-card:hover .suborg-icon img {
         animation: none;
     }

@@ -35,6 +35,7 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
 	<?php  $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/fontawesome.css"); ?>
 
 	<?php  $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/fancybox5.css"); ?>
+	<?php  $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/ui/glass.css"); ?>
 	<?php  $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/fancybox5.js"); ?>
 
 	<?php  $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/script.js"); ?>

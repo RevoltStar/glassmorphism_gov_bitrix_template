@@ -43,9 +43,9 @@ $items[] = [
         );
         ?>
         <div class="col-md-3 col-sm-6">
-            <div class="directions-card text-center">
+            <div class="csr43-glass-card csr43-glass-card--interactive csr43-glass-card--stretch directions-card text-center">
                 <?php if ($icon !== ''): ?>
-                    <div class="directions-card__icon mx-auto">
+                    <div class="csr43-glass-icon directions-card__icon mx-auto">
                         <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
                     </div>
                 <?php endif; ?>
