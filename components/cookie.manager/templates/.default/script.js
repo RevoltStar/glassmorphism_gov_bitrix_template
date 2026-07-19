@@ -39,7 +39,10 @@ class CookieManager {
     checkAllConsents() {
         const decision = getConsentCookie(this.settings.cookieName);
 
-        if (decision === '') {
+        if (
+            decision !== this.settings.cookieValue
+            && decision !== this.settings.rejectedValue
+        ) {
             this.showBanner();
             return;
         }
@@ -131,8 +134,20 @@ class CookieManager {
 }
 
 function getConsentCookie(name) {
-    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const match = document.cookie.match(new RegExp(`(?:^|; )${escapedName}=([^;]*)`));
+    if (typeof name !== 'string' || name === '') {
+        return '';
+    }
 
-    return match ? decodeURIComponent(match[1]) : '';
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${escapedName}=([^;]*)`));
+
+    if (!match) {
+        return '';
+    }
+
+    try {
+        return decodeURIComponent(match[1]);
+    } catch (error) {
+        return '';
+    }
 }
