@@ -239,7 +239,7 @@ if (!empty($additionalFiles['VALUE'])) {
                                 $fileExtension = strtolower(GetFileExtension(site_string($file['FILE_NAME'] ?? '')));
                                 $isVideo = in_array($fileExtension, ['mp4', 'avi', 'mov', 'webm']);
                                 $thumbnailSrc = $isVideo ?
-                                    '/bitrix/templates/mitis_2026/components/bitrix/news.detail/detail/images/video-thumbnail.jpg' :
+                                    SITE_TEMPLATE_PATH . '/components/bitrix/news.detail/detail/images/video-thumbnail.jpg' :
                                     $file['SRC'];
                                 ?>
 
@@ -252,7 +252,7 @@ if (!empty($additionalFiles['VALUE'])) {
                                        aria-label="<?=htmlspecialcharsbx('Открыть: ' . $file['FANCYBOX_NAME'])?>">
                                         <?php if ($isVideo): ?>
                                             <div class="gallery-item glass-image-thumb">
-                                                <img src="/bitrix/templates/mitis_2026/components/bitrix/news.detail/detail/images/video-thumbnail.jpg" alt="<?=htmlspecialcharsbx($file['FANCYBOX_NAME'])?>" class="img-fluid rounded" loading="lazy">
+                                                <img src="<?=htmlspecialcharsbx($thumbnailSrc)?>" alt="<?=htmlspecialcharsbx($file['FANCYBOX_NAME'])?>" class="img-fluid rounded" loading="lazy">
                                                 <div class="play-icon"><i class="bi bi-play-circle-fill" aria-hidden="true"></i></div>
                                             </div>
                                         <?php else: ?>

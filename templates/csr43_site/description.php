@@ -1,6 +1,6 @@
 <?php
 $arTemplate = array (
-  'NAME' => 'МИТИС (2026)',
+  'NAME' => 'CSR43 Site',
   'DESCRIPTION' => '',
   'SORT' => '',
   'TYPE' => '',
