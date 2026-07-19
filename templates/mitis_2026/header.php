@@ -155,9 +155,9 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
                 "bitrix:menu",
                 "top",
                 Array(
-                    "ROOT_MENU_TYPE" => "top",
+                    "ROOT_MENU_TYPE" => site_menu_type(get_info('menu_top_root_type', 'top'), 'top'),
                     "MAX_LEVEL" => "4",
-                    "CHILD_MENU_TYPE" => "right",
+                    "CHILD_MENU_TYPE" => site_menu_type(get_info('menu_top_child_type', 'right'), 'right'),
                     "USE_EXT" => "N",
                     "MENU_CACHE_TYPE" => "A",
                     "MENU_CACHE_TIME" => "3600",

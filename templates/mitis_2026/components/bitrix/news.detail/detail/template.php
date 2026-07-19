@@ -212,7 +212,7 @@ if (!empty($additionalFiles['VALUE'])) {
                     <span style="color: #1e3a5f; font-weight: 600;">Оставайтесь с нами:</span>
                     <?php
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
-							"ROOT_MENU_TYPE" => "social",
+							"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_social_root_type', 'social'), 'social'),
 							"MAX_LEVEL" => "1",
 							"USE_EXT" => "N",
 							"MENU_CACHE_TYPE" => "N",

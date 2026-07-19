@@ -101,6 +101,15 @@ function site_css_classes(mixed $value, string $default = ''): string
     ) === 1 ? $value : $default;
 }
 
+function site_menu_type(mixed $value, string $default): string
+{
+    $value = trim(site_string($value));
+
+    return preg_match('/^[a-zA-Z0-9_-]+$/D', $value) === 1
+        ? $value
+        : $default;
+}
+
 function site_css_url(mixed $value, string $fallback): string
 {
     $url = site_url($value, $fallback);

@@ -18,13 +18,13 @@ if (!$isExcludedPage && !$is404Error): ?>
             "bitrix:menu",
             "side",
             Array(
-                "CHILD_MENU_TYPE" => "right",
+                "CHILD_MENU_TYPE" => site_menu_type(get_info('menu_side_child_type', 'right'), 'right'),
                 "MAX_LEVEL" => "2",
                 "MENU_CACHE_GET_VARS" => "",
                 "MENU_CACHE_TIME" => "3600",
                 "MENU_CACHE_TYPE" => "N",
                 "MENU_CACHE_USE_GROUPS" => "Y",
-                "ROOT_MENU_TYPE" => "right",
+                "ROOT_MENU_TYPE" => site_menu_type(get_info('menu_side_root_type', 'right'), 'right'),
                 "USE_EXT" => "N"
             )
         );?>
@@ -57,7 +57,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                 </p>
                 <?php
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
-							"ROOT_MENU_TYPE" => "social",
+							"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_social_root_type', 'social'), 'social'),
 							"MAX_LEVEL" => "1",
 							"USE_EXT" => "N",
 							"DELAY" => "N",

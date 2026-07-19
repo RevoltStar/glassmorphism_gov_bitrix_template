@@ -41,6 +41,11 @@ const SITE_INFO = [
     'yandex_metrika_id' => 105106588,
     'gosuslugi_widget_id' => 215882,
     'gosuslugi_org_id' => 494,
+    'menu_top_root_type' => 'top',
+    'menu_top_child_type' => 'right',
+    'menu_side_root_type' => 'right',
+    'menu_side_child_type' => 'right',
+    'menu_social_root_type' => 'social',
     'layout_excluded_pages' => [
         '/',
         '/news',
