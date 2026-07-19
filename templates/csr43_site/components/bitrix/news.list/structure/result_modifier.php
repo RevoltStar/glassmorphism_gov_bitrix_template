@@ -3,6 +3,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
+$arParams = is_array($arParams ?? null) ? $arParams : [];
+$arResult = is_array($arResult ?? null) ? $arResult : [];
 $iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
 $arResult['SECTIONS'] = [];
 
@@ -23,7 +25,7 @@ $sectionResult = CIBlockSection::GetList(
     ['ID', 'NAME', 'CODE', 'UF_*']
 );
 
-while ($section = $sectionResult->Fetch()) {
+while (is_object($sectionResult) && ($section = $sectionResult->Fetch())) {
     if (!is_array($section)) {
         continue;
     }
@@ -65,7 +67,7 @@ $elementResult = CIBlockElement::GetList(
     ]
 );
 
-while ($element = $elementResult->GetNextElement()) {
+while (is_object($elementResult) && ($element = $elementResult->GetNextElement())) {
     $fields = $element->GetFields();
     $properties = $element->GetProperties();
     if (!is_array($fields) || !is_array($properties)) {
@@ -73,10 +75,14 @@ while ($element = $elementResult->GetNextElement()) {
     }
 
     foreach (['PHONE', 'ADDRESS', 'EMAIL'] as $code) {
-        $properties[$code]['VALUE'] = implode(
+        $property = is_array($properties[$code] ?? null)
+            ? $properties[$code]
+            : [];
+        $property['VALUE'] = implode(
             ', ',
-            site_string_list($properties[$code]['VALUE'] ?? [])
+            site_string_list($property['VALUE'] ?? [])
         );
+        $properties[$code] = $property;
     }
 
     $fields['PROPERTIES'] = $properties;
