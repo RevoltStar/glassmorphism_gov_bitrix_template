@@ -45,13 +45,12 @@ $totalLink = '#';
             ?>
             <div class="mb-4">
                 <div class="d-flex justify-content-between mb-2 align-items-center">
-                    <span class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($name)?></span>
+                    <span class="national-project__name fw-bold"><?=htmlspecialcharsbx($name)?></span>
                     <div class="d-flex align-items-center gap-3">
-                        <span style="color: #2980b9; font-weight: 600;"><?=htmlspecialcharsbx($progressText)?>%</span>
+                        <span class="national-project__progress"><?=htmlspecialcharsbx($progressText)?>%</span>
                         <?php if ($link !== '#'): ?>
                             <a href="<?=htmlspecialcharsbx($link)?>"
-                               class="btn btn-sm btn-outline-primary"
-                               style="border-radius: 20px; padding: 2px 12px; font-size: 12px;"
+                               class="national-project__more btn btn-sm btn-outline-primary"
                                aria-label="Подробнее: <?=htmlspecialcharsbx($name)?>">
                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
@@ -61,7 +60,7 @@ $totalLink = '#';
                 <?php if ($badges !== []): ?>
                     <div class="gap-2 d-flex flex-wrap">
                         <?php foreach ($badges as $badge): ?>
-                            <span class="badge main-badge"><?=htmlspecialcharsbx($badge)?></span>
+                            <span class="badge national-project__badge"><?=htmlspecialcharsbx($badge)?></span>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
@@ -71,10 +70,10 @@ $totalLink = '#';
     <?php $totalProgressText = rtrim(rtrim(number_format($totalProgress, 2, '.', ''), '0'), '.'); ?>
     <div class="col-lg-6">
         <div class="text-center p-4">
-            <i class="fas fa-chart-line fa-4x mb-3" aria-hidden="true" style="color: #3498db;"></i>
-            <h4 class="fw-bold" style="color: #0a3144;"><?=htmlspecialcharsbx($totalName)?></h4>
-            <p class="display-3 fw-bold" style="color: #2980b9;"><?=htmlspecialcharsbx($totalProgressText)?>%</p>
-            <p style="color: #2c6b9e;">План на текущий год выполнен на <?=htmlspecialcharsbx($totalProgressText)?>%</p>
+            <i class="national-project__summary-icon fas fa-chart-line fa-4x mb-3" aria-hidden="true"></i>
+            <h4 class="national-project__summary-title fw-bold"><?=htmlspecialcharsbx($totalName)?></h4>
+            <p class="national-project__summary-progress display-3 fw-bold"><?=htmlspecialcharsbx($totalProgressText)?>%</p>
+            <p class="national-project__summary-description">План на текущий год выполнен на <?=htmlspecialcharsbx($totalProgressText)?>%</p>
             <?php if ($totalLink !== '#'): ?>
                 <a href="<?=htmlspecialcharsbx($totalLink)?>" class="btn btn-glass-blue mt-2">Подробнее о проектах</a>
             <?php endif; ?>

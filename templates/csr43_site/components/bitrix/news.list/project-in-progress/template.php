@@ -44,24 +44,24 @@ $items[] = [
         );
         ?>
         <div class="col-md-6">
-            <a href="<?=htmlspecialcharsbx($link)?>" class="text-decoration-none">
-                <div class="glass-card d-flex">
+            <a href="<?=htmlspecialcharsbx($link)?>" class="project-card-link text-decoration-none">
+                <div class="project-card d-flex">
                     <div class="me-3">
                         <?php if ($icon !== ''): ?>
-                            <div class="activity-icon" style="width: 60px; height: 60px;">
+                            <div class="project-card__icon">
                                 <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
                             </div>
                         <?php endif; ?>
                     </div>
                     <div class="w-100">
-                        <h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($name)?></h5>
+                        <h5 class="project-card__title fw-bold"><?=htmlspecialcharsbx($name)?></h5>
                         <?php if ($preview !== ''): ?>
-                            <p style="color: #2c6b9e;"><?=htmlspecialcharsbx($preview)?></p>
+                            <p class="project-card__description"><?=htmlspecialcharsbx($preview)?></p>
                         <?php endif; ?>
                         <?php if ($badges !== []): ?>
                             <div class="gap-2 d-flex flex-wrap">
                                 <?php foreach ($badges as $badge): ?>
-                                    <span class="badge main-badge"><?=htmlspecialcharsbx($badge)?></span>
+                                    <span class="badge project-card__badge"><?=htmlspecialcharsbx($badge)?></span>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>

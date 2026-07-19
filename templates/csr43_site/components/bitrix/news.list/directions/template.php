@@ -43,19 +43,18 @@ $items[] = [
         );
         ?>
         <div class="col-md-3 col-sm-6">
-            <div class="glass-card text-center">
+            <div class="directions-card text-center">
                 <?php if ($icon !== ''): ?>
-                    <div class="activity-icon mx-auto">
+                    <div class="directions-card__icon mx-auto">
                         <i class="<?=htmlspecialcharsbx($icon)?>" aria-hidden="true"></i>
                     </div>
                 <?php endif; ?>
-                <h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($name)?></h5>
+                <h5 class="directions-card__title fw-bold"><?=htmlspecialcharsbx($name)?></h5>
                 <?php if ($preview !== ''): ?>
-                    <p class="small" style="color: #2c6b9e;"><?=htmlspecialcharsbx($preview)?></p>
+                    <p class="directions-card__description small"><?=htmlspecialcharsbx($preview)?></p>
                 <?php endif; ?>
                 <a href="<?=htmlspecialcharsbx($link)?>"
-                   class="text-decoration-none small"
-                   style="color: #2980b9;">Подробнее <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                   class="directions-card__link text-decoration-none small">Подробнее <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
             </div>
         </div>
     <?php endforeach; ?>

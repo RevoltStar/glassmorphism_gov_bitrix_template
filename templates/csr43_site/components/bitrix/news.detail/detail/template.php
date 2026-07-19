@@ -100,18 +100,18 @@ if (!empty($additionalFiles['VALUE'])) {
 }
 ?>
 
-<div class="news-detail glass-container">
-    <div class="glass-card p-4 p-lg-5 mb-4">
+<div class="news-detail news-detail__container">
+    <div class="news-detail__card p-4 p-lg-5 mb-4">
 		 <!-- Заголовок новости -->
-        <h1 class="news-title mb-3"><?=htmlspecialcharsbx($newsName)?></h1>
+        <h1 class="news-detail__title mb-3"><?=htmlspecialcharsbx($newsName)?></h1>
         <!-- Мета-информация -->
-        <div class="news-meta d-flex flex-wrap align-items-center gap-3 mb-4">
-            <span class="glass-badge">
-                <i class="bi bi-calendar3 me-1" style="color: #2980b9;"></i> <?=htmlspecialcharsbx(site_string($arResult["DISPLAY_ACTIVE_FROM"] ?? ''))?>
+        <div class="news-detail__meta d-flex flex-wrap align-items-center gap-3 mb-4">
+            <span class="news-detail__meta-badge">
+                <i class="news-detail__accent-icon bi bi-calendar3 me-1"></i> <?=htmlspecialcharsbx(site_string($arResult["DISPLAY_ACTIVE_FROM"] ?? ''))?>
             </span>
             <?php if ($showCounter > 0): ?>
-                <span class="glass-badge">
-                    <i class="bi bi-eye me-1" style="color: #2980b9;"></i> <?=$showCounter?> просмотров
+                <span class="news-detail__meta-badge">
+                    <i class="news-detail__accent-icon bi bi-eye me-1"></i> <?=$showCounter?> просмотров
                 </span>
             <?php endif; ?>
         </div>
@@ -134,12 +134,12 @@ if (!empty($additionalFiles['VALUE'])) {
             ?>
             <?php if (!empty($newsCategories)): ?>
                 <?php foreach ($newsCategories as $category): ?>
-                    <a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="glass-category">
+                    <a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="news-detail__category">
                         <span class="bvi-speech"><i class="bi bi-tag me-1"></i><?=htmlspecialcharsbx($category["VALUE"])?></span>
                     </a>
                 <?php endforeach; ?>
             <?php else: ?>
-                <span class="glass-category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
+                <span class="news-detail__category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
             <?php endif; ?>
         </div>
 		<hr>
@@ -148,20 +148,20 @@ if (!empty($additionalFiles['VALUE'])) {
             <div class="col-lg-8 order-2 order-lg-1">
                 <!-- Анонс -->
                 <?php if ($hasPreviewText): ?>
-                    <div class="news-preview glass-preview mb-4 bvi-speech">
-                        <i class="bi bi-quote me-2" style="color: #3498db;"></i>
+                    <div class="news-detail__preview mb-4 bvi-speech">
+                        <i class="news-detail__accent-icon bi bi-quote me-2"></i>
                         <?=site_safe_html($previewHtml)?>
                     </div>
                 <?php endif; ?>
 
                 <!-- Детальный текст -->
-                <article class="news-content mb-5 bvi-speech">
+                <article class="news-detail__content mb-5 bvi-speech">
                     <?=site_safe_html($arResult['~DETAIL_TEXT'] ?? $arResult['DETAIL_TEXT'] ?? '')?>
                 </article>
 
                 <!-- Поделиться в соцсетях (дополнительно) -->
-                <div class="share-block d-flex align-items-center gap-3 mt-4 pt-4" style="border-top: 1px solid rgba(52,152,219,0.2);">
-                    <span style="color: #1e3a5f; font-weight: 600;">Оставайтесь с нами:</span>
+                <div class="news-detail__share d-flex align-items-center gap-3 mt-4 pt-4">
+                    <span class="news-detail__share-label">Оставайтесь с нами:</span>
                     <?php
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
 							"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_social_root_type', 'social'), 'social'),
@@ -181,9 +181,9 @@ if (!empty($additionalFiles['VALUE'])) {
                 <!-- Галерея изображений и видео -->
                 <?php if (!empty($galleryFiles)): ?>
                     <?php $galleryId = 'news-detail-' . $this->randString(); ?>
-                    <section class="glass-card p-4 mb-4">
-                        <h5 class="section-title-mini mb-3">
-                            <i class="bi bi-images me-2" style="color: #2980b9;"></i> Материалы
+                    <section class="news-detail__card p-4 mb-4">
+                        <h5 class="news-detail__section-title mb-3">
+                            <i class="news-detail__accent-icon bi bi-images me-2"></i> Материалы
                         </h5>
                         <div class="row g-2">
                             <?php foreach ($galleryFiles as $index => $file): ?>
@@ -197,18 +197,18 @@ if (!empty($additionalFiles['VALUE'])) {
 
                                 <div class="col-6 d-flex justify-content-center">
                                     <a href="<?=htmlspecialcharsbx($file['SRC'])?>"
-                                       class="gallery-item-link gallery-item-wrapper"
+                                       class="news-detail__gallery-trigger news-detail__gallery-link"
                                        data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
                                        data-gallery-caption="<?=htmlspecialcharsbx($file['FANCYBOX_NAME'])?>"
                                        data-type="<?=$isVideo ? 'html5video' : 'image'?>"
                                        aria-label="<?=htmlspecialcharsbx('Открыть: ' . $file['FANCYBOX_NAME'])?>">
                                         <?php if ($isVideo): ?>
-                                            <div class="gallery-item glass-image-thumb">
+                                            <div class="news-detail__media-thumb">
                                                 <img src="<?=htmlspecialcharsbx($thumbnailSrc)?>" alt="<?=htmlspecialcharsbx($file['FANCYBOX_NAME'])?>" class="img-fluid rounded" loading="lazy">
-                                                <div class="play-icon"><i class="bi bi-play-circle-fill" aria-hidden="true"></i></div>
+                                                <div class="news-detail__play-icon"><i class="bi bi-play-circle-fill" aria-hidden="true"></i></div>
                                             </div>
                                         <?php else: ?>
-                                            <div class="gallery-item glass-image-thumb">
+                                            <div class="news-detail__media-thumb">
                                                 <img src="<?=htmlspecialcharsbx($thumbnailSrc)?>" alt="<?=htmlspecialcharsbx($file['FANCYBOX_NAME'])?>" class="img-fluid rounded" loading="lazy">
                                             </div>
                                         <?php endif; ?>
@@ -221,15 +221,15 @@ if (!empty($additionalFiles['VALUE'])) {
 
                 <!-- Файлы для скачивания -->
                 <?php if (!empty($downloadFiles)): ?>
-                    <section class="glass-card p-4 mb-4">
-                        <h5 class="section-title-mini mb-3">
-                            <i class="bi bi-paperclip me-2" style="color: #2980b9;"></i> Приложенные файлы
+                    <section class="news-detail__card p-4 mb-4">
+                        <h5 class="news-detail__section-title mb-3">
+                            <i class="news-detail__accent-icon bi bi-paperclip me-2"></i> Приложенные файлы
                         </h5>
-                        <div class="d-grid gap-2 download-files-grid">
+                        <div class="news-detail__downloads d-grid gap-2">
                             <?php foreach ($downloadFiles as $file): ?>
-                                <div class="file-download glass-file-item">
+                                <div class="news-detail__file">
                                     <div class="d-flex align-items-center">
-                                        <div class="file-icon me-3">
+                                        <div class="news-detail__file-icon me-3">
                                             <?php
                                             $fileExtension = strtolower(GetFileExtension(site_string($file['FILE_NAME'] ?? '')));
                                             $iconClass = 'bi-file-earmark';
@@ -261,10 +261,10 @@ if (!empty($additionalFiles['VALUE'])) {
                                             <i class="bi <?= $iconClass ?> <?= $colorClass ?> fs-3"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                             <div class="fw-bold small" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($file['ORIGINAL_NAME'] ?? ''))?></div>
-                                             <div class="text-muted extra-small"><?=htmlspecialcharsbx(CFile::FormatSize(max(0, (int)($file['FILE_SIZE'] ?? 0))))?></div>
+                                             <div class="news-detail__file-name fw-bold small"><?=htmlspecialcharsbx(site_string($file['ORIGINAL_NAME'] ?? ''))?></div>
+                                             <div class="news-detail__file-size text-muted"><?=htmlspecialcharsbx(CFile::FormatSize(max(0, (int)($file['FILE_SIZE'] ?? 0))))?></div>
                                         </div>
-                                        <a href="<?=htmlspecialcharsbx(site_url($file['SRC'] ?? null, ''))?>" download class="glass-download-btn ms-2">
+                                        <a href="<?=htmlspecialcharsbx(site_url($file['SRC'] ?? null, ''))?>" download class="news-detail__download-button ms-2">
                                             <i class="bi bi-download"></i>
                                         </a>
                                     </div>
@@ -275,28 +275,28 @@ if (!empty($additionalFiles['VALUE'])) {
                 <?php endif; ?>
 
                 <!-- Навигация между новостями -->
-                <section class="glass-card p-4">
-                    <h5 class="section-title-mini mb-3">
-                        <i class="bi bi-arrow-left-right me-2" style="color: #2980b9;"></i> Другие новости
+                <section class="news-detail__card p-4">
+                    <h5 class="news-detail__section-title mb-3">
+                        <i class="news-detail__accent-icon bi bi-arrow-left-right me-2"></i> Другие новости
                     </h5>
                     <div class="d-grid gap-3">
                         <?php if (!empty($navNews['PREV'])): ?>
-                            <a href="<?=htmlspecialcharsbx(site_url($navNews['PREV']['DETAIL_PAGE_URL'] ?? null))?>" class="glass-nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['PREV']['DETAIL_PAGE_URL'] ?? null))?>" class="news-detail__nav-link">
                                 <div class="d-flex align-items-center">
-                                    <div class="nav-icon me-3">
-                                        <i class="bi bi-arrow-left-circle-fill" style="color: #3498db; font-size: 1.5rem;"></i>
+                                    <div class="news-detail__nav-icon me-3">
+                                        <i class="news-detail__nav-icon--active bi bi-arrow-left-circle-fill"></i>
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="small text-muted">К более актуальной новости</div>
-                                        <div class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($navNews['PREV']['~NAME'] ?? $navNews['PREV']['NAME'] ?? ''))?></div>
+                                        <div class="news-detail__nav-title fw-bold"><?=htmlspecialcharsbx(site_string($navNews['PREV']['~NAME'] ?? $navNews['PREV']['NAME'] ?? ''))?></div>
                                     </div>
                                 </div>
                             </a>
                         <?php else: ?>
-                            <div class="glass-nav-link disabled">
+                            <div class="news-detail__nav-link news-detail__nav-link--disabled">
                                 <div class="d-flex align-items-center">
-                                    <div class="nav-icon me-3">
-                                        <i class="bi bi-arrow-left-circle" style="color: #ccc; font-size: 1.5rem;"></i>
+                                    <div class="news-detail__nav-icon me-3">
+                                        <i class="news-detail__nav-icon--disabled bi bi-arrow-left-circle"></i>
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="small text-muted">К более актуальной новости</div>
@@ -307,26 +307,26 @@ if (!empty($additionalFiles['VALUE'])) {
                         <?php endif; ?>
 
                         <?php if (!empty($navNews['NEXT'])): ?>
-                            <a href="<?=htmlspecialcharsbx(site_url($navNews['NEXT']['DETAIL_PAGE_URL'] ?? null))?>" class="glass-nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['NEXT']['DETAIL_PAGE_URL'] ?? null))?>" class="news-detail__nav-link">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 text-end me-3">
                                         <div class="small text-muted">К предыдущей новости</div>
-                                        <div class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx(site_string($navNews['NEXT']['~NAME'] ?? $navNews['NEXT']['NAME'] ?? ''))?></div>
+                                        <div class="news-detail__nav-title fw-bold"><?=htmlspecialcharsbx(site_string($navNews['NEXT']['~NAME'] ?? $navNews['NEXT']['NAME'] ?? ''))?></div>
                                     </div>
-                                    <div class="nav-icon">
-                                        <i class="bi bi-arrow-right-circle-fill" style="color: #3498db; font-size: 1.5rem;"></i>
+                                    <div class="news-detail__nav-icon">
+                                        <i class="news-detail__nav-icon--active bi bi-arrow-right-circle-fill"></i>
                                     </div>
                                 </div>
                             </a>
                         <?php else: ?>
-                            <div class="glass-nav-link disabled">
+                            <div class="news-detail__nav-link news-detail__nav-link--disabled">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 text-end me-3">
                                         <div class="small text-muted">К предыдущей новости</div>
                                         <div class="text-muted">Нет новости</div>
                                     </div>
-                                    <div class="nav-icon">
-                                        <i class="bi bi-arrow-right-circle" style="color: #ccc; font-size: 1.5rem;"></i>
+                                    <div class="news-detail__nav-icon">
+                                        <i class="news-detail__nav-icon--disabled bi bi-arrow-right-circle"></i>
                                     </div>
                                 </div>
                             </div>

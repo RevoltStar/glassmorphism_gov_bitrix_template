@@ -1,14 +1,38 @@
-        /* ПРОГРЕСС БАР */
-        .progress-glass {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 30px;
-            height: 12px;
-            border: 1px solid rgba(52, 152, 219, 0.2);
-        }
-        .progress-bar-glass {
-            background: linear-gradient(90deg, #3498db, #2980b9);
-            border-radius: 30px;
-            position: relative;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
-        }
+.national-project__name {
+    color: #1e3a5f;
+}
+
+.national-project__summary-title {
+    color: #0a3144;
+}
+
+.national-project__progress {
+    color: #2980b9;
+    font-weight: 600;
+}
+
+.national-project__more {
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge.national-project__badge {
+    width: 100%;
+    color: #2980b9;
+    text-align: start;
+    white-space: normal;
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.national-project__summary-icon {
+    color: #3498db;
+}
+
+.national-project__summary-progress {
+    color: #2980b9;
+}
+
+.national-project__summary-description {
+    color: #2c6b9e;
+}

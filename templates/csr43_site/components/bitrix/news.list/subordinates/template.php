@@ -43,10 +43,10 @@ if (!is_array($items) || $items === []) {
         );
         ?>
         <div class="col-md-6">
-            <div class="glass-card d-flex align-items-center">
+            <div class="subordinate-card d-flex align-items-center">
                 <?php if ($logoSrc !== ''): ?>
-                    <div class="position-absolute d-block d-md-none" style="right: 10px; top: 10px;">
-                        <img style="width: 40px; opacity: 0.5;"
+                    <div class="subordinate-card__mobile-logo d-block d-md-none">
+                        <img
                              src="<?=htmlspecialcharsbx($logoSrc)?>"
                              alt="Логотип <?=htmlspecialcharsbx($name)?>">
                     </div>
@@ -64,9 +64,9 @@ if (!is_array($items) || $items === []) {
                     </div>
                 </div>
                 <div>
-                    <h4 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($name)?></h4>
+                    <h4 class="subordinate-card__title fw-bold"><?=htmlspecialcharsbx($name)?></h4>
                     <?php if ($preview !== ''): ?>
-                        <p style="color: #2c6b9e;"><?=htmlspecialcharsbx($preview)?></p>
+                        <p class="subordinate-card__description"><?=htmlspecialcharsbx($preview)?></p>
                     <?php endif; ?>
                     <?php if ($badges !== []): ?>
                         <div class="d-flex gap-2 flex-wrap">
