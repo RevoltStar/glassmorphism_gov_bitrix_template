@@ -214,10 +214,7 @@ if (!empty($additionalFiles['VALUE'])) {
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
 							"ROOT_MENU_TYPE" => "social",
 							"MAX_LEVEL" => "1",
-							"CHILD_MENU_TYPE" => "social",
 							"USE_EXT" => "N",
-							"DELAY" => "N",
-							"ALLOW_MULTI_SELECT" => "N",
 							"MENU_CACHE_TYPE" => "N",
 							"MENU_CACHE_TIME" => "3600",
 							"MENU_CACHE_USE_GROUPS" => "Y",

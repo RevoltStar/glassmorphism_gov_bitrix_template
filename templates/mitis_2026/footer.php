@@ -18,9 +18,7 @@ if (!$isExcludedPage && !$is404Error): ?>
             "bitrix:menu",
             "side",
             Array(
-                "ALLOW_MULTI_SELECT" => "Y",
                 "CHILD_MENU_TYPE" => "right",
-                "DELAY" => "N",
                 "MAX_LEVEL" => "2",
                 "MENU_CACHE_GET_VARS" => "",
                 "MENU_CACHE_TIME" => "3600",
@@ -61,7 +59,6 @@ if (!$isExcludedPage && !$is404Error): ?>
 						$APPLICATION->IncludeComponent("bitrix:menu","social",Array(
 							"ROOT_MENU_TYPE" => "social",
 							"MAX_LEVEL" => "1",
-							"CHILD_MENU_TYPE" => "social",
 							"USE_EXT" => "N",
 							"DELAY" => "N",
 							"ALLOW_MULTI_SELECT" => "N",
