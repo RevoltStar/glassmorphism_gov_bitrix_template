@@ -1,106 +1,266 @@
 .widget_cookie {
+    --cookie-accent: #2980b9;
+    --cookie-accent-light: #3498db;
+    --cookie-accent-rgb: 41, 128, 185;
+
     position: fixed;
     z-index: 1020;
-    right: 12px;
-    bottom: 12px;
-    left: 12px;
-
-    width: auto;
-    max-height: calc(100dvh - 24px);
-    padding: 16px;
+    right: 24px;
+    bottom: 24px;
+    width: min(520px, calc(100vw - 48px));
+    max-height: calc(100dvh - 48px);
+    padding: 24px;
+    overflow-x: hidden;
     overflow-y: auto;
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
 
-    background: #fff;
-    border: 2px solid var(--theme-color-primary, #63aa28);
+    color: #1e3a5f;
+    background:
+        radial-gradient(circle at 100% 0, rgba(var(--cookie-accent-rgb), 0.16), transparent 42%),
+        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(var(--cookie-accent-rgb), 0.28);
+    border-radius: 24px;
+    box-shadow:
+        0 24px 60px rgba(30, 58, 95, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
+    backdrop-filter: blur(20px) saturate(145%);
+    -webkit-backdrop-filter: blur(20px) saturate(145%);
+    isolation: isolate;
 
-    transition: opacity 0.3s, transform 0.3s;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0s linear;
 }
-.widget_cookie__style1{
-	border-color:#63aa28
+
+.widget_cookie::before {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 28px;
+    left: 28px;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: linear-gradient(90deg, transparent, var(--cookie-accent-light), transparent);
+    box-shadow: 0 2px 18px rgba(var(--cookie-accent-rgb), 0.35);
+    content: '';
+    pointer-events: none;
 }
-.widget_cookie__style2{
-	border-color:#f8a91c
+
+.widget_cookie__style1 {
+    --cookie-accent: #4d8f24;
+    --cookie-accent-light: #63aa28;
+    --cookie-accent-rgb: 77, 143, 36;
 }
-.widget_cookie__style3{
-	border-color:#e12a2a
+
+.widget_cookie__style2 {
+    --cookie-accent: #c87900;
+    --cookie-accent-light: #f8a91c;
+    --cookie-accent-rgb: 200, 121, 0;
 }
-.widget_cookie__style4{
-	border-color:#0082d1
+
+.widget_cookie__style3 {
+    --cookie-accent: #b52222;
+    --cookie-accent-light: #e12a2a;
+    --cookie-accent-rgb: 181, 34, 34;
 }
-.widget_cookie__style5{
-	border-color:#159dba
+
+.widget_cookie__style4 {
+    --cookie-accent: #2980b9;
+    --cookie-accent-light: #3498db;
+    --cookie-accent-rgb: 41, 128, 185;
 }
+
+.widget_cookie__style5 {
+    --cookie-accent: #117f96;
+    --cookie-accent-light: #159dba;
+    --cookie-accent-rgb: 17, 127, 150;
+}
+
 .widget_cookie__text {
     margin: 0;
     padding: 0;
-    color: rgba(25, 25, 25, 0.7);
-    font-size: 12px;
-    line-height: 1.5;
+    color: #2c5678;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-.widget_cookie a{
-	color:var(--theme-b-link)
+.widget_cookie a {
+    color: var(--cookie-accent);
+    font-weight: 600;
+    text-decoration-color: rgba(var(--cookie-accent-rgb), 0.35);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
-.widget_cookie.cookie__hide{
-	transition-delay:0s;
-	opacity:0 !important;
-	transform:translateY(20px) !important;
-	pointer-events: none !important;
+
+.widget_cookie a:hover {
+    color: var(--cookie-accent-light);
+    text-decoration-color: currentColor;
+}
+
+.widget_cookie a:focus-visible,
+.widget_cookie button:focus-visible,
+.widget_cookie input:focus-visible {
+    outline: 3px solid rgba(var(--cookie-accent-rgb), 0.28);
+    outline-offset: 3px;
+}
+
+.widget_cookie.cookie__hide {
+    opacity: 0 !important;
+    transform: translateY(24px) scale(0.98) !important;
+    pointer-events: none !important;
     visibility: hidden !important;
+    transition-delay: 0s, 0s, 0.3s;
 }
 
 .cookie-settings {
-    margin: 12px 0 0 !important;
-    padding: 10px;
+    margin: 18px 0 0 !important;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(var(--cookie-accent-rgb), 0.16);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .cookie-option {
-    margin: 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+    padding: 7px 0;
 }
 
+.cookie-option + .cookie-option {
+    border-top: 1px solid rgba(var(--cookie-accent-rgb), 0.12);
+}
 
-.cookie-option input[type="checkbox"] {
-    margin-right: 10px;
+.cookie-option input[type='checkbox'] {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin: 1px 0 0;
+    accent-color: var(--cookie-accent);
+    cursor: pointer;
+}
+
+.cookie-option input[type='checkbox']:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
 }
 
 .cookie-option label {
     min-width: 0;
-    line-height: 1.4;
+    color: #1e3a5f;
+    font-size: 13px;
+    line-height: 1.45;
+    cursor: pointer;
 }
 
-
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
+.cookie-option input[type='checkbox']:disabled + label {
+    cursor: default;
 }
 
 .cookie-buttons {
-    display: flex;
-    margin-top: 12px !important;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 12px;
+    margin-top: 18px !important;
 }
 
-.widget_cookie__btn-reject,
-.widget_cookie__btn-accept {
-    min-height: 44px;
+.widget_cookie .widget_cookie__btn-reject,
+.widget_cookie .widget_cookie__btn-accept {
+    min-height: 46px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
 }
 
-@media (min-width: 480px) {
+.widget_cookie .widget_cookie__btn-reject {
+    color: #2c6b9e;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(var(--cookie-accent-rgb), 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.widget_cookie .widget_cookie__btn-reject:hover {
+    color: #1e3a5f;
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(var(--cookie-accent-rgb), 0.5);
+    box-shadow: 0 8px 20px rgba(31, 100, 180, 0.12);
+    transform: translateY(-2px);
+}
+
+.widget_cookie .widget_cookie__btn-accept {
+    color: #fff;
+    background: linear-gradient(145deg, var(--cookie-accent-light), var(--cookie-accent));
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow: 0 9px 22px rgba(var(--cookie-accent-rgb), 0.28);
+}
+
+.widget_cookie .widget_cookie__btn-accept:hover {
+    color: #fff;
+    background: linear-gradient(145deg, var(--cookie-accent-light), var(--cookie-accent));
+    border-color: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 14px 28px rgba(var(--cookie-accent-rgb), 0.36);
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+}
+
+.widget_cookie .widget_cookie__btn-reject:active,
+.widget_cookie .widget_cookie__btn-accept:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .widget_cookie {
-        right: 15px;
-        bottom: 30px;
-        left: auto;
-        width: 345px;
+        background: rgba(244, 250, 255, 0.97);
+    }
+
+    .cookie-settings {
+        background: rgba(255, 255, 255, 0.82);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .widget_cookie {
+        right: 12px;
+        bottom: 12px;
+        width: calc(100vw - 24px);
+        max-height: calc(100dvh - 24px);
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .cookie-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .widget_cookie,
+    .widget_cookie a,
+    .widget_cookie .widget_cookie__btn-reject,
+    .widget_cookie .widget_cookie__btn-accept {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms;
     }
 }
