@@ -42,9 +42,9 @@ const SITE_INFO = [
     'gosuslugi_widget_id' => 215882,
     'gosuslugi_org_id' => 494,
     'menu_top_root_type' => 'top',
-    'menu_top_child_type' => 'right',
-    'menu_side_root_type' => 'right',
-    'menu_side_child_type' => 'right',
+    'menu_top_child_type' => 'left',
+    'menu_side_root_type' => 'left',
+    'menu_side_child_type' => 'left',
     'menu_social_root_type' => 'social',
     'layout_excluded_pages' => [
         '/',
