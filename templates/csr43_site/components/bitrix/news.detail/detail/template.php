@@ -101,7 +101,7 @@ if (!empty($additionalFiles['VALUE'])) {
 ?>
 
 <div class="news-detail news-detail__container">
-    <div class="news-detail__card p-4 p-lg-5 mb-4">
+    <div class="csr43-glass-card news-detail__card p-4 p-lg-5 mb-4">
 		 <!-- Заголовок новости -->
         <h1 class="news-detail__title mb-3"><?=htmlspecialcharsbx($newsName)?></h1>
         <!-- Мета-информация -->
@@ -181,7 +181,7 @@ if (!empty($additionalFiles['VALUE'])) {
                 <!-- Галерея изображений и видео -->
                 <?php if (!empty($galleryFiles)): ?>
                     <?php $galleryId = 'news-detail-' . $this->randString(); ?>
-                    <section class="news-detail__card p-4 mb-4">
+                    <section class="csr43-glass-card news-detail__card p-4 mb-4">
                         <h5 class="news-detail__section-title mb-3">
                             <i class="news-detail__accent-icon bi bi-images me-2"></i> Материалы
                         </h5>
@@ -221,7 +221,7 @@ if (!empty($additionalFiles['VALUE'])) {
 
                 <!-- Файлы для скачивания -->
                 <?php if (!empty($downloadFiles)): ?>
-                    <section class="news-detail__card p-4 mb-4">
+                    <section class="csr43-glass-card news-detail__card p-4 mb-4">
                         <h5 class="news-detail__section-title mb-3">
                             <i class="news-detail__accent-icon bi bi-paperclip me-2"></i> Приложенные файлы
                         </h5>
@@ -275,7 +275,7 @@ if (!empty($additionalFiles['VALUE'])) {
                 <?php endif; ?>
 
                 <!-- Навигация между новостями -->
-                <section class="news-detail__card p-4">
+                <section class="csr43-glass-card news-detail__card p-4">
                     <h5 class="news-detail__section-title mb-3">
                         <i class="news-detail__accent-icon bi bi-arrow-left-right me-2"></i> Другие новости
                     </h5>
