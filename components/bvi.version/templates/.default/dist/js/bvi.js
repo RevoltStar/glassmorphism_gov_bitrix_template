@@ -1011,6 +1011,7 @@
   };
 
   var setBviBodies = function setBviBodies() {
+    applyBviBodyAttributes(document.body);
     Array.from(document.body.children).forEach(function (element) {
       if (!isBviBodyElement(element)) {
         return;
@@ -1059,6 +1060,11 @@
 
   var removeBviBodies = function removeBviBodies() {
     disconnectBviBodiesObserver();
+    Array.from(document.body.attributes).forEach(function (attribute) {
+      if (attribute.name.indexOf('data-bvi-') === 0) {
+        document.body.removeAttribute(attribute.name);
+      }
+    });
     getBviBodies().forEach(function (element) {
       Array.from(element.attributes).forEach(function (attribute) {
         if (attribute.name.indexOf('data-bvi-') === 0) {

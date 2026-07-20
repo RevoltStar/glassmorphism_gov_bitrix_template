@@ -10,6 +10,26 @@ html body .bvi-link-fixed-top:focus-visible {
     border: 1px solid rgba(52, 152, 219, 0.3);
 }
 
+body.bvi-active[data-bvi-theme="white"] {
+    background: #ffffff !important;
+}
+
+body.bvi-active[data-bvi-theme="black"] {
+    background: #000000 !important;
+}
+
+body.bvi-active[data-bvi-theme="blue"] {
+    background: #9dd1ff !important;
+}
+
+body.bvi-active[data-bvi-theme="brown"] {
+    background: #f7f3d6 !important;
+}
+
+body.bvi-active[data-bvi-theme="green"] {
+    background: #3b2716 !important;
+}
+
 html body .bvi-panel [aria-pressed="true"] {
     outline: 2px solid currentColor !important;
     outline-offset: 2px !important;
