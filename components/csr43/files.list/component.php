@@ -11,8 +11,8 @@ if (!Loader::includeModule('iblock')) {
     return;
 }
 
-$iblockType = trim((string)($arParams['IBLOCK_TYPE'] ?? ''));
-$iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
+$iblockType = trim((string)get_info('files_iblock_type', ''));
+$iblockId = max(0, (int)get_info('files_iblock_id', 0));
 $sectionId = max(0, (int)($arParams['SECTION_ID'] ?? 0));
 $newsCount = min(1000, max(1, (int)($arParams['NEWS_COUNT'] ?? 100)));
 $cacheType = (string)($arParams['CACHE_TYPE'] ?? 'A');
@@ -25,7 +25,7 @@ $iblock = $iblockType !== '' && $iblockId > 0
     : false;
 
 if (!$iblock) {
-    ShowError('В компоненте «Список файлов» не выбран инфоблок или выбранный инфоблок недоступен.');
+    ShowError('Инфоблок для компонента «Список файлов» не настроен или недоступен.');
     return;
 }
 

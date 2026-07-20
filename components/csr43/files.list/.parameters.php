@@ -6,31 +6,19 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
-$iblockTypeOptions = ['' => '— Выберите тип инфоблока —'];
-$iblockOptions = ['0' => '— Выберите инфоблок —'];
 $sectionOptions = ['0' => '— Выберите раздел —'];
 
 if (Loader::includeModule('iblock')) {
-    $iblockTypeOptions += CIBlockParameters::GetIBlockTypes();
+    $iblockType = trim((string)get_info('files_iblock_type', ''));
+    $iblockId = max(0, (int)get_info('files_iblock_id', 0));
+    $iblock = $iblockType !== '' && $iblockId > 0
+        ? CIBlock::GetList([], ['ID' => $iblockId, 'TYPE' => $iblockType, 'ACTIVE' => 'Y', 'CHECK_PERMISSIONS' => 'Y'])->Fetch()
+        : false;
 
-    $selectedIblockType = trim((string)($arCurrentValues['IBLOCK_TYPE'] ?? ''));
-    $selectedIblockId = max(0, (int)($arCurrentValues['IBLOCK_ID'] ?? 0));
-
-    if ($selectedIblockType !== '') {
-        $iblockResult = CIBlock::GetList(
-            ['SORT' => 'ASC', 'NAME' => 'ASC'],
-            ['TYPE' => $selectedIblockType, 'ACTIVE' => 'Y']
-        );
-
-        while ($iblock = $iblockResult->Fetch()) {
-            $iblockOptions[(string)$iblock['ID']] = sprintf('[%d] %s', $iblock['ID'], trim(strip_tags((string)$iblock['NAME'])));
-        }
-    }
-
-    if ($selectedIblockId > 0) {
+    if ($iblock) {
         $sectionResult = CIBlockSection::GetList(
             ['LEFT_MARGIN' => 'ASC'],
-            ['IBLOCK_ID' => $selectedIblockId, 'ACTIVE' => 'Y'],
+            ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y', 'GLOBAL_ACTIVE' => 'Y', 'CHECK_PERMISSIONS' => 'Y'],
             false,
             ['ID', 'NAME', 'DEPTH_LEVEL']
         );
@@ -51,24 +39,6 @@ $arComponentParameters = [
         ],
     ],
     'PARAMETERS' => [
-        'IBLOCK_TYPE' => [
-            'PARENT' => 'BASE',
-            'NAME' => 'Тип инфоблока',
-            'TYPE' => 'LIST',
-            'VALUES' => $iblockTypeOptions,
-            'DEFAULT' => '',
-            'REFRESH' => 'Y',
-            'ADDITIONAL_VALUES' => 'N',
-        ],
-        'IBLOCK_ID' => [
-            'PARENT' => 'BASE',
-            'NAME' => 'Инфоблок',
-            'TYPE' => 'LIST',
-            'VALUES' => $iblockOptions,
-            'DEFAULT' => '0',
-            'REFRESH' => 'Y',
-            'ADDITIONAL_VALUES' => 'N',
-        ],
         'SECTION_ID' => [
             'PARENT' => 'BASE',
             'NAME' => 'Раздел инфоблока',
