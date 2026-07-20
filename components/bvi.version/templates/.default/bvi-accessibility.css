@@ -38,6 +38,15 @@ html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open
     background-color: transparent !important;
 }
 
+html body .bvi-body[data-bvi-theme] .section-title::before,
+html body .bvi-body[data-bvi-theme] .section-title::after {
+    background: currentColor !important;
+}
+
+html body .bvi-body[data-bvi-theme] .section-title::before {
+    opacity: 0.25;
+}
+
 html body .bvi-panel [aria-pressed="true"] {
     outline: 2px solid currentColor !important;
     outline-offset: 2px !important;
