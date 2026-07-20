@@ -172,6 +172,27 @@ function site_safe_html(mixed $value): string
                 $sanitizer->SetLevel(CBXSanitizer::SECURE_LEVEL_HIGH);
             }
 
+            // Высокий уровень сохраняет базовое форматирование, но не ссылки.
+            // Разрешаем только атрибуты, необходимые для обычной текстовой ссылки.
+            $sanitizer->AddTags([
+                'a' => ['href', 'title'],
+            ]);
+
+            // Не превращаем уже существующие сущности вроде &nbsp; в &amp;nbsp;.
+            if (method_exists($sanitizer, 'ApplyDoubleEncode')) {
+                $sanitizer->ApplyDoubleEncode(false);
+            }
+
+            if (method_exists($sanitizer, 'setDelTagsWithContent')) {
+                $sanitizer->setDelTagsWithContent([
+                    'script',
+                    'style',
+                    'iframe',
+                    'object',
+                    'embed',
+                ]);
+            }
+
             return (string)$sanitizer->SanitizeHtml($html);
         } catch (Throwable) {
             // Безопасный fallback ниже.
