@@ -13,8 +13,12 @@ if (!Loader::includeModule('iblock')) {
 
 $iblockType = trim((string)get_info('links_iblock_type', ''));
 $iblockId = max(0, (int)get_info('links_iblock_id', 0));
-$sectionId = max(0, (int)($arParams['SECTION_ID'] ?? 0));
+$sectionKey = site_string($arParams['SECTION_ID'] ?? '');
+$sectionId = preg_match('/^section_([1-9][0-9]*)$/D', $sectionKey, $sectionMatch) === 1
+    ? (int)$sectionMatch[1]
+    : 0;
 $newsCount = min(1000, max(1, (int)($arParams['NEWS_COUNT'] ?? 100)));
+$displayChildSections = ($arParams['DISPLAY_CHILD_SECTIONS'] ?? 'N') === 'Y';
 $cacheType = (string)($arParams['CACHE_TYPE'] ?? 'A');
 if (!in_array($cacheType, ['A', 'Y', 'N'], true)) {
     $cacheType = 'A';
@@ -40,21 +44,54 @@ if (!$section) {
 
 $showUpdateDate = ($arParams['SHOW_UPDATE_DATE'] ?? 'N') === 'Y' ? 'Y' : 'N';
 
-$APPLICATION->IncludeComponent(
-    'bitrix:news.list',
-    'links',
-    [
+$allowedSortFields = ['ID', 'NAME', 'SORT', 'ACTIVE_FROM', 'DATE_CREATE', 'TIMESTAMP_X'];
+$sortBy1 = strtoupper(trim((string)($arParams['SORT_BY1'] ?? 'SORT')));
+$sortBy2 = strtoupper(trim((string)($arParams['SORT_BY2'] ?? 'ID')));
+$sortBy1 = in_array($sortBy1, $allowedSortFields, true) ? $sortBy1 : 'SORT';
+$sortBy2 = in_array($sortBy2, $allowedSortFields, true) ? $sortBy2 : 'ID';
+$sortOrder1 = strtoupper((string)($arParams['SORT_ORDER1'] ?? 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
+$sortOrder2 = strtoupper((string)($arParams['SORT_ORDER2'] ?? 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
+
+$sectionIds = [$sectionId];
+if ($displayChildSections) {
+    $sectionIds = [];
+    $sectionResult = CIBlockSection::GetList(
+        ['SORT' => 'ASC', 'NAME' => 'DESC'],
+        [
+            'IBLOCK_ID' => $iblockId,
+            'SECTION_ID' => $sectionId,
+            'ACTIVE' => 'Y',
+            'GLOBAL_ACTIVE' => 'Y',
+            'CHECK_PERMISSIONS' => 'Y',
+        ],
+        false,
+        ['ID']
+    );
+
+    while ($childSection = $sectionResult->Fetch()) {
+        $childSectionId = max(0, (int)($childSection['ID'] ?? 0));
+        if ($childSectionId > 0) {
+            $sectionIds[] = $childSectionId;
+        }
+    }
+}
+
+foreach ($sectionIds as $currentSectionId) {
+    $APPLICATION->IncludeComponent(
+        'bitrix:news.list',
+        'links',
+        [
         'IBLOCK_TYPE' => $iblockType,
         'IBLOCK_ID' => (string)$iblockId,
         'NEWS_COUNT' => (string)$newsCount,
-        'SORT_BY1' => 'SORT',
-        'SORT_ORDER1' => 'ASC',
-        'SORT_BY2' => 'ID',
-        'SORT_ORDER2' => 'ASC',
+        'SORT_BY1' => $sortBy1,
+        'SORT_ORDER1' => $sortOrder1,
+        'SORT_BY2' => $sortBy2,
+        'SORT_ORDER2' => $sortOrder2,
         'FIELD_CODE' => ['ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'TIMESTAMP_X'],
         'PROPERTY_CODE' => ['LINK', 'ICON'],
-        'PARENT_SECTION' => (string)$sectionId,
-        'SECTION_ID' => (string)$sectionId,
+        'PARENT_SECTION' => (string)$currentSectionId,
+        'SECTION_ID' => (string)$currentSectionId,
         'INCLUDE_SUBSECTIONS' => ($arParams['INCLUDE_SUBSECTIONS'] ?? 'N') === 'Y' ? 'Y' : 'N',
         'CHECK_DATES' => 'Y',
         'SHOW_DATE' => $showUpdateDate,
@@ -76,6 +113,7 @@ $APPLICATION->IncludeComponent(
         'DISPLAY_TOP_PAGER' => 'N',
         'DISPLAY_BOTTOM_PAGER' => 'N',
         'SET_STATUS_404' => 'N',
-    ],
-    $this
-);
+        ],
+        $this
+    );
+}

@@ -6,7 +6,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
-$sectionOptions = ['0' => '— Выберите раздел —'];
+$sectionOptions = ['' => '— Выберите раздел —'];
 
 if (Loader::includeModule('iblock')) {
     $iblockType = trim((string)get_info('links_iblock_type', ''));
@@ -26,7 +26,7 @@ if (Loader::includeModule('iblock')) {
         while ($section = $sectionResult->Fetch()) {
             $depth = max(0, (int)$section['DEPTH_LEVEL'] - 1);
             $prefix = $depth > 0 ? str_repeat('·  ', $depth) : '';
-            $sectionOptions[(string)$section['ID']] = $prefix . trim(strip_tags((string)$section['NAME']));
+            $sectionOptions['section_' . (int)$section['ID']] = $prefix . trim(strip_tags((string)$section['NAME']));
         }
     }
 }
@@ -44,7 +44,7 @@ $arComponentParameters = [
             'NAME' => 'Раздел инфоблока',
             'TYPE' => 'LIST',
             'VALUES' => $sectionOptions,
-            'DEFAULT' => '0',
+            'DEFAULT' => '',
             'ADDITIONAL_VALUES' => 'N',
         ],
         'INCLUDE_SUBSECTIONS' => [
@@ -53,11 +53,45 @@ $arComponentParameters = [
             'TYPE' => 'CHECKBOX',
             'DEFAULT' => 'N',
         ],
+        'DISPLAY_CHILD_SECTIONS' => [
+            'PARENT' => 'BASE',
+            'NAME' => 'Выводить каждый непосредственный подраздел отдельным списком',
+            'TYPE' => 'CHECKBOX',
+            'DEFAULT' => 'N',
+        ],
         'NEWS_COUNT' => [
             'PARENT' => 'BASE',
             'NAME' => 'Максимальное количество элементов',
             'TYPE' => 'STRING',
             'DEFAULT' => '100',
+        ],
+        'SORT_BY1' => [
+            'PARENT' => 'DATA_SOURCE',
+            'NAME' => 'Поле первой сортировки',
+            'TYPE' => 'LIST',
+            'VALUES' => ['SORT' => 'Сортировка', 'NAME' => 'Название', 'DATE_CREATE' => 'Дата создания', 'TIMESTAMP_X' => 'Дата изменения', 'ID' => 'ID'],
+            'DEFAULT' => 'SORT',
+        ],
+        'SORT_ORDER1' => [
+            'PARENT' => 'DATA_SOURCE',
+            'NAME' => 'Направление первой сортировки',
+            'TYPE' => 'LIST',
+            'VALUES' => ['ASC' => 'По возрастанию', 'DESC' => 'По убыванию'],
+            'DEFAULT' => 'ASC',
+        ],
+        'SORT_BY2' => [
+            'PARENT' => 'DATA_SOURCE',
+            'NAME' => 'Поле второй сортировки',
+            'TYPE' => 'LIST',
+            'VALUES' => ['ID' => 'ID', 'NAME' => 'Название', 'SORT' => 'Сортировка', 'DATE_CREATE' => 'Дата создания', 'TIMESTAMP_X' => 'Дата изменения'],
+            'DEFAULT' => 'ID',
+        ],
+        'SORT_ORDER2' => [
+            'PARENT' => 'DATA_SOURCE',
+            'NAME' => 'Направление второй сортировки',
+            'TYPE' => 'LIST',
+            'VALUES' => ['ASC' => 'По возрастанию', 'DESC' => 'По убыванию'],
+            'DEFAULT' => 'ASC',
         ],
         'SHOW_SECTION_NAME' => [
             'PARENT' => 'DISPLAY',
