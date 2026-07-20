@@ -30,6 +30,14 @@ body.bvi-active[data-bvi-theme="green"] {
     background: #3b2716 !important;
 }
 
+html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles):hover,
+html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles):focus,
+html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles):focus-visible {
+    color: inherit !important;
+    background-color: transparent !important;
+}
+
 html body .bvi-panel [aria-pressed="true"] {
     outline: 2px solid currentColor !important;
     outline-offset: 2px !important;
