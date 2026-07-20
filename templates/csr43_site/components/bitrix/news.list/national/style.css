@@ -11,7 +11,7 @@
     font-weight: 600;
 }
 
-.national-project__more {
+.btn.national-project__more {
     padding: 2px 12px;
     border-radius: 20px;
     font-size: 12px;
