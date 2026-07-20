@@ -992,6 +992,33 @@
     }
   };
 
+  var getBviBodies = function getBviBodies() {
+    return document.querySelectorAll('body > .bvi-body');
+  };
+
+  var setBviBodies = function setBviBodies() {
+    var excludedTags = ['LINK', 'META', 'NOSCRIPT', 'SCRIPT', 'STYLE', 'TEMPLATE'];
+    Array.from(document.body.children).forEach(function (element) {
+      if (excludedTags.indexOf(element.tagName) !== -1 || element.classList.contains('bvi-panel')) {
+        return;
+      }
+
+      element.classList.add('bvi-body');
+    });
+    return getBviBodies();
+  };
+
+  var removeBviBodies = function removeBviBodies() {
+    getBviBodies().forEach(function (element) {
+      Array.from(element.attributes).forEach(function (attribute) {
+        if (attribute.name.indexOf('data-bvi-') === 0) {
+          element.removeAttribute(attribute.name);
+        }
+      });
+      element.classList.remove('bvi-body');
+    });
+  };
+
   var unwrap = function unwrap(wrapper) {
     var docFrag = document.createDocumentFragment();
     if (!wrapper) return;
@@ -1760,8 +1787,13 @@
         var html = "\n    <div class='bvi-panel".concat(panelHide, "'>\n        <div class=\"bvi-blocks bvi-block-center\">\n            <div class=\"bvi-block\">\n                <div class=\"bvi-block-title\">").concat(this._i18n.t('fontSize'), "</div>\n                <a class=\"bvi-link bvi-fontSize-minus\">\u0410-</a>\n                <a class=\"bvi-link bvi-fontSize-plus\">\u0410+</a>\n            </div>\n            <div class=\"bvi-block\">\n                <div class=\"bvi-block-title\">").concat(this._i18n.t('siteColors'), "</div>\n                <a href=\"#\" class=\"bvi-link bvi-theme-white\">\u0426</a>\n                <a href=\"#\" class=\"bvi-link bvi-theme-black\">\u0426</a>\n                <a href=\"#\" class=\"bvi-link bvi-theme-blue\">\u0426</a>\n                <a href=\"#\" class=\"bvi-link bvi-theme-brown\">\u0426</a>\n                <a href=\"#\" class=\"bvi-link bvi-theme-green\">\u0426</a>\n            </div>\n            <div class=\"bvi-block\">\n                <div class=\"bvi-block-title\">").concat(this._i18n.t('images'), "</div>\n                <a href=\"#\" class=\"bvi-link bvi-images-on\">\n                    <i class=\"bvi-images bvi-images-image\"></i>\n                </a>\n                <a href=\"#\" class=\"bvi-link bvi-images-off\">\n                    <i class=\"bvi-images bvi-images-minus-circle\"></i>\n                </a>\n                <a href=\"#\" class=\"bvi-link bvi-images-grayscale\">\n                    <i class=\"bvi-images bvi-images-adjust\"></i>\n                </a>\n            </div>\n            <div class=\"bvi-block\">\n                <div class=\"bvi-block-title\">").concat(this._i18n.t('speech'), "</div>\n                <a href=\"#\" class=\"bvi-link bvi-speech-off\">\n                    <i class=\"bvi-images bvi-images-volume-off\"></i>\n                </a>\n                <a href=\"#\" class=\"bvi-link bvi-speech-on\">\n                    <i class=\"bvi-images bvi-images-volume-up\"></i>\n                </a>\n            </div>\n            <div class=\"bvi-block\">\n                <div class=\"bvi-block-title\">").concat(this._i18n.t('settings'), "</div>\n                <a href=\"#\" class=\"bvi-link\" data-bvi=\"modal\">\n                    <i class=\"bvi-images bvi-images-cog\"></i>\n                </a>\n                <a href=\"#\" class=\"bvi-link\" data-bvi=\"close\">\n                    ").concat(this._i18n.t('regularVersionOfTheSite'), "\n                </a>\n                <a href=\"#\" class=\"bvi-link\" data-bvi=\"panel-hide\">\n                    <i class=\"bvi-images bvi-images-minus\"></i>\n                </a>\n            </div>\n        </div>\n        <div class=\"bvi-modal\">\n            <div class=\"bvi-modal-dialog\">\n                <div class=\"bvi-modal-content\">\n                    <div class=\"bvi-modal-header\">\n                        <div class=\"bvi-modal-title\">").concat(this._i18n.t('settings'), "</div>\n                        <a href=\"#\" class=\"bvi-link bvi-modal-close\" data-bvi=\"modal-close\">\xD7</a>\n                    </div>\n                    <div class=\"bvi-modal-body\">\n                        <div class=\"bvi-blocks bvi-block-center\">\n                            <div class=\"bvi-block\">\n                                <div class=\"bvi-block-title\">").concat(this._i18n.t('letterSpacing'), "</div>\n                                <a href=\"#\" class=\"bvi-link bvi-letter-spacing-normal\">").concat(this._i18n.t('normal'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-letter-spacing-average\">").concat(this._i18n.t('average'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-letter-spacing-big\">").concat(this._i18n.t('big'), "</a>\n                            </div>\n                            <div class=\"bvi-block\">\n                                <div class=\"bvi-block-title\">").concat(this._i18n.t('lineHeight'), "</div>\n                                <a href=\"#\" class=\"bvi-link bvi-line-height-normal\">").concat(this._i18n.t('normal'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-line-height-average\">").concat(this._i18n.t('average'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-line-height-big\">").concat(this._i18n.t('big'), "</a>\n                            </div>\n                            <div class=\"bvi-block\">\n                                <div class=\"bvi-block-title\">").concat(this._i18n.t('font'), "</div>\n                                <a href=\"#\" class=\"bvi-link bvi-font-family-arial\">").concat(this._i18n.t('arial'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-font-family-times\">").concat(this._i18n.t('times'), "</a>\n                            </div>\n                            <div class=\"bvi-block\">\n                                <div class=\"bvi-block-title\">").concat(this._i18n.t('builtElements'), "</div>\n                                <a href=\"#\" class=\"bvi-link bvi-built-elements-on\">").concat(this._i18n.t('on'), "</a>\n                                <a href=\"#\" class=\"bvi-link bvi-built-elements-off\">").concat(this._i18n.t('off'), "</a>\n                            </div>\n                        </div>\n                        <div class=\"bvi-blocks bvi-block-center\">\n                            <a href=\"https://bvi.isvek.ru\" class=\"bvi-copyright\" target=\"_blank\">bvi.isvek.ru</a>\n                        </div>\n                    </div>\n                    <div class=\"bvi-modal-footer\">\n                        <a href=\"#\" class=\"bvi-link bvi-reset\">").concat(this._i18n.t('reset'), "</a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>");
         var link = "<a href=\"#\" class=\"bvi-link bvi-link-fixed-top bvi-no-styles ".concat(linkHide, "\" data-bvi=\"panel-show\">") + '<i class="bvi-images bvi-images-eye bvi-images-size-32 bvi-no-styles"></i></a>';
         window.addEventListener('scroll', scroll);
-        document.querySelector('.bvi-body').insertAdjacentHTML('beforebegin', html);
-        document.querySelector('.bvi-body').insertAdjacentHTML('afterbegin', link);
+        document.body.insertAdjacentHTML('afterbegin', html);
+        var linkContainer = document.querySelector('body > header') || document.querySelector('.bvi-body');
+
+        if (linkContainer) {
+          linkContainer.insertAdjacentHTML('afterbegin', link);
+        }
+
         scroll();
       }
     }, {
@@ -1770,7 +1802,7 @@
         var _this3 = this;
 
         document.body.classList.add('bvi-active');
-        wrapInner(document.body, 'div', 'bvi-body');
+        setBviBodies();
         getObject(this._config, function (key) {
           return _this3._setAttrDataBviBody(key, getCookie(key));
         });
@@ -1792,20 +1824,17 @@
       key: "_remove",
       value: function _remove() {
         var bviPanel = document.querySelector('.bvi-panel');
-        var bviBody = document.querySelector('.bvi-body');
         var bviLinkFixedTop = document.querySelector('.bvi-link-fixed-top');
 
         if (bviPanel) {
           bviPanel.remove();
         }
 
-        if (bviBody) {
-          unwrap(bviBody);
-        }
-
         if (bviLinkFixedTop) {
           bviLinkFixedTop.remove();
         }
+
+        removeBviBodies();
 
         this._speech("".concat(this._i18n.v('panelOff')));
 
@@ -1860,7 +1889,15 @@
       value: function _setAttrDataBviBody() {
         var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-        document.querySelector('.bvi-body').setAttribute("data-bvi-".concat(name), value);
+        var bviBodies = getBviBodies();
+
+        if (!bviBodies.length) {
+          bviBodies = setBviBodies();
+        }
+
+        bviBodies.forEach(function (element) {
+          element.setAttribute("data-bvi-".concat(name), value);
+        });
       }
     }, {
       key: "_speechPlayer",
@@ -2067,4 +2104,3 @@
   return index_umd;
 
 })));
-//# sourceMappingURL=bvi.js.map
