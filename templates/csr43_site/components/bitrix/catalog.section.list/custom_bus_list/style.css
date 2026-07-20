@@ -240,6 +240,8 @@ a.bus-route-card:hover {
 .bus-route-list__empty {
     --csr43-glass-bg: rgba(255, 255, 255, 0.58);
     --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-shadow: none;
+    --csr43-glass-blur: 0px;
     display: flex;
     align-items: center;
     gap: 0.65rem;

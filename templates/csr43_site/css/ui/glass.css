@@ -72,6 +72,10 @@
     background: var(--csr43-glass-bg-hover);
     border-color: var(--csr43-glass-border-hover);
     box-shadow: var(--csr43-glass-shadow-hover);
+}
+
+.csr43-glass-card--interactive:hover,
+.csr43-glass-card--interactive:focus-visible {
     transform: translateY(var(--csr43-glass-hover-translate-y));
 }
 
@@ -107,6 +111,10 @@
     color: var(--csr43-color-text);
     background: #fff;
     border-color: var(--csr43-color-accent-light);
+}
+
+.csr43-glass-card--interactive:hover .csr43-glass-icon,
+.csr43-glass-card--interactive:focus-visible .csr43-glass-icon {
     transform: scale(var(--csr43-glass-icon-scale));
 }
 
@@ -126,7 +134,8 @@
     .csr43-glass-card,
     .glass,
     .glass-card-blue {
-        background: rgba(244, 250, 255, 0.97);
+        --csr43-glass-bg: rgba(244, 250, 255, 0.97);
+        --csr43-glass-bg-hover: rgba(244, 250, 255, 0.99);
     }
 }
 
@@ -138,10 +147,12 @@
 
     .csr43-glass-card--interactive:hover,
     .csr43-glass-card--interactive:focus-visible,
-    .csr43-glass-card--interactive:focus-within,
+    .csr43-glass-card--interactive:focus-within {
+        transform: none;
+    }
+
     .csr43-glass-card--interactive:hover .csr43-glass-icon,
-    .csr43-glass-card--interactive:focus-visible .csr43-glass-icon,
-    .csr43-glass-card--interactive:focus-within .csr43-glass-icon {
+    .csr43-glass-card--interactive:focus-visible .csr43-glass-icon {
         transform: none;
     }
 }

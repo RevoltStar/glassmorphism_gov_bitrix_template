@@ -4,6 +4,7 @@
 
 .news-detail__card {
     --csr43-glass-radius: 32px;
+    --csr43-glass-hover-translate-y: 0;
 }
 
 .news-detail__title {
