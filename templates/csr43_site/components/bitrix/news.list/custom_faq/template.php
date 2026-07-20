@@ -97,7 +97,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
                                 <div class="citizen-faq__answer">
                                     <?php if ($answer !== ''): ?>
                                         <?php if ($answerType === 'html'): ?>
-                                            <?=$answer?>
+                                            <?=site_safe_html($answer)?>
                                         <?php else: ?>
                                             <?=nl2br(htmlspecialcharsbx($answer))?>
                                         <?php endif; ?>
