@@ -112,7 +112,7 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="ministry-logo"
                          width="80"
-                         height="801">
+                         height="80">
                 </a>
             </div>
 
