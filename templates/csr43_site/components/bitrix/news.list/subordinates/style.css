@@ -8,10 +8,10 @@
     justify-content: center;
     width: 80px;
     height: 80px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     color: var(--csr43-color-accent);
     background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(52, 152, 219, 0.2);
+    /*border: 1px solid rgba(52, 152, 219, 0.2);*/
     border-radius: 20px;
 }
 
