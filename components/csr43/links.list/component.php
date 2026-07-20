@@ -30,7 +30,7 @@ if (!$iblock) {
 }
 
 $section = $sectionId > 0
-    ? CIBlockSection::GetList([], ['ID' => $sectionId, 'IBLOCK_ID' => $iblockId, 'CHECK_PERMISSIONS' => 'Y'], false, ['ID'])->Fetch()
+    ? CIBlockSection::GetList([], ['ID' => $sectionId, 'IBLOCK_ID' => $iblockId, 'CHECK_PERMISSIONS' => 'Y', 'ACTIVE' => 'Y', 'GLOBAL_ACTIVE' => 'Y'], false, ['ID'])->Fetch()
     : false;
 
 if (!$section) {

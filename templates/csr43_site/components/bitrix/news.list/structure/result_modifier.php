@@ -51,6 +51,7 @@ $elementResult = CIBlockElement::GetList(
         'SECTION_ID' => array_keys($sections),
         'ACTIVE' => 'Y',
         'CHECK_PERMISSIONS' => 'Y',
+        'ACTIVE_DATE' => 'Y',
     ],
     false,
     false,
