@@ -22,7 +22,7 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
 	<?php
 		$APPLICATION->SetPageProperty(
     	'canonical',
-    	get_canonical_link(["PAGEN_1", "PAGEN_2"])
+    	get_canonical_link(["PAGEN_1", "PAGEN_2", "q"])
 	);
 	?>
 	<?php include __DIR__ . '/include/schema_org.php'; ?>
