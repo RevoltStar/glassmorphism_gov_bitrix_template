@@ -39,9 +39,12 @@ HTML может содержать внешние обёртки и данные
   репозитории и регистрируются в `templates/csr43_site/header.php`.
 - Сборки через Composer/npm нет. Нет PHPUnit, PHPStan, PHPCS, ESLint,
   Stylelint, CI-конфигурации или локального тестового стенда.
-- Minified-файлы, sourcemaps, шрифты и
-  `components/bvi.version/templates/.default/dist/` считаются vendored-кодом.
-  Не редактируйте их вручную без отдельной задачи на обновление зависимости.
+- Сторонние minified-файлы, sourcemaps и шрифты считаются vendored-кодом и не
+  редактируются вручную без отдельной задачи на обновление зависимости.
+- `components/bvi.version/templates/.default/dist/` — поддерживаемая в проекте
+  собственная версия BVI. Изменения вносите в читаемый `dist/js/bvi.js`, после
+  чего пересобирайте `bvi.min.js` и `bvi.min.js.map`; сжатый файл и его карту не
+  редактируйте вручную.
 
 ## Архитектура Bitrix
 

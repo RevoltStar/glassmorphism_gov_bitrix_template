@@ -992,23 +992,73 @@
     }
   };
 
+  var bviBodyAttributes = {};
+  var bviBodyObserver = null;
+
   var getBviBodies = function getBviBodies() {
     return document.querySelectorAll('body > .bvi-body');
   };
 
-  var setBviBodies = function setBviBodies() {
+  var isBviBodyElement = function isBviBodyElement(element) {
     var excludedTags = ['LINK', 'META', 'NOSCRIPT', 'SCRIPT', 'STYLE', 'TEMPLATE'];
+    return element.nodeType === 1 && excludedTags.indexOf(element.tagName) === -1 && !element.classList.contains('bvi-panel');
+  };
+
+  var applyBviBodyAttributes = function applyBviBodyAttributes(element) {
+    Object.keys(bviBodyAttributes).forEach(function (name) {
+      element.setAttribute("data-bvi-".concat(name), bviBodyAttributes[name]);
+    });
+  };
+
+  var setBviBodies = function setBviBodies() {
     Array.from(document.body.children).forEach(function (element) {
-      if (excludedTags.indexOf(element.tagName) !== -1 || element.classList.contains('bvi-panel')) {
+      if (!isBviBodyElement(element)) {
         return;
       }
 
       element.classList.add('bvi-body');
+      applyBviBodyAttributes(element);
     });
     return getBviBodies();
   };
 
+  var observeBviBodies = function observeBviBodies() {
+    if (typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    if (bviBodyObserver) {
+      bviBodyObserver.disconnect();
+    }
+
+    bviBodyObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (element) {
+          if (!isBviBodyElement(element)) {
+            return;
+          }
+
+          element.classList.add('bvi-body');
+          applyBviBodyAttributes(element);
+        });
+      });
+    });
+    bviBodyObserver.observe(document.body, {
+      childList: true
+    });
+  };
+
+  var disconnectBviBodiesObserver = function disconnectBviBodiesObserver() {
+    if (!bviBodyObserver) {
+      return;
+    }
+
+    bviBodyObserver.disconnect();
+    bviBodyObserver = null;
+  };
+
   var removeBviBodies = function removeBviBodies() {
+    disconnectBviBodiesObserver();
     getBviBodies().forEach(function (element) {
       Array.from(element.attributes).forEach(function (attribute) {
         if (attribute.name.indexOf('data-bvi-') === 0) {
@@ -1017,6 +1067,7 @@
       });
       element.classList.remove('bvi-body');
     });
+    bviBodyAttributes = {};
   };
 
   var unwrap = function unwrap(wrapper) {
@@ -1806,6 +1857,7 @@
         getObject(this._config, function (key) {
           return _this3._setAttrDataBviBody(key, getCookie(key));
         });
+        observeBviBodies();
         getArray(this._elements, function (element) {
           return element.style.display = 'none';
         });
@@ -1889,15 +1941,8 @@
       value: function _setAttrDataBviBody() {
         var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
         var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-        var bviBodies = getBviBodies();
-
-        if (!bviBodies.length) {
-          bviBodies = setBviBodies();
-        }
-
-        bviBodies.forEach(function (element) {
-          element.setAttribute("data-bvi-".concat(name), value);
-        });
+        bviBodyAttributes[name] = value;
+        setBviBodies();
       }
     }, {
       key: "_speechPlayer",

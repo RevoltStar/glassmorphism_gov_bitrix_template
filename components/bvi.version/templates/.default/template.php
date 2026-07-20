@@ -7,7 +7,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->addExternalCss($templateFolder . '/dist/css/bvi.min.css');
 
 // 2. ПОДКЛЮЧАЕМ СКРИПТ ПЛАГИНА
-$this->addExternalJs($templateFolder . '/dist/js/bvi.js');
+$this->addExternalJs($templateFolder . '/dist/js/bvi.min.js');
 $this->addExternalJs($templateFolder . '/bvi-accessibility.js');
 $this->addExternalCss($templateFolder . '/bvi-accessibility.css');
 
