@@ -60,6 +60,8 @@ const SITE_INFO = [
         '/news/',
         '/contacts',
         '/contacts/',
+        '/for_citizens',
+        '/for_citizens/',
     ],
 
     // Пути могут быть относительными от корня сайта или абсолютными URL.
