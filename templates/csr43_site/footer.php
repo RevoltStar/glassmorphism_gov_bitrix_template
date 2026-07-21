@@ -3,7 +3,7 @@ $excludedPages = get_info('layout_excluded_pages', []);
 $currentPage = site_string($APPLICATION->GetCurPage(), '/');
 $isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
 $is404Error = defined('ERROR_404');
-$footerLogoUrl = site_url(get_info('logo', ''), '');
+$footerLogoUrl = site_string(get_info('logo', ''), '');
 $footerPhoneUrl = site_url('tel:' . site_string(get_info('phone_e164', '')), '#', ['tel'], false);
 $footerEmailUrl = site_url('mailto:' . site_string(get_info('email', '')), '#', ['mailto'], false);
 $feedbackUrl = site_url(get_info('feedback_path', ''), '#');
@@ -44,7 +44,7 @@ if (!$isExcludedPage && !$is404Error): ?>
             <!-- Колонка 1: Логотип и контакты -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?=SITE_TEMPLATE_PATH . htmlspecialcharsbx($footerLogoUrl)?>"
+                    <img src="<?=SITE_TEMPLATE_PATH . "/images/" . htmlspecialcharsbx($footerLogoUrl)?>"
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="footer-logo">
                     <div class="ms-3">

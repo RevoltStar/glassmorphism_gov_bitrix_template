@@ -63,8 +63,8 @@ const SITE_INFO = [
     ],
 
     // Пути могут быть относительными от корня сайта или абсолютными URL.
-    'logo' => '/images/gerb_kirov.png',
-    'national_project_logo' => '/images/national_project.png',
+    'logo' => 'gerb_kirov.png',
+    'national_project_logo' => 'national_project.png',
     'national_project_logo_alt' => 'Символ проекта «Экономика данных и цифровая трансформация государства»',
     'national_project_url' => 'https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva',
 
