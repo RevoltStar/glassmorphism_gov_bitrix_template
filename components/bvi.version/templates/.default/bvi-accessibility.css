@@ -63,23 +63,6 @@ html body .bvi-body[data-bvi-theme][data-bvi-images="grayscale"] .banner-item .b
     background-color: rgb(var(--bvi-theme-background-rgb) / 0.88) !important;
 }
 
-html body .bvi-body[data-bvi-theme] #js-show-iframe-wrapper:not(.bvi-no-styles) {
-    color: var(--bvi-theme-foreground) !important;
-    background-color: var(--bvi-theme-background) !important;
-    border: 1px solid var(--bvi-theme-foreground) !important;
-    filter: none !important;
-}
-
-html body .bvi-body[data-bvi-builtelements="false"] .row > .col-md-5:has(> .external-vote-widget) {
-    display: none !important;
-}
-
-html body .bvi-body[data-bvi-builtelements="false"] .row > .col-md-7:has(#js-show-iframe-wrapper) {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
 html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles):hover,
 html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open:not(.bvi-no-styles):focus,
