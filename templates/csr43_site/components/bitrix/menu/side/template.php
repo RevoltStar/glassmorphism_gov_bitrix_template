@@ -10,6 +10,7 @@ if (!is_array($items) || $items === []) {
 
 $forceDesktop = ($arParams['FORCE_DESKTOP'] ?? 'N') === 'Y';
 $childCount = [];
+$topLevelPaths = [];
 $currentParentIndex = null;
 $currentParentLink = null;
 
@@ -58,6 +59,7 @@ foreach ($items as $index => $item) {
         }
 
         $itemPath = $normalizePath($itemLink);
+        $topLevelPaths[$index] = $itemPath;
         $itemLength = strlen($itemPath);
         $itemIsParent = !empty($item['IS_PARENT']);
 
@@ -106,6 +108,28 @@ foreach ($items as $index => $item) {
 }
 
 $activeIndex ??= $selectedFallbackIndex;
+$overviewIndex = null;
+
+if (count($topLevelPaths) > 1) {
+    $candidateIndex = array_key_first($topLevelPaths);
+    $candidatePath = $topLevelPaths[$candidateIndex];
+    $containsAllTopLevelItems = true;
+
+    foreach ($topLevelPaths as $index => $itemPath) {
+        if ($index === $candidateIndex) {
+            continue;
+        }
+
+        if ($itemPath === $candidatePath || !str_starts_with($itemPath, $candidatePath)) {
+            $containsAllTopLevelItems = false;
+            break;
+        }
+    }
+
+    if ($containsAllTopLevelItems) {
+        $overviewIndex = $candidateIndex;
+    }
+}
 ?>
 <select class="side-menu-select glass-select"
         <?php if ($forceDesktop): ?>style="display: none !important;"<?php endif; ?>
@@ -120,7 +144,7 @@ $activeIndex ??= $selectedFallbackIndex;
         $link = site_url($item['LINK'] ?? null);
         $text = site_string($item['TEXT'] ?? '');
         $count = $childCount[$index] ?? 0;
-        if ($count > 0) {
+        if ($count > 0 && $index !== $overviewIndex) {
             $text .= ' (' . $count . ')';
         }
         $isSelected = $index === $activeIndex;
@@ -141,7 +165,7 @@ $activeIndex ??= $selectedFallbackIndex;
         $link = site_url($item['LINK'] ?? null);
         $text = site_string($item['TEXT'] ?? '');
         $count = $childCount[$index] ?? 0;
-        if ($count > 0) {
+        if ($count > 0 && $index !== $overviewIndex) {
             $text .= ' (' . $count . ')';
         }
         $icon = site_css_classes(
