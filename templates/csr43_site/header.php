@@ -8,6 +8,30 @@ $headerSearchPath = site_url(get_info('search_path', '/search/'), '/search/');
 $headerLogoUrl = site_string(get_info('logo', ''), '');
 $nationalProjectUrl = site_url(get_info('national_project_url', ''), '#');
 $nationalProjectLogo = site_string(get_info('national_project_logo', ''), '');
+$currentPage = site_string($APPLICATION->GetCurPage(), '/');
+$normalizedCurrentPage = '/' . ltrim((string)parse_url($currentPage, PHP_URL_PATH), '/');
+$normalizedCurrentPage = $normalizedCurrentPage === '/' ? '/' : rtrim($normalizedCurrentPage, '/');
+$isTitleExcludedPage = false;
+
+foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitlePage) {
+	$includeTitle = str_starts_with($excludedTitlePage, '!');
+	$excludedTitlePage = $includeTitle ? substr($excludedTitlePage, 1) : $excludedTitlePage;
+	$excludeChildren = str_ends_with($excludedTitlePage, '/*');
+	$excludedTitlePath = $excludeChildren ? substr($excludedTitlePage, 0, -2) : $excludedTitlePage;
+	$excludedTitlePath = '/' . ltrim((string)parse_url($excludedTitlePath, PHP_URL_PATH), '/');
+	$excludedTitlePath = $excludedTitlePath === '/' ? '/' : rtrim($excludedTitlePath, '/');
+
+	if (
+		(!$excludeChildren && $normalizedCurrentPage === $excludedTitlePath)
+		|| (
+			$excludeChildren
+			&& $excludedTitlePath !== '/'
+			&& str_starts_with($normalizedCurrentPage, $excludedTitlePath . '/')
+		)
+	) {
+		$isTitleExcludedPage = !$includeTitle;
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?=htmlspecialcharsbx(site_string(LANGUAGE_ID))?>">
@@ -199,16 +223,12 @@ $nationalProjectLogo = site_string(get_info('national_project_logo', ''), '');
 </nav>
 <?php endif?>
 	<main id="main-content"<?php if ($APPLICATION->GetCurPage() != '/'):?> class="container" <?php endif?>>
-		<?php
-			$currentPage = $APPLICATION->GetCurPage();
-			if ($currentPage != '/' && (strpos($currentPage, '/news/') !== 0 || $currentPage == "/news/")):
-			?>
+		<?php if (!$isTitleExcludedPage): ?>
 			<h1 class="mb-5"><?=$APPLICATION->ShowTitle(false)?></h1>
 		<?php endif; ?>
 		<?php
 			$excludedPages = get_info('layout_excluded_pages', []);
 
-$currentPage = site_string($APPLICATION->GetCurPage(), '/');
 $isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
 			$is404Error = defined('ERROR_404');
 

@@ -64,7 +64,11 @@ const SITE_INFO = [
         '/for_citizens/',
     ],
 
-    
+    'title_excluded_pages' => [
+        '/',
+        '/news/*',
+        '!/news/category/*',
+    ],
     'logo' => 'gerb_kirov.png',
     'national_project_logo' => 'national_project.png',
     'national_project_logo_alt' => 'Символ проекта «Инфраструктура для жизни»',
