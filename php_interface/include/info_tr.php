@@ -67,8 +67,8 @@ const SITE_INFO = [
     
     'logo' => 'gerb_kirov.png',
     'national_project_logo' => 'national_project.png',
-    'national_project_logo_alt' => 'Символ проекта «Экономика данных и цифровая трансформация государства»',
-    'national_project_url' => 'https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva',
+    'national_project_logo_alt' => 'Символ проекта «Инфраструктура для жизни»',
+    'national_project_url' => 'https://национальныепроекты.рф/new-projects/infrastruktura-dlya-zhizni/',
 
     'social_links' => [
         'https://vk.com/informtehkirov',
