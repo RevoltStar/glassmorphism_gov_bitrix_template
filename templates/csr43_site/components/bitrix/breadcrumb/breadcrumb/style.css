@@ -18,6 +18,11 @@
 }
 
 /* Стили для ссылок */
+.glass-breadcrumb .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+}
+
 .glass-breadcrumb-link {
     color: #1e3a5f;
     text-decoration: none;
@@ -51,6 +56,8 @@
 /* Разделители */
 .glass-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
+    float: none;
+    flex: 0 0 auto;
     color: #3498db;
     font-size: 1.2rem;
     line-height: 1;
