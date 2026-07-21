@@ -61,9 +61,9 @@ if (is_array($items) && $items !== []):
                             <h5 class="glass-section-heading">
                                 <i class="fas fa-clock"></i> Условия
                             </h5>
-                            <?php if(!empty($requirements)):?>
+                            <?php if(!empty($conditions)):?>
                                 <ul class="glass-vacancy-list">
-                                    <?php foreach($requirements as $item):?>
+                                    <?php foreach($conditions as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
@@ -81,9 +81,9 @@ if (is_array($items) && $items !== []):
                             <h5 class="glass-section-heading">
                                 <i class="fas fa-clipboard-list"></i> Требования
                             </h5>
-                            <?php if(!empty($conditions)):?>
+                            <?php if(!empty($requirements)):?>
                                 <ul class="glass-vacancy-list">
-                                    <?php foreach($conditions as $item):?>
+                                    <?php foreach($requirements as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
