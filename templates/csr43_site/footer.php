@@ -10,6 +10,8 @@ $feedbackUrl = site_url(get_info('feedback_path', ''), '#');
 $privacyPolicyUrl = site_url(get_info('privacy_policy_path', ''), '#');
 $developerUrl = site_url(get_info('developer_url', ''), '#');
 $developerLogoUrl = site_url(get_info('developer_logo', ''), '');
+$footerMenu1Title = site_plain_text(get_info('menu_footer_1_title', 'Быстрые ссылки'));
+$footerMenu2Title = site_plain_text(get_info('menu_footer_2_title', 'Информация'));
 
 if (!$isExcludedPage && !$is404Error): ?>
     </div> <!-- Закрывающий для col-lg-8 -->
@@ -72,90 +74,63 @@ if (!$isExcludedPage && !$is404Error): ?>
 
             <!-- Колонка 2: Быстрые ссылки -->
             <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                <h6 class="footer-section-title">
-                    <i class="bi bi-link-45deg"></i> Быстрые ссылки
-                </h6>
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-						<a href="/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Главная
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/doc/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Документы
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/activity/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Деятельность
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="/activity/procurement/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Госзакупки
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Открытые данные
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/contacts/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Контакты
-                        </a>
-                    </li>
-					<li class="mb-2">
-						<a href="https://www.kirovreg.ru/max-bots/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Чат-боты MAX
-                        </a>
-                    </li>
-					<li class="mb-2">
-						<a href="https://www.kirovreg.ru/free-wifi/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Бесплатный Wi-Fi
-                        </a>
-                    </li>
-                </ul>
+                <?php if ($footerMenu1Title !== ''): ?>
+                    <h6 class="footer-menu__title">
+                        <i class="bi bi-link-45deg" aria-hidden="true"></i>
+                        <?=htmlspecialcharsbx($footerMenu1Title)?>
+                    </h6>
+                <?php endif; ?>
+                <?php $APPLICATION->IncludeComponent(
+                    "bitrix:menu",
+                    "footer",
+                    [
+                        "ROOT_MENU_TYPE" => site_menu_type(
+                            get_info('menu_footer_1_root_type', 'footer_quick'),
+                            'footer_quick'
+                        ),
+                        "MAX_LEVEL" => "1",
+                        "USE_EXT" => "N",
+                        "DELAY" => "N",
+                        "ALLOW_MULTI_SELECT" => "N",
+                        "MENU_CACHE_TYPE" => "A",
+                        "MENU_CACHE_TIME" => "3600",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "MENU_CACHE_GET_VARS" => "",
+                    ]
+                ); ?>
             </div>
 
             <!-- Колонка 3: Информация -->
             <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                <h6 class="footer-section-title">
-                    <i class="bi bi-info-circle"></i> Информация
-                </h6>
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-						<a href="/about/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> О министерстве
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/about/structure/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Структура
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/about/vacancy/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Вакансии
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="/activity/anti-corruption/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Противодействие коррупции
-                        </a>
-                    </li>
-                    <li class="mb-2">
-						<a href="/sitemap/" class="footer-link">
-                            <i class="bi bi-chevron-right"></i> Карта сайта
-                        </a>
-                    </li>
-                </ul>
+                <?php if ($footerMenu2Title !== ''): ?>
+                    <h6 class="footer-menu__title">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        <?=htmlspecialcharsbx($footerMenu2Title)?>
+                    </h6>
+                <?php endif; ?>
+                <?php $APPLICATION->IncludeComponent(
+                    "bitrix:menu",
+                    "footer",
+                    [
+                        "ROOT_MENU_TYPE" => site_menu_type(
+                            get_info('menu_footer_2_root_type', 'footer_info'),
+                            'footer_info'
+                        ),
+                        "MAX_LEVEL" => "1",
+                        "USE_EXT" => "N",
+                        "DELAY" => "N",
+                        "ALLOW_MULTI_SELECT" => "N",
+                        "MENU_CACHE_TYPE" => "A",
+                        "MENU_CACHE_TIME" => "3600",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "MENU_CACHE_GET_VARS" => "",
+                    ]
+                ); ?>
             </div>
 
             <!-- Колонка 4: Контакты и обратная связь -->
             <div class="col-lg-3 col-md-6 col-12">
-                <h6 class="footer-section-title">
+                <h6 class="footer-contact__title">
                     <i class="bi bi-telephone"></i> Контакты
                 </h6>
 

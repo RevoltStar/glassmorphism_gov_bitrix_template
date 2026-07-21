@@ -364,21 +364,21 @@ main{
     font-size: 0.85rem;
 }
 
-/* Заголовки секций с подчеркиванием */
-.footer-section-title {
-    font-weight: 700;
-    color: #1e3a5f;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
+.footer-menu__title,
+.footer-contact__title {
     display: inline-block;
     margin-bottom: 1rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+    color: #1e3a5f;
+    font-weight: 700;
 }
 
-.footer-section-title i {
-    color: #2980b9;
+.footer-menu__title i,
+.footer-contact__title i {
     margin-right: 6px;
+    color: #2980b9;
 }
-
 
 /* Иконки контактов */
 .footer-contact-icon {
@@ -433,27 +433,6 @@ main{
 .footer-contact-label {
     color: #2c6b9e;
     font-size: 0.85rem;
-}
-
-/* Ссылки в футере */
-.footer-link {
-    color: #1e3a5f;
-    opacity: 0.75;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-}
-
-.footer-link i {
-    color: #3498db;
-    font-size: 0.8rem;
-    margin-right: 6px;
-}
-
-.footer-link:hover {
-    opacity: 1;
-    color: #2980b9;
-    transform: translateX(5px);
 }
 
 /* Кнопка обратной связи */
@@ -541,10 +520,11 @@ main{
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .footer-section-title {
+    .footer-menu__title,
+    .footer-contact__title {
         font-size: 1rem;
     }
-    
+
     .footer-text {
         font-size: 0.9rem;
     }

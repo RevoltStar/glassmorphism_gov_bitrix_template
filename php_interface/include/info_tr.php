@@ -46,6 +46,10 @@ const SITE_INFO = [
     'menu_side_root_type' => 'left',
     'menu_side_child_type' => 'left',
     'menu_social_root_type' => 'social',
+    'menu_footer_1_root_type' => 'footer_quick',
+    'menu_footer_1_title' => 'Быстрые ссылки',
+    'menu_footer_2_root_type' => 'footer_info',
+    'menu_footer_2_title' => 'Информация',
     'layout_excluded_pages' => [
         '/',
         '/news',
