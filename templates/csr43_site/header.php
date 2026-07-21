@@ -8,6 +8,8 @@ $headerSearchPath = site_url(get_info('search_path', '/search/'), '/search/');
 $headerLogoUrl = site_string(get_info('logo', ''), '');
 $nationalProjectUrl = site_url(get_info('national_project_url', ''), '#');
 $nationalProjectLogo = site_string(get_info('national_project_logo', ''), '');
+$maxRobotRegionId = preg_replace('/\D+/', '', site_string(get_info('max_robot_region_id', '33000000000')));
+$maxRobotRegionId = $maxRobotRegionId !== '' ? $maxRobotRegionId : '33000000000';
 $currentPage = site_string($APPLICATION->GetCurPage(), '/');
 $normalizedCurrentPage = '/' . ltrim((string)parse_url($currentPage, PHP_URL_PATH), '/');
 $normalizedCurrentPage = $normalizedCurrentPage === '/' ? '/' : rtrim($normalizedCurrentPage, '/');
@@ -65,7 +67,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 	<?php  $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/script.js"); ?>
 	<?php $APPLICATION->ShowHead();?>
 	<?php if ((bool)get_info('show_max_robot', false)): ?>
-		<script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&amp;position=bottom-left&amp;region=33000000000&amp;platform=default_iframe"></script>
+		<script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&amp;position=bottom-left&amp;region=<?=htmlspecialcharsbx($maxRobotRegionId)?>&amp;platform=default_iframe"></script>
 	<?php endif; ?>
 </head>
 <body>
@@ -172,6 +174,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 </div>
 
 <!-- Уведомление о текущем обновлении сайта -->
+<?php if ((bool)get_info('show_development_notice', true)): ?>
 <section class="site-development-notice" role="note" aria-label="Информация об обновлении сайта">
     <div class="container">
         <div class="site-development-notice__inner">
@@ -186,6 +189,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
         </div>
     </div>
 </section>
+<?php endif; ?>
 
 <!-- Навигационное меню -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top"
