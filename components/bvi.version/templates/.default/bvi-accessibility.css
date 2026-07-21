@@ -72,7 +72,8 @@ html body .bvi-body[data-bvi-theme] *:not(.bvi-no-styles) button.menu-panel-open
 }
 
 html body .bvi-body[data-bvi-theme] .section-title::before,
-html body .bvi-body[data-bvi-theme] .section-title::after {
+html body .bvi-body[data-bvi-theme] .section-title::after,
+html body .bvi-body[data-bvi-theme] .glass-menu-link::before {
     background: currentColor !important;
 }
 
