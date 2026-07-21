@@ -26,6 +26,65 @@ function site_string_list(mixed $value): array
     ));
 }
 
+function site_http_url_with_ascii_host(string $url): ?string
+{
+    $parts = parse_url($url);
+    if (!is_array($parts) || !isset($parts['scheme'], $parts['host'])) {
+        return null;
+    }
+
+    $host = (string)$parts['host'];
+    if (preg_match('/[^\x00-\x7F]/', $host) !== 1) {
+        return $url;
+    }
+
+    $asciiHost = false;
+
+    try {
+        if (function_exists('idn_to_ascii')) {
+            $idnaFlags = defined('IDNA_DEFAULT') ? IDNA_DEFAULT : 0;
+            $asciiHost = defined('INTL_IDNA_VARIANT_UTS46')
+                ? idn_to_ascii($host, $idnaFlags, INTL_IDNA_VARIANT_UTS46)
+                : idn_to_ascii($host, $idnaFlags);
+        } elseif (class_exists('CBXPunycode')) {
+            $encodingErrors = [];
+            $asciiHost = CBXPunycode::ToASCII($host, $encodingErrors);
+            if ($encodingErrors !== []) {
+                $asciiHost = false;
+            }
+        }
+    } catch (Throwable) {
+        return null;
+    }
+
+    if (
+        !is_string($asciiHost)
+        || $asciiHost === ''
+        || preg_match('/^[\x21-\x7E]+$/D', $asciiHost) !== 1
+    ) {
+        return null;
+    }
+
+    $authority = '';
+    if (array_key_exists('user', $parts)) {
+        $authority .= (string)$parts['user'];
+        if (array_key_exists('pass', $parts)) {
+            $authority .= ':' . (string)$parts['pass'];
+        }
+        $authority .= '@';
+    }
+
+    $authority .= $asciiHost;
+    if (array_key_exists('port', $parts)) {
+        $authority .= ':' . (int)$parts['port'];
+    }
+
+    return strtolower((string)$parts['scheme']) . '://' . $authority
+        . (string)($parts['path'] ?? '')
+        . (array_key_exists('query', $parts) ? '?' . (string)$parts['query'] : '')
+        . (array_key_exists('fragment', $parts) ? '#' . (string)$parts['fragment'] : '');
+}
+
 function site_url(
     mixed $value,
     string $fallback = '#',
@@ -59,8 +118,11 @@ function site_url(
     }
 
     if (in_array($scheme, ['http', 'https'], true)) {
-        return filter_var($value, FILTER_VALIDATE_URL) !== false
-            ? $value
+        $normalizedUrl = site_http_url_with_ascii_host($value);
+
+        return $normalizedUrl !== null
+            && filter_var($normalizedUrl, FILTER_VALIDATE_URL) !== false
+            ? $normalizedUrl
             : $fallback;
     }
 
