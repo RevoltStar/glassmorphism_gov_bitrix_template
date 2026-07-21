@@ -203,7 +203,7 @@ $nationalProjectLogo = site_string(get_info('national_project_logo', ''), '');
 			$currentPage = $APPLICATION->GetCurPage();
 			if ($currentPage != '/' && (strpos($currentPage, '/news/') !== 0 || $currentPage == "/news/")):
 			?>
-			<h1 class="mb-5"><?=$APPLICATION->ShowTitle()?></h1>
+			<h1 class="mb-5"><?=$APPLICATION->ShowTitle(false)?></h1>
 		<?php endif; ?>
 		<?php
 			$excludedPages = get_info('layout_excluded_pages', []);
