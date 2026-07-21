@@ -1876,6 +1876,14 @@
           if (element.classList.contains('bvi-background-image')) {
             element.classList.remove('bvi-background-image');
           }
+
+          if (element.classList.contains('bvi-css-background-image')) {
+            element.classList.remove('bvi-css-background-image');
+          }
+
+          if (element.classList.contains('bvi-css-background-gradient')) {
+            element.classList.remove('bvi-css-background-gradient');
+          }
         });
       }
     }, {
@@ -1917,15 +1925,19 @@
       key: "_images",
       value: function _images() {
         document.querySelectorAll('img').forEach(function (element) {
-          if (!element.classList.contains('bvi-no-style')) {
+          if (!element.classList.contains('bvi-no-style') && !element.classList.contains('bvi-no-styles')) {
             element.classList.add('bvi-img');
           }
         });
         document.querySelectorAll('.bvi-body *').forEach(function (element) {
           var style = getComputedStyle(element);
 
-          if (style.backgroundImage !== 'none' && style.background !== 'none' && !element.classList.contains('bvi-no-style')) {
-            element.classList.add('bvi-background-image');
+          if (!element.classList.contains('bvi-no-style') && !element.classList.contains('bvi-no-styles')) {
+            if (style.backgroundImage.indexOf('url(') !== -1) {
+              element.classList.add('bvi-css-background-image');
+            } else if (style.backgroundImage !== 'none') {
+              element.classList.add('bvi-css-background-gradient');
+            }
           }
         });
       }

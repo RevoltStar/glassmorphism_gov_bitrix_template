@@ -35,7 +35,6 @@ if (!is_array($items) || $items === []) {
         }
 
         $imageSrc = site_url($pictureSrc, '/images/image_not_found.jpg');
-        $cssImageSrc = site_css_url($imageSrc, '/images/image_not_found.jpg');
 
         $nameValue = $actual['~NAME'] ?? $actual['NAME'] ?? '';
         $name = is_scalar($nameValue) ? (string)$nameValue : '';
@@ -50,8 +49,12 @@ if (!is_array($items) || $items === []) {
         <div class="col-md-4">
             <a href="<?=htmlspecialcharsbx($link)?>"
                class="text-decoration-none">
-                <div class="banner-item"
-                     style="background-image: url(<?=htmlspecialcharsbx($cssImageSrc)?>);">
+                <div class="banner-item">
+                    <img class="banner-item__image"
+                         src="<?=htmlspecialcharsbx($imageSrc)?>"
+                         alt=""
+                         loading="lazy"
+                         aria-hidden="true">
                     <div class="banner-overlay">
                         <h5 class="fw-bold"><?=htmlspecialcharsbx($name)?></h5>
                         <?php if ($previewText !== ''): ?>
