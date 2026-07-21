@@ -13,7 +13,7 @@ $items = is_array($arResult ?? null) ? $arResult : [];
         }
 
         $link = site_url($item['LINK'] ?? null);
-        $image = site_url($item['PARAMS']['IMAGE'] ?? null, '');
+        $image = site_string($item['PARAMS']['IMAGE'] ?? null, '');
         $text = site_string($item['TEXT'] ?? '');
         if ($link === '#' || $image === '') {
             continue;
