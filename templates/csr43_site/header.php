@@ -147,6 +147,22 @@ $nationalProjectLogo = site_url(get_info('national_project_logo', ''), '');
     </div>
 </div>
 
+<!-- Уведомление о текущем обновлении сайта -->
+<section class="site-development-notice" role="note" aria-label="Информация об обновлении сайта">
+    <div class="container">
+        <div class="site-development-notice__inner">
+            <i class="bi bi-tools site-development-notice__icon" aria-hidden="true"></i>
+            <div>
+                <div class="site-development-notice__title">Сайт находится в процессе обновления</div>
+                <p class="site-development-notice__text">
+                    Продолжается перенос и актуализация материалов. Отдельные страницы могут содержать
+                    неполную или временно неактуальную информацию.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Навигационное меню -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top"
      aria-label="Основное меню сайта">

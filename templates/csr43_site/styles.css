@@ -28,6 +28,44 @@ html {
             padding: 25px 0;
             border-bottom: 1px solid rgba(52, 152, 219, 0.2);
         }
+
+        /* Уведомление о наполнении и актуализации сайта */
+        .site-development-notice {
+            padding: 10px 0;
+            background: rgba(255, 248, 225, 0.92);
+            border-bottom: 1px solid rgba(184, 121, 0, 0.28);
+            color: #684100;
+        }
+
+        .site-development-notice__inner {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 16px;
+            border: 1px solid rgba(184, 121, 0, 0.25);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .site-development-notice__icon {
+            flex: 0 0 auto;
+            margin-top: 2px;
+            color: #9a6200;
+            font-size: 1.15rem;
+        }
+
+        .site-development-notice__title {
+            margin-bottom: 2px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .site-development-notice__text {
+            margin: 0;
+            font-size: 0.94rem;
+            line-height: 1.45;
+        }
+        
         /* Логотип */
         .ministry-logo {
             max-height: 100px;
