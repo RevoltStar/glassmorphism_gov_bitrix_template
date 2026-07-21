@@ -24,9 +24,9 @@ $items = is_array($arResult ?? null) ? $arResult : [];
            target="_blank"
            rel="noopener noreferrer">
             <img class="social-icon"
-                 src="<?=htmlspecialcharsbx($image)?>"
+                 src="<?=SITE_TEMPLATE_PATH?>/images/social/<?=htmlspecialcharsbx($image)?>"
                  alt="Логотип <?=htmlspecialcharsbx($text)?>"
-                 title="Перейти в группу Министерства информационных технологий в <?=htmlspecialcharsbx($text)?>">
+                 title="Перейти в сообщество в социальной сети '<?=htmlspecialcharsbx($text)?>'">
         </a>
     <?php endforeach; ?>
 </div>
