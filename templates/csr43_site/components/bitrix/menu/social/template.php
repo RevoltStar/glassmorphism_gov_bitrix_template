@@ -24,7 +24,7 @@ $items = is_array($arResult ?? null) ? $arResult : [];
            target="_blank"
            rel="noopener noreferrer">
             <img class="social-icon"
-                 src="<?=SITE_TEMPLATE_PATH?>/images/social/<?=htmlspecialcharsbx($image)?>"
+                 src="<?=SITE_TEMPLATE_PATH?>/images/<?=htmlspecialcharsbx($image)?>"
                  alt="Логотип <?=htmlspecialcharsbx($text)?>"
                  title="Перейти в сообщество в социальной сети '<?=htmlspecialcharsbx($text)?>'">
         </a>
