@@ -51,6 +51,9 @@ body.bvi-active[data-bvi-theme] {
 
 html body .bvi-body[data-bvi-theme] .bvi-css-background-gradient:not(.bvi-no-styles) {
     background-image: none !important;
+    background-clip: border-box !important;
+    -webkit-background-clip: border-box !important;
+    -webkit-text-fill-color: currentColor !important;
     filter: none !important;
 }
 
