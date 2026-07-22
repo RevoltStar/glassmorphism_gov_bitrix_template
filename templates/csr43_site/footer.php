@@ -245,7 +245,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                 <div class="col-12 d-flex justify-content-end">
                     <a class="footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
                         <span class="footer-developer__logo-wrap">
-                            <img class="footer-developer__logo" src="<?=SITE_TEMPLATE_PATH . htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
+                            <img class="footer-developer__logo" src="<?=SITE_TEMPLATE_PATH .  "/images/" .htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
                         </span>
                         <span class="footer-developer__content">
                             <span class="footer-developer__label">Сайт разработан</span>
