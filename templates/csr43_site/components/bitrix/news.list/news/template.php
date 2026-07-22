@@ -10,7 +10,7 @@ $newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
 	? $arResult['NEWS_CATEGORIES']
 	: [];
 ?>
-<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 <?php if (($arParams["SHOW_CATEGORY_FILTER"] ?? "N") === "Y" && $newsCategories !== []): ?>
@@ -126,6 +126,6 @@ $newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
 		Новостей по указанным критериям не найдено
 	</div>
 <?php endif?>
-<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? false) === true):?>
 	<br /><?=$arResult["NAV_STRING"] ?? ''?>
 <?php endif;?>

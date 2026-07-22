@@ -48,7 +48,7 @@ $galleryId = 'files-' . $this->randString();
 $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
 ?>
 
-<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
     <?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 
@@ -257,7 +257,7 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
     <?php endif;?>
 </div>
 
-<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? false) === true):?>
     <div class="glass-pagination mt-4">
         <?=$arResult["NAV_STRING"] ?? ''?>
     </div>

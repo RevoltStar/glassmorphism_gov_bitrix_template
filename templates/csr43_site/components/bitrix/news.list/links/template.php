@@ -14,7 +14,7 @@ $iblockId = max(0, (int)($arParams['IBLOCK_ID'] ?? 0));
 if (is_array($items) && $items !== []):
 ?>
 
-<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
         <?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 
@@ -110,7 +110,7 @@ if (is_array($items) && $items !== []):
         </div>
 </div>
 
-<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? 'N') === 'Y'):?>
+<?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? false) === true):?>
         <div class="glass-pagination mt-4">
                 <?=$arResult["NAV_STRING"] ?? ''?>
         </div>
