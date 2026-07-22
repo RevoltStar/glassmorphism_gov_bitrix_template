@@ -1,0 +1,88 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1536"
+  height="1024"
+  viewBox="0 0 1536 1024"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Изображение недоступно</title>
+  <desc id="desc">
+    Светлая заглушка с иконкой изображения и подписью
+    «Изображение недоступно».
+  </desc>
+
+  <defs>
+    <radialGradient id="background" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="72%" stop-color="#fbfbfc" />
+      <stop offset="100%" stop-color="#f3f4f6" />
+    </radialGradient>
+
+    <linearGradient id="iconGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d9dde2" />
+      <stop offset="100%" stop-color="#bfc5cc" />
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow
+        dx="0"
+        dy="12"
+        stdDeviation="24"
+        flood-color="#c8ccd2"
+        flood-opacity="0.22"
+      />
+    </filter>
+  </defs>
+
+  <rect width="1536" height="1024" fill="url(#background)" />
+
+  <g
+    transform="translate(492 272)"
+    filter="url(#softShadow)"
+    fill="none"
+    stroke="url(#iconGradient)"
+    stroke-width="24"
+    stroke-linejoin="round"
+  >
+    <rect
+      x="0"
+      y="0"
+      width="552"
+      height="424"
+      rx="30"
+    />
+
+    <path
+      d="
+        M 12 307
+        L 163 156
+        Q 184 135 205 156
+        L 339 290
+        L 392 237
+        Q 413 216 434 237
+        L 540 343
+      "
+    />
+
+    <circle
+      cx="408"
+      cy="105"
+      r="49"
+      fill="url(#iconGradient)"
+      stroke="none"
+    />
+  </g>
+
+  <text
+    x="768"
+    y="806"
+    text-anchor="middle"
+    fill="#8b9098"
+    font-family="Inter, Arial, Helvetica, sans-serif"
+    font-size="44"
+    font-weight="400"
+  >
+    Изображение недоступно
+  </text>
+</svg>
