@@ -157,11 +157,10 @@ function site_template_image_url(mixed $value, string $fallback = ''): string
 
     $filename = trim(site_string($value));
     if (
-        $filename === ''
-        || $filename === '.'
-        || $filename === '..'
-        || str_contains($filename, '/')
-        || str_contains($filename, '\\')
+        preg_match(
+            '/^[\p{L}\p{N}][\p{L}\p{N}._-]*\.(?:avif|gif|ico|jpe?g|png|svg|webp|bmp)$/Diu',
+            $filename
+        ) !== 1
     ) {
         return $fallback;
     }
