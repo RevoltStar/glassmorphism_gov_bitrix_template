@@ -72,7 +72,7 @@ const SITE_INFO = [
         '!/news/category/*',
     ],
     'logo' => 'gerb_kirov.png',
-    'national_project_logo' => 'national_project.png',
+    'national_project_logo' => 'national_project_infr.png',
     'national_project_logo_alt' => 'Символ проекта «Инфраструктура для жизни»',
     'national_project_url' => 'https://национальныепроекты.рф/new-projects/infrastruktura-dlya-zhizni/',
 
