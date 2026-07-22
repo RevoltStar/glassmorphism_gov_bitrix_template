@@ -76,13 +76,6 @@ const SITE_INFO = [
     'national_project_logo_alt' => 'Символ проекта «Экономика данных и цифровая трансформация государства»',
     'national_project_url' => 'https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva',
 
-    'social_links' => [
-        'https://vk.com/informtehkirov',
-        'https://ok.ru/informtehkirov',
-        'https://t.me/informtehkirov',
-        'https://max.ru/id4345326586_gos',
-    ],
-
     'copyright_year_from' => 1991,
     'developer_name' => 'КОГБУ «Центр стратегического развития информационных ресурсов и систем управления»',
     'developer_url' => 'https://csr43.ru/',
