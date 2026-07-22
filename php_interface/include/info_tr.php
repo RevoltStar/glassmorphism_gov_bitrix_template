@@ -79,7 +79,7 @@ const SITE_INFO = [
     'copyright_year_from' => 1991,
     'developer_name' => 'КОГБУ «Центр стратегического развития информационных ресурсов и систем управления»',
     'developer_url' => 'https://csr43.ru/',
-    'developer_logo' => '/images/logo_csr.png',
+    'developer_logo' => 'logo_csr.png',
 ];
 
 function get_info(string $key, mixed $default = null): mixed
