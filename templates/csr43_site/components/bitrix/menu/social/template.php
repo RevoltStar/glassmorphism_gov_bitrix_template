@@ -13,9 +13,9 @@ $items = is_array($arResult ?? null) ? $arResult : [];
         }
 
         $link = site_url($item['LINK'] ?? null);
-        $image = site_string($item['PARAMS']['IMAGE'] ?? null, '');
+        $imageUrl = site_template_image_url($item['PARAMS']['IMAGE'] ?? null);
         $text = site_string($item['TEXT'] ?? '');
-        if ($link === '#' || $image === '') {
+        if ($link === '#' || $imageUrl === '') {
             continue;
         }
         ?>
@@ -24,7 +24,7 @@ $items = is_array($arResult ?? null) ? $arResult : [];
            target="_blank"
            rel="noopener noreferrer">
             <img class="social-icon"
-                 src="<?=SITE_TEMPLATE_PATH?>/images/<?=htmlspecialcharsbx($image)?>"
+                 src="<?=htmlspecialcharsbx($imageUrl)?>"
                  alt="Логотип <?=htmlspecialcharsbx($text)?>"
                  title="Перейти в сообщество в социальной сети '<?=htmlspecialcharsbx($text)?>'">
         </a>

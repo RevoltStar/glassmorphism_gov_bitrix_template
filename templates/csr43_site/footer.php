@@ -9,7 +9,7 @@ $footerEmailUrl = site_url('mailto:' . site_string(get_info('email', '')), '#', 
 $feedbackUrl = site_url(get_info('feedback_path', ''), '#');
 $privacyPolicyUrl = site_url(get_info('privacy_policy_path', ''), '#');
 $developerUrl = site_url(get_info('developer_url', ''), '#');
-$developerLogoUrl = site_url(get_info('developer_logo', ''), '');
+$developerLogoUrl = site_template_image_url(get_info('developer_logo', ''));
 $footerMenu1Title = site_plain_text(get_info('menu_footer_1_title', 'Быстрые ссылки'));
 $footerMenu2Title = site_plain_text(get_info('menu_footer_2_title', 'Информация'));
 
@@ -244,9 +244,11 @@ if (!$isExcludedPage && !$is404Error): ?>
 			<div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end">
                     <a class="footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
-                        <span class="footer-developer__logo-wrap">
-                            <img class="footer-developer__logo" src="<?=SITE_TEMPLATE_PATH .  "/images/" .htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
-                        </span>
+                        <?php if ($developerLogoUrl !== ''): ?>
+                            <span class="footer-developer__logo-wrap">
+                                <img class="footer-developer__logo" src="<?=htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">
+                            </span>
+                        <?php endif; ?>
                         <span class="footer-developer__content">
                             <span class="footer-developer__label">Сайт разработан</span>
                             <span class="footer-developer__name">
