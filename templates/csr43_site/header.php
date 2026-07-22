@@ -5,9 +5,17 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 $headerPhoneUrl = site_url('tel:' . site_string(get_info('phone_e164', '')), '#', ['tel'], false);
 $headerEmailUrl = site_url('mailto:' . site_string(get_info('email', '')), '#', ['mailto'], false);
 $headerSearchPath = site_url(get_info('search_path', '/search/'), '/search/');
-$headerLogoUrl = site_string(get_info('logo', ''), '');
-$nationalProjectUrl = site_url(get_info('national_project_url', ''), '#');
-$nationalProjectLogo = site_string(get_info('national_project_logo', ''), '');
+$headerLogoUrl = site_template_image_url(get_info('logo', ''));
+$nationalProjectUrl = site_url(get_info('national_project_url', ''), '', ['http', 'https'], false);
+$nationalProjectLogo = site_string(get_info('national_project_logo', ''));
+$nationalProjectLogoUrl = site_template_image_url($nationalProjectLogo);
+if (
+	$nationalProjectLogoUrl !== ''
+	&& !is_file(__DIR__ . '/images/' . $nationalProjectLogo)
+) {
+	$nationalProjectLogoUrl = '';
+}
+$nationalProjectLogoAlt = site_plain_text(get_info('national_project_logo_alt', ''));
 $maxRobotRegionId = preg_replace('/\D+/', '', site_string(get_info('max_robot_region_id', '33000000000')));
 $maxRobotRegionId = $maxRobotRegionId !== '' ? $maxRobotRegionId : '33000000000';
 $currentPage = site_string($APPLICATION->GetCurPage(), '/');
@@ -134,7 +142,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
         <div class="row align-items-center">
             <div class="col-auto">
                 <a href="/" class="logo-link" aria-label="На главную">
-                    <img src="<?=SITE_TEMPLATE_PATH . "/images/" . htmlspecialcharsbx($headerLogoUrl)?>"
+                    <img src="<?=htmlspecialcharsbx($headerLogoUrl)?>"
                          alt="<?=htmlspecialcharsbx((string)get_info('org_full_name'))?>"
                          class="ministry-logo"
                          width="80"
@@ -160,9 +168,15 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
             <!-- Декоративные элементы -->
             <div class="col-auto d-none d-md-block text-end">
                 <div class="decorative-elements" aria-hidden="true">
-					<a href="<?=htmlspecialcharsbx($nationalProjectUrl)?>">
-						<img src="<?=SITE_TEMPLATE_PATH . "/images/" . htmlspecialcharsbx($nationalProjectLogo)?>" alt="<?=htmlspecialcharsbx((string)get_info('national_project_logo_alt'))?>">
-					</a>
+					<?php if ($nationalProjectLogoUrl !== ''): ?>
+						<?php if ($nationalProjectUrl !== ''): ?>
+							<a href="<?=htmlspecialcharsbx($nationalProjectUrl)?>">
+								<img src="<?=htmlspecialcharsbx($nationalProjectLogoUrl)?>" alt="<?=htmlspecialcharsbx($nationalProjectLogoAlt)?>">
+							</a>
+						<?php else: ?>
+							<img src="<?=htmlspecialcharsbx($nationalProjectLogoUrl)?>" alt="<?=htmlspecialcharsbx($nationalProjectLogoAlt)?>">
+						<?php endif; ?>
+					<?php endif; ?>
                     <div class="mt-2 fw-semibold" style="color: #1e3a5f; font-size: 0.95rem;">
                         <i class="bi bi-geo-alt me-1" style="color: #3498db;" aria-hidden="true"></i>
                         <?=htmlspecialcharsbx((string)get_info('region_name'))?>

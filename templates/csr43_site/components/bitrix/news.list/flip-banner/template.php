@@ -4,6 +4,7 @@ $this->setFrameMode(true);
 
 <?php
 $items = is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [];
+$fallbackImage = site_template_image_url('image_not_found.svg');
 if ($items !== []):
 ?>
 	<?php $galleryId = 'flip-banner-' . $this->randString(); ?>
@@ -13,7 +14,7 @@ if ($items !== []):
 			if (!is_array($banner)) {
                 continue;
             }
-            $galleryImage = site_url($banner['PREVIEW_PICTURE']['SRC'] ?? null, '/images/image_not_found.jpg');
+            $galleryImage = site_url($banner['PREVIEW_PICTURE']['SRC'] ?? null, $fallbackImage);
 
 			// Получаем детальную картинку для галереи (если есть)
 			$detailImage = site_url($banner['DETAIL_PICTURE']['SRC'] ?? null, $galleryImage);
@@ -42,7 +43,7 @@ if ($items !== []):
 				   title="Перейти по ссылке">
 					<div class="glass-flip-card-inner">
 						<div class="glass-flip-front"
-							 style="background-image: url(<?=htmlspecialcharsbx(site_css_url($galleryImage, '/images/image_not_found.jpg'))?>);">
+							 style="background-image: url(<?=htmlspecialcharsbx(site_css_url($galleryImage, $fallbackImage))?>);">
 							<div class="front-icon">
 								<i class="bi bi-building"></i>
 							</div>

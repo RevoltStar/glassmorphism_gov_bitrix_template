@@ -1,4 +1,8 @@
 <?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
 $gosuslugiWidgetId = max(0, (int)get_info('gosuslugi_widget_id', 0));
 
 if ($gosuslugiWidgetId === 0) {

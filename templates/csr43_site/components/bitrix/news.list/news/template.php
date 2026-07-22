@@ -9,6 +9,7 @@ $arParams = is_array($arParams ?? null) ? $arParams : [];
 $newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
 	? $arResult['NEWS_CATEGORIES']
 	: [];
+$fallbackImage = site_template_image_url('image_not_found.svg');
 ?>
 <?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
@@ -48,7 +49,7 @@ $newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
             continue;
         }
         $detailPageUrl = site_url($news['DETAIL_PAGE_URL'] ?? null);
-        $previewPictureSrc = site_url($news['PREVIEW_PICTURE']['SRC'] ?? null, '/images/image_not_found.jpg');
+        $previewPictureSrc = site_url($news['PREVIEW_PICTURE']['SRC'] ?? null, $fallbackImage);
         $gallerySrc = site_url($news['DETAIL_PICTURE']['SRC'] ?? null, $previewPictureSrc);
 		$galleryCaption = site_string($news['~NAME'] ?? $news['NAME'] ?? '');
 		?>

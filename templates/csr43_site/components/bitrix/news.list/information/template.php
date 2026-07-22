@@ -2,6 +2,7 @@
 
 <?php
 $items = is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [];
+$fallbackImage = site_template_image_url('image_not_found.svg');
 if ($items !== []):
 ?>
 <?php $galleryId = 'information-' . $this->randString();?>
@@ -10,7 +11,7 @@ if ($items !== []):
         if (!is_array($banner)) {
             continue;
         }
-        $imageSrc = site_url($banner['PREVIEW_PICTURE']['SRC'] ?? null, SITE_TEMPLATE_PATH . '/images/no-photo.png');
+        $imageSrc = site_url($banner['PREVIEW_PICTURE']['SRC'] ?? null, $fallbackImage);
         $detailSrc = site_url($banner['DETAIL_PICTURE']['SRC'] ?? null, $imageSrc);
         $link = site_url($banner['PROPERTIES']['LINK']['VALUE'] ?? null);
         $name = site_string($banner['~NAME'] ?? $banner['NAME'] ?? '');

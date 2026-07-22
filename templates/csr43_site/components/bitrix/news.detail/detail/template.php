@@ -393,7 +393,10 @@ foreach ($galleryFiles as $file) {
 
 // Если нет изображений, используем дефолтное изображение новости
 if (empty($imagesForMarkup)) {
-    $defaultImage = site_url(get_info_absolute_url('logo'), '', ['http', 'https'], false);
+    $defaultImagePath = site_template_image_url(get_info('logo', ''));
+    $defaultImage = $defaultImagePath !== ''
+        ? site_url($siteUrl . '/' . ltrim($defaultImagePath, '/'), '', ['http', 'https'], false)
+        : '';
     if ($defaultImage !== '') {
         $imagesForMarkup[] = $defaultImage;
     }

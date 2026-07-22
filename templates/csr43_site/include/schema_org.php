@@ -9,7 +9,10 @@ if ($siteUrl === '') {
     return;
 }
 
-$logoUrl = site_url(get_info_absolute_url('logo'), '', ['http', 'https'], false);
+$logoPath = site_template_image_url(get_info('logo', ''));
+$logoUrl = $logoPath !== ''
+    ? site_url($siteUrl . '/' . ltrim($logoPath, '/'), '', ['http', 'https'], false)
+    : '';
 $searchPath = site_url(get_info('search_path'), '/search/');
 $searchUrl = site_is_external_http_url($searchPath)
     ? $searchPath

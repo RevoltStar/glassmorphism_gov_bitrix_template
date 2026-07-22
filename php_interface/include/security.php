@@ -149,6 +149,28 @@ function site_is_external_http_url(string $url): bool
     return in_array($scheme, ['http', 'https'], true);
 }
 
+function site_template_image_url(mixed $value, string $fallback = ''): string
+{
+    if (!defined('SITE_TEMPLATE_PATH')) {
+        return $fallback;
+    }
+
+    $filename = trim(site_string($value));
+    if (
+        $filename === ''
+        || $filename === '.'
+        || $filename === '..'
+        || str_contains($filename, '/')
+        || str_contains($filename, '\\')
+    ) {
+        return $fallback;
+    }
+
+    return rtrim((string)SITE_TEMPLATE_PATH, '/')
+        . '/images/'
+        . rawurlencode($filename);
+}
+
 function site_css_classes(mixed $value, string $default = ''): string
 {
     if (!is_string($value)) {

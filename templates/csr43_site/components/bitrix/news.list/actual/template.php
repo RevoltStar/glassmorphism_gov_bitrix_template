@@ -9,6 +9,7 @@ $items = $arResult['ITEMS'] ?? [];
 if (!is_array($items) || $items === []) {
     return;
 }
+$fallbackImage = site_template_image_url('image_not_found.svg');
 
 ?>
 <div class="row g-4">
@@ -34,7 +35,7 @@ if (!is_array($items) || $items === []) {
             }
         }
 
-        $imageSrc = site_url($pictureSrc, '/images/image_not_found.jpg');
+        $imageSrc = site_url($pictureSrc, $fallbackImage);
 
         $nameValue = $actual['~NAME'] ?? $actual['NAME'] ?? '';
         $name = is_scalar($nameValue) ? (string)$nameValue : '';
