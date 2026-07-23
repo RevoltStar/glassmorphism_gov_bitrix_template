@@ -26,7 +26,7 @@ $hasContactPhone = $contactPhone !== '' && $contactPhoneUrl !== '';
 $hasVacancyContacts = $hasContactEmail || $hasContactPhone;
 if (is_array($items) && $items !== []):
 ?>
-    <div class="glass-vacancies-list">
+    <div class="vacancy-list">
         <?php foreach ($items as $vacancyIndex => $vacancy):
             if (!is_array($vacancy)) {
                 continue;
@@ -48,109 +48,109 @@ if (is_array($items) && $items !== []):
                 . '-'
                 . $this->randString(6);
         ?>
-        <div class="glass-vacancy-card">
-            <div class="glass-vacancy-card-inner">
+        <div class="vacancy-card">
+            <div class="csr43-glass-card csr43-glass-card--interactive vacancy-card__inner">
                 <!-- Заголовок вакансии -->
-                <div class="glass-vacancy-header">
-                    <h3 class="glass-vacancy-title"><?=htmlspecialcharsbx($name)?></h3>
+                <div class="vacancy-card__header">
+                    <h3 class="vacancy-card__title"><?=htmlspecialcharsbx($name)?></h3>
                     <?php if($format):?>
-                        <span class="glass-vacancy-badge">
+                        <span class="badge csr43-glass-badge vacancy-card__badge">
                             <i class="fas fa-laptop-code me-1"></i> <?=htmlspecialcharsbx($format)?>
                         </span>
                     <?php endif;?>
                 </div>
 
                 <!-- Основная информация: две колонки (обязанности + условия) -->
-                <div class="glass-vacancy-row">
-                    <div class="glass-vacancy-col">
-                        <div class="glass-vacancy-section">
-                            <h5 class="glass-section-heading">
+                <div class="vacancy-card__row">
+                    <div class="vacancy-card__column">
+                        <div class="vacancy-card__section">
+                            <h5 class="vacancy-card__section-heading">
                                 <i class="fas fa-tasks"></i> Обязанности
                             </h5>
                             <?php if(!empty($responsibilities)):?>
-                                <ul class="glass-vacancy-list">
+                                <ul class="vacancy-card__list">
                                     <?php foreach($responsibilities as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
                             <?php else:?>
-                                <p class="glass-vacancy-empty">Информация временно отсутствует</p>
+                                <p class="vacancy-card__empty">Информация временно отсутствует</p>
                             <?php endif;?>
                         </div>
                     </div>
-                    <div class="glass-vacancy-col">
-                        <div class="glass-vacancy-section">
-                            <h5 class="glass-section-heading">
+                    <div class="vacancy-card__column">
+                        <div class="vacancy-card__section">
+                            <h5 class="vacancy-card__section-heading">
                                 <i class="fas fa-clock"></i> Условия
                             </h5>
                             <?php if(!empty($conditions)):?>
-                                <ul class="glass-vacancy-list">
+                                <ul class="vacancy-card__list">
                                     <?php foreach($conditions as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
                             <?php else:?>
-                                <p class="glass-vacancy-empty">Информация временно отсутствует</p>
+                                <p class="vacancy-card__empty">Информация временно отсутствует</p>
                             <?php endif;?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Вторая строка: требования + предложения -->
-                <div class="glass-vacancy-row">
-                    <div class="glass-vacancy-col">
-                        <div class="glass-vacancy-section">
-                            <h5 class="glass-section-heading">
+                <div class="vacancy-card__row">
+                    <div class="vacancy-card__column">
+                        <div class="vacancy-card__section">
+                            <h5 class="vacancy-card__section-heading">
                                 <i class="fas fa-clipboard-list"></i> Требования
                             </h5>
                             <?php if(!empty($requirements)):?>
-                                <ul class="glass-vacancy-list">
+                                <ul class="vacancy-card__list">
                                     <?php foreach($requirements as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
                             <?php else:?>
-                                <p class="glass-vacancy-empty">Информация временно отсутствует</p>
+                                <p class="vacancy-card__empty">Информация временно отсутствует</p>
                             <?php endif;?>
                         </div>
                     </div>
-                    <div class="glass-vacancy-col">
-                        <div class="glass-vacancy-section">
-                            <h5 class="glass-section-heading">
+                    <div class="vacancy-card__column">
+                        <div class="vacancy-card__section">
+                            <h5 class="vacancy-card__section-heading">
                                 <i class="fas fa-gift"></i> Мы предлагаем
                             </h5>
                             <?php if(!empty($offers)):?>
-                                <ul class="glass-vacancy-list">
+                                <ul class="vacancy-card__list">
                                     <?php foreach($offers as $item):?>
                                         <li><?=htmlspecialcharsbx($item)?></li>
                                     <?php endforeach;?>
                                 </ul>
                             <?php else:?>
-                                <p class="glass-vacancy-empty">Информация временно отсутствует</p>
+                                <p class="vacancy-card__empty">Информация временно отсутствует</p>
                             <?php endif;?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Местоположение и зарплата -->
-                <div class="glass-vacancy-row glass-vacancy-footer">
-                    <div class="glass-vacancy-col">
-                        <div class="glass-info-block glass-location-block">
-                            <i class="fas fa-map-marker-alt glass-info-icon"></i>
+                <div class="vacancy-card__row vacancy-card__footer">
+                    <div class="vacancy-card__column">
+                        <div class="csr43-glass-surface csr43-glass-card--interactive vacancy-card__info vacancy-card__info--location">
+                            <i class="fas fa-map-marker-alt vacancy-card__info-icon"></i>
                             <div>
-                                <div class="glass-info-label">Место работы</div>
-                                <div class="glass-info-value">
+                                <div class="vacancy-card__info-label">Место работы</div>
+                                <div class="vacancy-card__info-value">
                                     <?=$location !== '' ? htmlspecialcharsbx($location) : 'Не указано'?>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="glass-vacancy-col">
-                        <div class="glass-info-block glass-salary-block">
-                            <i class="fas fa-ruble-sign glass-info-icon"></i>
+                    <div class="vacancy-card__column">
+                        <div class="csr43-glass-surface csr43-glass-card--interactive vacancy-card__info vacancy-card__info--salary">
+                            <i class="fas fa-ruble-sign vacancy-card__info-icon"></i>
                             <div>
-                                <div class="glass-info-label">Зарплата</div>
-                                <div class="glass-info-value glass-salary-value">
+                                <div class="vacancy-card__info-label">Зарплата</div>
+                                <div class="vacancy-card__info-value vacancy-card__salary">
                                     <?=$salary !== '' ? htmlspecialcharsbx($salary) . ' ₽' : 'Не указана'?>
                                 </div>
                             </div>
@@ -159,15 +159,15 @@ if (is_array($items) && $items !== []):
                 </div>
 
                 <!-- Нижняя панель: дата + кнопка -->
-                <div class="glass-vacancy-action">
-                    <span class="glass-vacancy-date">
+                <div class="vacancy-card__action">
+                    <span class="vacancy-card__date">
                         <?php if ($publishedDate !== ''): ?>
                             <i class="far fa-calendar-alt me-1"></i> Опубликовано: <?=htmlspecialcharsbx($publishedDate)?>
                         <?php endif; ?>
                     </span>
                     <?php if ($hasVacancyContacts): ?>
                         <button type="button"
-                                class="glass-vacancy-btn"
+                                class="vacancy-card__button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#<?=htmlspecialcharsbx($contactsId)?>"
                                 aria-expanded="false"
@@ -181,7 +181,7 @@ if (is_array($items) && $items !== []):
 
                 <?php if ($hasVacancyContacts): ?>
                     <div id="<?=htmlspecialcharsbx($contactsId)?>" class="collapse">
-                        <section class="vacancy-contact">
+                        <section class="csr43-glass-surface vacancy-contact">
                             <h4 class="vacancy-contact__title">Контакты для отклика</h4>
                             <div class="vacancy-contact__items">
                                 <?php if ($hasContactEmail): ?>
@@ -211,8 +211,8 @@ if (is_array($items) && $items !== []):
         <?php endforeach;?>
     </div>
 <?php else:?>
-    <div class="glass-empty-alert">
-        <div class="glass-empty-icon">
+    <div class="csr43-glass-surface vacancy-list__empty">
+        <div class="vacancy-list__empty-icon">
             <i class="fas fa-info-circle"></i>
         </div>
         <div>

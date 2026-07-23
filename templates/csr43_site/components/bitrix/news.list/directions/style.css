@@ -1,10 +1,3 @@
-.directions-card {
-    --csr43-glass-icon-size: 70px;
-    --csr43-glass-icon-radius: 20px;
-    --csr43-glass-icon-font-size: 30px;
-    --csr43-glass-icon-scale: 1.1;
-}
-
 .directions-card__icon {
     margin-bottom: 15px;
 }

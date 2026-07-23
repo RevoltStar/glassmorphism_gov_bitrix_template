@@ -54,7 +54,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 		$galleryCaption = site_string($news['~NAME'] ?? $news['NAME'] ?? '');
 		?>
 		<div class="col-lg-4 <?php if($key==0 && count($arResult["ITEMS"])%2!=0):?>col-md-12<?php else:?>col-md-6<?php endif?>">
-				<div class="news-card gallery-media">
+				<div class="csr43-glass-surface csr43-glass-card--interactive csr43-glass-card--stretch news-card gallery-media">
 					<!-- Кнопка увеличения для FancyBox (вне ссылки!) -->
 					<a href="<?=htmlspecialcharsbx($gallerySrc)?>" class="gallery-expand-button mt-2 me-2"
 					   data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
@@ -122,7 +122,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 	<?php endforeach?>
 	</div>
 <?php else:?>
-	<div class="news-empty-state" role="status">
+	<div class="csr43-glass-surface news-empty-state" role="status">
 		<i class="bi bi-info-circle me-2" aria-hidden="true"></i>
 		Новостей по указанным критериям не найдено
 	</div>

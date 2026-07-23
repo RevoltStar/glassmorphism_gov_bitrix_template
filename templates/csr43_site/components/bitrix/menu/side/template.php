@@ -131,7 +131,7 @@ if (count($topLevelPaths) > 1) {
     }
 }
 ?>
-<select class="side-menu-select glass-select"
+<select class="side-menu__select"
         <?php if ($forceDesktop): ?>style="display: none !important;"<?php endif; ?>
         aria-label="Выберите подраздел">
     <option value="">Выберите подраздел...</option>
@@ -154,7 +154,7 @@ if (count($topLevelPaths) > 1) {
     <?php endforeach; ?>
 </select>
 
-<ul class="side-menu glass-side-menu"
+<ul class="side-menu"
     <?php if ($forceDesktop): ?>style="display: flex !important;"<?php endif; ?>>
     <?php foreach ($items as $index => $item): ?>
         <?php
@@ -174,13 +174,13 @@ if (count($topLevelPaths) > 1) {
         );
         $isSelected = $index === $activeIndex;
         ?>
-        <li class="glass-menu-item<?=$isSelected ? ' glass-menu-item--selected' : ''?>">
+        <li class="side-menu__item<?=$isSelected ? ' side-menu__item--selected' : ''?>">
             <a href="<?=htmlspecialcharsbx($link)?>"
-               class="glass-menu-link"
+               class="csr43-glass-surface csr43-glass-card--interactive side-menu__link"
                <?php if ($isSelected): ?>aria-current="page"<?php endif; ?>>
                 <i class="<?=htmlspecialcharsbx($icon)?> me-2" aria-hidden="true"></i>
                 <?=htmlspecialcharsbx($text)?>
-                <span class="glass-menu-arrow"></span>
+                <span class="side-menu__arrow"></span>
             </a>
         </li>
     <?php endforeach; ?>

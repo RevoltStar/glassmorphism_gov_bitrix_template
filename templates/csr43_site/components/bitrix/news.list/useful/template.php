@@ -45,10 +45,10 @@ if (!is_array($items) || $items === []) {
         ?>
         <div class="col-md-3 col-6">
             <a href="<?=htmlspecialcharsbx($link)?>"
-               class="resource-link"
+               class="csr43-glass-surface csr43-glass-card--interactive csr43-glass-card--stretch resource-link"
                <?php if ($target !== ''): ?>target="<?=htmlspecialcharsbx($target)?>"<?php endif; ?>
                <?php if ($rel !== ''): ?>rel="<?=htmlspecialcharsbx($rel)?>"<?php endif; ?>>
-                <div class="h-100 resource-link-info-container">
+                <div class="h-100 resource-link__content">
                     <div>
                         <i class="<?=htmlspecialcharsbx($icon)?> fs-5 me-2"
                            style="color: #2980b9;"

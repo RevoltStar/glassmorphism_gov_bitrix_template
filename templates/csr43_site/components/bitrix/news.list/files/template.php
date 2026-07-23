@@ -52,7 +52,7 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
     <?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 
-<div class="glass-files mt-2 mb-2">
+<div class="file-library mt-2 mb-2">
     <?php
     $section = ($sectionId > 0 && $iblockId > 0) ? CIBlockSection::GetList(
         [],
@@ -62,16 +62,16 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
     ) : null;
     if (is_object($section) && ($arSection = $section->Fetch()) && (($arParams['SHOW_SECTION_NAME'] ?? 'N') === "Y")):
     ?>
-    <div class="glass-section-header mb-4">
-        <h2 class="glass-section-title h4 mb-2"><?=htmlspecialcharsbx(site_string($arSection['~NAME'] ?? $arSection['NAME'] ?? ''))?></h2>
+    <div class="csr43-glass-surface file-library__header mb-4">
+        <h2 class="file-library__title h4 mb-2"><?=htmlspecialcharsbx(site_string($arSection['~NAME'] ?? $arSection['NAME'] ?? ''))?></h2>
         <?php if($arSection['DESCRIPTION']):?>
-            <p class="glass-section-desc text-muted"><?=htmlspecialcharsbx(site_plain_text($arSection['~DESCRIPTION'] ?? $arSection['DESCRIPTION']))?></p>
+            <p class="file-library__description text-muted"><?=htmlspecialcharsbx(site_plain_text($arSection['~DESCRIPTION'] ?? $arSection['DESCRIPTION']))?></p>
         <?php endif;?>
 
         <?php if(($arParams['COLLAPSE_SECTION'] ?? 'N') === "Y"):?>
         <div class="mt-3">
             <button
-                class="glass-collapse-btn"
+                class="file-library__collapse-button"
                 type="button" data-bs-toggle="collapse"
                 data-bs-target="#section-collapse-<?=$sectionId?>"
                 aria-expanded="false"
@@ -84,10 +84,10 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
     <?php endif;?>
 
     <?php if(($arParams['COLLAPSE_SECTION'] ?? 'N') === "Y"):?>
-    <div class="collapse glass-section-collapse" id="section-collapse-<?=$sectionId?>">
+    <div class="collapse file-library__collapse" id="section-collapse-<?=$sectionId?>">
     <?php endif;?>
 
-    <div class="glass-files-grid">
+    <div class="file-library__grid">
         <?php foreach($items as $arItem):
             if (!is_array($arItem)) {
                 continue;
@@ -110,23 +110,23 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
             $itemName = site_string($arItem['~NAME'] ?? $arItem['NAME'] ?? '');
             $itemId = max(0, (int)($arItem['ID'] ?? 0));
         ?>
-        <div class="glass-file-card">
-            <div class="glass-file-card-body">
-                <div class="glass-file-header mb-3">
-                    <h5 class="glass-file-title mb-1"><?=htmlspecialcharsbx($itemName)?></h5>
+        <div class="csr43-glass-surface csr43-glass-card--interactive document-card">
+            <div class="document-card__body">
+                <div class="document-card__header mb-3">
+                    <h5 class="document-card__title mb-1"><?=htmlspecialcharsbx($itemName)?></h5>
                     <?php if($description && false):?>
-                        <p class="glass-file-desc"><?=htmlspecialcharsbx(TruncateText($description, 150))?></p>
+                        <p class="document-card__description"><?=htmlspecialcharsbx(TruncateText($description, 150))?></p>
                     <?php endif;?>
                 </div>
 
                 <?php if($showDate && $timestamp > 0):?>
-                <div class="glass-file-date mb-3">
+                <div class="document-card__date mb-3">
                     <i class="bi bi-clock me-1"></i>
                     Обновлено: <?=htmlspecialcharsbx(FormatDate("d.m.Y H:i", $timestamp))?>
                 </div>
                 <?php endif;?>
 
-                <div class="glass-file-list">
+                <div class="document-card__files">
                     <?php
                     $fileIDs = site_string_list($arItem['PROPERTIES']['FILES']['VALUE'] ?? []);
                     if ($fileIDs !== []):
@@ -153,26 +153,26 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
                                     continue;
                                 }
                     ?>
-                    <div class="glass-file-item">
+                    <div class="document-card__file">
                         <?php if(in_array($fileExtension, ['mp4', 'webm', 'ogg'], true)):?>
                         <?php $videoIndex++;?>
-                        <div class="glass-video-file">
-                            <div class="glass-file-header-line d-flex justify-content-between align-items-center mb-2">
+                        <div class="csr43-glass-surface csr43-glass-card--interactive document-preview document-preview--video">
+                            <div class="document-preview__header d-flex justify-content-between align-items-center mb-2">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-play-btn me-2 glass-accent-icon"></i>
+                                    <i class="bi bi-play-btn me-2 file-library__accent-icon"></i>
                                     <span class="fw-medium">Видеофайл</span>
                                 </div>
-                                <button class="glass-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#video-<?=$itemId?>-<?=$videoIndex?>" aria-expanded="false">
+                                <button class="document-preview__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#video-<?=$itemId?>-<?=$videoIndex?>" aria-expanded="false">
                                     <i class="bi bi-eye me-1"></i>Показать видео
                                 </button>
                             </div>
-                            <div class="glass-file-meta d-flex flex-wrap gap-2 mb-2">
-                                <span class="glass-file-badge"><?=htmlspecialcharsbx($fileExtension)?></span>
-                                <span class="glass-file-size"><?=htmlspecialcharsbx($fileSize)?></span>
+                            <div class="document-meta d-flex flex-wrap gap-2 mb-2">
+                                <span class="document-meta__badge"><?=htmlspecialcharsbx($fileExtension)?></span>
+                                <span class="document-meta__size"><?=htmlspecialcharsbx($fileSize)?></span>
                             </div>
                             <div class="collapse" id="video-<?=$itemId?>-<?=$videoIndex?>">
-                                <div class="glass-video-container mt-2">
-                                    <video class="glass-video" controls preload="metadata">
+                                <div class="document-preview__video-container mt-2">
+                                    <video class="document-preview__video" controls preload="metadata">
                                         <source src="<?=htmlspecialcharsbx($fileSrc)?>" type="video/<?=htmlspecialcharsbx($fileExtension)?>">
                                         Ваш браузер не поддерживает видео.
                                     </video>
@@ -188,29 +188,29 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
                                 ?? $fileInfo['ORIGINAL_NAME']
                                 ?? ''
                         );?>
-                        <div class="glass-photo-file">
-                            <div class="glass-file-header-line d-flex justify-content-between align-items-center mb-2">
+                        <div class="csr43-glass-surface csr43-glass-card--interactive document-preview document-preview--photo">
+                            <div class="document-preview__header d-flex justify-content-between align-items-center mb-2">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-image me-2 glass-accent-icon"></i>
+                                    <i class="bi bi-image me-2 file-library__accent-icon"></i>
                                     <span class="fw-medium">Изображение</span>
                                 </div>
                                 <?php if(!$showImageImmediately):?>
-                                    <button class="glass-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#photo-<?=$itemId?>-<?=$photoIndex?>" aria-expanded="false">
+                                    <button class="document-preview__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#photo-<?=$itemId?>-<?=$photoIndex?>" aria-expanded="false">
                                         <i class="bi bi-eye me-1"></i>Показать изображение
                                     </button>
                                 <?php endif;?>
                             </div>
-                            <div class="glass-file-meta d-flex flex-wrap gap-2 mb-2">
-                                <span class="glass-file-badge"><?=htmlspecialcharsbx($fileExtension)?></span>
-                                <span class="glass-file-size"><?=htmlspecialcharsbx($fileSize)?></span>
-                                <span class="glass-image-dimensions">
+                            <div class="document-meta d-flex flex-wrap gap-2 mb-2">
+                                <span class="document-meta__badge"><?=htmlspecialcharsbx($fileExtension)?></span>
+                                <span class="document-meta__size"><?=htmlspecialcharsbx($fileSize)?></span>
+                                <span class="document-preview__image-dimensions">
                                     <?=max(0, (int)($fileInfo['WIDTH'] ?? 0))?> × <?=max(0, (int)($fileInfo['HEIGHT'] ?? 0))?> px
                                 </span>
                             </div>
                             <div<?php if(!$showImageImmediately):?> class="collapse" id="photo-<?=$itemId?>-<?=$photoIndex?>"<?php endif;?>>
-                                <div class="glass-image-container mt-2 text-center gallery-media">
+                                <div class="document-preview__image-container mt-2 text-center gallery-media">
                                     <a href="<?=htmlspecialcharsbx($fileSrc)?>"
-                                       class="gallery-expand-button glass-image-expand"
+                                       class="gallery-expand-button document-preview__image-expand"
                                        data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
                                        data-gallery-caption="<?=htmlspecialcharsbx($galleryCaption)?>" data-type="image"
                                        aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $galleryCaption)?>">
@@ -218,24 +218,24 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
                                     </a>
                                     <img src="<?=htmlspecialcharsbx($fileSrc)?>"
                                          alt="<?=htmlspecialcharsbx($galleryCaption)?>"
-                                         class="glass-image img-fluid rounded"
+                                         class="document-preview__image img-fluid rounded"
                                          loading="lazy">
                                 </div>
                             </div>
                         </div>
                         <?php else:?>
-                        <a target="_blank" class="glass-download-link" href="<?=htmlspecialcharsbx($fileSrc)?>" rel="noopener noreferrer">
-                            <div class="glass-file-icon">
+                        <a target="_blank" class="csr43-glass-surface csr43-glass-card--interactive document-download" href="<?=htmlspecialcharsbx($fileSrc)?>" rel="noopener noreferrer">
+                            <div class="document-download__icon">
                                 <i class="bi <?=htmlspecialcharsbx($fileIcon)?>"></i>
                             </div>
-                            <div class="glass-file-info">
-								<div class="glass-file-name"><?=htmlspecialcharsbx($description !== '' ? $description : $itemName)?></div>
-                                <div class="glass-file-meta">
-                                    <span class="glass-file-type text-uppercase"><?=htmlspecialcharsbx($fileExtension)?></span>
-                                    <span class="glass-file-size"><?=htmlspecialcharsbx($fileSize)?></span>
+                            <div class="document-download__info">
+								<div class="document-download__name"><?=htmlspecialcharsbx($description !== '' ? $description : $itemName)?></div>
+                                <div class="document-meta">
+                                    <span class="document-meta__type text-uppercase"><?=htmlspecialcharsbx($fileExtension)?></span>
+                                    <span class="document-meta__size"><?=htmlspecialcharsbx($fileSize)?></span>
                                 </div>
                             </div>
-                            <div class="glass-download-icon">
+                            <div class="document-download__action">
                                 <i class="bi bi-download"></i>
                             </div>
                         </a>
@@ -258,14 +258,14 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
 </div>
 
 <?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? false) === true):?>
-    <div class="glass-pagination mt-4">
+    <div class="file-library__pagination mt-4">
         <?=$arResult["NAV_STRING"] ?? ''?>
     </div>
 <?php endif;?>
 
 <?php else:?>
-<div class="glass-empty-alert">
-    <div class="glass-empty-icon">
+<div class="csr43-glass-surface file-library__empty">
+    <div class="file-library__empty-icon">
         <i class="bi bi-folder-x"></i>
     </div>
     <div>

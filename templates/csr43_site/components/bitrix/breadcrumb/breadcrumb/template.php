@@ -72,7 +72,7 @@ $breadcrumbJson = json_encode([
 
 // HTML для хлебных крошек в стиле образца
 $breadcrumbHtml = '
-<ol class="breadcrumb glass-breadcrumb m-0">';
+<ol class="breadcrumb csr43-glass-surface csr43-glass-card--interactive site-breadcrumb m-0">';
 
 foreach ($arResult as $index => $item) {
     $itemTitle = site_string($item['TITLE'] ?? '');
@@ -84,7 +84,7 @@ foreach ($arResult as $index => $item) {
     } else {
         // Обычные элементы с ссылками
         $breadcrumbHtml .= '
-    <li class="breadcrumb-item"><a href="' . htmlspecialcharsbx($itemLink) . '" class="glass-breadcrumb-link">' . htmlspecialcharsbx($itemTitle) . '</a></li>';
+    <li class="breadcrumb-item"><a href="' . htmlspecialcharsbx($itemLink) . '" class="site-breadcrumb__link">' . htmlspecialcharsbx($itemTitle) . '</a></li>';
     }
 }
 

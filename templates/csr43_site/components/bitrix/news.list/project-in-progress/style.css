@@ -3,8 +3,6 @@
     --csr43-glass-icon-radius: 18px;
     --csr43-glass-icon-font-size: 26px;
     --csr43-glass-icon-scale: 1.08;
-
-    color: var(--csr43-color-text);
 }
 
 .project-card__title {

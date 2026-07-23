@@ -18,7 +18,7 @@ if (is_array($items) && $items !== []):
         <?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 
-<div class="glass-links mt-2 mb-2">
+<div class="link-directory mt-2 mb-2">
         <?php
         // Получаем информацию о разделе
         $section = ($sectionId > 0 && $iblockId > 0) ? CIBlockSection::GetList(
@@ -29,15 +29,15 @@ if (is_array($items) && $items !== []):
         ) : null;
         if (is_object($section) && ($arSection = $section->Fetch()) && (($arParams['SHOW_SECTION_NAME'] ?? 'N') === "Y")):
         ?>
-        <div class="glass-section-header mb-4">
-                <h2 class="glass-section-title h4 mb-2"><?=htmlspecialcharsbx(site_string($arSection['~NAME'] ?? $arSection['NAME'] ?? ''))?></h2>
+        <div class="csr43-glass-surface link-directory__header mb-4">
+                <h2 class="link-directory__title h4 mb-2"><?=htmlspecialcharsbx(site_string($arSection['~NAME'] ?? $arSection['NAME'] ?? ''))?></h2>
                 <?php if($arSection['DESCRIPTION']):?>
-                        <p class="glass-section-desc text-muted"><?=htmlspecialcharsbx(site_plain_text($arSection['~DESCRIPTION'] ?? $arSection['DESCRIPTION']))?></p>
+                        <p class="link-directory__description text-muted"><?=htmlspecialcharsbx(site_plain_text($arSection['~DESCRIPTION'] ?? $arSection['DESCRIPTION']))?></p>
                 <?php endif;?>
         </div>
         <?php endif;?>
 
-        <div class="glass-links-grid">
+        <div class="link-directory__grid">
     <?php foreach($arResult["ITEMS"] as $arItem):
                 if (!is_array($arItem)) {
                     continue;
@@ -79,20 +79,20 @@ if (is_array($items) && $items !== []):
         <a href="<?=htmlspecialcharsbx($link)?>"
            target="<?=htmlspecialcharsbx($target)?>"
            rel="<?=htmlspecialcharsbx($rel)?>"
-           class="glass-link-card <?=!$hasLink ? 'glass-link-card--disabled' : ''?>"
+           class="csr43-glass-card<?=$hasLink ? ' csr43-glass-card--interactive' : ''?> link-card <?=!$hasLink ? 'link-card--disabled' : ''?>"
            <?php if(!$hasLink):?>onclick="return false;"<?php endif;?>>
-            <div class="glass-link-card-inner">
-                <div class="glass-link-card-content">
-                    <div class="glass-link-icon">
+            <div class="link-card__surface">
+                <div class="link-card__content">
+                    <div class="csr43-glass-icon link-card__icon">
                         <i class="bi <?=htmlspecialcharsbx($iconClass)?>"></i>
                     </div>
-                    <div class="glass-link-info">
-                        <h5 class="glass-link-title"><?=htmlspecialcharsbx($name)?></h5>
+                    <div class="link-card__info">
+                        <h5 class="link-card__title"><?=htmlspecialcharsbx($name)?></h5>
                         <?php if($description):?>
-                            <p class="glass-link-desc"><?=htmlspecialcharsbx(TruncateText($description, 120))?></p>
+                            <p class="link-card__description"><?=htmlspecialcharsbx(TruncateText($description, 120))?></p>
                         <?php endif;?>
                         <?php if($showDate && $timestamp > 0 && ($arParams['SHOW_UPDATE_DATE']??'Y')!="N"):?>
-                            <div class="glass-link-date">
+                            <div class="link-card__date">
                                 <i class="bi bi-clock me-1"></i>
                                 Обновлено: <?=htmlspecialcharsbx(FormatDate("d.m.Y H:i", $timestamp))?>
                             </div>
@@ -100,7 +100,7 @@ if (is_array($items) && $items !== []):
                     </div>
                 </div>
                 <?php if($hasLink):?>
-                    <div class="glass-link-arrow">
+                    <div class="link-card__arrow">
                         <i class="bi bi-arrow-up-right"></i>
                     </div>
                 <?php endif;?>
@@ -111,14 +111,14 @@ if (is_array($items) && $items !== []):
 </div>
 
 <?php if(($arParams["DISPLAY_BOTTOM_PAGER"] ?? false) === true):?>
-        <div class="glass-pagination mt-4">
+        <div class="link-directory__pagination mt-4">
                 <?=$arResult["NAV_STRING"] ?? ''?>
         </div>
 <?php endif;?>
 
 <?php else:?>
-<div class="glass-empty-alert">
-    <div class="glass-empty-icon">
+<div class="csr43-glass-surface link-directory__empty">
+    <div class="link-directory__empty-icon">
         <i class="bi bi-folder-x"></i>
     </div>
     <div>

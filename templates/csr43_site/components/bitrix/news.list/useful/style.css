@@ -1,25 +1,36 @@
  /* ПОЛЕЗНЫЕ РЕСУРСЫ */
-        .resource-link {
-            display: block;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(52, 152, 219, 0.2);
-            border-radius: 16px;
-            color: #1e3a5f;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-weight: 500;
-			height: 100%;
-        }
-        .resource-link:hover {
-            background: white;
-            border: 1px solid #3498db;
-            color: #2980b9;
-            transform: translateX(5px);
-        }
-		.resource-link-info-container{
-			display: flex;
-  			flex-direction: column;
-  			justify-content: space-between;
-		}
+.resource-link {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.5);
+    --csr43-glass-bg-hover: #fff;
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-border-hover: #3498db;
+    --csr43-glass-radius: 16px;
+    --csr43-glass-blur: 8px;
+    --csr43-glass-hover-translate-y: 0;
+
+    display: block;
+    padding: 12px 20px;
+    color: var(--csr43-color-text);
+    border-radius: var(--csr43-glass-radius);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.csr43-glass-card--interactive.resource-link:hover,
+.csr43-glass-card--interactive.resource-link:focus-visible {
+    color: var(--csr43-color-accent);
+    transform: translateX(5px);
+}
+
+.resource-link__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .csr43-glass-card--interactive.resource-link:hover,
+    .csr43-glass-card--interactive.resource-link:focus-visible {
+        transform: none;
+    }
+}
