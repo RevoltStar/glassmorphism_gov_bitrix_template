@@ -41,7 +41,11 @@ $resolveVehicleType = static function (array $property) use ($allowedVehicleType
     return in_array($xmlId, $allowedVehicleTypes, true) ? $xmlId : '';
 };
 
-foreach ($arResult['SECTIONS'] as $section) {
+$sections = is_array($arResult['SECTIONS'] ?? null)
+    ? array_values(array_filter($arResult['SECTIONS'], 'is_array'))
+    : [];
+
+foreach ($sections as $section) {
     $this->AddEditAction(
         $section['ID'],
         $section['EDIT_LINK'],

@@ -5,8 +5,16 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 $this->setFrameMode(true);
 
-$items = $arResult['ITEMS'] ?? [];
-if (!is_array($items) || $items === []) {
+$items = is_array($arResult['ITEMS'] ?? null)
+    ? array_values(array_filter($arResult['ITEMS'], 'is_array'))
+    : [];
+if ($items === []) {
+    ?>
+    <div class="csr43-glass-surface rounded-4 p-4 text-center text-muted" role="status">
+        <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
+        Информация о национальных проектах временно недоступна.
+    </div>
+    <?php
     return;
 }
 

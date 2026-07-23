@@ -1,7 +1,9 @@
 <?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
 <?php
-$items = is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [];
+$items = is_array($arResult['ITEMS'] ?? null)
+    ? array_values(array_filter($arResult['ITEMS'], 'is_array'))
+    : [];
 $fallbackImage = site_template_image_url('image_not_found.svg');
 if ($items !== []):
 ?>
@@ -47,5 +49,10 @@ if ($items !== []):
         </a>
     </div>
     <?php endforeach;?>
+</div>
+<?php else: ?>
+<div class="csr43-glass-surface rounded-4 p-4 text-center text-muted" role="status">
+    <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
+    Информационные материалы отсутствуют. Актуальная информация будет размещена в ближайшее время.
 </div>
 <?php endif;?>

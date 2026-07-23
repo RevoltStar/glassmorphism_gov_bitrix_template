@@ -108,4 +108,9 @@ $galleryId = 'org-structure-' . $this->randString();
             <?php endforeach; ?>
         </ul>
     </div>
+<?php else: ?>
+    <div class="csr43-glass-surface rounded-4 p-4 text-center text-muted" role="status">
+        <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
+        Не удалось получить информацию о руководстве.
+    </div>
 <?php endif; ?>
