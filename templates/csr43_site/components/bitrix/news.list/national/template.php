@@ -14,7 +14,7 @@ $totalName = 'Общая готовность';
 $totalProgress = 0;
 $totalLink = '#';
 ?>
-<div class="csr43-glass-card">
+<div class="csr43-glass-card national-project-card">
     <div class="row align-items-center">
         <div class="col-lg-6">
             <?php foreach ($items as $national): ?>
