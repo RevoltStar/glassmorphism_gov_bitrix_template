@@ -7,10 +7,27 @@ $this->setFrameMode(true);
 ?>
 <?php
 $items = $arResult['ITEMS'] ?? [];
+$contactEmail = site_string(get_info('email', ''));
+$contactPhone = site_string(get_info('phone', ''));
+$contactEmailUrl = site_url(
+    'mailto:' . $contactEmail,
+    '',
+    ['mailto'],
+    false
+);
+$contactPhoneUrl = site_url(
+    'tel:' . site_string(get_info('phone_e164', $contactPhone), $contactPhone),
+    '',
+    ['tel'],
+    false
+);
+$hasContactEmail = $contactEmail !== '' && $contactEmailUrl !== '';
+$hasContactPhone = $contactPhone !== '' && $contactPhoneUrl !== '';
+$hasVacancyContacts = $hasContactEmail || $hasContactPhone;
 if (is_array($items) && $items !== []):
 ?>
     <div class="glass-vacancies-list">
-        <?php foreach ($items as $vacancy):
+        <?php foreach ($items as $vacancyIndex => $vacancy):
             if (!is_array($vacancy)) {
                 continue;
             }
@@ -25,6 +42,11 @@ if (is_array($items) && $items !== []):
             $name = site_string($vacancy['~NAME'] ?? $vacancy['NAME'] ?? '');
             $timestamp = MakeTimeStamp(site_string($vacancy['TIMESTAMP_X'] ?? ''));
             $publishedDate = $timestamp > 0 ? FormatDate('d.m.Y', $timestamp) : '';
+            $vacancyId = max(0, (int)($vacancy['ID'] ?? 0));
+            $contactsId = 'vacancy-contacts-'
+                . ($vacancyId > 0 ? $vacancyId : (int)$vacancyIndex)
+                . '-'
+                . $this->randString(6);
         ?>
         <div class="glass-vacancy-card">
             <div class="glass-vacancy-card-inner">
@@ -143,10 +165,47 @@ if (is_array($items) && $items !== []):
                             <i class="far fa-calendar-alt me-1"></i> Опубликовано: <?=htmlspecialcharsbx($publishedDate)?>
                         <?php endif; ?>
                     </span>
-                    <button class="glass-vacancy-btn">
-                        <i class="fas fa-paper-plane me-1"></i> Откликнуться
-                    </button>
+                    <?php if ($hasVacancyContacts): ?>
+                        <button type="button"
+                                class="glass-vacancy-btn"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#<?=htmlspecialcharsbx($contactsId)?>"
+                                aria-expanded="false"
+                                aria-controls="<?=htmlspecialcharsbx($contactsId)?>">
+                            <i class="fas fa-paper-plane me-1" aria-hidden="true"></i>
+                            <span class="vacancy-contact-toggle__label vacancy-contact-toggle__label--show">Откликнуться</span>
+                            <span class="vacancy-contact-toggle__label vacancy-contact-toggle__label--hide">Скрыть контакты</span>
+                        </button>
+                    <?php endif; ?>
                 </div>
+
+                <?php if ($hasVacancyContacts): ?>
+                    <div id="<?=htmlspecialcharsbx($contactsId)?>" class="collapse">
+                        <section class="vacancy-contact">
+                            <h4 class="vacancy-contact__title">Контакты для отклика</h4>
+                            <div class="vacancy-contact__items">
+                                <?php if ($hasContactEmail): ?>
+                                    <a class="vacancy-contact__item"
+                                       href="<?=htmlspecialcharsbx($contactEmailUrl)?>">
+                                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                                        <span><?=htmlspecialcharsbx($contactEmail)?></span>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($hasContactPhone): ?>
+                                    <a class="vacancy-contact__item"
+                                       href="<?=htmlspecialcharsbx($contactPhoneUrl)?>">
+                                        <i class="fas fa-phone" aria-hidden="true"></i>
+                                        <span><?=htmlspecialcharsbx($contactPhone)?></span>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                            <p class="vacancy-contact__hint">
+                                При обращении укажите название вакансии:
+                                «<?=htmlspecialcharsbx($name)?>».
+                            </p>
+                        </section>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php endforeach;?>

@@ -222,8 +222,73 @@
     box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
 }
 
+.glass-vacancy-btn:focus-visible {
+    outline: 3px solid rgba(41, 128, 185, 0.45);
+    outline-offset: 3px;
+}
+
 .glass-vacancy-btn i {
     margin-right: 6px;
+}
+
+.vacancy-contact-toggle__label--hide {
+    display: none;
+}
+
+.glass-vacancy-btn[aria-expanded="true"] .vacancy-contact-toggle__label--show {
+    display: none;
+}
+
+.glass-vacancy-btn[aria-expanded="true"] .vacancy-contact-toggle__label--hide {
+    display: inline;
+}
+
+.vacancy-contact {
+    margin-top: 20px;
+    padding: 20px 24px;
+    border: 1px solid rgba(52, 152, 219, 0.25);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.vacancy-contact__title {
+    margin: 0 0 14px;
+    color: #1e3a5f;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.vacancy-contact__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+}
+
+.vacancy-contact__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #1f6391;
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.vacancy-contact__item:hover {
+    color: #174b70;
+    text-decoration: underline;
+}
+
+.vacancy-contact__item:focus-visible {
+    outline: 3px solid rgba(41, 128, 185, 0.35);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.vacancy-contact__hint {
+    margin: 14px 0 0;
+    color: #526f82;
+    font-size: 0.9rem;
 }
 
 /* Пустое состояние */
@@ -281,6 +346,12 @@
         text-align: center;
         width: 100%;
     }
+    .vacancy-contact {
+        padding: 18px;
+    }
+    .vacancy-contact__items {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 576px) {
@@ -292,5 +363,11 @@
     }
     .glass-vacancy-list li {
         font-size: 0.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-vacancy-btn {
+        transition: none;
     }
 }
