@@ -135,7 +135,7 @@ if (!empty($additionalFiles['VALUE'])) {
             <?php if (!empty($newsCategories)): ?>
                 <?php foreach ($newsCategories as $category): ?>
                     <a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="csr43-glass-surface csr43-glass-card--interactive news-detail__category">
-                        <span class="bvi-speech"><i class="bi bi-tag me-1"></i><?=htmlspecialcharsbx($category["VALUE"])?></span>
+                        <span><i class="bi bi-tag me-1"></i><?=htmlspecialcharsbx($category["VALUE"])?></span>
                     </a>
                 <?php endforeach; ?>
             <?php else: ?>

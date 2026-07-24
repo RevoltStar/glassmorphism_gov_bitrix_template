@@ -94,7 +94,7 @@ if ($questionCount % 100 >= 11 && $questionCount % 100 <= 14) {
                                  id="<?=$answerId?>"
                                  aria-labelledby="<?=$headingId?>"
                                  data-bs-parent="#<?=$accordionId?>">
-                                <div class="citizen-faq__answer">
+                                <div class="citizen-faq__answer bvi-speech">
                                     <?php if ($answer !== ''): ?>
                                         <?php if ($answerType === 'html'): ?>
                                             <?=site_safe_html($answer)?>
