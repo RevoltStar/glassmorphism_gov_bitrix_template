@@ -169,6 +169,7 @@
 }
 
 .org-structure__toggle {
+    --csr43-fixed-icon-font-size: 1.35rem;
     --csr43-glass-bg: rgba(52, 152, 219, 0.12);
     --csr43-glass-bg-hover: #fff;
     --csr43-glass-border: rgba(52, 152, 219, 0.28);
@@ -185,7 +186,7 @@
     align-items: center;
     justify-content: center;
     color: var(--csr43-color-accent);
-    font-size: 1.35rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     border-radius: 50%;
     cursor: pointer;
 }
@@ -292,9 +293,10 @@
     }
 
     .org-structure__toggle {
+        --csr43-fixed-icon-font-size: 1.15rem;
+
         width: 38px;
         height: 38px;
-        font-size: 1.15rem;
     }
 }
 

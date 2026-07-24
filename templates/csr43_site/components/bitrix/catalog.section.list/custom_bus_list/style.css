@@ -91,6 +91,8 @@ a.bus-route-card:hover {
 }
 
 .bus-route-card__vehicle {
+    --csr43-fixed-icon-font-size: 1.5rem;
+
     display: inline-flex;
     flex: 0 0 78px;
     width: 78px;
@@ -102,7 +104,7 @@ a.bus-route-card:hover {
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.78);
     color: var(--route-blue);
-    font-size: 1.5rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .bus-route-card__vehicle img {
@@ -172,6 +174,8 @@ a.bus-route-card:hover {
 }
 
 .bus-route-card__external {
+    --csr43-fixed-icon-font-size: 0.82rem;
+
     display: inline-flex;
     flex: 0 0 30px;
     width: 30px;
@@ -182,7 +186,7 @@ a.bus-route-card:hover {
     border-radius: 50%;
     background: rgba(52, 152, 219, 0.1);
     color: var(--route-blue);
-    font-size: 0.82rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .bus-route-card__path {

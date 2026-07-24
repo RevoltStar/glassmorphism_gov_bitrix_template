@@ -54,11 +54,13 @@
 
 /* Стрелка справа (→) */
 .side-menu__arrow {
+    --csr43-fixed-icon-font-size: 1.1rem;
+
     margin-left: auto;
     opacity: 0;
     transform: translateX(-8px);
     transition: all 0.3s ease;
-    font-size: 1.1rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     color: #2980b9;
 }
 
@@ -102,8 +104,10 @@
 
 /* Иконки (если используются) */
 .side-menu__link i {
+    --csr43-fixed-icon-font-size: 1.2rem;
+
     color: #2980b9;
-    font-size: 1.2rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     width: 28px;
     text-align: center;
     transition: all 0.2s;

@@ -193,11 +193,13 @@
 }
 
 .news-detail__play-icon {
+    --csr43-fixed-icon-font-size: 2rem;
+
     position: absolute;
     top: 50%;
     left: 50%;
     color: #fff;
-    font-size: 2rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     opacity: 0.9;
     transform: translate(-50%, -50%);
@@ -287,7 +289,9 @@
 }
 
 .news-detail__nav-icon {
-    font-size: 1.5rem;
+    --csr43-fixed-icon-font-size: 1.5rem;
+
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .news-detail__nav-icon--active {

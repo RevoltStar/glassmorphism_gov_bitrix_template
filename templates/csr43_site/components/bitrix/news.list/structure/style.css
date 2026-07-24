@@ -128,9 +128,11 @@
 }
 
 .employee-card__contact-icon {
+    --csr43-fixed-icon-font-size: 0.9rem;
+
     width: 18px;
     color: #2980b9;
-    font-size: 0.9rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     margin-top: 2px;
     flex-shrink: 0;
 }

@@ -133,6 +133,8 @@
 }
 
 .document-download__icon {
+    --csr43-fixed-icon-font-size: 1.8rem;
+
     width: 48px;
     height: 48px;
     display: flex;
@@ -145,7 +147,7 @@
 }
 
 .document-download__icon i {
-    font-size: 1.8rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     color: #2980b9;
 }
 
@@ -181,9 +183,11 @@
 }
 
 .document-download__action {
+    --csr43-fixed-icon-font-size: 1.2rem;
+
     margin-left: 12px;
     color: #2980b9;
-    font-size: 1.2rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     opacity: 0.6;
     transition: all 0.3s;
 }
@@ -213,8 +217,10 @@
 }
 
 .file-library__accent-icon {
+    --csr43-fixed-icon-font-size: 1.2rem;
+
     color: #2980b9;
-    font-size: 1.2rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .document-preview__toggle {
@@ -323,7 +329,9 @@
 }
 
 .file-library__empty-icon {
-    font-size: 2.5rem;
+    --csr43-fixed-icon-font-size: 2.5rem;
+
+    font-size: var(--csr43-fixed-icon-font-size);
     color: #2980b9;
     opacity: 0.6;
 }
@@ -387,7 +395,7 @@
     }
     
     .document-download__icon i {
-        font-size: 1.5rem;
+        --csr43-fixed-icon-font-size: 1.5rem;
     }
     
     .document-download__name {

@@ -306,6 +306,8 @@
 
 .discussion-file__icon,
 .discussion-file__download {
+    --csr43-fixed-icon-font-size: 1.25rem;
+
     display: inline-flex;
     width: 44px;
     height: 44px;
@@ -314,7 +316,7 @@
     border-radius: 14px;
     background: rgba(52, 152, 219, 0.1);
     color: var(--discussion-blue);
-    font-size: 1.25rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .discussion-file__content {
@@ -353,11 +355,13 @@
 }
 
 .discussion-file__download {
+    --csr43-fixed-icon-font-size: 0.9rem;
+
     width: 36px;
     height: 36px;
     border: 1px solid rgba(52, 152, 219, 0.16);
     border-radius: 50%;
-    font-size: 0.9rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .discussion-card__no-files {

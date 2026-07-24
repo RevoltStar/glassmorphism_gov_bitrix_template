@@ -130,6 +130,8 @@
 
 /* Стрелка для внешних ссылок */
 .link-card__arrow {
+    --csr43-fixed-icon-font-size: 1.3rem;
+
     flex-shrink: 0;
     background: rgba(52, 152, 219, 0.1);
     border-radius: 40px;
@@ -142,7 +144,7 @@
 }
 
 .link-card__arrow i {
-    font-size: 1.3rem;
+    font-size: var(--csr43-fixed-icon-font-size);
     color: #2980b9;
     transition: transform 0.2s;
 }
@@ -173,7 +175,9 @@
 }
 
 .link-directory__empty-icon {
-    font-size: 2.5rem;
+    --csr43-fixed-icon-font-size: 2.5rem;
+
+    font-size: var(--csr43-fixed-icon-font-size);
     color: #2980b9;
     opacity: 0.6;
 }
@@ -253,7 +257,7 @@
     }
     
     .link-card__arrow i {
-        font-size: 1.1rem;
+        --csr43-fixed-icon-font-size: 1.1rem;
     }
 }
 

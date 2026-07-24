@@ -55,10 +55,12 @@ html {
         }
 
         .site-development-notice__icon {
+            --csr43-fixed-icon-font-size: 1.15rem;
+
             flex: 0 0 auto;
             margin-top: 2px;
             color: #9a6200;
-            font-size: 1.15rem;
+            font-size: var(--csr43-fixed-icon-font-size);
         }
 
         .site-development-notice__title {
@@ -176,8 +178,10 @@ html {
             color: #2980b9;
         }
         .top-contact i {
+            --csr43-fixed-icon-font-size: 1.1rem;
+
             color: #2980b9;
-            font-size: 1.1rem;
+            font-size: var(--csr43-fixed-icon-font-size);
         }
 
 
@@ -579,8 +583,10 @@ main{
 		margin-left: 6px;
 }
 .gallery-expand-button .bi-arrows-angle-expand {
+    --csr43-fixed-icon-font-size: 16px;
+
     color: #333;
-    font-size: 16px;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 #main-content{
 	min-height: 690px;

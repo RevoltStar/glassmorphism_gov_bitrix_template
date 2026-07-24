@@ -8,9 +8,11 @@
 }
 
 .footer-menu__link-icon {
+    --csr43-fixed-icon-font-size: 0.8rem;
+
     margin-right: 6px;
     color: #3498db;
-    font-size: 0.8rem;
+    font-size: var(--csr43-fixed-icon-font-size);
 }
 
 .footer-menu__link:hover,

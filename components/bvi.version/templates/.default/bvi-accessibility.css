@@ -117,6 +117,32 @@ html body .bvi-body[data-bvi-fontsize] .csr43-glass-icon > i:not(.bvi-no-styles)
     font-size: var(--csr43-glass-icon-font-size) !important;
 }
 
+html body .bvi-body[data-bvi-fontsize] .site-development-notice__icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .top-contact i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .employee-card__contact-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .discussion-file__icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .discussion-file__download > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .document-download__icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .document-download__action > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .file-library__accent-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .file-library__empty-icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .link-card__arrow > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .link-directory__empty-icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .vacancy-card__section-heading > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .vacancy-card__info-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .vacancy-list__empty-icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .footer-menu__link-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .side-menu__link > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .side-menu__arrow:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .news-detail__play-icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .news-detail__nav-icon > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .org-structure__toggle > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .bus-route-card__vehicle > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .bus-route-card__external > i:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .gallery-expand-button .bi-arrows-angle-expand:not(.bvi-no-styles) {
+    font-size: var(--csr43-fixed-icon-font-size) !important;
+}
+
 html body .bvi-panel [aria-pressed="true"] {
     outline: 2px solid currentColor !important;
     outline-offset: 2px !important;
