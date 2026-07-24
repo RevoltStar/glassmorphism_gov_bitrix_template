@@ -1188,6 +1188,10 @@
         'imagesGrayscale': 'Изображения чёрно-белые',
         'speechOn': 'Синтез речи включён',
         'speechOff': 'Синтез речи вы́ключен',
+        'speechUnavailable': 'Синтез речи не поддерживается этим браузером.',
+        'speechNoVoices': 'Не удалось запустить синтез речи: в системе не найдены доступные голоса.',
+        'speechNoLanguageVoice': 'Не удалось запустить синтез речи: голос для выбранного языка недоступен.',
+        'speechError': 'Не удалось воспроизвести текст. Проверьте настройки синтеза речи.',
         'lineHeightNormal': 'Межстрочный интервал стандартный',
         'lineHeightAverage': 'Межстрочный интервал средний',
         'lineHeightBig': 'Межстрочный интервал большой',
@@ -1242,6 +1246,10 @@
         'imagesGrayscale': 'Images gray scale',
         'speechOn': 'Synthesis speech enable',
         'speechOff': 'Synthesis speech disabled',
+        'speechUnavailable': 'Speech synthesis is not supported by this browser.',
+        'speechNoVoices': 'Speech synthesis could not start because no voices are available.',
+        'speechNoLanguageVoice': 'Speech synthesis could not start because no voice is available for the selected language.',
+        'speechError': 'The text could not be spoken. Check the speech synthesis settings.',
         'lineHeightNormal': 'Line spacing single',
         'lineHeightAverage': 'Line spacing one and a half',
         'lineHeightBig': 'Line spacing double',
@@ -1349,6 +1357,8 @@
       this._i18n = new I18n({
         lang: this._config.lang
       });
+      this._pendingSpeech = null;
+      this._speechVoicesHandler = null;
 
       this._addEventListeners();
 
@@ -2019,7 +2029,9 @@
 
               // Этот код включает подсветку произносимого текста.
               // _this4._speech(text.textContent, text, true);
-              _this4._speech(text.textContent);
+              if (!_this4._speech(text.textContent)) {
+                return;
+              }
 
               play.forEach(function (element) {
                 return element.classList.remove('disabled');
@@ -2075,79 +2087,186 @@
         }
       }
     }, {
+      key: "_showSpeechStatus",
+      value: function _showSpeechStatus(message) {
+        var panel = document.querySelector('.bvi-panel');
+
+        if (!panel) {
+          console.warn("Bvi console: ".concat(message));
+          return;
+        }
+
+        var status = panel.querySelector('.bvi-speech-status');
+
+        if (!status) {
+          status = document.createElement('div');
+          status.className = 'bvi-speech-status';
+          status.setAttribute('role', 'alert');
+          status.setAttribute('aria-live', 'assertive');
+          status.setAttribute('aria-atomic', 'true');
+          panel.appendChild(status);
+        }
+
+        status.textContent = message;
+        status.hidden = false;
+        console.warn("Bvi console: ".concat(message));
+      }
+    }, {
+      key: "_hideSpeechStatus",
+      value: function _hideSpeechStatus() {
+        var status = document.querySelector('.bvi-panel .bvi-speech-status');
+
+        if (status) {
+          status.hidden = true;
+          status.textContent = '';
+        }
+      }
+    }, {
       key: "_speech",
       value: function _speech(text, element) {
         var _this5 = this;
 
         var echo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-        if ('speechSynthesis' in window && stringToBoolean(getCookie('speech'))) {
-          synth().cancel();
+        if (!stringToBoolean(getCookie('speech'))) {
+          return false;
+        }
 
-          var getWordAt = function getWordAt(str, pos) {
-            str = String(str);
-            pos = Number(pos) >>> 0;
-            var left = str.slice(0, pos + 1).search(/\S+$/);
-            var right = str.slice(pos).search(/\s/);
+        if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+          this._showSpeechStatus(this._i18n.v('speechUnavailable'));
+          return false;
+        }
 
-            if (right < 0) {
-              return str.slice(left);
-            }
+        var speechSynthesis = synth();
+        var voices = speechSynthesis.getVoices();
 
-            return str.slice(left, right + pos);
+        if (voices.length === 0) {
+          this._pendingSpeech = {
+            text: text,
+            element: element,
+            echo: echo
           };
+          this._showSpeechStatus(this._i18n.v('speechNoVoices'));
 
-          var chunkLength = 120;
-          var patternRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
-          var array = [];
-          var $text = text;
-          var voices = synth().getVoices();
+          if (!this._speechVoicesHandler) {
+            this._speechVoicesHandler = function () {
+              if (speechSynthesis.getVoices().length === 0) {
+                return;
+              }
 
-          while ($text.length > 0) {
-            array.push($text.match(patternRegex)[0]);
-            $text = $text.substring(array[array.length - 1].length);
+              speechSynthesis.removeEventListener('voiceschanged', _this5._speechVoicesHandler);
+              _this5._speechVoicesHandler = null;
+              var pendingSpeech = _this5._pendingSpeech;
+              _this5._pendingSpeech = null;
+              _this5._hideSpeechStatus();
+
+              if (pendingSpeech && stringToBoolean(getCookie('speech'))) {
+                _this5._speech(pendingSpeech.text, pendingSpeech.element, pendingSpeech.echo);
+              }
+            };
+            speechSynthesis.addEventListener('voiceschanged', this._speechVoicesHandler);
           }
 
-          array.forEach(function (getText) {
-            var utter = new SpeechSynthesisUtterance(getText.trim());
-            utter.volume = 1;
-            utter.rate = 1;
-            utter.pitch = 1;
-            utter.lang = _this5._config.lang;
+          return false;
+        }
 
-            for (var i = 0; i < voices.length; i++) {
-              if (_this5._config.lang === 'ru-RU' && voices[i].name === 'Microsoft Pavel - Russian (Russia)') {
-                utter.voice = voices[i];
-              }
+        if (this._speechVoicesHandler) {
+          speechSynthesis.removeEventListener('voiceschanged', this._speechVoicesHandler);
+          this._speechVoicesHandler = null;
+        }
 
-              if (_this5._config.lang === 'en-US' && voices[i].name === 'Microsoft Pavel - English (English)') {
-                utter.voice = voices[i];
-              }
-            }
+        this._pendingSpeech = null;
+        this._hideSpeechStatus();
+        speechSynthesis.cancel();
 
-            if (echo) {
-              utter.onboundary = function (event) {
-                element.classList.add('bvi-highlighting');
-                var world = getWordAt(event.utterance.text, event.charIndex);
-                var textContent = element.textContent;
-                var term = world.replace(/(\s+)/, '((<[^>]+>)*$1(<[^>]+>)*)');
-                var pattern = new RegExp('(' + term + ')', 'gi');
-                textContent = textContent.replace(pattern, '<mark>$1</mark>');
-                textContent = textContent.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/, '$1</mark>$2<mark>$4');
-                element.innerHTML = textContent;
-              };
+        var getWordAt = function getWordAt(str, pos) {
+          str = String(str);
+          pos = Number(pos) >>> 0;
+          var left = str.slice(0, pos + 1).search(/\S+$/);
+          var right = str.slice(pos).search(/\s/);
 
-              utter.onend = function (event) {
-                element.classList.remove('bvi-highlighting');
-                var textContent = element.textContent;
-                textContent = textContent.replace(/(<mark>$1<\/mark>)/, '$1');
-                element.innerHTML = textContent;
-              };
-            }
+          if (right < 0) {
+            return str.slice(left);
+          }
 
-            synth().speak(utter);
+          return str.slice(left, right + pos);
+        };
+
+        var configuredLanguage = this._config.lang.toLowerCase().replace('_', '-');
+        var languageCode = configuredLanguage.split('-')[0];
+        var preferredVoice = null;
+
+        if (languageCode === 'ru') {
+          preferredVoice = voices.find(function (voice) {
+            return voice.name.toLowerCase().indexOf('aleksandr-hq') !== -1;
+          });
+        } else if (languageCode === 'en') {
+          preferredVoice = voices.find(function (voice) {
+            return voice.name === 'Microsoft Pavel - English (English)';
           });
         }
+
+        if (!preferredVoice) {
+          preferredVoice = voices.find(function (voice) {
+            var voiceLanguage = (voice.lang || '').toLowerCase().replace('_', '-');
+            return voiceLanguage === languageCode || voiceLanguage.indexOf("".concat(languageCode, "-")) === 0;
+          });
+        }
+
+        if (!preferredVoice) {
+          this._showSpeechStatus(this._i18n.v('speechNoLanguageVoice'));
+          return false;
+        }
+
+        var chunkLength = 120;
+        var patternRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
+        var array = [];
+        var $text = text;
+
+        while ($text.length > 0) {
+          array.push($text.match(patternRegex)[0]);
+          $text = $text.substring(array[array.length - 1].length);
+        }
+
+        array.forEach(function (getText) {
+          var utter = new SpeechSynthesisUtterance(getText.trim());
+          utter.volume = 1;
+          utter.rate = 1;
+          utter.pitch = 1;
+          utter.lang = _this5._config.lang;
+          utter.voice = preferredVoice;
+          utter.onerror = function (event) {
+            if (event.error === 'canceled' || event.error === 'interrupted') {
+              return;
+            }
+
+            _this5._showSpeechStatus(_this5._i18n.v('speechError'));
+          };
+
+          if (echo) {
+            utter.onboundary = function (event) {
+              element.classList.add('bvi-highlighting');
+              var world = getWordAt(event.utterance.text, event.charIndex);
+              var textContent = element.textContent;
+              var term = world.replace(/(\s+)/, '((<[^>]+>)*$1(<[^>]+>)*)');
+              var pattern = new RegExp('(' + term + ')', 'gi');
+              textContent = textContent.replace(pattern, '<mark>$1</mark>');
+              textContent = textContent.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/, '$1</mark>$2<mark>$4');
+              element.innerHTML = textContent;
+            };
+
+            utter.onend = function (event) {
+              element.classList.remove('bvi-highlighting');
+              var textContent = element.textContent;
+              textContent = textContent.replace(/(<mark>$1<\/mark>)/, '$1');
+              element.innerHTML = textContent;
+            };
+          }
+
+          speechSynthesis.speak(utter);
+        });
+
+        return true;
       }
     }]);
 

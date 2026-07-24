@@ -117,6 +117,23 @@ html body .bvi-panel [aria-pressed="true"] {
     outline-offset: 2px !important;
 }
 
+html body .bvi-panel .bvi-speech-status {
+    display: block !important;
+    margin: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+    border: 2px solid currentColor !important;
+    border-radius: 0.5rem !important;
+    color: inherit !important;
+    background: transparent !important;
+    font-size: inherit !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+
+html body .bvi-panel .bvi-speech-status[hidden] {
+    display: none !important;
+}
+
 
 body .bvi-body[data-bvi-theme] input::placeholder,
 body .bvi-body[data-bvi-theme] textarea::placeholder {
