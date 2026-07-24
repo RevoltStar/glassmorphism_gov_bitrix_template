@@ -242,7 +242,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 <?php endif?>
 	<main id="main-content"<?php if ($APPLICATION->GetCurPage() != '/'):?> class="container" <?php endif?>>
 		<?php if (!$isTitleExcludedPage): ?>
-			<h1 class="mb-5"><?=$APPLICATION->ShowTitle(false)?></h1>
+			<h1 class="section-title mb-5"><?=$APPLICATION->ShowTitle(false)?></h1>
 		<?php endif; ?>
 		<?php
 			$excludedPages = get_info('layout_excluded_pages', []);

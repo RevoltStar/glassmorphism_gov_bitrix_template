@@ -266,32 +266,6 @@ html {
             }
         }
         
-        /* Дополнительные акценты */
-        .text-primary-blue {
-            color: #2980b9;
-        }
-        .bg-blue-glass {
-            background: rgba(52, 152, 219, 0.1);
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-glass-blue {
-            background: linear-gradient(145deg, #3498db, #2980b9);
-            border: none;
-            color: white;
-            border-radius: 40px;
-            padding: 12px 28px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .btn-glass-blue:hover {
-            background: linear-gradient(145deg, #3fa3e3, #2c8ac5);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.35);
-        }
 /* Заголовки разделов */
 .section-title {
     position: relative;
@@ -405,11 +379,6 @@ main{
     color: #1e3a5f;
     opacity: 0.7;
     font-size: 0.9rem;
-}
-
-.footer-text-small {
-    color: #2c6b9e;
-    font-size: 0.85rem;
 }
 
 .footer-menu__title,
@@ -613,12 +582,6 @@ main{
     color: #333;
     font-size: 16px;
 }
-.gallery-item-link {
-    position: relative;
-    display: block;
-    cursor: pointer;
-}
-
 #main-content{
 	min-height: 690px;
 }
