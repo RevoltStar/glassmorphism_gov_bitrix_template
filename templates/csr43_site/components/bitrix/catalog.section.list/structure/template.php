@@ -57,18 +57,14 @@ if (!function_exists('mitisRenderSectionNode')) {
             <article class="csr43-glass-card csr43-glass-card--interactive org-structure__card"
                      id="<?=htmlspecialcharsbx($editId)?>">
                 <?php if ($avatarSrc !== ''): ?>
-                    <div class="org-structure__avatar gallery-media"
-                         style="background-image: url(<?=htmlspecialcharsbx($avatarCssUrl)?>);">
-                        <a href="<?=htmlspecialcharsbx($avatarSrc)?>"
-                           class="csr43-glass-surface csr43-glass-card--interactive gallery-expand-button me-2 mt-2"
-                           data-gallery-item
-                           data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
-                           data-gallery-caption="<?=htmlspecialcharsbx($name)?>"
-                           data-type="image"
-                           aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $name)?>">
-                            <i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                    <a href="<?=htmlspecialcharsbx($avatarSrc)?>"
+                       class="org-structure__avatar org-structure__avatar--link gallery-media"
+                       style="background-image: url(<?=htmlspecialcharsbx($avatarCssUrl)?>);"
+                       data-gallery-item
+                       data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
+                       data-gallery-caption="<?=htmlspecialcharsbx($name)?>"
+                       data-type="image"
+                       aria-label="<?=htmlspecialcharsbx('Открыть: ' . $name)?>"></a>
                 <?php else: ?>
                     <div class="csr43-glass-icon org-structure__avatar org-structure__avatar--placeholder">
                         <i class="bi bi-person-circle" aria-hidden="true"></i>

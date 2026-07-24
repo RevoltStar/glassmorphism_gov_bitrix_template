@@ -98,6 +98,7 @@
 
 .org-structure__avatar {
     position: relative;
+    display: block;
     width: clamp(92px, 11vw, 128px);
     height: clamp(92px, 11vw, 128px);
     flex-shrink: 0;
@@ -114,6 +115,16 @@
         border-color var(--csr43-glass-transition-duration) ease,
         box-shadow var(--csr43-glass-transition-duration) ease,
         transform var(--csr43-glass-transition-duration) ease;
+}
+
+.org-structure__avatar--link {
+    cursor: zoom-in;
+    text-decoration: none;
+}
+
+.org-structure__avatar--link:focus-visible {
+    outline: 3px solid rgba(52, 152, 219, 0.4);
+    outline-offset: 4px;
 }
 
 .org-structure__card:hover .org-structure__avatar,
