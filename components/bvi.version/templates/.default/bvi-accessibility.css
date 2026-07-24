@@ -61,6 +61,25 @@ html body .bvi-body[data-bvi-images="false"] .bvi-css-background-image:not(.bvi-
     background-image: none !important;
 }
 
+/*
+ * Fancybox создаёт изображения после активации BVI, поэтому они не получают
+ * служебный класс .bvi-img. Применяем выбранный режим к динамической галерее
+ * по атрибутам BVI на её контейнере.
+ */
+html body .fancybox__container.bvi-body[data-bvi-images="grayscale"] img:not(.bvi-no-styles) {
+    -webkit-filter: grayscale(1) !important;
+    filter: grayscale(1) !important;
+}
+
+html body .fancybox__container.bvi-body[data-bvi-images="true"] img:not(.bvi-no-styles) {
+    -webkit-filter: grayscale(0) !important;
+    filter: grayscale(0) !important;
+}
+
+html body .fancybox__container.bvi-body[data-bvi-images="false"] img:not(.bvi-no-styles) {
+    visibility: hidden !important;
+}
+
 html body .bvi-body[data-bvi-theme][data-bvi-images="true"] .banner-item .banner-overlay:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-theme][data-bvi-images="grayscale"] .banner-item .banner-overlay:not(.bvi-no-styles) {
     background-color: rgb(var(--bvi-theme-background-rgb) / 0.88) !important;
