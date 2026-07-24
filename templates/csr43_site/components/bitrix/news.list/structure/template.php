@@ -23,7 +23,7 @@ $sections = array_values(array_filter($sections, 'is_array'));
         $sectionName = site_string($section['~NAME'] ?? $section['NAME'] ?? '');
         $employees = is_array($section['ELEMENTS'] ?? null) ? $section['ELEMENTS'] : [];
         ?>
-        <div class="csr43-glass-card csr43-glass-card--interactive org-department">
+        <div class="csr43-glass-card org-department">
             <h2 class="org-department__title"><?=htmlspecialcharsbx($sectionName)?></h2>
 
             <?php if ($employees !== []): ?>

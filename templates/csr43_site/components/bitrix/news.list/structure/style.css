@@ -9,15 +9,11 @@
 /* Отдел (секция) */
 .org-department {
     --csr43-glass-bg: rgba(255, 255, 255, 0.5);
-    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.65);
     --csr43-glass-border: rgba(52, 152, 219, 0.2);
-    --csr43-glass-border-hover: rgba(52, 152, 219, 0.35);
     --csr43-glass-shadow: 0 8px 25px rgba(31, 100, 180, 0.05);
-    --csr43-glass-shadow-hover: 0 12px 30px rgba(31, 100, 180, 0.1);
     --csr43-glass-radius: 32px;
     --csr43-glass-padding: 28px 30px;
     --csr43-glass-blur: 12px;
-    --csr43-glass-hover-translate-y: 0;
 }
 
 .org-department__title {
