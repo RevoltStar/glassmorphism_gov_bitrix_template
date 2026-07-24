@@ -71,7 +71,7 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
         <?php if(($arParams['COLLAPSE_SECTION'] ?? 'N') === "Y"):?>
         <div class="mt-3">
             <button
-                class="file-library__collapse-button"
+                class="csr43-glass-surface csr43-glass-card--interactive file-library__collapse-button"
                 type="button" data-bs-toggle="collapse"
                 data-bs-target="#section-collapse-<?=$sectionId?>"
                 aria-expanded="false"
@@ -210,7 +210,7 @@ $showImageImmediately = ($arParams['SHOW_IMAGE_IMMEDIATELY'] ?? 'N') === 'Y';
                             <div<?php if(!$showImageImmediately):?> class="collapse" id="photo-<?=$itemId?>-<?=$photoIndex?>"<?php endif;?>>
                                 <div class="document-preview__image-container mt-2 text-center gallery-media">
                                     <a href="<?=htmlspecialcharsbx($fileSrc)?>"
-                                       class="gallery-expand-button document-preview__image-expand"
+                                       class="csr43-glass-surface csr43-glass-card--interactive gallery-expand-button document-preview__image-expand"
                                        data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
                                        data-gallery-caption="<?=htmlspecialcharsbx($galleryCaption)?>" data-type="image"
                                        aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $galleryCaption)?>">

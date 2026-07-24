@@ -1,40 +1,61 @@
- /* БАННЕР */
-        .banner-item {
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s;
-            height: 250px;
-            position: relative;
-            border: 1px solid rgba(52, 152, 219, 0.2);
-        }
-        .banner-item__image {
-            position: absolute;
-            inset: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .banner-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
-            border: 1px solid #3498db;
-        }
-        .banner-overlay {
-            position: relative;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
-            padding: 15px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s;
-            color: #1e3a5f;
-        }
-        .banner-item:hover .banner-overlay {
-            background: rgba(255, 255, 255, 0.85);
-        }
+/* БАННЕР */
+.actual-card__link {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.65);
+    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.85);
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-border-hover: #3498db;
+    --csr43-glass-shadow: none;
+    --csr43-glass-shadow-hover: 0 15px 30px rgba(52, 152, 219, 0.2);
+    --csr43-glass-hover-translate-y: 0;
+
+    display: block;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.banner-item {
+    position: relative;
+    height: 250px;
+}
+
+.banner-item__image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.actual-card__link:hover,
+.actual-card__link:focus-visible {
+    transform: scale(1.02);
+}
+
+.banner-overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: 100%;
+    padding: 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1e3a5f;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s ease;
+}
+
+.actual-card__link:hover .banner-overlay,
+.actual-card__link:focus-visible .banner-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .actual-card__link:hover,
+    .actual-card__link:focus-visible {
+        transform: none;
+    }
+}

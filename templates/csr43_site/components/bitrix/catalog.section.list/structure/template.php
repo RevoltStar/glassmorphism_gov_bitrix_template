@@ -57,7 +57,7 @@ if (!function_exists('mitisRenderSectionNode')) {
                     <div class="org-structure__avatar gallery-media"
                          style="background-image: url(<?=htmlspecialcharsbx($avatarCssUrl)?>);">
                         <a href="<?=htmlspecialcharsbx($avatarSrc)?>"
-                           class="gallery-expand-button me-2 mt-2"
+                           class="csr43-glass-surface csr43-glass-card--interactive gallery-expand-button me-2 mt-2"
                            data-gallery-item
                            data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
                            data-gallery-caption="<?=htmlspecialcharsbx($name)?>"

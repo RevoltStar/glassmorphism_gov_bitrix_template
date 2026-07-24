@@ -1,234 +1,146 @@
-        /* Сетка карточек — Bootstrap-совместимая */
-        .banner-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
+.banner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
 
+.flip-card {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+    perspective: 2000px;
+}
 
-        /* ===== СТЕКЛЯННАЯ FLIP-КАРТОЧКА ===== */
-        .glass-flip-card {
-            background-color: transparent;
-            width: 100%;
-            aspect-ratio: 1 / 1; /* Квадратная форма, как в оригинале */
-            border-radius: 28px; /* 28px для плавности (ближе к 32) */
-            perspective: 2000px;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-            border: none;
-        }
+.flip-card:focus-visible {
+    border-radius: 28px;
+    outline: 3px solid rgba(52, 152, 219, 0.3);
+    outline-offset: 3px;
+}
 
-        .glass-flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            border-radius: 28px;
-            display: flex;
-        }
+.flip-card__inner {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-        .glass-flip-card:hover .glass-flip-card-inner {
-            transform: rotateY(180deg);
-        }
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-visible .flip-card__inner {
+    transform: rotateY(180deg);
+}
 
-        /* Общие стили для обеих сторон */
-        .glass-flip-front, 
-        .glass-flip-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 28px;
-            overflow: hidden;
-            background: var(--glass-white);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: var(--border-light);
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s ease;
-        }
+.flip-card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 28px;
+    backface-visibility: hidden;
+}
 
-        /* ЛИЦЕВАЯ СТОРОНА (изображение + иконка) */
-        .glass-flip-front {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-        }
+.flip-card__front {
+    --csr43-glass-border: rgba(52, 152, 219, 0.25);
+    --csr43-glass-shadow: 0 15px 35px rgba(31, 100, 180, 0.08);
+    --csr43-glass-blur: 16px;
 
-        /* Затемнение для читаемости иконки */
-        .glass-flip-front::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(0deg, rgba(10,49,68,0.4) 0%, rgba(255,255,255,0.1) 70%);
-            border-radius: 28px;
-            z-index: 1;
-        }
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-        /* Иконка поверх изображения */
-        .front-icon {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 2px solid rgba(52, 152, 219, 0.4);
-            box-shadow: 0 10px 25px rgba(31,100,180,0.2);
-            transform: translateY(-15px);
-			opacity: 0;
-        }
+.flip-card__front::before {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: 28px;
+    background: linear-gradient(0deg, rgba(10, 49, 68, 0.4) 0%, rgba(255, 255, 255, 0.1) 70%);
+    content: '';
+}
 
-        .front-icon i {
-            font-size: 2.2rem;
-            color: var(--accent-dark);
-        }
+.flip-card__front:not([style*="background-image"]) {
+    background: linear-gradient(145deg, #d4e4f5, #c2d6e8);
+}
 
-        /* Заглушка, если картинка не загрузится — сохраняем стекло */
-        .glass-flip-front[style*="background-image"] .front-icon {
-            /* остается как есть */
-        }
+.flip-card__icon {
+    --csr43-glass-icon-size: 70px;
+    --csr43-glass-icon-radius: 50%;
+    --csr43-glass-icon-font-size: 2.2rem;
 
-        .glass-flip-front:not([style*="background-image"]) {
-            background: linear-gradient(145deg, #d4e4f5, #c2d6e8);
-        }
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+    border-width: 2px;
+    box-shadow: 0 10px 25px rgba(31, 100, 180, 0.2);
+    opacity: 0;
+    transform: translateY(-15px);
+}
 
-        /* ОБОРОТНАЯ СТОРОНА (описание) */
-        .glass-flip-back {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 25px 20px;
-            color: var(--text-dark);
-            border: 1px solid rgba(52, 152, 219, 0.35);
-        }
+.flip-card__back {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.75);
+    --csr43-glass-border: rgba(52, 152, 219, 0.35);
+    --csr43-glass-blur: 18px;
 
-        .glass-flip-back .banner-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-deep);
-            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
-        }
+    display: flex;
+    padding: 25px 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--csr43-color-text);
+    transform: rotateY(180deg);
+}
 
-        .glass-flip-back .banner-desc {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #1e3a5f;
-            opacity: 0.85;
-            margin-bottom: 20px;
-            max-width: 90%;
-        }
+.flip-card__title {
+    margin-bottom: 12px;
+    color: var(--csr43-color-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
 
-        .glass-flip-back .banner-hint {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--accent-dark);
-            background: rgba(52, 152, 219, 0.15);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            padding: 8px 24px;
-            border-radius: 40px;
-            border: 1px solid rgba(52, 152, 219, 0.3);
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+.flip-card__description {
+    max-width: 90%;
+    margin-bottom: 20px;
+    color: var(--csr43-color-text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.85;
+}
 
-        .glass-flip-card:hover .glass-flip-back .banner-hint {
-            background: white;
-            border-color: var(--accent-blue);
-            color: var(--accent-dark);
-            box-shadow: 0 8px 20px rgba(52,152,219,0.25);
-            transform: scale(1.05);
-        }
+@media (max-width: 768px) {
+    .banner-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+    }
 
-        .glass-flip-back .banner-hint i {
-            font-size: 0.8rem;
-        }
+    .flip-card__title {
+        font-size: 1.3rem;
+    }
+}
 
-        /* Примечание в конце */
-        .note-glass {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(52, 152, 219, 0.25);
-            border-radius: 40px;
-            padding: 18px 25px;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-            margin: 40px 0 20px;
-            box-shadow: var(--shadow-soft);
-            border-left: 6px solid var(--accent-blue);
-        }
+@media (max-width: 576px) {
+    .flip-card__back {
+        padding: 15px;
+    }
 
-        .note-glass i {
-            color: var(--accent-blue);
-            margin-right: 8px;
-        }
+    .flip-card__description {
+        font-size: 0.85rem;
+    }
+}
 
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .section-title-glass {
-                font-size: 1.6rem;
-            }
-            .glass-flip-back .banner-title {
-                font-size: 1.3rem;
-            }
-            .banner-grid {
-                gap: 20px;
-				 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            }
-        }
-
-        @media (max-width: 576px) {
-            .glass-flip-back {
-                padding: 15px;
-            }
-            .glass-flip-back .banner-desc {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* акцентные кнопки */
-        .btn-glass-blue {
-            background: rgba(52, 152, 219, 0.2);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(52,152,219,0.4);
-            color: var(--text-dark);
-            border-radius: 40px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn-glass-blue:hover {
-            background: white;
-            border-color: var(--accent-blue);
-            color: var(--accent-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(52,152,219,0.2);
-        }
+@media (prefers-reduced-motion: reduce) {
+    .flip-card__inner {
+        transition-duration: 0.01ms;
+    }
+}

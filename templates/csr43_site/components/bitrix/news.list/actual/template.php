@@ -57,7 +57,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
         ?>
         <div class="col-md-4">
             <a href="<?=htmlspecialcharsbx($link)?>"
-               class="text-decoration-none">
+               class="csr43-glass-surface csr43-glass-card--interactive actual-card__link text-decoration-none">
                 <div class="banner-item">
                     <img class="banner-item__image"
                          src="<?=htmlspecialcharsbx($imageSrc)?>"

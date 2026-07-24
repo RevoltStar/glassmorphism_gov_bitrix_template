@@ -435,7 +435,7 @@ $activeIndex = customMenuGetActiveIndex($arResult);
                         <span><?= $safeText ?></span>
                     </a>
 
-                    <ul class="dropdown-menu"
+                    <ul class="dropdown-menu csr43-glass-surface"
                         aria-labelledby="dropdown-<?= htmlspecialcharsbx($topId) ?>"
                         data-menu-root-panel
                         data-menu-initial-panels='<?= $initialPanelJson ?>'>

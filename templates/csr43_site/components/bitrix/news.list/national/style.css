@@ -1,15 +1,6 @@
 .national-project-card {
-    transition:
-        background-color var(--csr43-glass-transition-duration) ease,
-        border-color var(--csr43-glass-transition-duration) ease,
-        box-shadow var(--csr43-glass-transition-duration) ease;
-}
-
-.national-project-card:hover,
-.national-project-card:focus-within {
-    background: var(--csr43-glass-bg-hover);
-    border-color: var(--csr43-glass-border-hover);
-    box-shadow: 0 20px 45px rgba(31, 100, 180, 0.16);
+    --csr43-glass-shadow-hover: 0 20px 45px rgba(31, 100, 180, 0.16);
+    --csr43-glass-hover-translate-y: 0;
 }
 
 .national-project__name {
@@ -41,10 +32,4 @@
 
 .national-project__summary-description {
     color: var(--csr43-color-muted);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .national-project-card {
-        transition: none;
-    }
 }

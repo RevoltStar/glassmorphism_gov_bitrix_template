@@ -80,7 +80,7 @@ foreach ($arResult as $index => $item) {
     if ($index === count($arResult) - 1) {
         // Последний элемент (активный)
         $breadcrumbHtml .= '
-    <li class="breadcrumb-item active" aria-current="page">' . htmlspecialcharsbx($itemTitle) . '</li>';
+    <li class="breadcrumb-item active csr43-glass-surface" aria-current="page">' . htmlspecialcharsbx($itemTitle) . '</li>';
     } else {
         // Обычные элементы с ссылками
         $breadcrumbHtml .= '

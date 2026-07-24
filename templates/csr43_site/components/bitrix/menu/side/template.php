@@ -131,7 +131,7 @@ if (count($topLevelPaths) > 1) {
     }
 }
 ?>
-<select class="side-menu__select"
+<select class="csr43-glass-surface side-menu__select"
         <?php if ($forceDesktop): ?>style="display: none !important;"<?php endif; ?>
         aria-label="Выберите подраздел">
     <option value="">Выберите подраздел...</option>

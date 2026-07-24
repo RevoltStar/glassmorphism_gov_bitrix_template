@@ -64,7 +64,7 @@ $sections = array_values(array_filter($sections, 'is_array'));
                                              loading="lazy">
                                     </div>
                                 <?php else: ?>
-                                    <div class="employee-card__photo-placeholder">
+                                    <div class="csr43-glass-icon employee-card__photo-placeholder">
                                         <i class="fas fa-user-circle" aria-hidden="true"></i>
                                     </div>
                                 <?php endif; ?>

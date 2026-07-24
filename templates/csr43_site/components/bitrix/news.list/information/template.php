@@ -20,9 +20,9 @@ if ($items !== []):
         $desc = site_plain_text($banner['~PREVIEW_TEXT'] ?? $banner['PREVIEW_TEXT'] ?? '');
         $caption = $name . ($desc ? " - " . $desc : "");
     ?>
-    <div class="gallery-media banner-card">
+    <div class="csr43-glass-card csr43-glass-card--interactive gallery-media banner-card">
         <?php // Кнопка увеличения (FancyBox её обрабатывает) ?>
-        <a href="<?=htmlspecialcharsbx($detailSrc)?>" class="gallery-expand-button me-2 mt-2"
+        <a href="<?=htmlspecialcharsbx($detailSrc)?>" class="csr43-glass-surface csr43-glass-card--interactive gallery-expand-button me-2 mt-2"
            data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
            data-gallery-caption="<?=htmlspecialcharsbx($caption)?>" data-type="image"
            aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $caption)?>">
@@ -40,10 +40,7 @@ if ($items !== []):
                     <h3 class="banner-card__title"><?=htmlspecialcharsbx($name)?></h3>
                     <?php if($desc):?>
                         <p class="banner-card__desc"><?=htmlspecialcharsbx($desc)?></p>
-                    <?php endif;?><!--
-                    <span class="banner-card__hint">
-                        Подробнее <i class="bi bi-arrow-right-short"></i>
-                    </span>-->
+                    <?php endif;?>
                 </div>
             </div>
         </a>

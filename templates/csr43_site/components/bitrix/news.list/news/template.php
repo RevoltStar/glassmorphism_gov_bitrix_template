@@ -56,7 +56,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 		<div class="col-lg-4 <?php if($key==0 && count($arResult["ITEMS"])%2!=0):?>col-md-12<?php else:?>col-md-6<?php endif?>">
 				<div class="csr43-glass-surface csr43-glass-card--interactive csr43-glass-card--stretch news-card gallery-media">
 					<!-- Кнопка увеличения для FancyBox (вне ссылки!) -->
-					<a href="<?=htmlspecialcharsbx($gallerySrc)?>" class="gallery-expand-button mt-2 me-2"
+					<a href="<?=htmlspecialcharsbx($gallerySrc)?>" class="csr43-glass-surface csr43-glass-card--interactive gallery-expand-button mt-2 me-2"
 					   data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
 					   data-gallery-caption="<?=htmlspecialcharsbx($galleryCaption)?>" data-type="image"
 					   aria-label="<?=htmlspecialcharsbx('Увеличить: ' . $galleryCaption)?>">
@@ -74,7 +74,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 							<?php
 								$d = strtotime(site_string($news['ACTIVE_FROM_X'] ?? ''));
 							?>
-							<span class="news-date">
+							<span class="csr43-glass-surface news-date">
                                 <i class="bi bi-calendar3 me-1"></i>
                                 <?php if ($d !== false): ?><?=htmlspecialcharsbx(date('d', $d) . ' ' . ($months[(int)date('m', $d)] ?? '') . ' ' . date('Y', $d) . ' года')?><?php endif; ?>
                             </span>

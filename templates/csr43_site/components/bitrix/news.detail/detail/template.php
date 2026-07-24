@@ -106,11 +106,11 @@ if (!empty($additionalFiles['VALUE'])) {
         <h1 class="news-detail__title mb-3"><?=htmlspecialcharsbx($newsName)?></h1>
         <!-- Мета-информация -->
         <div class="news-detail__meta d-flex flex-wrap align-items-center gap-3 mb-4">
-            <span class="news-detail__meta-badge">
+            <span class="csr43-glass-surface news-detail__meta-badge">
                 <i class="news-detail__accent-icon bi bi-calendar3 me-1"></i> <?=htmlspecialcharsbx(site_string($arResult["DISPLAY_ACTIVE_FROM"] ?? ''))?>
             </span>
             <?php if ($showCounter > 0): ?>
-                <span class="news-detail__meta-badge">
+                <span class="csr43-glass-surface news-detail__meta-badge">
                     <i class="news-detail__accent-icon bi bi-eye me-1"></i> <?=$showCounter?> просмотров
                 </span>
             <?php endif; ?>
@@ -134,12 +134,12 @@ if (!empty($additionalFiles['VALUE'])) {
             ?>
             <?php if (!empty($newsCategories)): ?>
                 <?php foreach ($newsCategories as $category): ?>
-                    <a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="news-detail__category">
+                    <a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="csr43-glass-surface csr43-glass-card--interactive news-detail__category">
                         <span class="bvi-speech"><i class="bi bi-tag me-1"></i><?=htmlspecialcharsbx($category["VALUE"])?></span>
                     </a>
                 <?php endforeach; ?>
             <?php else: ?>
-                <span class="news-detail__category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
+                <span class="csr43-glass-surface news-detail__category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
             <?php endif; ?>
         </div>
 		<hr>
@@ -148,7 +148,7 @@ if (!empty($additionalFiles['VALUE'])) {
             <div class="col-lg-8 order-2 order-lg-1">
                 <!-- Анонс -->
                 <?php if ($hasPreviewText): ?>
-                    <div class="news-detail__preview mb-4 bvi-speech">
+                    <div class="csr43-glass-surface news-detail__preview mb-4 bvi-speech">
                         <i class="news-detail__accent-icon bi bi-quote me-2"></i>
                         <?=site_safe_html($previewHtml)?>
                     </div>
@@ -227,7 +227,7 @@ if (!empty($additionalFiles['VALUE'])) {
                         </h5>
                         <div class="news-detail__downloads d-grid gap-2">
                             <?php foreach ($downloadFiles as $file): ?>
-                                <div class="news-detail__file">
+                                <div class="csr43-glass-surface news-detail__file">
                                     <div class="d-flex align-items-center">
                                         <div class="news-detail__file-icon me-3">
                                             <?php
@@ -264,7 +264,7 @@ if (!empty($additionalFiles['VALUE'])) {
                                              <div class="news-detail__file-name fw-bold small"><?=htmlspecialcharsbx(site_string($file['ORIGINAL_NAME'] ?? ''))?></div>
                                              <div class="news-detail__file-size text-muted"><?=htmlspecialcharsbx(CFile::FormatSize(max(0, (int)($file['FILE_SIZE'] ?? 0))))?></div>
                                         </div>
-                                        <a href="<?=htmlspecialcharsbx(site_url($file['SRC'] ?? null, ''))?>" download class="news-detail__download-button ms-2">
+                                        <a href="<?=htmlspecialcharsbx(site_url($file['SRC'] ?? null, ''))?>" download class="csr43-glass-surface csr43-glass-card--interactive news-detail__download-button ms-2">
                                             <i class="bi bi-download"></i>
                                         </a>
                                     </div>
@@ -281,7 +281,7 @@ if (!empty($additionalFiles['VALUE'])) {
                     </h5>
                     <div class="d-grid gap-3">
                         <?php if (!empty($navNews['PREV'])): ?>
-                            <a href="<?=htmlspecialcharsbx(site_url($navNews['PREV']['DETAIL_PAGE_URL'] ?? null))?>" class="news-detail__nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['PREV']['DETAIL_PAGE_URL'] ?? null))?>" class="csr43-glass-surface csr43-glass-card--interactive news-detail__nav-link">
                                 <div class="d-flex align-items-center">
                                     <div class="news-detail__nav-icon me-3">
                                         <i class="news-detail__nav-icon--active bi bi-arrow-left-circle-fill"></i>
@@ -293,7 +293,7 @@ if (!empty($additionalFiles['VALUE'])) {
                                 </div>
                             </a>
                         <?php else: ?>
-                            <div class="news-detail__nav-link news-detail__nav-link--disabled">
+                            <div class="csr43-glass-surface news-detail__nav-link news-detail__nav-link--disabled">
                                 <div class="d-flex align-items-center">
                                     <div class="news-detail__nav-icon me-3">
                                         <i class="news-detail__nav-icon--disabled bi bi-arrow-left-circle"></i>
@@ -307,7 +307,7 @@ if (!empty($additionalFiles['VALUE'])) {
                         <?php endif; ?>
 
                         <?php if (!empty($navNews['NEXT'])): ?>
-                            <a href="<?=htmlspecialcharsbx(site_url($navNews['NEXT']['DETAIL_PAGE_URL'] ?? null))?>" class="news-detail__nav-link">
+                            <a href="<?=htmlspecialcharsbx(site_url($navNews['NEXT']['DETAIL_PAGE_URL'] ?? null))?>" class="csr43-glass-surface csr43-glass-card--interactive news-detail__nav-link">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 text-end me-3">
                                         <div class="small text-muted">К предыдущей новости</div>
@@ -319,7 +319,7 @@ if (!empty($additionalFiles['VALUE'])) {
                                 </div>
                             </a>
                         <?php else: ?>
-                            <div class="news-detail__nav-link news-detail__nav-link--disabled">
+                            <div class="csr43-glass-surface news-detail__nav-link news-detail__nav-link--disabled">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 text-end me-3">
                                         <div class="small text-muted">К предыдущей новости</div>

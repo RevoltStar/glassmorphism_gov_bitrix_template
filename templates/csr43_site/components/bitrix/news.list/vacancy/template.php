@@ -135,7 +135,7 @@ if (is_array($items) && $items !== []):
                 <!-- Местоположение и зарплата -->
                 <div class="vacancy-card__row vacancy-card__footer">
                     <div class="vacancy-card__column">
-                        <div class="csr43-glass-surface csr43-glass-card--interactive vacancy-card__info vacancy-card__info--location">
+                        <div class="csr43-glass-surface vacancy-card__info vacancy-card__info--location">
                             <i class="fas fa-map-marker-alt vacancy-card__info-icon"></i>
                             <div>
                                 <div class="vacancy-card__info-label">Место работы</div>
@@ -146,7 +146,7 @@ if (is_array($items) && $items !== []):
                         </div>
                     </div>
                     <div class="vacancy-card__column">
-                        <div class="csr43-glass-surface csr43-glass-card--interactive vacancy-card__info vacancy-card__info--salary">
+                        <div class="csr43-glass-surface vacancy-card__info vacancy-card__info--salary">
                             <i class="fas fa-ruble-sign vacancy-card__info-icon"></i>
                             <div>
                                 <div class="vacancy-card__info-label">Зарплата</div>
@@ -167,7 +167,7 @@ if (is_array($items) && $items !== []):
                     </span>
                     <?php if ($hasVacancyContacts): ?>
                         <button type="button"
-                                class="vacancy-card__button"
+                                class="csr43-glass-surface csr43-glass-card--interactive vacancy-card__button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#<?=htmlspecialcharsbx($contactsId)?>"
                                 aria-expanded="false"

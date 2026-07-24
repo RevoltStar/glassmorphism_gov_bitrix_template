@@ -11,22 +11,26 @@ html {
         }
         
         /* Верхняя панель */
-        .header-top {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(41, 128, 185, 0.15);
+        .csr43-glass-surface.header-top {
+            --csr43-glass-bg: rgba(255, 255, 255, 0.65);
+            --csr43-glass-border: rgba(41, 128, 185, 0.15);
+            --csr43-glass-shadow: none;
+            --csr43-glass-blur: 12px;
+
+            border-width: 0 0 1px;
             padding: 12px 0;
             color: #1e3a5f;
         }
         
         /* Основной хедер */
-        .main-header {
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+        .csr43-glass-surface.main-header {
+            --csr43-glass-bg: rgba(255, 255, 255, 0.55);
+            --csr43-glass-border: rgba(52, 152, 219, 0.2);
+            --csr43-glass-shadow: none;
+            --csr43-glass-blur: 16px;
+
             padding: 25px 0;
-            border-bottom: 1px solid rgba(52, 152, 219, 0.2);
+            border-width: 0 0 1px;
         }
 
         /* Уведомление о наполнении и актуализации сайта */
@@ -38,13 +42,16 @@ html {
         }
 
         .site-development-notice__inner {
+            --csr43-glass-bg: rgba(255, 255, 255, 0.55);
+            --csr43-glass-border: rgba(184, 121, 0, 0.25);
+            --csr43-glass-shadow: none;
+            --csr43-glass-blur: 0;
+
             display: flex;
             align-items: flex-start;
             gap: 12px;
             padding: 10px 16px;
-            border: 1px solid rgba(184, 121, 0, 0.25);
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.55);
         }
 
         .site-development-notice__icon {
@@ -107,19 +114,18 @@ html {
             flex: 1 1 240px;
             min-width: 0;
         }
-        .search-form .input-group {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        .search-form .csr43-glass-surface.input-group {
+            --csr43-glass-bg: rgba(255, 255, 255, 0.75);
+            --csr43-glass-bg-hover: #fff;
+            --csr43-glass-border: rgba(52, 152, 219, 0.2);
+            --csr43-glass-border-hover: #3498db;
+            --csr43-glass-shadow: none;
+            --csr43-glass-shadow-hover: 0 8px 20px rgba(52, 152, 219, 0.15);
+            --csr43-glass-blur: 8px;
+            --csr43-glass-hover-translate-y: 0;
+
             border-radius: 40px;
-            border: 1px solid rgba(52, 152, 219, 0.2);
             overflow: hidden;
-            transition: all 0.3s;
-        }
-        .search-form .input-group:focus-within {
-            background: white;
-            border: 1px solid #3498db;
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
         }
         .search-form .form-control {
             background: transparent;
@@ -144,7 +150,16 @@ html {
         }
         
         /* Контакты */
-        .top-contact {
+        .csr43-glass-surface.top-contact {
+            --csr43-glass-bg: rgba(255, 255, 255, 0.7);
+            --csr43-glass-bg-hover: #fff;
+            --csr43-glass-border: rgba(52, 152, 219, 0.2);
+            --csr43-glass-border-hover: #3498db;
+            --csr43-glass-shadow: none;
+            --csr43-glass-shadow-hover: 0 8px 20px rgba(52, 152, 219, 0.15);
+            --csr43-glass-blur: 8px;
+            --csr43-glass-hover-translate-y: -2px;
+
             display: flex;
             flex: 0 0 auto;
             align-items: center;
@@ -154,18 +169,11 @@ html {
             text-decoration: none;
             padding: 8px 18px;
             border-radius: 40px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(52, 152, 219, 0.2);
-            transition: all 0.3s;
             font-weight: 500;
         }
-        .top-contact:hover {
-            background: white;
-            border: 1px solid #3498db;
+        .top-contact:hover,
+        .top-contact:focus-visible {
             color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
         }
         .top-contact i {
             color: #2980b9;
@@ -236,9 +244,7 @@ html {
     animation: wobbleOut 0.6s ease-in-out forwards;
 }
         /* Бейдж официальности */
-        .official-badge {
-            background: rgba(52, 152, 219, 0.15);
-            backdrop-filter: blur(8px);
+        .badge.csr43-glass-badge.official-badge {
             border: 1px solid rgba(52, 152, 219, 0.25);
             color: #1e3a5f;
             border-radius: 30px;
@@ -354,20 +360,24 @@ main{
 }
 
 
-.footer {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(52, 152, 219, 0.2);
+.csr43-glass-surface.footer {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.5);
+    --csr43-glass-border: rgba(52, 152, 219, 0.2);
+    --csr43-glass-shadow: none;
+    --csr43-glass-blur: 16px;
+
+    border-width: 1px 0 0;
     margin-top: 3rem;
 }
 
 /* Нижняя часть футера */
-.footer-bottom {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(52, 152, 219, 0.15);
+.csr43-glass-surface.footer-bottom {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.6);
+    --csr43-glass-border: rgba(52, 152, 219, 0.15);
+    --csr43-glass-shadow: none;
+    --csr43-glass-blur: 8px;
+
+    border-width: 1px 0 0;
 }
 
 /* Заголовки в футере */
@@ -419,17 +429,12 @@ main{
 }
 
 /* Иконки контактов */
-.footer-contact-icon {
-    width: 36px;
-    height: 36px;
+.csr43-glass-icon.footer-contact-icon {
+    --csr43-glass-icon-size: 36px;
+    --csr43-glass-icon-radius: 50%;
+    --csr43-glass-icon-font-size: 1rem;
+
     background: rgba(52, 152, 219, 0.1);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(52, 152, 219, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .footer-contact-icon i {
@@ -475,23 +480,24 @@ main{
 
 /* Кнопка обратной связи */
 .footer-btn {
-    background: rgba(52, 152, 219, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(52, 152, 219, 0.3);
+    --csr43-glass-bg: rgba(52, 152, 219, 0.1);
+    --csr43-glass-bg-hover: #fff;
+    --csr43-glass-border: rgba(52, 152, 219, 0.3);
+    --csr43-glass-border-hover: #3498db;
+    --csr43-glass-shadow: none;
+    --csr43-glass-hover-translate-y: 0;
+
     color: #1e3a5f;
     font-weight: 600;
     border-radius: 40px;
     padding: 10px;
     /*width: 100%;*/
 	width: fit-content;
-    transition: all 0.3s ease;
 	text-decoration: none;
 }
 
-.footer-btn:hover {
-    background: white;
-    border: 1px solid #3498db;
+.footer-btn:hover,
+.footer-btn:focus-visible {
     color: #2980b9;
 }
 
@@ -500,7 +506,9 @@ main{
 }
 
 /* Бейджи в футере */
-.footer-badge {
+.badge.csr43-glass-badge.footer-badge {
+    --bs-badge-font-size: 0.875rem;
+
     background: rgba(52, 152, 219, 0.1);
     color: #1e3a5f;
     padding: 8px 15px;
@@ -581,22 +589,25 @@ main{
     position: relative;
 }
 .gallery-expand-button {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.7);
+    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.9);
+    --csr43-glass-border: transparent;
+    --csr43-glass-border-hover: transparent;
+    --csr43-glass-shadow: none;
+    --csr43-glass-shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --csr43-glass-blur: 4px;
+    --csr43-glass-hover-translate-y: 0;
+
     position: absolute;
     right: 1px;
     top: 1px;
     z-index: 1;
     cursor: pointer;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.7);
-    transition: all 0.2s ease;
 }
 .gallery-expand-button i {
 		margin-right: 6px;
 		margin-left: 6px;
-}
-.gallery-expand-button:hover {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 .gallery-expand-button .bi-arrows-angle-expand {
     color: #333;
@@ -623,6 +634,14 @@ main{
 
 
 .footer-developer {
+    --csr43-glass-bg: rgba(255, 255, 255, 0.45);
+    --csr43-glass-bg-hover: rgba(255, 255, 255, 0.75);
+    --csr43-glass-border: rgba(52, 152, 219, 0.18);
+    --csr43-glass-border-hover: rgba(52, 152, 219, 0.4);
+    --csr43-glass-shadow: none;
+    --csr43-glass-shadow-hover: 0 6px 18px rgba(31, 100, 180, 0.1);
+    --csr43-glass-hover-translate-y: 0;
+
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -630,18 +649,12 @@ main{
     padding: 10px 14px;
     color: #1e3a5f;
     text-decoration: none;
-    border: 1px solid rgba(52, 152, 219, 0.18);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.45);
-    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .footer-developer:hover,
 .footer-developer:focus-visible {
     color: #1e3a5f;
-    border-color: rgba(52, 152, 219, 0.4);
-    background: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 6px 18px rgba(31, 100, 180, 0.1);
 }
 
 .footer-developer__logo-wrap {

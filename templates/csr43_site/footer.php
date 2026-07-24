@@ -35,7 +35,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 <?php endif ?>
 </main>
 <!-- Подвал -->
-<footer class="footer">
+<footer class="csr43-glass-surface footer">
 
     <!-- Основная информация в подвале -->
     <div class="container py-5">
@@ -136,7 +136,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
                 <div class="d-flex mb-3">
                     <div class="me-3">
-                        <div class="footer-contact-icon">
+                        <div class="csr43-glass-icon footer-contact-icon">
                             <i class="bi bi-geo-alt-fill"></i>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
                 <div class="d-flex mb-3">
                     <div class="me-3">
-                        <div class="footer-contact-icon">
+                        <div class="csr43-glass-icon footer-contact-icon">
                             <i class="bi bi-telephone-fill"></i>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
                 <div class="d-flex mb-3">
                     <div class="me-3">
-                        <div class="footer-contact-icon">
+                        <div class="csr43-glass-icon footer-contact-icon">
                             <i class="bi bi-envelope-fill"></i>
                         </div>
                     </div>
@@ -176,7 +176,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
                 <div class="d-flex mb-3">
                     <div class="me-3">
-                        <div class="footer-contact-icon">
+                        <div class="csr43-glass-icon footer-contact-icon">
                             <i class="bi bi-clock-fill"></i>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ if (!$isExcludedPage && !$is404Error): ?>
                 </div>
 				<div class="d-flex mb-3">
                     <div class="me-3">
-                        <div class="footer-contact-icon">
+                        <div class="csr43-glass-icon footer-contact-icon">
                             <i class="bi bi-clock-fill"></i>
                         </div>
                     </div>
@@ -199,7 +199,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
                 <!-- Кнопка обратной связи -->
 				<div class="d-flex mb-3">
-				<a href="<?=htmlspecialcharsbx($feedbackUrl)?>" class="footer-btn">
+					<a href="<?=htmlspecialcharsbx($feedbackUrl)?>" class="csr43-glass-surface csr43-glass-card--interactive footer-btn">
 					<nobr><i class="bi bi-chat-dots"></i> Написать обращение</nobr>
                 </a>
 				</div>
@@ -208,7 +208,7 @@ if (!$isExcludedPage && !$is404Error): ?>
     </div>
 
     <!-- Нижняя часть подвала (копирайт, политика, счетчики) -->
-    <div class="footer-bottom">
+    <div class="csr43-glass-surface footer-bottom">
         <div class="container py-3">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
@@ -230,20 +230,20 @@ if (!$isExcludedPage && !$is404Error): ?>
             <div class="row mt-2">
                 <div class="col-12 d-flex flex-wrap justify-content-center
             justify-content-md-end align-items-center gap-2 gap-md-3">
-                    <span class="footer-badge">
+                    <span class="badge csr43-glass-badge footer-badge">
                         <i class="bi bi-eye"></i> 0+
                     </span>
-                    <span class="footer-badge">
+                    <span class="badge csr43-glass-badge footer-badge">
                         <i class="bi bi-activity"></i> Яндекс.Метрика
                     </span>
-                    <span class="footer-badge">
+                    <span class="badge csr43-glass-badge footer-badge">
                         <i class="bi bi-shield-check"></i> Госуслуги
                     </span>
                 </div>
             </div>
 			<div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end">
-                    <a class="footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
+                    <a class="csr43-glass-surface csr43-glass-card--interactive footer-developer" href="<?=htmlspecialcharsbx($developerUrl)?>" target="_blank" rel="noopener noreferrer">
                         <?php if ($developerLogoUrl !== ''): ?>
                             <span class="footer-developer__logo-wrap">
                                 <img class="footer-developer__logo" src="<?=htmlspecialcharsbx($developerLogoUrl)?>" width="48" height="49" alt="Логотип Центра стратегического развития">

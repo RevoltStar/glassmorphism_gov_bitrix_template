@@ -84,7 +84,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 		<?php $APPLICATION->ShowPanel();?>
 	</div>
 <!-- Верхняя служебная шапка (контакты, поиск) -->
-<header class="header-top">
+<header class="csr43-glass-surface header-top">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-5 d-flex align-items-center gap-3">
@@ -98,7 +98,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 								?>
 
                 <!-- Бейдж официальности -->
-                <span class="official-badge d-none d-md-inline-block">
+                <span class="badge csr43-glass-badge official-badge d-none d-md-inline-block">
                     <i class="bi bi-patch-check-fill me-1" aria-hidden="true"></i>
                     Официальный сайт
                 </span>
@@ -106,19 +106,19 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 
             <div class="col-md-6 col-lg-7 d-flex justify-content-end align-items-center gap-3">
                 <!-- Контакты -->
-                <a href="<?=htmlspecialcharsbx($headerPhoneUrl)?>" class="top-contact d-none d-md-flex">
+                <a href="<?=htmlspecialcharsbx($headerPhoneUrl)?>" class="csr43-glass-surface csr43-glass-card--interactive top-contact d-none d-md-flex">
                     <i class="bi bi-telephone-fill" aria-hidden="true"></i>
                     <span class="d-none d-xl-inline"><?=htmlspecialcharsbx((string)get_info('phone'))?></span>
                 </a>
 
-                <a href="<?=htmlspecialcharsbx($headerEmailUrl)?>" class="top-contact d-none d-md-flex">
+                <a href="<?=htmlspecialcharsbx($headerEmailUrl)?>" class="csr43-glass-surface csr43-glass-card--interactive top-contact d-none d-md-flex">
                     <i class="bi bi-envelope-fill" aria-hidden="true"></i>
                     <span class="d-none d-xl-inline"><?=htmlspecialcharsbx((string)get_info('email'))?></span>
                 </a>
 
                 <!-- Поиск -->
                 <form class="d-flex search-form" role="search" action="<?=htmlspecialcharsbx($headerSearchPath)?>" method="get">
-                    <div class="input-group">
+                    <div class="input-group csr43-glass-surface csr43-glass-card--interactive">
                         <input id="searchInput"
                                class="form-control"
                                type="search"
@@ -137,7 +137,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 </header>
 
 <!-- Блок с логотипом и названием организации -->
-<div class="main-header">
+<div class="csr43-glass-surface main-header">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-auto">
@@ -191,7 +191,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 <?php if ((bool)get_info('show_development_notice', true)): ?>
 <section class="site-development-notice" role="note" aria-label="Информация об обновлении сайта">
     <div class="container">
-        <div class="site-development-notice__inner">
+        <div class="csr43-glass-surface site-development-notice__inner">
             <i class="bi bi-tools site-development-notice__icon" aria-hidden="true"></i>
             <div>
                 <div class="site-development-notice__title">Сайт находится в процессе обновления</div>
@@ -206,7 +206,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 <?php endif; ?>
 
 <!-- Навигационное меню -->
-<nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top"
+<nav class="navbar navbar-expand-lg navbar-light csr43-glass-surface navbar-custom sticky-top"
      aria-label="Основное меню сайта">
     <div class="container">
             <?php

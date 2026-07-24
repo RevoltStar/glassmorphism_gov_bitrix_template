@@ -22,7 +22,7 @@ $totalName = 'Общая готовность';
 $totalProgress = 0;
 $totalLink = '#';
 ?>
-<div class="csr43-glass-card national-project-card">
+<div class="csr43-glass-card csr43-glass-card--interactive national-project-card">
     <div class="row align-items-center">
         <div class="col-lg-6">
             <?php foreach ($items as $national): ?>
@@ -84,7 +84,7 @@ $totalLink = '#';
                 <p class="national-project__summary-progress display-3 fw-bold"><?=htmlspecialcharsbx($totalProgressText)?>%</p>
                 <p class="national-project__summary-description">План на текущий год выполнен на <?=htmlspecialcharsbx($totalProgressText)?>%</p>
                 <?php if ($totalLink !== '#'): ?>
-                    <a href="<?=htmlspecialcharsbx($totalLink)?>" class="btn btn-glass-blue mt-2">Подробнее о проектах</a>
+                    <a href="<?=htmlspecialcharsbx($totalLink)?>" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Подробнее о проектах</a>
                 <?php endif; ?>
             </div>
         </div>
