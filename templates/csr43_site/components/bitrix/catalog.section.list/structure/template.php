@@ -44,7 +44,6 @@ if (!function_exists('mitisRenderSectionNode')) {
         $hasChildren = !empty($section['CHILDREN']) && is_array($section['CHILDREN']);
         $editId = site_string($componentTemplate->GetEditAreaId($sectionId));
         $avatarSrc = site_url($section['PICTURE']['SRC'] ?? null, '');
-        $avatarCssUrl = site_css_url($avatarSrc, '');
         $position = site_string($result['POSITION'][$sectionId] ?? '');
         $name = site_string($section['~NAME'] ?? $section['NAME'] ?? '');
         $depth = max(0, (int)($section['DEPTH_LEVEL'] ?? 0));
@@ -59,12 +58,17 @@ if (!function_exists('mitisRenderSectionNode')) {
                 <?php if ($avatarSrc !== ''): ?>
                     <a href="<?=htmlspecialcharsbx($avatarSrc)?>"
                        class="org-structure__avatar org-structure__avatar--link gallery-media"
-                       style="background-image: url(<?=htmlspecialcharsbx($avatarCssUrl)?>);"
                        data-gallery-item
                        data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
                        data-gallery-caption="<?=htmlspecialcharsbx($name)?>"
                        data-type="image"
-                       aria-label="<?=htmlspecialcharsbx('Открыть: ' . $name)?>"></a>
+                       aria-label="<?=htmlspecialcharsbx('Открыть: ' . $name)?>">
+                        <img src="<?=htmlspecialcharsbx($avatarSrc)?>"
+                             class="org-structure__avatar-image"
+                             alt="<?=htmlspecialcharsbx($name)?>"
+                             loading="lazy"
+                             decoding="async">
+                    </a>
                 <?php else: ?>
                     <div class="csr43-glass-icon org-structure__avatar org-structure__avatar--placeholder">
                         <i class="bi bi-person-circle" aria-hidden="true"></i>
