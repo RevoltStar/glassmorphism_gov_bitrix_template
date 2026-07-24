@@ -108,6 +108,14 @@ html body .bvi-body[data-bvi-theme] .site-breadcrumb .breadcrumb-item + .breadcr
     opacity: 1;
 }
 
+html body .bvi-body[data-bvi-theme] .org-structure {
+    --org-structure-connector: currentColor !important;
+}
+
+html body .bvi-body[data-bvi-theme] .org-structure__card::after {
+    background: currentColor !important;
+}
+
 /*
  * BVI задаёт font-size с !important всем элементам страницы.
  * Декоративные пиктограммы внутри glass-контейнеров должны сохранять
