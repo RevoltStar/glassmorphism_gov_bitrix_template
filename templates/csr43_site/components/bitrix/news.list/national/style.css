@@ -33,3 +33,45 @@
 .national-project__summary-description {
     color: var(--csr43-color-muted);
 }
+
+.btn.national-project__summary-button {
+    padding: 12px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 40px;
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
+    color: #fff;
+    font-weight: 600;
+    transition:
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.btn.national-project__summary-button:hover,
+.btn.national-project__summary-button:focus-visible {
+    background: linear-gradient(145deg, #3fa3e3, #2c8ac5);
+    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.35);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.btn.national-project__summary-button:focus-visible {
+    outline: 3px solid rgba(41, 128, 185, 0.35);
+    outline-offset: 3px;
+}
+
+.btn.national-project__summary-button:active {
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn.national-project__summary-button {
+        transition: none;
+    }
+
+    .btn.national-project__summary-button:hover,
+    .btn.national-project__summary-button:focus-visible {
+        transform: none;
+    }
+}
