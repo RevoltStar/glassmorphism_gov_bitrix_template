@@ -103,6 +103,11 @@ html body .bvi-body[data-bvi-theme] .section-title::before {
     opacity: 0.25;
 }
 
+html body .bvi-body[data-bvi-theme] .site-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    color: inherit !important;
+    opacity: 1;
+}
+
 /*
  * BVI задаёт font-size с !important всем элементам страницы.
  * Декоративные пиктограммы внутри glass-контейнеров должны сохранять
