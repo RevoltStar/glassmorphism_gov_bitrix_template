@@ -11,6 +11,7 @@ $categoryValues = (array)($categoryProperty['VALUE'] ?? []);
 $categoryXmlIds = (array)($categoryProperty['VALUE_XML_ID'] ?? []);
 $detailPictureValue = $arResult['DETAIL_PICTURE'] ?? null;
 $previewPictureValue = $arResult['PREVIEW_PICTURE'] ?? null;
+$detailPictureDuplicatesPreview = ($arResult['DETAIL_PICTURE_DUPLICATES_PREVIEW'] ?? false) === true;
 $previewHtml = site_string($arResult['~PREVIEW_TEXT'] ?? $arResult['PREVIEW_TEXT'] ?? '');
 $hasPreviewText = trim($previewHtml) !== '';
 $showCounter = max(0, (int)($arResult['SHOW_COUNTER'] ?? 0));
@@ -28,7 +29,7 @@ $galleryFiles = [];
 $newsName = site_string($arResult['~NAME'] ?? $arResult['NAME'] ?? '');
 
 // Добавляем DETAIL_PICTURE в начало галереи
-if (!empty($detailPictureValue)) {
+if (!$detailPictureDuplicatesPreview && !empty($detailPictureValue)) {
     if (is_array($detailPictureValue)) {
         $detailPicture = $detailPictureValue;
         $detailPicture['SRC'] = site_url($detailPicture['SRC'] ?? null, '');
