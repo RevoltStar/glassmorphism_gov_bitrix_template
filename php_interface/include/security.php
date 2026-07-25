@@ -284,3 +284,66 @@ function site_safe_html(mixed $value): string
 
     return htmlspecialcharsbx($html);
 }
+
+function site_safe_pagination_html(mixed $value): string
+{
+    $html = site_string($value);
+    if ($html === '') {
+        return '';
+    }
+
+    if (class_exists('CBXSanitizer')) {
+        try {
+            $sanitizer = new CBXSanitizer();
+            if (defined('CBXSanitizer::SECURE_LEVEL_HIGH')) {
+                $sanitizer->SetLevel(CBXSanitizer::SECURE_LEVEL_HIGH);
+            }
+
+            $sanitizer->AddTags([
+                'nav' => ['class', 'aria-label'],
+                'div' => ['class', 'role', 'aria-label'],
+                'ul' => ['class', 'role'],
+                'ol' => ['class', 'role'],
+                'li' => ['class', 'role'],
+                'a' => [
+                    'class',
+                    'href',
+                    'title',
+                    'rel',
+                    'role',
+                    'aria-label',
+                    'aria-current',
+                    'aria-disabled',
+                ],
+                'span' => [
+                    'class',
+                    'role',
+                    'aria-label',
+                    'aria-current',
+                    'aria-hidden',
+                    'aria-disabled',
+                ],
+            ]);
+
+            if (method_exists($sanitizer, 'ApplyDoubleEncode')) {
+                $sanitizer->ApplyDoubleEncode(false);
+            }
+
+            if (method_exists($sanitizer, 'setDelTagsWithContent')) {
+                $sanitizer->setDelTagsWithContent([
+                    'script',
+                    'style',
+                    'iframe',
+                    'object',
+                    'embed',
+                ]);
+            }
+
+            return (string)$sanitizer->SanitizeHtml($html);
+        } catch (Throwable) {
+            // Безопасный fallback ниже.
+        }
+    }
+
+    return htmlspecialcharsbx($html);
+}

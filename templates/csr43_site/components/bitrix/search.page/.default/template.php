@@ -78,7 +78,7 @@ if (is_object($navigationResult) && isset($navigationResult->NavRecordCount)) {
     $totalCount = max(0, (int)$navigationResult->NavRecordCount);
 }
 
-$navigationHtml = site_safe_html($arResult['NAV_STRING'] ?? '');
+$navigationHtml = site_safe_pagination_html($arResult['NAV_STRING'] ?? '');
 $iconByModule = [
     'iblock' => 'bi-newspaper',
     'main' => 'bi-file-earmark-text',
@@ -292,9 +292,9 @@ $resultsTitleId = $formId . '-results-title';
             </div>
 
             <?php if (($arParams['DISPLAY_TOP_PAGER'] ?? 'N') === 'Y' && $navigationHtml !== ''): ?>
-                <nav class="search-page__pagination" aria-label="<?=htmlspecialcharsbx((string)Loc::getMessage('CSR43_SEARCH_RESULTS_TITLE'))?>">
+                <div class="search-page__pagination">
                     <?=$navigationHtml?>
-                </nav>
+                </div>
             <?php endif; ?>
 
             <div class="search-page__list">
@@ -401,9 +401,9 @@ $resultsTitleId = $formId . '-results-title';
             </div>
 
             <?php if (($arParams['DISPLAY_BOTTOM_PAGER'] ?? 'N') === 'Y' && $navigationHtml !== ''): ?>
-                <nav class="search-page__pagination" aria-label="<?=htmlspecialcharsbx((string)Loc::getMessage('CSR43_SEARCH_RESULTS_TITLE'))?>">
+                <div class="search-page__pagination">
                     <?=$navigationHtml?>
-                </nav>
+                </div>
             <?php endif; ?>
         </section>
     <?php endif; ?>
