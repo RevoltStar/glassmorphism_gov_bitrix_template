@@ -81,7 +81,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 						</div>
 					</a>
 
-                    <div class="p-4">
+                    <div class="news-card__body p-4">
 						<?php
 						$categoryValues = (array)($news["PROPERTIES"]["category"]["VALUE"] ?? array());
 						$categoryXmlIds = (array)($news["PROPERTIES"]["category"]["VALUE_XML_ID"] ?? array());
@@ -115,7 +115,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 							<h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($galleryCaption)?></h5>
 						</a>
                         <p class="mb-3" style="color: #2c6b9e;"><?=htmlspecialcharsbx(mb_strimwidth(site_plain_text($news['~PREVIEW_TEXT'] ?? $news['PREVIEW_TEXT'] ?? ''), 0, 150, '...'))?></p>
-                        <a href="<?=htmlspecialcharsbx($detailPageUrl)?>" class="btn btn-outline-primary btn-sm rounded-pill" aria-label="Подробнее о новости <?=htmlspecialcharsbx($galleryCaption)?>">Подробнее</a>
+                        <a href="<?=htmlspecialcharsbx($detailPageUrl)?>" class="news-card__more btn btn-outline-primary btn-sm rounded-pill" aria-label="Подробнее о новости <?=htmlspecialcharsbx($galleryCaption)?>">Подробнее</a>
                     </div>
                 </div>
             </div>

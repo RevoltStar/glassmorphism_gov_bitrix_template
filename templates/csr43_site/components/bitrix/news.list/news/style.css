@@ -6,9 +6,23 @@
     --csr43-glass-shadow-hover: 0 15px 30px rgba(52, 152, 219, 0.15);
     --csr43-glass-radius: 20px;
 
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border-radius: var(--csr43-glass-radius);
 }
+
+.news-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.news-card__more {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
 		.news-card:hover .news-img-object {
     transform: scale(1.05); /* Плавное увеличение при наведении на карточку */
 }
