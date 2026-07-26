@@ -1,6 +1,6 @@
 .vision-btn:focus-visible,
-html body .bvi-panel .bvi-link:focus-visible,
-html body .bvi-link-fixed-top:focus-visible {
+html body .bvi-panel a.bvi-link:focus-visible,
+html body a.bvi-link-fixed-top:focus-visible {
     outline: 3px solid #ffbf47 !important;
     outline-offset: 3px !important;
     box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.35) !important;
@@ -211,9 +211,14 @@ html body .bvi-body[data-bvi-fontsize] .gallery-expand-button .bi-arrows-angle-e
     font-size: var(--csr43-fixed-icon-font-size) !important;
 }
 
-html body .bvi-panel [aria-pressed="true"] {
-    outline: 2px solid currentColor !important;
-    outline-offset: 2px !important;
+html body .bvi-panel .bvi-link[aria-pressed="true"] {
+    box-shadow: inset 0 0 0 2px currentColor !important;
+}
+
+html body .bvi-panel .bvi-link[aria-pressed="true"]:focus-visible {
+    box-shadow:
+        inset 0 0 0 2px currentColor,
+        0 0 0 5px rgba(0, 0, 0, 0.35) !important;
 }
 
 html body .bvi-panel .bvi-speech-status {
