@@ -117,6 +117,19 @@ html body .bvi-body[data-bvi-theme] .org-structure__card::after {
 }
 
 /*
+ * BVI перекрашивает каждый элемент пагинации в одинаковые цвета темы.
+ * Инверсия цветов темы сохраняет контраст и делает aria-current заметным
+ * во всех пяти темах без исключения элемента из доступной адаптации.
+ */
+html body .bvi-body[data-bvi-theme] .csr43-pagination .csr43-pagination__link--current[aria-current="page"]:not(.bvi-no-styles) {
+    color: var(--bvi-theme-background) !important;
+    background-color: var(--bvi-theme-foreground) !important;
+    border-color: var(--bvi-theme-foreground) !important;
+    box-shadow: none !important;
+    font-weight: 900 !important;
+}
+
+/*
  * BVI задаёт font-size с !important всем элементам страницы.
  * Декоративные пиктограммы внутри glass-контейнеров должны сохранять
  * размер, согласованный с фиксированными размерами самого контейнера.
