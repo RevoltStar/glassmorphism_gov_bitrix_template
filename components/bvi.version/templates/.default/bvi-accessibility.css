@@ -272,7 +272,31 @@ body .bvi-body[data-bvi-theme="green"] textarea::placeholder {
 body.bvi-active .bvi-component-container {
     display: none;
 }
-body.bvi-active .official-badge{
-	width: 100%;
-	text-align: center;
+body.bvi-active .header-top__identity,
+body.bvi-active .header-top__actions {
+    min-width: 0;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+}
+
+body.bvi-active .official-badge {
+    width: auto;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+body.bvi-active .header-top__actions .top-contact {
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+body.bvi-active .header-top__actions .search-form {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
 }

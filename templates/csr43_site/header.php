@@ -87,7 +87,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 <header class="csr43-glass-surface header-top">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6 col-lg-5 d-flex align-items-center gap-3">
+            <div class="col-md-6 col-lg-5 d-flex align-items-center gap-3 header-top__identity">
                 <!-- Кнопка слабовидящих -->
 					<?php
 									$APPLICATION->IncludeComponent(
@@ -104,7 +104,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
                 </span>
             </div>
 
-            <div class="col-md-6 col-lg-7 d-flex justify-content-end align-items-center gap-3">
+            <div class="col-md-6 col-lg-7 d-flex justify-content-end align-items-center gap-3 header-top__actions">
                 <!-- Контакты -->
                 <a href="<?=htmlspecialcharsbx($headerPhoneUrl)?>" class="csr43-glass-surface csr43-glass-card--interactive top-contact d-none d-md-flex">
                     <i class="bi bi-telephone-fill" aria-hidden="true"></i>
