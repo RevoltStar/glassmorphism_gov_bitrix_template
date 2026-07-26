@@ -99,6 +99,10 @@ html body .bvi-body[data-bvi-theme] .side-menu__link::before {
     background: currentColor !important;
 }
 
+html body .bvi-body[data-bvi-theme] .widget_cookie::before {
+    content: none !important;
+}
+
 html body .bvi-body[data-bvi-theme] .section-title::before {
     opacity: 0.25;
 }
