@@ -135,7 +135,8 @@ html body .bvi-body[data-bvi-theme] .csr43-pagination .csr43-pagination__link--c
  * сохраняет форму логотипа, а инверсия делает чёрные логотипы контрастными
  * в тёмных палитрах. Текст ссылки остаётся доступным независимо от изображения.
  */
-html body .bvi-body[data-bvi-theme] .social-icons .social-icon:not(.bvi-no-styles) {
+html body .bvi-body[data-bvi-theme] .social-icons .social-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles) {
     background: transparent !important;
 }
 
@@ -143,6 +144,19 @@ html body .bvi-body[data-bvi-theme="black"] .social-icons .social-icon:not(.bvi-
 html body .bvi-body[data-bvi-theme="green"] .social-icons .social-icon:not(.bvi-no-styles) {
     -webkit-filter: invert(1) grayscale(1) !important;
     filter: invert(1) grayscale(1) !important;
+}
+
+html body .bvi-body[data-bvi-theme="white"] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme="blue"] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme="brown"] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles) {
+    -webkit-filter: invert(1) grayscale(1) !important;
+    filter: invert(1) grayscale(1) !important;
+}
+
+html body .bvi-body[data-bvi-theme="black"] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme="green"] .social-icons .social-link:hover .social-icon:not(.bvi-no-styles) {
+    -webkit-filter: grayscale(1) !important;
+    filter: grayscale(1) !important;
 }
 
 html body .bvi-body[data-bvi-images="false"] .social-icons .social-link:not(.bvi-no-styles) {
