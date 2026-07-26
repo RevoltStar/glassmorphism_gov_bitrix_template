@@ -130,6 +130,39 @@ html body .bvi-body[data-bvi-theme] .csr43-pagination .csr43-pagination__link--c
 }
 
 /*
+ * У прозрачных SVG-логотипов BVI окрашивает прямоугольник img в цвет темы,
+ * а затем переводит весь прямоугольник в оттенки серого. Прозрачный фон
+ * сохраняет форму логотипа, а инверсия делает чёрные логотипы контрастными
+ * в тёмных палитрах. Текст ссылки остаётся доступным независимо от изображения.
+ */
+html body .bvi-body[data-bvi-theme] .social-icons .social-icon:not(.bvi-no-styles) {
+    background: transparent !important;
+}
+
+html body .bvi-body[data-bvi-theme="black"] .social-icons .social-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-theme="green"] .social-icons .social-icon:not(.bvi-no-styles) {
+    -webkit-filter: invert(1) grayscale(1) !important;
+    filter: invert(1) grayscale(1) !important;
+}
+
+html body .bvi-body[data-bvi-images="false"] .social-icons .social-link:not(.bvi-no-styles) {
+    gap: 0 !important;
+    padding: 0.5rem 0.75rem !important;
+    border: 2px solid currentColor !important;
+}
+
+html body .bvi-body[data-bvi-images="false"] .social-icons .social-link__label:not(.bvi-no-styles) {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+
+/*
  * BVI задаёт font-size с !important всем элементам страницы.
  * Декоративные пиктограммы внутри glass-контейнеров должны сохранять
  * размер, согласованный с фиксированными размерами самого контейнера.

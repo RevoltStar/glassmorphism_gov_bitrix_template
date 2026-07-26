@@ -18,15 +18,20 @@ $items = is_array($arResult ?? null) ? $arResult : [];
         if ($link === '#' || $imageUrl === '') {
             continue;
         }
+
+        $accessibleText = $text !== '' ? $text : 'Социальная сеть';
+        $linkTitle = "Перейти в сообщество в социальной сети '{$accessibleText}'";
         ?>
         <a href="<?=htmlspecialcharsbx($link)?>"
-           class="text-decoration-none"
+           class="social-link text-decoration-none"
            target="_blank"
-           rel="noopener noreferrer">
+           rel="noopener noreferrer"
+           title="<?=htmlspecialcharsbx($linkTitle)?>">
             <img class="social-icon"
                  src="<?=htmlspecialcharsbx($imageUrl)?>"
-                 alt="Логотип <?=htmlspecialcharsbx($text)?>"
-                 title="Перейти в сообщество в социальной сети '<?=htmlspecialcharsbx($text)?>'">
+                 alt=""
+                 aria-hidden="true">
+            <span class="social-link__label"><?=htmlspecialcharsbx($accessibleText)?></span>
         </a>
     <?php endforeach; ?>
 </div>
