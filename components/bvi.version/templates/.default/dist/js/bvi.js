@@ -1505,6 +1505,18 @@
           });
         };
 
+        var changeSetting = function changeSetting(element, name, value, callback) {
+          click(element, function (event) {
+            if (getCookie(name) === String(value)) {
+              return;
+            }
+
+            if (typeof callback === 'function') {
+              callback(event);
+            }
+          });
+        };
+
         var activeAll = function activeAll() {
           var links = document.querySelectorAll('.bvi-link');
           links.forEach(function (link) {
@@ -1583,7 +1595,7 @@
           }
         }); // Theme
 
-        click(elements.themeWhite, function () {
+        changeSetting(elements.themeWhite, 'theme', 'white', function () {
           _this2._setAttrDataBviBody('theme', 'white');
 
           setCookie('theme', 'white');
@@ -1592,7 +1604,7 @@
 
           activeLink(elements.themeWhite);
         });
-        click(elements.themeBlack, function () {
+        changeSetting(elements.themeBlack, 'theme', 'black', function () {
           _this2._setAttrDataBviBody('theme', 'black');
 
           setCookie('theme', 'black');
@@ -1601,7 +1613,7 @@
 
           activeLink(elements.themeBlack);
         });
-        click(elements.themeBlue, function () {
+        changeSetting(elements.themeBlue, 'theme', 'blue', function () {
           _this2._setAttrDataBviBody('theme', 'blue');
 
           setCookie('theme', 'blue');
@@ -1610,7 +1622,7 @@
 
           activeLink(elements.themeBlue);
         });
-        click(elements.themeBrown, function () {
+        changeSetting(elements.themeBrown, 'theme', 'brown', function () {
           _this2._setAttrDataBviBody('theme', 'brown');
 
           setCookie('theme', 'brown');
@@ -1619,7 +1631,7 @@
 
           activeLink(elements.themeBrown);
         });
-        click(elements.themeGreen, function () {
+        changeSetting(elements.themeGreen, 'theme', 'green', function () {
           _this2._setAttrDataBviBody('theme', 'green');
 
           setCookie('theme', 'green');
@@ -1629,7 +1641,7 @@
           activeLink(elements.themeGreen);
         }); // Images
 
-        click(elements.imagesOn, function () {
+        changeSetting(elements.imagesOn, 'images', 'true', function () {
           _this2._setAttrDataBviBody('images', 'true');
 
           setCookie('images', 'true');
@@ -1638,7 +1650,7 @@
 
           activeLink(elements.imagesOn);
         });
-        click(elements.imagesOff, function () {
+        changeSetting(elements.imagesOff, 'images', 'false', function () {
           _this2._setAttrDataBviBody('images', 'false');
 
           setCookie('images', 'false');
@@ -1647,7 +1659,7 @@
 
           activeLink(elements.imagesOff);
         });
-        click(elements.imagesGrayscale, function () {
+        changeSetting(elements.imagesGrayscale, 'images', 'grayscale', function () {
           _this2._setAttrDataBviBody('images', 'grayscale');
 
           setCookie('images', 'grayscale');
@@ -1657,7 +1669,7 @@
           activeLink(elements.imagesGrayscale);
         }); // Speech
 
-        click(elements.speechOn, function () {
+        changeSetting(elements.speechOn, 'speech', 'true', function () {
           _this2._setAttrDataBviBody('speech', 'true');
 
           setCookie('speech', 'true');
@@ -1668,7 +1680,7 @@
 
           _this2._speechPlayer();
         });
-        click(elements.speechOff, function () {
+        changeSetting(elements.speechOff, 'speech', 'false', function () {
           _this2._speech("".concat(_this2._i18n.v('speechOff')));
 
           _this2._setAttrDataBviBody('speech', 'false');
@@ -1679,7 +1691,7 @@
           _this2._speechPlayer();
         }); // Line height
 
-        click(elements.lineHeightNormal, function () {
+        changeSetting(elements.lineHeightNormal, 'lineHeight', 'normal', function () {
           _this2._setAttrDataBviBody('lineHeight', 'normal');
 
           setCookie('lineHeight', 'normal');
@@ -1688,7 +1700,7 @@
 
           activeLink(elements.lineHeightNormal);
         });
-        click(elements.lineHeightAverage, function () {
+        changeSetting(elements.lineHeightAverage, 'lineHeight', 'average', function () {
           _this2._setAttrDataBviBody('lineHeight', 'average');
 
           setCookie('lineHeight', 'average');
@@ -1697,7 +1709,7 @@
 
           activeLink(elements.lineHeightAverage);
         });
-        click(elements.lineHeightBig, function () {
+        changeSetting(elements.lineHeightBig, 'lineHeight', 'big', function () {
           _this2._setAttrDataBviBody('lineHeight', 'big');
 
           setCookie('lineHeight', 'big');
@@ -1707,7 +1719,7 @@
           activeLink(elements.lineHeightBig);
         }); // Letter spacing
 
-        click(elements.letterSpacingNormal, function () {
+        changeSetting(elements.letterSpacingNormal, 'letterSpacing', 'normal', function () {
           _this2._setAttrDataBviBody('letterSpacing', 'normal');
 
           setCookie('letterSpacing', 'normal');
@@ -1716,7 +1728,7 @@
 
           activeLink(elements.letterSpacingNormal);
         });
-        click(elements.letterSpacingAverage, function () {
+        changeSetting(elements.letterSpacingAverage, 'letterSpacing', 'average', function () {
           _this2._setAttrDataBviBody('letterSpacing', 'average');
 
           setCookie('letterSpacing', 'average');
@@ -1725,7 +1737,7 @@
 
           activeLink(elements.letterSpacingAverage);
         });
-        click(elements.letterSpacingBig, function () {
+        changeSetting(elements.letterSpacingBig, 'letterSpacing', 'big', function () {
           _this2._setAttrDataBviBody('letterSpacing', 'big');
 
           setCookie('letterSpacing', 'big');
@@ -1735,7 +1747,7 @@
           activeLink(elements.letterSpacingBig);
         }); // Font family
 
-        click(elements.fontFamilyArial, function () {
+        changeSetting(elements.fontFamilyArial, 'fontFamily', 'arial', function () {
           _this2._setAttrDataBviBody('fontFamily', 'arial');
 
           setCookie('fontFamily', 'arial');
@@ -1744,7 +1756,7 @@
 
           activeLink(elements.fontFamilyArial);
         });
-        click(elements.fontFamilyTimes, function () {
+        changeSetting(elements.fontFamilyTimes, 'fontFamily', 'times', function () {
           _this2._setAttrDataBviBody('fontFamily', 'times');
 
           setCookie('fontFamily', 'times');
@@ -1754,7 +1766,7 @@
           activeLink(elements.fontFamilyTimes);
         }); // Built elements
 
-        click(elements.builtElementsOn, function () {
+        changeSetting(elements.builtElementsOn, 'builtElements', 'true', function () {
           _this2._setAttrDataBviBody('builtElements', 'true');
 
           setCookie('builtElements', 'true');
@@ -1763,7 +1775,7 @@
 
           activeLink(elements.builtElementsOn);
         });
-        click(elements.builtElementsOff, function () {
+        changeSetting(elements.builtElementsOff, 'builtElements', 'false', function () {
           _this2._setAttrDataBviBody('builtElements', 'false');
 
           setCookie('builtElements', 'false');
