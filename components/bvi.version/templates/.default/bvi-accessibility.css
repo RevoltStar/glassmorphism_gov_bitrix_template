@@ -49,6 +49,10 @@ body.bvi-active[data-bvi-theme] {
     background: var(--bvi-theme-background) !important;
 }
 
+html body .bvi-body[data-bvi-theme] .navbar-custom.sticky-top {
+    position: static !important;
+}
+
 html body .bvi-body[data-bvi-theme] .bvi-css-background-gradient:not(.bvi-no-styles) {
     background-image: none !important;
     background-clip: border-box !important;
