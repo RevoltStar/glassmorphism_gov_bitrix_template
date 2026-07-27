@@ -23,6 +23,46 @@ $decodeText = static function ($value): string {
     );
 };
 
+$formatTitleHtml = static function ($value): string {
+    $parts = preg_split(
+        '~(</?(?:b|strong)>)~i',
+        site_string($value),
+        -1,
+        PREG_SPLIT_DELIM_CAPTURE
+    );
+    if (!is_array($parts)) {
+        return htmlspecialcharsbx(site_plain_text($value));
+    }
+
+    $html = '';
+    $openTags = [];
+    foreach ($parts as $part) {
+        if (preg_match('~^<(b|strong)>$~i', $part, $matches) === 1) {
+            $tag = strtolower($matches[1]);
+            $html .= '<' . $tag . '>';
+            $openTags[] = $tag;
+            continue;
+        }
+
+        if (preg_match('~^</(b|strong)>$~i', $part, $matches) === 1) {
+            $tag = strtolower($matches[1]);
+            if ($openTags !== [] && end($openTags) === $tag) {
+                array_pop($openTags);
+                $html .= '</' . $tag . '>';
+            }
+            continue;
+        }
+
+        $html .= htmlspecialcharsbx(strip_tags($part));
+    }
+
+    foreach (array_reverse($openTags) as $tag) {
+        $html .= '</' . $tag . '>';
+    }
+
+    return $html;
+};
+
 $query = array_key_exists('~QUERY', $request)
     ? trim(site_string($request['~QUERY']))
     : trim($decodeText($request['QUERY'] ?? ''));
@@ -34,14 +74,14 @@ $dateFrom = array_key_exists('~FROM', $request)
 $dateTo = array_key_exists('~TO', $request)
     ? site_string($request['~TO'])
     : $decodeText($request['TO'] ?? $_GET['to'] ?? '');
-$tags = site_string($request['TAGS'] ?? $_GET['tags'] ?? '');
+$tags = trim(site_string($request['TAGS'] ?? $_GET['tags'] ?? ''));
 $sort = strtolower(site_string($request['HOW'] ?? $_GET['how'] ?? 'r'));
 $sort = in_array($sort, ['r', 'd'], true) ? $sort : 'r';
 
 $showWhere = ($arParams['SHOW_WHERE'] ?? 'N') === 'Y';
 $showWhen = ($arParams['SHOW_WHEN'] ?? 'N') === 'Y';
-$showOrderBy = ($arParams['SHOW_ORDER_BY'] ?? 'N') === 'Y';
-$showItemDate = ($arParams['SHOW_ITEM_DATE_CHANGE'] ?? 'N') === 'Y';
+$showOrderBy = ($arParams['SHOW_ORDER_BY'] ?? 'Y') === 'Y';
+$showItemDate = ($arParams['SHOW_ITEM_DATE_CHANGE'] ?? 'Y') === 'Y';
 $showItemTags = ($arParams['SHOW_ITEM_TAGS'] ?? 'N') === 'Y';
 $dropdown = is_array($arResult['DROPDOWN'] ?? null) ? $arResult['DROPDOWN'] : [];
 $showWhereField = $showWhere && $dropdown !== [];
@@ -257,7 +297,7 @@ $resultsTitleId = $formId . '-results-title';
                 <?php endif; ?>
             </div>
         </div>
-    <?php elseif ($query === ''): ?>
+    <?php elseif ($query === '' && $tags === ''): ?>
         <div class="csr43-glass-surface search-page__state" role="status">
             <div class="csr43-glass-icon search-page__state-icon" aria-hidden="true">
                 <i class="bi bi-search"></i>
@@ -312,7 +352,7 @@ $resultsTitleId = $formId . '-results-title';
 
                     $formattedTitle = site_string($searchItem['TITLE_FORMATED'] ?? '');
                     $titleHtml = $formattedTitle !== ''
-                        ? site_safe_html($formattedTitle)
+                        ? $formatTitleHtml($formattedTitle)
                         : htmlspecialcharsbx(
                             site_plain_text($searchItem['~TITLE'] ?? $searchItem['TITLE'] ?? '')
                         );
