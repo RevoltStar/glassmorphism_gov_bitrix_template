@@ -41,7 +41,7 @@ $policyUrl = site_url($arResult['POLICY_URL'] ?? '', '');
                     <label for="cookie_session_<?=htmlspecialcharsbx($wrapId)?>"><?=htmlspecialcharsbx(site_string(Loc::getMessage('COOKIE_SESSION')))?></label>
                 </div>
                 <div class="cookie-option">
-                    <input type="checkbox" id="cookie_analytics_<?=htmlspecialcharsbx($wrapId)?>">
+                    <input type="checkbox" id="cookie_analytics_<?=htmlspecialcharsbx($wrapId)?>" checked>
                     <label for="cookie_analytics_<?=htmlspecialcharsbx($wrapId)?>"><?=htmlspecialcharsbx(site_string(Loc::getMessage('COOKIE_ANALYTICS')))?></label>
                 </div>
             </div>
