@@ -101,7 +101,7 @@ foreach ($sectionIds as $currentSectionId) {
         'CACHE_TYPE' => $cacheType,
         'CACHE_TIME' => max(0, (int)($arParams['CACHE_TIME'] ?? 36000000)),
         'CACHE_FILTER' => 'N',
-        'CACHE_GROUPS' => ($arParams['CACHE_GROUPS'] ?? 'Y') === 'N' ? 'N' : 'Y',
+        'CACHE_GROUPS' => 'Y',
         'SET_TITLE' => 'N',
         'SET_BROWSER_TITLE' => 'N',
         'SET_META_KEYWORDS' => 'N',
