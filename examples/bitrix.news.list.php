@@ -26,6 +26,24 @@ if ($categoryCode !== "") {
     if (!\Bitrix\Main\Loader::includeModule("iblock")) {
         throw new \RuntimeException("Iblock module is not available");
     }
+    $iblock = CIBlock::GetList(
+    [],
+    [
+        'ID' => $newsIblockId,
+        'ACTIVE' => 'Y',
+        'CHECK_PERMISSIONS' => 'Y',
+    ]
+    )->Fetch();
+
+    if (!is_array($iblock)) {
+        \Bitrix\Iblock\Component\Tools::process404(
+            'Раздел новостей недоступен',
+            true,
+            true,
+            true
+        );
+        return;
+    }
 
     $categoryResult = CIBlockPropertyEnum::GetList(
         [],
