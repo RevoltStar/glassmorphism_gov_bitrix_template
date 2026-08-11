@@ -63,11 +63,9 @@ $cacheTime = max(
     (int)($arParams['CACHE_TIME'] ?? 36000000)
 );
 
-$cacheGroups = ($arParams['CACHE_GROUPS'] ?? 'Y') !== 'N';
 
 $arParams['CACHE_TYPE'] = $cacheType;
 $arParams['CACHE_TIME'] = $cacheTime;
-$arParams['CACHE_GROUPS'] = $cacheGroups ? 'Y' : 'N';
 
 if ($iblockId <= 0) {
     ShowError(
