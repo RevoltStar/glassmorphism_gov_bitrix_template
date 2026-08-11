@@ -13,22 +13,23 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 <?php
-$APPLICATION->IncludeComponent(
-    'csr43:news.categories',
-    '',
-    [
-        'IBLOCK_ID' => max(0, (int)($arParams['IBLOCK_ID'] ?? 0)),
-        'CURRENT_CATEGORY_CODE' => site_string(
-            $arParams['CATEGORY_CODE'] ?? ''
-        ),
-        'BASE_URL' => '/news/',
-        'CATEGORY_URL_TEMPLATE' => '/news/category/#CODE#/',
-        'CACHE_TYPE' => 'A',
-        'CACHE_TIME' => '36000000',
-        'CACHE_GROUPS' => 'Y',
-    ],
-    false
-);
+if (($arParams['SHOW_CATEGORY_FILTER'] ?? 'N') === 'Y') {
+    $APPLICATION->IncludeComponent(
+        'csr43:news.categories',
+        '',
+        [
+            'IBLOCK_ID' => max(0, (int)($arParams['IBLOCK_ID'] ?? 0)),
+            'CURRENT_CATEGORY_CODE' => site_string(
+                $arParams['CATEGORY_CODE'] ?? ''
+            ),
+            'BASE_URL' => '/news/',
+            'CATEGORY_URL_TEMPLATE' => '/news/category/#CODE#/',
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => '36000000',
+        ],
+        false
+    );
+}
 ?>
 <?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])):?>
 	<?php
