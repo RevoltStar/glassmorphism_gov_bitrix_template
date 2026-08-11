@@ -1,39 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-
-    if (!searchInput || !searchButton) {
-        return;
-    }
-    
-    // Обработчик клика по кнопке
-    searchButton.addEventListener('click', function() {
-        performSearch();
-    });
-    
-    // Обработчик нажатия Enter в поле ввода
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            performSearch();
-        }
-    });
-    
-    function performSearch() {
-        const searchTerm = searchInput.value.trim();
-        
-        if (searchTerm) {
-            // Кодируем поисковый запрос для URL
-            const encodedQuery = encodeURIComponent(searchTerm);
-            // Перенаправляем на страницу поиска
-            window.location.href = `/search?q=${encodedQuery}`;
-        } else {
-            // Если поле пустое, можно показать сообщение или просто ничего не делать
-            alert('Введите поисковый запрос');
-            searchInput.focus();
-        }
-    }
-});
-document.addEventListener('DOMContentLoaded', function() {
     if (typeof Fancybox === 'undefined' || typeof Fancybox.bind !== 'function') {
         return;
     }
