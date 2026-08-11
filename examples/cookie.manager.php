@@ -5,7 +5,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 }
 
 $APPLICATION->IncludeComponent(
-    'cookie.manager',
+    'csr43:cookie.manager',
     '.default',
     [
         // 1. Фиксированные параметры.

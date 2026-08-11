@@ -5,7 +5,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 }
 
 $APPLICATION->IncludeComponent(
-    'bvi.version',
+    'csr43:bvi.version',
     '.default',
     [
         // 1. У компонента нет параметров: пустой массив фиксирован.

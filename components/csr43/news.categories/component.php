@@ -139,10 +139,10 @@ if ($this->StartResultCache($cacheTime, $additionalCacheId)) {
     ];
 
     /*
-     * Поведение намеренно совпадает с текущим news/result_modifier.php:
-     * берём все enum-значения свойства category, а не только рубрики,
-     * в которых сейчас есть активные новости.
-     */
+        * Сохраняем прежнее поведение фильтра:
+        * выводим все enum-значения свойства category, а не только рубрики,
+        * в которых сейчас есть активные новости.
+    */
     $categoryResult = CIBlockPropertyEnum::GetList(
         [
             'SORT' => 'ASC',
