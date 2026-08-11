@@ -27,12 +27,12 @@ if ($categoryCode !== "") {
         throw new \RuntimeException("Iblock module is not available");
     }
     $iblock = CIBlock::GetList(
-    [],
-    [
-        'ID' => $newsIblockId,
-        'ACTIVE' => 'Y',
-        'CHECK_PERMISSIONS' => 'Y',
-    ]
+        [],
+        [
+            'ID' => $newsIblockId,
+            'ACTIVE' => 'Y',
+            'CHECK_PERMISSIONS' => 'Y',
+        ]
     )->Fetch();
 
     if (!is_array($iblock)) {
