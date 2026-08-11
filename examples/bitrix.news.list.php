@@ -30,7 +30,7 @@ if ($categoryCode !== "") {
     $categoryResult = CIBlockPropertyEnum::GetList(
         [],
         [
-            "IBLOCK_ID" => 8,
+            "IBLOCK_ID" => $newsIblockId,
             "CODE" => "category",
             "XML_ID" => $categoryCode,
         ]
@@ -47,9 +47,11 @@ if ($categoryCode !== "") {
     }
 
     $newsFilter["PROPERTY_category"] = (int)$selectedCategory["ID"];
-	$APPLICATION->SetTitle("Новости: " . $selectedCategory["VALUE"]);
-    $APPLICATION->SetPageProperty("title", $selectedCategory["VALUE"] . " — новости");
-	$APPLICATION->AddChainItem($selectedCategory["VALUE"]);
+	$categoryName = site_plain_text($selectedCategory['VALUE'] ?? '');
+
+    $APPLICATION->SetTitle('Новости: ' . $categoryName);
+    $APPLICATION->SetPageProperty('title', $categoryName . ' — новости');
+    $APPLICATION->AddChainItem($categoryName);
 }
 
 
