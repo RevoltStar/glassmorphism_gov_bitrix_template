@@ -83,16 +83,11 @@ if ($iblockId <= 0) {
 $userGroups = [];
 
 if (
-    $cacheGroups
-    && isset($USER)
+    isset($USER)
     && is_object($USER)
     && method_exists($USER, 'GetGroups')
 ) {
-    $userGroups = array_map(
-        'intval',
-        (array)$USER->GetGroups()
-    );
-
+    $userGroups = array_map('intval', (array)$USER->GetGroups());
     sort($userGroups, SORT_NUMERIC);
 }
 

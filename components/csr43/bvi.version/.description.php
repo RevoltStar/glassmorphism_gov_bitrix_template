@@ -5,8 +5,9 @@ $arComponentDescription = array(
     "NAME" => "Версия для слабовидящий",
     "DESCRIPTION" => "Подключение плагина Версия для слабовидящих",
     "PATH" => array(
-        "ID" => "custom",
-        "NAME" => "Кастомные компоненты"
+        'ID' => 'csr43',
+        'NAME' => 'CSR43 — компоненты сайта',
+        'SORT' => 20,
 	)
 );
 ?>

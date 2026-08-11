@@ -7,13 +7,8 @@ $arComponentDescription = [
     'COMPLEX'     => 'N',
     'CACHE_PATH'  => 'Y',
     'PATH'        => [
-        "ID"   => "cookie_section",
-        "NAME" => GetMessage("SECTIONS_NAME"),
-        "SORT" => 10,
-        "CHILD" => array(
-            'ID'    => 'cookie_manager',
-            "NAME" => GetMessage("SECTION_NAME"),
-            "SORT" => 10,
-        ),
+        'ID' => 'csr43',
+        'NAME' => 'CSR43 — компоненты сайта',
+        'SORT' => 20,
     ],
 ];

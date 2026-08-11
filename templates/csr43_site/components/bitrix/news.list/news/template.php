@@ -6,37 +6,23 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 $this->setFrameMode(true);
 $arResult = is_array($arResult ?? null) ? $arResult : [];
 $arParams = is_array($arParams ?? null) ? $arParams : [];
-$newsCategories = is_array($arResult['NEWS_CATEGORIES'] ?? null)
-	? $arResult['NEWS_CATEGORIES']
-	: [];
+
 $fallbackImage = site_template_image_url('image_not_found.svg');
 ?>
 <?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
 <?php
-
 $APPLICATION->IncludeComponent(
     'csr43:news.categories',
     '',
     [
-        'IBLOCK_ID' => $newsIblockId,
-
-        /*
-         * Та же переменная, значение которой раньше
-         * передавалось в news.list как CATEGORY_CODE.
-         *
-         * Для /news/:
-         *     ''
-         *
-         * Для /news/category/sport/:
-         *     'sport'
-         */
-        'CURRENT_CATEGORY_CODE' => $categoryCode,
-
+        'IBLOCK_ID' => max(0, (int)($arParams['IBLOCK_ID'] ?? 0)),
+        'CURRENT_CATEGORY_CODE' => site_string(
+            $arParams['CATEGORY_CODE'] ?? ''
+        ),
         'BASE_URL' => '/news/',
         'CATEGORY_URL_TEMPLATE' => '/news/category/#CODE#/',
-
         'CACHE_TYPE' => 'A',
         'CACHE_TIME' => '36000000',
         'CACHE_GROUPS' => 'Y',
