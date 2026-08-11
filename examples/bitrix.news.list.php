@@ -1,8 +1,71 @@
+/*
+ * Учтите, что этот шаблон расчитан на то, что urlrewrite содержит эти строки:
+ * $arUrlRewrite=array (
+ * 0 => 
+ * array (
+ *   'CONDITION' => '#^/news/category/([^/]+)/?(?:\\?(.*))?$#',
+ *   'RULE' => 'CATEGORY_CODE=$1&$2',
+ *   'ID' => '',
+ *   'PATH' => '/news/index.php',
+ *   'SORT' => 80,
+ * ),
+ * 1 => 
+ * array (
+ *   'CONDITION' => '#^/news/([^/]+)/?(?:\\?(.*))?$#',
+ *   'RULE' => 'ELEMENT_CODE=$1&$2',
+ *   'ID' => '',
+ *   'PATH' => '/news/detail.php',
+ *   'SORT' => 90,
+ * ),
+ *);
+ */
+
 <?php
 
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+/*
+*    Извлекаем рубрику из URL
+*/
+$categoryCode = $_REQUEST["CATEGORY_CODE"] ?? "";
+$categoryCode = is_string($categoryCode) ? trim($categoryCode) : "";
+$selectedCategory = null;
+
+global $newsFilter;
+$newsFilter = array();
+
+if ($categoryCode !== "") {
+    if (!\Bitrix\Main\Loader::includeModule("iblock")) {
+        throw new \RuntimeException("Iblock module is not available");
+    }
+
+    $categoryResult = CIBlockPropertyEnum::GetList(
+        array(),
+        array(
+            "IBLOCK_ID" => 7,
+            "CODE" => "category",
+            "XML_ID" => $categoryCode,
+        )
+    );
+    $selectedCategory = $categoryResult->Fetch();
+
+    if (!$selectedCategory) {
+        \Bitrix\Iblock\Component\Tools::process404(
+            "Рубрика не найдена",
+            true,
+            true,
+            true
+        );
+    }
+
+    $newsFilter["PROPERTY_category"] = (int)$selectedCategory["ID"];
+	$APPLICATION->SetTitle("Новости: " . $selectedCategory["VALUE"]);
+    $APPLICATION->SetPageProperty("title", $selectedCategory["VALUE"] . " — новости");
+	$APPLICATION->AddChainItem($selectedCategory["VALUE"]);
+}
+
+
 
 // Администратор выбирает локальный шаблон под назначение списка.
 $componentTemplate = 'news';
