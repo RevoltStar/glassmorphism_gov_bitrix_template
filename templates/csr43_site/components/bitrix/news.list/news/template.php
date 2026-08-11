@@ -14,28 +14,7 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 <?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
-<?php if (($arParams["SHOW_CATEGORY_FILTER"] ?? "N") === "Y" && $newsCategories !== []): ?>
-	<nav class="news-category-filter mb-4" aria-label="Фильтр новостей по рубрикам">
-		<a href="/news/" class="news-category-filter__item<?=empty($arParams["CATEGORY_CODE"]) ? " is-active" : ""?>">
-			Все новости
-		</a>
-		<?php foreach ($newsCategories as $category):
-			if (!is_array($category)) {
-				continue;
-			}
-			$categoryXmlId = site_string($category['XML_ID'] ?? '');
-			$categoryValue = site_string($category['VALUE'] ?? '');
-			if ($categoryXmlId === '' || $categoryValue === '') {
-				continue;
-			}
-		?>
-			<a href="/news/category/<?=rawurlencode($categoryXmlId)?>/"
-			   class="news-category-filter__item<?=(site_string($arParams["CATEGORY_CODE"] ?? '') === $categoryXmlId) ? " is-active" : ""?>">
-				<?=htmlspecialcharsbx($categoryValue)?>
-			</a>
-		<?php endforeach; ?>
-	</nav>
-<?php endif; ?>
+
 <?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])):?>
 	<?php
 	//Массив названий месяцев (в родительном падеже) для поля даты
@@ -83,33 +62,57 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 
                     <div class="news-card__body p-4">
 						<?php
-						$categoryValues = (array)($news["PROPERTIES"]["category"]["VALUE"] ?? array());
-						$categoryXmlIds = (array)($news["PROPERTIES"]["category"]["VALUE_XML_ID"] ?? array());
-						$newsCategories = array();
+						$categoryValues = (array)(
+    						$news['PROPERTIES']['category']['VALUE'] ?? []
+						);
+
+						$categoryXmlIds = (array)(
+    						$news['PROPERTIES']['category']['VALUE_XML_ID'] ?? []
+						);
+
+						$itemCategories = [];
+
 						foreach ($categoryValues as $categoryIndex => $categoryValue) {
-							$categoryValue = site_string($categoryValue);
-							$categoryXmlId = site_string($categoryXmlIds[$categoryIndex] ?? '');
-							if ($categoryValue === false || $categoryValue === null || $categoryValue === "" || $categoryXmlId === "") {
-								continue;
-							}
-							$newsCategories[] = array(
-								"VALUE" => $categoryValue,
-								"XML_ID" => $categoryXmlId,
-							);
+    						$categoryValue = site_string($categoryValue);
+
+    						$categoryXmlId = site_string(
+        						$categoryXmlIds[$categoryIndex] ?? ''
+    						);
+
+						    if (
+        						!is_string($categoryValue)
+        						|| $categoryValue === ''
+        						|| !is_string($categoryXmlId)
+        						|| $categoryXmlId === ''
+    						) {
+        						continue;
+    						}
+
+    						$itemCategories[] = [
+        						'VALUE' => $categoryValue,
+        						'XML_ID' => $categoryXmlId,
+    						];
 						}
 						?>
-						<?php if (!empty($newsCategories)): ?>
-							<div class="mb-2">
-								<?php foreach ($newsCategories as $category): ?>
-									<a href="/news/category/<?=rawurlencode($category["XML_ID"])?>/" class="news-category text-decoration-none">
-										<i class="bi bi-tag me-1"></i><?=htmlspecialcharsbx($category["VALUE"])?>
-									</a>
-								<?php endforeach; ?>
-							</div>
+						<?php if ($itemCategories !== []): ?>
+    					<div class="mb-2">
+        					<?php foreach ($itemCategories as $category): ?>
+            			<a
+                			href="/news/category/<?=rawurlencode($category['XML_ID'])?>/"
+                			class="news-category text-decoration-none"
+            			>
+                		<i class="bi bi-tag me-1"></i>
+                				<?=htmlspecialcharsbx($category['VALUE'])?>
+            			</a>
+        					<?php endforeach; ?>
+    					</div>
 						<?php else: ?>
-							<div class="mb-2">
-								<span class="news-category"><i class="bi bi-tag me-1"></i>Без рубрики</span>
-							</div>
+    					<div class="mb-2">
+        					<span class="news-category">
+            					<i class="bi bi-tag me-1"></i>
+            						Без рубрики
+        					</span>
+    					</div>
 						<?php endif; ?>
 						<a class="news-name text-decoration-none" href="<?=htmlspecialcharsbx($detailPageUrl)?>">
 							<h5 class="fw-bold" style="color: #1e3a5f;"><?=htmlspecialcharsbx($galleryCaption)?></h5>
