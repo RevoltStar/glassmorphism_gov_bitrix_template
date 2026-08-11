@@ -44,6 +44,7 @@ if ($categoryCode !== "") {
             true,
             true
         );
+        return;
     }
 
     $newsFilter["PROPERTY_category"] = (int)$selectedCategory["ID"];
