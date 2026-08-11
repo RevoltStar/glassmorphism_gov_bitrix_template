@@ -1,35 +1,22 @@
-/*
- * Учтите, что этот шаблон расчитан на то, что urlrewrite содержит эти строки:
- * $arUrlRewrite=array (
- * 0 => 
- * array (
- *   'CONDITION' => '#^/news/category/([^/]+)/?(?:\\?(.*))?$#',
- *   'RULE' => 'CATEGORY_CODE=$1&$2',
- *   'ID' => '',
- *   'PATH' => '/news/index.php',
- *   'SORT' => 80,
- * ),
- * 1 => 
- * array (
- *   'CONDITION' => '#^/news/([^/]+)/?(?:\\?(.*))?$#',
- *   'RULE' => 'ELEMENT_CODE=$1&$2',
- *   'ID' => '',
- *   'PATH' => '/news/detail.php',
- *   'SORT' => 90,
- * ),
- *);
- */
-
 <?php
+
+/*
+ * Для маршрутизации рубрик должны быть настроены правила urlrewrite.php.
+ */
 
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
-/*
-*    Извлекаем рубрику из URL
-*/
-$categoryCode = $_REQUEST["CATEGORY_CODE"] ?? "";
-$categoryCode = is_string($categoryCode) ? trim($categoryCode) : "";
+
+$newsIblockId = 8;
+
+$categoryCode = site_string($_GET['CATEGORY_CODE'] ?? '');
+
+if (!is_string($categoryCode)) {
+    $categoryCode = '';
+}
+
+$categoryCode = mb_substr($categoryCode, 0, 255);
 $selectedCategory = null;
 
 global $newsFilter;
@@ -41,12 +28,12 @@ if ($categoryCode !== "") {
     }
 
     $categoryResult = CIBlockPropertyEnum::GetList(
-        array(),
-        array(
-            "IBLOCK_ID" => 7,
+        [],
+        [
+            "IBLOCK_ID" => 8,
             "CODE" => "category",
             "XML_ID" => $categoryCode,
-        )
+        ]
     );
     $selectedCategory = $categoryResult->Fetch();
 
@@ -99,7 +86,7 @@ $APPLICATION->IncludeComponent(
 
         // 2. Параметры, которые определяет администратор.
         'IBLOCK_TYPE' => 'content',
-        'IBLOCK_ID' => '8',
+        'IBLOCK_ID' => (string)$newsIblockId,
         'NEWS_COUNT' => '12',
         'SORT_BY1' => 'ACTIVE_FROM',
         'SORT_ORDER1' => 'DESC',
@@ -130,7 +117,7 @@ $APPLICATION->IncludeComponent(
 
         // Параметры локального шаблона news.
         'SHOW_CATEGORY_FILTER' => 'Y',
-        'CATEGORY_CODE' => '',
+        'CATEGORY_CODE' => $categoryCode,
 
         // 3. Пустое значение не ограничивает анонс на уровне компонента;
         // локальный шаблон сам обрезает текст.
