@@ -267,7 +267,7 @@ $cookieMessage = site_plain_text(get_info('org_name'))
     . ' использует файлы cookie для работы и аналитики.';
 
 $APPLICATION->IncludeComponent(
-	"cookie.manager",
+	"csr43:cookie.manager",
     ".default",
     array(
         "CACHE_TIME" => "86400",

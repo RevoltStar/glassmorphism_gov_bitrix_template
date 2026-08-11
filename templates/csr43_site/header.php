@@ -91,7 +91,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
                 <!-- Кнопка слабовидящих -->
 					<?php
 									$APPLICATION->IncludeComponent(
-    									"bvi.version", // Пространство имен и имя компонента
+    									"csr43:bvi.version", // Пространство имен и имя компонента
     									".default",          // Имя шаблона
     									array()              // Параметры (пустой массив, так как их нет)
 									);

@@ -14,7 +14,36 @@ $fallbackImage = site_template_image_url('image_not_found.svg');
 <?php if(($arParams["DISPLAY_TOP_PAGER"] ?? false) === true):?>
 	<?=$arResult["NAV_STRING"] ?? ''?><br />
 <?php endif;?>
+<?php
 
+$APPLICATION->IncludeComponent(
+    'csr43:news.categories',
+    '',
+    [
+        'IBLOCK_ID' => $newsIblockId,
+
+        /*
+         * Та же переменная, значение которой раньше
+         * передавалось в news.list как CATEGORY_CODE.
+         *
+         * Для /news/:
+         *     ''
+         *
+         * Для /news/category/sport/:
+         *     'sport'
+         */
+        'CURRENT_CATEGORY_CODE' => $categoryCode,
+
+        'BASE_URL' => '/news/',
+        'CATEGORY_URL_TEMPLATE' => '/news/category/#CODE#/',
+
+        'CACHE_TYPE' => 'A',
+        'CACHE_TIME' => '36000000',
+        'CACHE_GROUPS' => 'Y',
+    ],
+    false
+);
+?>
 <?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])):?>
 	<?php
 	//Массив названий месяцев (в родительном падеже) для поля даты
