@@ -86,7 +86,7 @@ left&initialState=collapsed&region=33000000000&platform=default_iframe"></script
 	<?php
 $APPLICATION->IncludeComponent(
     "bitrix:news.list", 
-    "main_2025_informationresources", 
+    "government_sites",
     array(
         "ACTIVE_DATE_FORMAT" => "d.m.Y",
         "ADD_SECTIONS_CHAIN" => "N",
@@ -158,8 +158,10 @@ $APPLICATION->IncludeComponent(
                 <!-- Левая колонка -->
                 <div class="col-lg-6 col-md-12 mb-2 mb-lg-0">
                     <div class="d-flex justify-content-center justify-content-lg-start" role="button">
-                        <button 
+						<button
 							id="government_website_button"
+							type="button"
+							data-government-sites-toggle
 							class="text-center text-lg-start btn btn-light border"
 							aria-haspopup="dialog"
         					aria-controls="full-menu"

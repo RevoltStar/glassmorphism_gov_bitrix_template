@@ -1,0 +1,76 @@
+.directions-list__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.directions-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: var(--csr43-light-color-text);
+    text-align: center;
+    text-decoration: none;
+}
+
+.directions-card__media {
+    display: grid;
+    width: clamp(7.5rem, 14vw, 9.375rem);
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--csr43-light-bg-hover);
+    border: 3px solid var(--csr43-light-border);
+    border-radius: 50%;
+    place-items: center;
+    transition: border-color var(--csr43-light-transition-duration) ease;
+}
+
+.directions-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.directions-card__placeholder {
+    color: var(--csr43-light-color-muted);
+    font-size: 3rem;
+}
+
+.directions-card__title {
+    margin: 0;
+    color: var(--csr43-light-color-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.directions-card:not(.directions-card--disabled):hover .directions-card__media,
+.directions-card:not(.directions-card--disabled):focus-visible .directions-card__media {
+    border-color: var(--csr43-light-color-accent);
+}
+
+.directions-card--disabled {
+    box-shadow: none;
+}
+
+.directions-list__pagination {
+    margin-block: 1.5rem;
+}
+
+@media (max-width: 47.999rem) {
+    .directions-list__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 35.999rem) {
+    .directions-list__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .directions-card__media {
+        transition: none;
+    }
+}
