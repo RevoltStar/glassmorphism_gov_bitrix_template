@@ -1,0 +1,228 @@
+.news-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.news-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.news-image-container {
+    height: 250px;
+    overflow: hidden;
+}
+
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover .news-image {
+    transform: scale(1.05);
+}
+/*
+.expand-button-wrapper:hover ~ a .news-image {
+    transform: none;
+}
+*/
+.news-title {
+    line-height: 1.3;
+}
+.news-fullscreen-img-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+    overflow: hidden; /* Добавьте это */
+}
+
+.news-fullscreen-img-wrapper > div {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 90vw; /* Уменьшено для лучшего отображения */
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: scaleIn 0.3s ease;
+    position: relative; /* Добавлено */
+}
+
+
+.image-container {
+    max-height: calc(80vh - 120px); /* Улучшен расчет */
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Добавлено для гибкости */
+    min-height: 200px; /* Минимальная высота */
+}
+
+
+.news-fullscreen-img {
+    max-width: 100%;
+    max-height: 100%; /* Исправлено с 90% на 100% */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Добавьте отсутствующие анимации */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Остальные стили остаются без изменений */
+.btn-close-custom {
+    background: #dc3545!important;
+    border: none!important;
+    border-radius: 50%!important;
+    width: 40px!important;
+    height: 40px!important;
+    color: white!important;
+    font-weight: bold!important;
+    transition: all 0.3s ease!important;
+    opacity: 0.8;
+}
+
+.news-fullscreen-btn-close-wrapper {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+
+.btn-close-custom:hover {
+    background: #c82333!important;
+    transform: scale(1.1)!important;
+    opacity: 1;
+}
+.news-title a:hover {
+    color: #0d6efd !important;
+}
+
+/* Стили для рубрик */
+.categories-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    /*max-height: 50px;*/
+    overflow: hidden;
+}
+
+/* Вариант с анимацией "пульсации" */
+.category-badge {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+	text-wrap: wrap!important;
+}
+
+.category-badge:hover {
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+
+.category-badge:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { 
+        left: -100%;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% { 
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .news-image-container {
+        height: 180px;
+    }
+    
+    .news-title {
+        font-size: 1.1rem;
+    }
+    
+    .category-badge {
+        /*max-width: 100px;*/
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .news-image-container {
+        height: 160px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .news-title {
+        font-size: 1rem;
+    }
+    
+    .categories-wrapper {
+        /*max-height: 40px;*/
+    }
+    
+    .category-badge {
+        /*max-width: 90px;*/
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .news-image-container {
+        height: 140px;
+    }
+    
+    .g-4 {
+        --bs-gutter-y: 1rem;
+    }
+    /*
+    .category-badge {
+        max-width: 80px;
+    }
+	*/
+}
+
+/* Дополнительные утилиты для очень длинных рубрик */
+/*.category-badge[title] {
+    cursor: help;
+}*/

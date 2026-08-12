@@ -1,0 +1,583 @@
+.bvi-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    /*background: linear-gradient(135deg, #2c5aa0, #3a6bc7);*/
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(44, 90, 160, 0.2);
+}
+
+.bvi-open:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(44, 90, 160, 0.4);
+    background: linear-gradient(135deg, #1e3a6b, #2c5aa0);
+}
+
+.bvi-body .bg-light,
+.bvi-body [class*="bg-light"],
+.bvi-body [class*="bg-"] {
+  background-color: inherit !important;
+}
+
+/* Для конкретных цветовых тем */
+.bvi-body[data-bvi-theme="black"] .bg-light {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.bvi-body[data-bvi-theme="white"] .bg-light {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.bvi-body[data-bvi-theme="blue"] .bg-light {
+  background-color: #9DD1FF !important;
+  color: #063462 !important;
+}
+
+.bvi-body[data-bvi-theme="brown"] .bg-light {
+  background-color: #F7F3D6 !important;
+  color: #4D4B43 !important;
+}
+
+.bvi-body[data-bvi-theme="green"] .bg-light {
+  background-color: #3B2716 !important;
+  color: #A9E44D !important;
+}
+
+
+/* Основное переопределение для всех тем */
+.bvi-body .logo-menu-div,
+body.bvi-body .logo-menu-div,
+html .bvi-body .logo-menu-div {
+  background-color: inherit !important;
+  border-bottom-color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* Специфичные правила для каждой темы */
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .logo-menu-div,
+body.bvi-body[data-bvi-theme="black"] .logo-menu-div {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #333333 !important;
+  box-shadow: 0 2px 4px rgba(255,255,255,0.1) !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .logo-menu-div,
+body.bvi-body[data-bvi-theme="white"] .logo-menu-div {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #cccccc !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .logo-menu-div,
+body.bvi-body[data-bvi-theme="blue"] .logo-menu-div {
+  background-color: #9DD1FF !important;
+  border-bottom: 1px solid #7BB8FF !important;
+  box-shadow: 0 2px 4px rgba(6,52,98,0.2) !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .logo-menu-div,
+body.bvi-body[data-bvi-theme="brown"] .logo-menu-div {
+  background-color: #F7F3D6 !important;
+  border-bottom: 1px solid #E8E4C5 !important;
+  box-shadow: 0 2px 4px rgba(77,75,67,0.1) !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .logo-menu-div,
+body.bvi-body[data-bvi-theme="green"] .logo-menu-div {
+  background-color: #3B2716 !important;
+  border-bottom: 1px solid #2A1C10 !important;
+  box-shadow: 0 2px 4px rgba(169,228,77,0.1) !important;
+}
+
+
+/* Основное переопределение для всех тем */
+.bvi-body .special-div,
+body.bvi-body .special-div,
+html .bvi-body .special-div {
+  background-color: inherit !important;
+  border-bottom-color: inherit !important;
+}
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .special-div,
+body.bvi-body[data-bvi-theme="black"] .special-div {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .special-div,
+body.bvi-body[data-bvi-theme="white"] .special-div {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #cccccc !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .special-div,
+body.bvi-body[data-bvi-theme="blue"] .special-div {
+  background-color: #9DD1FF !important;
+  border-bottom: 1px solid #7BB8FF !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .special-div,
+body.bvi-body[data-bvi-theme="brown"] .special-div {
+  background-color: #F7F3D6 !important;
+  border-bottom: 1px solid #E8E4C5 !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .special-div,
+body.bvi-body[data-bvi-theme="green"] .special-div {
+  background-color: #3B2716 !important;
+  border-bottom: 1px solid #2A1C10 !important;
+}
+
+/* Основное переопределение для всех тем */
+.bvi-body .card,
+body.bvi-body .card,
+html .bvi-body .card {
+  background-color: inherit !important;
+  border-color: inherit !important;
+  color: inherit !important;
+}
+
+/* Переопределение CSS переменных для карточек */
+.bvi-body .card {
+  --bs-card-bg: inherit !important;
+  --bs-card-border-color: inherit !important;
+  --bs-card-cap-bg: inherit !important;
+}
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .card,
+body.bvi-body[data-bvi-theme="black"] .card {
+  background-color: #000000 !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.bvi-body[data-bvi-theme="black"] .card {
+  --bs-card-bg: #000000 !important;
+  --bs-card-border-color: #333333 !important;
+  --bs-card-cap-bg: #1a1a1a !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .card,
+body.bvi-body[data-bvi-theme="white"] .card {
+  background-color: #ffffff !important;
+  border-color: #cccccc !important;
+  color: #000000 !important;
+}
+
+.bvi-body[data-bvi-theme="white"] .card {
+  --bs-card-bg: #ffffff !important;
+  --bs-card-border-color: #cccccc !important;
+  --bs-card-cap-bg: #f8f9fa !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .card,
+body.bvi-body[data-bvi-theme="blue"] .card {
+  background-color: #9DD1FF !important;
+  border-color: #7BB8FF !important;
+  color: #063462 !important;
+}
+
+.bvi-body[data-bvi-theme="blue"] .card {
+  --bs-card-bg: #9DD1FF !important;
+  --bs-card-border-color: #7BB8FF !important;
+  --bs-card-cap-bg: #8BC6FF !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .card,
+body.bvi-body[data-bvi-theme="brown"] .card {
+  background-color: #F7F3D6 !important;
+  border-color: #E8E4C5 !important;
+  color: #4D4B43 !important;
+}
+
+.bvi-body[data-bvi-theme="brown"] .card {
+  --bs-card-bg: #F7F3D6 !important;
+  --bs-card-border-color: #E8E4C5 !important;
+  --bs-card-cap-bg: #F0EBC9 !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .card,
+body.bvi-body[data-bvi-theme="green"] .card {
+  background-color: #3B2716 !important;
+  border-color: #2A1C10 !important;
+  color: #A9E44D !important;
+}
+
+.bvi-body[data-bvi-theme="green"] .card {
+  --bs-card-bg: #3B2716 !important;
+  --bs-card-border-color: #2A1C10 !important;
+  --bs-card-cap-bg: #2D1F12 !important;
+}
+
+/* Основное переопределение для бокового меню */
+.bvi-body .side-menu a,
+body.bvi-body .side-menu a,
+html .bvi-body .side-menu a {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.bvi-body .side-menu a::before,
+body.bvi-body .side-menu a::before {
+  display: none !important;
+}
+
+.bvi-body .side-menu a::after,
+body.bvi-body .side-menu a::after {
+  display: none !important;
+}
+
+/* Переопределение для выбранного элемента меню */
+.bvi-body .side-menu li.selected a,
+body.bvi-body .side-menu li.selected a {
+  background-color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.bvi-body .side-menu li.selected a::before,
+body.bvi-body .side-menu li.selected a::before {
+  display: none !important;
+}
+
+/* Переопределение для мобильного селекта */
+.bvi-body .side-menu-select,
+body.bvi-body .side-menu-select {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  background-image: none !important;
+}
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .side-menu a,
+body.bvi-body[data-bvi-theme="black"] .side-menu a {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+.bvi-body[data-bvi-theme="black"] .side-menu li.selected a,
+body.bvi-body[data-bvi-theme="black"] .side-menu li.selected a {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border-color: #555555 !important;
+}
+
+.bvi-body[data-bvi-theme="black"] .side-menu-select,
+body.bvi-body[data-bvi-theme="black"] .side-menu-select {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .side-menu a,
+body.bvi-body[data-bvi-theme="white"] .side-menu a {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+  border-color: #dee2e6 !important;
+}
+
+.bvi-body[data-bvi-theme="white"] .side-menu li.selected a,
+body.bvi-body[data-bvi-theme="white"] .side-menu li.selected a {
+  background-color: #e9ecef !important;
+  color: #000000 !important;
+  border-color: #adb5bd !important;
+}
+
+.bvi-body[data-bvi-theme="white"] .side-menu-select,
+body.bvi-body[data-bvi-theme="white"] .side-menu-select {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+  border-color: #dee2e6 !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .side-menu a,
+body.bvi-body[data-bvi-theme="blue"] .side-menu a {
+  background-color: #8BC6FF !important;
+  color: #063462 !important;
+  border-color: #7BB8FF !important;
+}
+
+.bvi-body[data-bvi-theme="blue"] .side-menu li.selected a,
+body.bvi-body[data-bvi-theme="blue"] .side-menu li.selected a {
+  background-color: #7BB8FF !important;
+  color: #063462 !important;
+  border-color: #5BA3FF !important;
+}
+
+.bvi-body[data-bvi-theme="blue"] .side-menu-select,
+body.bvi-body[data-bvi-theme="blue"] .side-menu-select {
+  background-color: #8BC6FF !important;
+  color: #063462 !important;
+  border-color: #7BB8FF !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .side-menu a,
+body.bvi-body[data-bvi-theme="brown"] .side-menu a {
+  background-color: #F0EBC9 !important;
+  color: #4D4B43 !important;
+  border-color: #E8E4C5 !important;
+}
+
+.bvi-body[data-bvi-theme="brown"] .side-menu li.selected a,
+body.bvi-body[data-bvi-theme="brown"] .side-menu li.selected a {
+  background-color: #E8E4C5 !important;
+  color: #4D4B43 !important;
+  border-color: #D8D4B5 !important;
+}
+
+.bvi-body[data-bvi-theme="brown"] .side-menu-select,
+body.bvi-body[data-bvi-theme="brown"] .side-menu-select {
+  background-color: #F0EBC9 !important;
+  color: #4D4B43 !important;
+  border-color: #E8E4C5 !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .side-menu a,
+body.bvi-body[data-bvi-theme="green"] .side-menu a {
+  background-color: #2D1F12 !important;
+  color: #A9E44D !important;
+  border-color: #2A1C10 !important;
+}
+
+.bvi-body[data-bvi-theme="green"] .side-menu li.selected a,
+body.bvi-body[data-bvi-theme="green"] .side-menu li.selected a {
+  background-color: #3B2716 !important;
+  color: #A9E44D !important;
+  border-color: #4A321A !important;
+}
+
+.bvi-body[data-bvi-theme="green"] .side-menu-select,
+body.bvi-body[data-bvi-theme="green"] .side-menu-select {
+  background-color: #2D1F12 !important;
+  color: #A9E44D !important;
+  border-color: #2A1C10 !important;
+}
+
+/* Отключение анимаций и переходов */
+.bvi-body .side-menu a,
+.bvi-body .side-menu-select,
+.bvi-body .side-menu li {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Адаптивность для слабовидящих - всегда показываем меню */
+@media (max-width: 992px) {
+  .bvi-body .side-menu,
+  body.bvi-body .side-menu {
+    display: flex !important;
+  }
+  
+  .bvi-body .side-menu-select,
+  body.bvi-body .side-menu-select {
+    display: none !important;
+  }
+}
+
+/* Переопределение для меню с иконками */
+.bvi-body .side-menu.with-icons a,
+body.bvi-body .side-menu.with-icons a {
+  padding-left: 16px !important;
+}
+
+.bvi-body .side-menu.with-icons a::before,
+body.bvi-body .side-menu.with-icons a::before {
+  display: none !important;
+}
+
+
+/*breadcrumb*/
+
+/* Основное переопределение для хлебных крошек */
+.bvi-body .breadcrumb li a,
+body.bvi-body .breadcrumb li a,
+html .bvi-body .breadcrumb li a {
+  background-color: inherit !important;
+  color: inherit !important;
+  border: none !important;
+}
+
+.bvi-body .breadcrumb li a:before,
+.bvi-body .breadcrumb li a:after,
+body.bvi-body .breadcrumb li a:before,
+body.bvi-body .breadcrumb li a:after {
+  display: none !important;
+}
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .breadcrumb li a,
+body.bvi-body[data-bvi-theme="black"] .breadcrumb li a {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.bvi-body[data-bvi-theme="black"] .breadcrumb li:nth-child(even) a,
+body.bvi-body[data-bvi-theme="black"] .breadcrumb li:nth-child(even) a {
+  background-color: #555555 !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .breadcrumb li a,
+body.bvi-body[data-bvi-theme="white"] .breadcrumb li a {
+  background-color: #3498db !important;
+  color: #ffffff !important;
+}
+
+.bvi-body[data-bvi-theme="white"] .breadcrumb li:nth-child(even) a,
+body.bvi-body[data-bvi-theme="white"] .breadcrumb li:nth-child(even) a {
+  background-color: #2980b9 !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .breadcrumb li a,
+body.bvi-body[data-bvi-theme="blue"] .breadcrumb li a {
+  background-color: #5BA3FF !important;
+  color: #063462 !important;
+}
+
+.bvi-body[data-bvi-theme="blue"] .breadcrumb li:nth-child(even) a,
+body.bvi-body[data-bvi-theme="blue"] .breadcrumb li:nth-child(even) a {
+  background-color: #4A94FF !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .breadcrumb li a,
+body.bvi-body[data-bvi-theme="brown"] .breadcrumb li a {
+  background-color: #D8D4B5 !important;
+  color: #4D4B43 !important;
+}
+
+.bvi-body[data-bvi-theme="brown"] .breadcrumb li:nth-child(even) a,
+body.bvi-body[data-bvi-theme="brown"] .breadcrumb li:nth-child(even) a {
+  background-color: #C8C4A5 !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .breadcrumb li a,
+body.bvi-body[data-bvi-theme="green"] .breadcrumb li a {
+  background-color: #4A321A !important;
+  color: #A9E44D !important;
+}
+
+.bvi-body[data-bvi-theme="green"] .breadcrumb li:nth-child(even) a,
+body.bvi-body[data-bvi-theme="green"] .breadcrumb li:nth-child(even) a {
+  background-color: #5A422A !important;
+}
+
+/* Отключение hover и active эффектов */
+.bvi-body .breadcrumb li a:hover,
+.bvi-body .breadcrumb li a:active,
+body.bvi-body .breadcrumb li a:hover,
+body.bvi-body .breadcrumb li a:active {
+  background-color: inherit !important;
+  transform: none !important;
+}
+
+.bvi-body .breadcrumb li a:hover:before,
+.bvi-body .breadcrumb li a:hover:after,
+.bvi-body .breadcrumb li a:active:before,
+.bvi-body .breadcrumb li a:active:after,
+body.bvi-body .breadcrumb li a:hover:before,
+body.bvi-body .breadcrumb li a:hover:after,
+body.bvi-body .breadcrumb li a:active:before,
+body.bvi-body .breadcrumb li a:active:after {
+  display: none !important;
+}
+
+/* Упрощенный вид без стрелок */
+.bvi-body .breadcrumb li a,
+body.bvi-body .breadcrumb li a {
+  border-radius: 4px !important;
+  margin-right: 5px !important;
+  position: relative !important;
+}
+
+.bvi-body .breadcrumb li:first-child a,
+body.bvi-body .breadcrumb li:first-child a {
+  border-radius: 4px !important;
+}
+
+.bvi-body .breadcrumb li:last-child a,
+body.bvi-body .breadcrumb li:last-child a {
+  border-radius: 4px !important;
+  margin-right: 0 !important;
+}
+
+/* Основное переопределение для секции хлебных крошек */
+.bvi-body .breadcrumb-section,
+body.bvi-body .breadcrumb-section,
+html .bvi-body .breadcrumb-section {
+  background-color: inherit !important;
+  border-bottom-color: inherit !important;
+}
+
+/* Черная тема */
+.bvi-body[data-bvi-theme="black"] .breadcrumb-section,
+body.bvi-body[data-bvi-theme="black"] .breadcrumb-section {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+/* Белая тема */
+.bvi-body[data-bvi-theme="white"] .breadcrumb-section,
+body.bvi-body[data-bvi-theme="white"] .breadcrumb-section {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+/* Синяя тема */
+.bvi-body[data-bvi-theme="blue"] .breadcrumb-section,
+body.bvi-body[data-bvi-theme="blue"] .breadcrumb-section {
+  background-color: #9DD1FF !important;
+  border-bottom: 1px solid #7BB8FF !important;
+}
+
+/* Коричневая тема */
+.bvi-body[data-bvi-theme="brown"] .breadcrumb-section,
+body.bvi-body[data-bvi-theme="brown"] .breadcrumb-section {
+  background-color: #F7F3D6 !important;
+  border-bottom: 1px solid #E8E4C5 !important;
+}
+
+/* Зеленая тема */
+.bvi-body[data-bvi-theme="green"] .breadcrumb-section,
+body.bvi-body[data-bvi-theme="green"] .breadcrumb-section {
+  background-color: #3B2716 !important;
+  border-bottom: 1px solid #2A1C10 !important;
+}

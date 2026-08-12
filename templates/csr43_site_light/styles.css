@@ -1,0 +1,265 @@
+/* Задаем для html, чтобы использовать единицы rem */
+html {
+  font-size: 100%; /* Это обычно 16px по умолчанию в браузерах */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.125rem; /* 18px / 16px = 1.125 */
+  line-height: 1.6; /* Можно чуть больше, например 1.6 */
+  color: #333;
+  /*overflow-x:hidden;*/
+}
+/*Шапка*/
+.special-div{
+	background-color: #f8f9fa;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+@media (max-width: 576px) {
+    .special-div {
+       	padding: 8px 0;
+    }
+}
+
+.logo-menu-div {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-header {
+    max-height: 80px;
+    width: auto;
+    transition: transform 0.2s ease;
+}
+
+.logo-header:hover {
+    transform: scale(1.05);
+}
+
+.organization-name {
+    line-height: 1.2;
+}
+
+/* Кастомные размеры шрифта */
+.fs-7 {
+    font-size: 0.875rem;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .logo-menu-div {
+        padding: 15px 0;
+    }
+    
+    .organization-name {
+        /*text-align: center;*/
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-header {
+        max-height: 60px;
+    }
+    
+    .organization-name br {
+        display: none;
+    }
+    
+    .organization-name span {
+        display: inline;
+    }
+    
+    .organization-name span:not(:last-child)::after {
+        content: " ";
+    }
+}
+
+#header-main-link .organization-name {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+#header-main-link .organization-name:hover {
+    transform: scale(1.05) translateY(-0.0625rem);
+}
+
+.breadcrumb-section {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 12px 0;
+}
+
+
+/*Подвал*/
+
+/* Добавьте в ваш CSS */
+.footer-text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.footer-text-muted:hover {
+    color: #ffffff !important;
+}
+
+.footer {
+    /*background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);*/
+}
+
+.footer-logo {
+    width: 50px;
+    height: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer a:hover {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+}
+
+.footer .bi {
+    font-size: 1.5rem;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .footer {
+        text-align: center;
+    }
+    
+    .footer-logo {
+        margin: 0 auto 15px;
+    }
+    
+    .footer .d-flex.align-items-start {
+        flex-direction: column;
+        align-items: center !important;
+    }
+    
+    .footer .d-flex.align-items-start .me-3 {
+        margin-right: 0 !important;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer {
+        font-size: 0.9rem;
+    }
+    
+    .footer-logo {
+        width: 40px;
+    }
+    
+    .footer h6 {
+        font-size: 1rem;
+    }
+    
+    .footer .btn-sm {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media (max-width: 400px) {
+    .footer .row .col-md-6 {
+        text-align: center !important;
+    }
+    
+    .footer .justify-content-md-end {
+        justify-content: center !important;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .footer .me-4 {
+        margin-right: 0 !important;
+    }
+}
+
+/*Основной контент*/
+main{
+	min-height: 500px;
+}
+
+/*Скрытая ссылка для лучшей доступности*/
+.skip-link {
+    position: absolute;
+    clip: rect(0 0 0 0); /* Стандартный способ скрытия для доступности */
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.skip-link:focus {
+    position: fixed;
+    top: 0;
+    left: 6px;
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    width: auto;
+    background: #0056b3;
+    color: white;
+    padding: 12px 16px;
+    z-index: 10000;
+}
+
+/*Название страницы (для НЕ главной)*/
+.page-name{
+	margin-top: 1.5rem;
+}
+
+/* Триггеры Fancybox */
+.gallery-media {
+    position: relative;
+}
+
+.gallery-expand-button {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+}
+
+.gallery-expand-button i {
+		margin-right: 6px;
+		margin-left: 6px;
+}
+
+.gallery-expand-button:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-expand-button .bi-arrows-angle-expand {
+    color: #333;
+    font-size: 16px;
+}
+
+.gallery-item-link {
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.footer-social-icon{
+ filter: brightness(0) invert(1); /* Белые иконки на темном фоне */
+    opacity: 0.8; /* Немного прозрачности */
+    transition: all 0.3s ease;
+height: 40px;
+width: 40px;
+}
+.footer-social-icon:hover{
+ opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}

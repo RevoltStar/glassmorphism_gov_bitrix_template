@@ -1,0 +1,47 @@
+.usefull-resource-banner-img {
+	border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(0.95);
+}
+
+.usefull-resource-banner-img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.05) contrast(1.1);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+
+.usefull-resource-banner-img.horizontal{
+	width: 100%;
+}
+
+
+
+
+.usefull-resource-banner.vertical {
+    height: 150px;
+    border-radius: 8px;
+    /*overflow: hidden;*/
+    position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+.usefull-resource-banner-img.vertical {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /*transition: transform 0.3s ease;*/
+}
+
+.usefull-resource-banner-link.vertical {
+    width: 100%;
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    position: relative;
+	max-width: 250px;
+}

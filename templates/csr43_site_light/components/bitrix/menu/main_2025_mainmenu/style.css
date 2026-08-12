@@ -1,0 +1,488 @@
+/** Top menu - Modern Redesign **/
+.top-menu, 
+.top-menu ul {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    min-height: 50px;
+    width: 100%;
+    list-style: none;
+    font-size: 14px;
+    float: left;
+}
+
+.top-menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Links */
+.top-menu a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 2px;
+    text-align: center;
+}
+
+.top-menu li {
+    position: relative;
+    flex-grow: 1;
+}
+
+/* Root items */
+.top-menu li a.root-item {
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 12px 16px;
+    background: rgba(243, 243, 243, 0.5);
+}
+
+/* Root menu selected */
+.top-menu li a.root-item-selected {
+    background: rgba(13, 110, 253, 0.15);
+    color: #0d6efd;
+    font-weight: 600;
+    padding: 12px 16px;
+}
+
+/* Root items: hover */
+.top-menu li:hover a.root-item, 
+.top-menu li.jshover a.root-item {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+/* Item-parents */
+.top-menu a.parent {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") center right no-repeat;
+    background-position: calc(100% - 8px) center;
+    padding-right: 24px;
+}
+
+/* Denied items */
+.top-menu a.denied {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23dc3545' viewBox='0 0 16 16'%3E%3Cpath d='M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM7 11.5a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0v7zm1-7v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/%3E%3C/svg%3E") center right no-repeat;
+    background-position: calc(100% - 8px) center;
+    padding-right: 24px;
+    color: #6c757d;
+    opacity: 0.6;
+}
+
+/* Child-items: hover */
+.top-menu li:hover, 
+.top-menu li.jshover {
+    background: transparent;
+}
+
+/* Child-items selected */
+.top-menu li.item-selected {
+    background: transparent;
+}
+
+.top-menu li.item-selected > a {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+/* Sub-menu box */
+.top-menu li ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    z-index: 1000;
+    height: auto;
+    width: 220px;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    padding: 8px 0;
+}
+
+/* Sub-menu item box */
+.top-menu li li {
+    width: 100%;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.top-menu li li:last-child {
+    border-bottom: none;
+}
+
+/* Item link */
+.top-menu li ul a {
+    text-align: left;
+    padding: 10px 16px;
+    margin: 0;
+    border-radius: 0;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+/* Items text color & size */
+.top-menu li a,
+.top-menu li:hover li a,
+.top-menu li.jshover li a,
+.top-menu li:hover li:hover li a,
+.top-menu li.jshover li.jshover li a,
+.top-menu li:hover li:hover li:hover li a,
+.top-menuu li.jshover li.jshover li.jshover li a,
+.top-menu li:hover li:hover li:hover li:hover li a,
+.top-menu li.jshover li.jshover li.jshover li.jshover li a,
+.top-menu li:hover li:hover li:hover li:hover li:hover li a,
+.top-menu li.jshover li.jshover li.jshover li.jshover li.jshover li a {
+    color: #2c3e50;
+    font-weight: 400;
+}
+
+/* Items text color & size: hover */
+.top-menu li ul a:hover,
+.top-menu li:hover li:hover a,
+.top-menu li.jshover li.jshover a,
+.top-menu li:hover li:hover li:hover a,
+.top-menu li.jshover li.jshover li.jshover a,
+.top-menu li:hover li:hover li:hover li:hover a,
+.top-menu li.jshover li.jshover li.jshover li.jshover a,
+.top-menu li:hover li:hover li:hover li:hover li:hover a,
+.top-menu li.jshover li.jshover li.jshover li.jshover li.jshover a,
+.top-menu li:hover li:hover li:hover li:hover li:hover li:hover a,
+.top-menu li.jshover li.jshover li.jshover li.jshover li.jshover li.jshover a {
+    color: #0d6efd;
+}
+
+/* Multi-level sub-menus */
+.top-menu li ul ul {
+    position: absolute;
+    top: -8px;
+    left: -100%;
+    display: none;
+}
+
+.top-menu li:hover ul ul,
+.top-menu li.jshover ul ul,
+.top-menu li:hover ul ul ul,
+.top-menu li.jshover ul ul ul,
+.top-menu li:hover ul ul ul ul,
+.top-menu li.jshover ul ul ul ul,
+.top-menu li:hover ul ul ul ul ul,
+.top-menu li.jshover ul ul ul ul ul {
+    display: none;
+}
+
+.top-menu li:hover ul,
+.top-menu li.jshover ul,
+.top-menu li li:hover ul,
+.top-menu li li.jshover ul,
+.top-menu li li li:hover ul,
+.top-menu li li li.jshover ul,
+.top-menu li li li li:hover ul,
+.top-menu li li li li.jshover ul,
+.top-menu li li li li li:hover ul,
+.top-menu li li li li li.jshover ul {
+    display: block;
+}
+
+div.menu-clear-left {
+    clear: left;
+}
+
+/* Стили для мобильного меню */
+.mobile-menu {
+    display: none;
+    position: relative;
+    z-index: 1001;
+}
+
+/* Гамбургер кнопка - увеличенная до 40x40 */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    padding: 12px;
+    background: rgba(13, 110, 253, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(13, 110, 253, 0.2);
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #2c3e50;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Оверлей */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Боковое меню - перенесено слева */
+.mobile-menu-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 320px;
+    max-width: 90%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 1001;
+    transition: left 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.mobile-menu-close {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-close span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background: #2c3e50;
+    transform-origin: center;
+    margin-left: -10px;
+}
+
+.mobile-menu-close span:first-child {
+    transform: rotate(45deg);
+}
+
+.mobile-menu-close span:last-child {
+    transform: rotate(-45deg);
+}
+
+.mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu-item {
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.mobile-menu-link-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-menu-link {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    flex-grow: 1;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-link:hover {
+    background: rgba(13, 110, 253, 0.05);
+}
+
+.mobile-menu-selected {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.mobile-menu-denied {
+    color: #6c757d;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mobile-menu-arrow {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+}
+
+.mobile-menu-arrow:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-arrow::before,
+.mobile-menu-arrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 10px;
+    height: 2px;
+    background: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-arrow::before {
+    transform: translateY(-50%) rotate(45deg);
+    right: 12px;
+}
+
+.mobile-menu-arrow::after {
+    transform: translateY(-50%) rotate(-45deg);
+    right: 6px;
+}
+
+.mobile-menu-parent.active .mobile-menu-arrow {
+    transform: rotate(180deg);
+}
+
+.mobile-submenu {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+}
+
+.mobile-submenu .mobile-menu-link {
+    padding-left: 40px;
+    font-weight: 400;
+}
+
+.mobile-submenu .mobile-submenu .mobile-menu-link {
+    padding-left: 60px;
+}
+
+/* Анимации */
+.mobile-menu-sidebar.active {
+    left: 0;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 991.98px) {
+    .top-menu {
+        display: none;
+    }
+    
+    .mobile-menu {
+        display: block;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-menu-sidebar {
+        width: 280px;
+    }
+    
+    .mobile-menu-link {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .mobile-submenu .mobile-menu-link {
+        padding-left: 30px;
+    }
+    
+    .mobile-submenu .mobile-submenu .mobile-menu-link {
+        padding-left: 45px;
+    }
+}
+
+/* Анимации для плавного появления */
+.top-menu li ul {
+    animation: fadeInUp 0.2s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Улучшенные hover-эффекты */
+.top-menu a {
+    position: relative;
+    overflow: hidden;
+}
+
+.top-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.top-menu a:hover::before {
+    left: 100%;
+}
