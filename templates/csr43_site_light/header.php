@@ -274,7 +274,7 @@ $APPLICATION->IncludeComponent(
             <!-- Меню -->
             <div class="col-xl-6 col-lg-6 col-md-12 col-12">
 				<div class="d-flex justify-content-center justify-content-lg-end">
-                    <nav class="navbar navbar-expand-lg p-0" aria-label="Основная навигация сайта">
+                    <div class="navbar navbar-expand-lg p-0">
 						<?php
 							$APPLICATION->IncludeComponent("bitrix:menu","top",Array(
 								"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_top_root_type', 'top'), 'top'),
@@ -289,7 +289,7 @@ $APPLICATION->IncludeComponent(
 							"MENU_CACHE_GET_VARS" => "" 
 							)
 						);?>
-                    </nav>
+                    </div>
 				</div>
             </div>
         </div>

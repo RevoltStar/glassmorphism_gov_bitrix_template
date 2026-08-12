@@ -41,6 +41,7 @@
             openButton.addEventListener('click', open);
             closeButton.addEventListener('click', () => close(true));
             backdrop.addEventListener('click', () => close(true));
+            root.addEventListener('top-menu:close', () => close(false));
             root.querySelectorAll('[data-top-menu-submenu-toggle]').forEach((button) => {
                 button.addEventListener('click', () => {
                     const submenu = document.getElementById(button.getAttribute('aria-controls') || '');
@@ -68,6 +69,16 @@
                 const drawer = root.querySelector('[data-top-menu-drawer]');
                 const closeButton = root.querySelector('[data-top-menu-close]');
                 if (drawer && !drawer.hidden && closeButton) { closeButton.click(); }
+            });
+        });
+        const desktopMedia = window.matchMedia('(min-width: 62rem)');
+        desktopMedia.addEventListener('change', (event) => {
+            if (!event.matches) { return; }
+            document.querySelectorAll('[data-top-menu]').forEach((root) => {
+                const drawer = root.querySelector('[data-top-menu-drawer]');
+                if (drawer && !drawer.hidden) {
+                    root.dispatchEvent(new CustomEvent('top-menu:close'));
+                }
             });
         });
         if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initializeTopMenus); }
