@@ -159,6 +159,7 @@ $renderSections = static function (
                 continue;
             }
             $name = site_string($section['name'] ?? '');
+            $anchorId = site_string($section['anchor_id'] ?? '');
             $depth = max(0, (int)($section['depth'] ?? 0));
             $employees = is_array($section['employees'] ?? null) ? $section['employees'] : [];
             $children = is_array($section['children'] ?? null) ? $section['children'] : [];
@@ -171,8 +172,10 @@ $renderSections = static function (
                 ['CONFIRM' => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM')]
             );
             ?>
-            <li class="org-structure__node" data-depth="<?=$depth?>">
-                <section class="org-structure__section" id="<?=htmlspecialcharsbx($componentTemplate->GetEditAreaId($sectionId))?>">
+            <li class="org-structure__node"
+                id="<?=htmlspecialcharsbx($componentTemplate->GetEditAreaId($sectionId))?>"
+                data-depth="<?=$depth?>">
+                <section class="org-structure__section"<?php if ($anchorId !== ''): ?> id="<?=htmlspecialcharsbx($anchorId)?>"<?php endif; ?>>
                     <header class="csr43-light-surface org-structure__section-header">
                         <i class="bi bi-diagram-3 org-structure__section-icon" aria-hidden="true"></i>
                         <h2 class="org-structure__section-title"><?=htmlspecialcharsbx($name)?></h2>

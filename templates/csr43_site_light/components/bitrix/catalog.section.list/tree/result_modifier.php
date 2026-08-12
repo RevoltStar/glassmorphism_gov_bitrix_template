@@ -50,12 +50,23 @@ foreach ($sourceSections as $sourceSection) {
 
     $count = max(0, (int)($sourceSection['ELEMENT_CNT'] ?? 0));
     $name = site_plain_text($sourceSection['~NAME'] ?? $sourceSection['NAME'] ?? '');
+    $anchorId = site_section_anchor_id($name, $sectionId);
+    $baseUrl = site_url($sourceSection['SECTION_PAGE_URL'] ?? null, '');
+    $url = '';
+    if ($baseUrl !== '') {
+        $fragmentPosition = strpos($baseUrl, '#');
+        if ($fragmentPosition !== false) {
+            $baseUrl = substr($baseUrl, 0, $fragmentPosition);
+        }
+        $url = $baseUrl . '#' . $anchorId;
+    }
     $nodes[$sectionId] = [
         'id' => $sectionId,
         'parent_id' => max(0, (int)($sourceSection['IBLOCK_SECTION_ID'] ?? 0)),
         'depth' => max(0, (int)($sourceSection['DEPTH_LEVEL'] ?? 0)),
         'name' => $name,
-        'url' => site_url($sourceSection['SECTION_PAGE_URL'] ?? null, ''),
+        'anchor_id' => $anchorId,
+        'url' => $url,
         'count' => $count,
         'show_count' => $showCount && $count > 0,
         'is_current' => $sectionId === $selectedSectionId,

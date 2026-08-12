@@ -210,6 +210,40 @@ function site_plain_text(mixed $value): string
     return trim(strip_tags(site_string($value)));
 }
 
+function site_section_anchor_id(mixed $name, mixed $sectionId = 0): string
+{
+    $source = site_plain_text($name);
+    $transliteration = [
+        'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd',
+        'е' => 'e', 'ё' => 'yo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i',
+        'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n',
+        'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't',
+        'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'ts', 'ч' => 'ch',
+        'ш' => 'sh', 'щ' => 'sch', 'ъ' => '', 'ы' => 'y', 'ь' => '',
+        'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
+        'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G', 'Д' => 'D',
+        'Е' => 'E', 'Ё' => 'Yo', 'Ж' => 'Zh', 'З' => 'Z', 'И' => 'I',
+        'Й' => 'Y', 'К' => 'K', 'Л' => 'L', 'М' => 'M', 'Н' => 'N',
+        'О' => 'O', 'П' => 'P', 'Р' => 'R', 'С' => 'S', 'Т' => 'T',
+        'У' => 'U', 'Ф' => 'F', 'Х' => 'H', 'Ц' => 'Ts', 'Ч' => 'Ch',
+        'Ш' => 'Sh', 'Щ' => 'Sch', 'Ъ' => '', 'Ы' => 'Y', 'Ь' => '',
+        'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya',
+    ];
+
+    $slug = strtolower(strtr($source, $transliteration));
+    $slug = preg_replace('/[^a-z0-9]+/', '_', $slug);
+    $slug = is_string($slug) ? trim($slug, '_') : '';
+
+    if ($slug === '') {
+        $normalizedSectionId = max(0, (int)$sectionId);
+        $slug = $normalizedSectionId > 0
+            ? 'id-' . $normalizedSectionId
+            : 'id-' . substr(hash('sha256', $source), 0, 12);
+    }
+
+    return 'section-' . $slug;
+}
+
 function site_path_is_excluded(mixed $currentPath, mixed $excludedPaths): bool
 {
     if (!is_string($currentPath)) {

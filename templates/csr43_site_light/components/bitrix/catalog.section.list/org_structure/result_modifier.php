@@ -34,11 +34,13 @@ foreach ($sourceSections as $sourceSection) {
 
     $parentId = max(0, (int)($sourceSection['IBLOCK_SECTION_ID'] ?? 0));
     $depth = max(0, (int)($sourceSection['DEPTH_LEVEL'] ?? 0));
+    $name = site_plain_text($sourceSection['~NAME'] ?? $sourceSection['NAME'] ?? '');
     $sections[$sectionId] = [
         'id' => $sectionId,
         'parent_id' => $parentId,
         'depth' => $depth,
-        'name' => site_plain_text($sourceSection['~NAME'] ?? $sourceSection['NAME'] ?? ''),
+        'name' => $name,
+        'anchor_id' => site_section_anchor_id($name, $sectionId),
         'edit_link' => site_string($sourceSection['EDIT_LINK'] ?? ''),
         'delete_link' => site_string($sourceSection['DELETE_LINK'] ?? ''),
         'employees' => [],
