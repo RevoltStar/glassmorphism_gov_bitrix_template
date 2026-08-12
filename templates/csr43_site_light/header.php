@@ -276,7 +276,7 @@ $APPLICATION->IncludeComponent(
 				<div class="d-flex justify-content-center justify-content-lg-end">
                     <nav class="navbar navbar-expand-lg p-0" aria-label="Основная навигация сайта">
 						<?php
-							$APPLICATION->IncludeComponent("bitrix:menu","main_2025_mainmenu",Array(
+							$APPLICATION->IncludeComponent("bitrix:menu","top",Array(
 								"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_top_root_type', 'top'), 'top'),
 								"MAX_LEVEL" => "3",
 								"CHILD_MENU_TYPE" => site_menu_type(get_info('menu_top_child_type', 'right'), 'right'),

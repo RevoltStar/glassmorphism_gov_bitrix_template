@@ -29,7 +29,7 @@ if (!$isExcludedPage && !$is404Error): ?>
     <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
         <?php $APPLICATION->IncludeComponent(
             "bitrix:menu",
-            "main_2025_sidemenu",
+            "side",
             Array(
                 "ALLOW_MULTI_SELECT" => "Y",
                 "CHILD_MENU_TYPE" => site_menu_type(get_info('menu_side_child_type', 'right'), 'right'),
