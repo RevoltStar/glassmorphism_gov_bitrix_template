@@ -34,6 +34,29 @@
         (closeButton || dialog).focus();
     };
 
+    const initializeEscapeHandler = () => {
+        const documentRoot = document.documentElement;
+        if (documentRoot.dataset.governmentSitesEscapeInitialized === 'true') {
+            return;
+        }
+
+        documentRoot.dataset.governmentSitesEscapeInitialized = 'true';
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') {
+                return;
+            }
+
+            const dialog = getDialog();
+            const toggle = getToggle();
+            if (!dialog || dialog.hidden || !toggle) {
+                return;
+            }
+
+            event.preventDefault();
+            closeDialog(dialog, toggle, true);
+        });
+    };
+
     function initializeGovernmentSites() {
         const dialog = getDialog();
         const toggle = getToggle();
@@ -41,6 +64,8 @@
         if (!dialog || !toggle) {
             return;
         }
+
+        initializeEscapeHandler();
 
         if (toggle.dataset.governmentSitesInitialized !== 'true') {
             toggle.dataset.governmentSitesInitialized = 'true';
@@ -78,12 +103,6 @@
             }
         });
 
-        dialog.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                event.preventDefault();
-                closeDialog(dialog, getToggle(), true);
-            }
-        });
     }
 
     if (document.readyState === 'loading') {

@@ -16,7 +16,7 @@ foreach (is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [] as $item
     }
 
     $id = max(0, (int)($item['ID'] ?? 0));
-    $name = site_plain_text($item['NAME'] ?? '');
+    $name = site_plain_text($item['~NAME'] ?? $item['NAME'] ?? '');
     if ($id <= 0 || $name === '') {
         continue;
     }

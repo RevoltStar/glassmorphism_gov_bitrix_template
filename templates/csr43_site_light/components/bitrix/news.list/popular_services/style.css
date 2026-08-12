@@ -112,7 +112,7 @@
 }
 
 .popular-service__cta:focus-visible {
-    outline: 3px solid rgba(13, 110, 253, 0.25);
+    outline: 2px solid var(--csr43-light-color-accent);
     outline-offset: 3px;
 }
 
