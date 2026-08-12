@@ -1,0 +1,280 @@
+.org-structure {
+    --org-structure-indent: clamp(1rem, 3vw, 2rem);
+    --org-structure-connector: var(--csr43-light-border);
+
+    min-width: 0;
+    color: var(--csr43-light-color-text);
+}
+
+.org-structure__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.org-structure__list .org-structure__list {
+    position: relative;
+    margin-top: 1.25rem;
+    padding-left: var(--org-structure-indent);
+}
+
+.org-structure__list .org-structure__list::before {
+    position: absolute;
+    top: 0;
+    bottom: 1rem;
+    left: calc(var(--org-structure-indent) / 2);
+    width: 1px;
+    background: var(--org-structure-connector);
+    content: '';
+}
+
+.org-structure__node {
+    min-width: 0;
+}
+
+.org-structure__node + .org-structure__node {
+    margin-top: 1.5rem;
+}
+
+.org-structure__section {
+    min-width: 0;
+}
+
+.org-structure__section-header {
+    position: relative;
+    display: flex;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1rem var(--csr43-light-padding);
+    align-items: center;
+    color: var(--csr43-light-color-heading);
+    border-radius: var(--csr43-light-radius);
+}
+
+.org-structure__list .org-structure__list .org-structure__section-header::before {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: calc(var(--org-structure-indent) / 2);
+    height: 1px;
+    background: var(--org-structure-connector);
+    content: '';
+}
+
+.org-structure__section-icon {
+    flex: 0 0 auto;
+    color: var(--csr43-light-color-accent);
+    font-size: 1.25rem;
+}
+
+.org-structure__section-title {
+    min-width: 0;
+    margin: 0;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.org-structure__employees {
+    margin-top: 1rem;
+}
+
+.org-structure__employees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+.org-structure__employee {
+    display: flex;
+    min-width: 0;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.org-structure__employee[hidden] {
+    display: none;
+}
+
+.org-structure__employee-photo {
+    position: relative;
+    width: min(100%, 15rem);
+    margin-bottom: 1rem;
+}
+
+.org-structure__employee-image {
+    display: block;
+    width: 100%;
+    max-height: 18rem;
+    object-fit: cover;
+    border-radius: calc(var(--csr43-light-radius) * 0.75);
+}
+
+.org-structure__photo-link {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 1;
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--csr43-light-color-heading);
+    background: var(--csr43-light-bg);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: 50%;
+    box-shadow: var(--csr43-light-shadow);
+    text-decoration: none;
+}
+
+.org-structure__photo-link:hover,
+.org-structure__photo-link:focus-visible {
+    color: var(--csr43-light-color-accent);
+    border-color: var(--csr43-light-border-hover);
+}
+
+.org-structure__photo-link:focus-visible,
+.org-structure__more-button:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.25);
+    outline-offset: 3px;
+}
+
+.csr43-light-icon.org-structure__employee-placeholder {
+    --csr43-light-icon-size: 6rem;
+    --csr43-light-icon-radius: 50%;
+    --csr43-light-icon-font-size: 3rem;
+
+    margin-bottom: 1rem;
+}
+
+.org-structure__employee-info,
+.org-structure__vacancy {
+    min-width: 0;
+    width: 100%;
+}
+
+.org-structure__employee-name {
+    margin: 0;
+    color: var(--csr43-light-color-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.org-structure__employee-position {
+    margin: 0.45rem 0 0;
+    color: var(--csr43-light-color-muted);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.org-structure__contacts {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+.org-structure__contact {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: start;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.org-structure__contact i {
+    color: var(--csr43-light-color-accent);
+}
+
+.org-structure__contact a {
+    color: var(--csr43-light-color-accent);
+    overflow-wrap: anywhere;
+}
+
+.org-structure__vacancy {
+    margin: auto 0;
+    color: var(--csr43-light-color-muted);
+}
+
+.org-structure__vacancy-icon {
+    color: var(--csr43-light-color-muted);
+    font-size: 3rem;
+}
+
+.org-structure__vacancy-label {
+    margin: 0.75rem 0 0;
+    font-weight: 600;
+}
+
+.org-structure__more {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.org-structure__more-button {
+    display: inline-flex;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    align-items: center;
+    color: var(--csr43-light-color-accent);
+    background: var(--csr43-light-bg);
+    border: 1px solid var(--csr43-light-color-accent);
+    border-radius: var(--csr43-light-radius);
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease;
+}
+
+.org-structure__more-button:hover {
+    color: var(--csr43-light-bg);
+    background: var(--csr43-light-color-accent);
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.org-structure__empty {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    padding: var(--csr43-light-padding);
+    align-items: center;
+    color: var(--csr43-light-color-muted);
+    border-radius: var(--csr43-light-radius);
+}
+
+@media (max-width: 575.98px) {
+    .org-structure {
+        --org-structure-indent: 0.75rem;
+    }
+
+    .org-structure__list .org-structure__list {
+        padding-left: var(--org-structure-indent);
+    }
+
+    .org-structure__list .org-structure__list::before,
+    .org-structure__list .org-structure__list .org-structure__section-header::before {
+        display: none;
+    }
+
+    .org-structure__section-header,
+    .org-structure__employee {
+        --csr43-light-padding: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .org-structure__more-button {
+        transition-duration: 0.01ms;
+    }
+}
