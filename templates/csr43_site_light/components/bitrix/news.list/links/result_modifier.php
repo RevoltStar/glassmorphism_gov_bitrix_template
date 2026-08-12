@@ -1,0 +1,12 @@
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) { die(); }
+use Bitrix\Main\Loader;
+$arResult = is_array($arResult ?? null) ? $arResult : [];
+$arParams = is_array($arParams ?? null) ? $arParams : [];
+$iblockId=max(0,(int)($arParams['IBLOCK_ID']??0)); $sectionId=max(0,(int)($arParams['SECTION_ID']??$arParams['PARENT_SECTION']??0));
+$showSection=($arParams['SHOW_SECTION_NAME']??'N')==='Y'; $showDate=($arParams['SHOW_DATE']??'N')==='Y' && ($arParams['SHOW_UPDATE_DATE']??'Y')==='Y';
+$allowedDateFields=['ACTIVE_FROM','DATE_CREATE','TIMESTAMP_X']; $dateField=site_string($arParams['DATE_FIELD']??'TIMESTAMP_X'); $dateField=in_array($dateField,$allowedDateFields,true)?$dateField:'TIMESTAMP_X';
+$view=['section'=>null,'items'=>[],'pager_html'=>site_safe_pagination_html($arResult['NAV_STRING']??''),'show_top_pager'=>($arParams['DISPLAY_TOP_PAGER']??'N')==='Y','show_bottom_pager'=>($arParams['DISPLAY_BOTTOM_PAGER']??'N')==='Y'];
+if($showSection&&$iblockId>0&&$sectionId>0&&Loader::includeModule('iblock')){$result=CIBlockSection::GetList([],['ID'=>$sectionId,'IBLOCK_ID'=>$iblockId,'CHECK_PERMISSIONS'=>'Y'],false,['ID','NAME','DESCRIPTION']);$section=$result->GetNext();if(is_array($section)){$view['section']=['name'=>site_plain_text($section['~NAME']??$section['NAME']??''),'description'=>site_plain_text($section['~DESCRIPTION']??$section['DESCRIPTION']??'')];}}
+foreach(is_array($arResult['ITEMS']??null)?$arResult['ITEMS']:[] as $item){if(!is_array($item))continue;$properties=is_array($item['PROPERTIES']??null)?$item['PROPERTIES']:[];$linkProperty=is_array($properties['LINK']??null)?$properties['LINK']:[];$iconProperty=is_array($properties['ICON']??null)?$properties['ICON']:[];$url=site_url($linkProperty['VALUE']??null,'');$description=site_plain_text($item['~PREVIEW_TEXT']??$item['PREVIEW_TEXT']??$item['~DETAIL_TEXT']??$item['DETAIL_TEXT']??'');if(mb_strlen($description)>120){$description=rtrim(mb_substr($description,0,120)).'…';}$date='';$timestamp=strtotime(site_string($item[$dateField]??''));if($showDate&&$timestamp!==false){$date=date('d.m.Y H:i',$timestamp);}$view['items'][]=['id'=>max(0,(int)($item['ID']??0)),'name'=>site_plain_text($item['~NAME']??$item['NAME']??''),'description'=>$description,'url'=>$url,'has_link'=>$url!=='','is_external'=>$url!==''&&site_is_external_http_url($url),'icon'=>site_css_classes($iconProperty['VALUE']??'','bi-box-arrow-up-right'),'date'=>$date];}
+$arResult['LINK_LIST']=$view;

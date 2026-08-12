@@ -1,0 +1,19 @@
+.file-library, .file-card, .file-entry { min-width: 0; }
+.file-library__header { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--csr43-light-border); }
+.file-library__header h2, .file-card__header h3 { margin: 0; color: var(--csr43-light-color-heading); overflow-wrap: anywhere; }
+.file-library__header p, .file-card__header p { margin: .4rem 0 0; color: var(--csr43-light-color-muted); overflow-wrap: anywhere; }
+.file-library__items { display: grid; gap: 1rem; }
+.file-card__date { display: inline-flex; gap: .35rem; margin-top: .65rem; color: var(--csr43-light-color-muted); font-size: .9rem; }
+.file-card__files { display: grid; gap: .75rem; margin-top: 1rem; }
+.file-entry { padding: .85rem; background: var(--csr43-light-bg-hover); border: 1px solid var(--csr43-light-border); border-radius: calc(var(--csr43-light-radius) * .75); }
+.file-entry--download { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .75rem; align-items: center; color: var(--csr43-light-color-text); text-decoration: none; }
+.file-entry--download span { display: grid; overflow-wrap: anywhere; }
+.file-entry--download small { color: var(--csr43-light-color-muted); }
+.file-entry details summary, .file-library__collapse > summary { padding: .55rem; color: var(--csr43-light-color-accent); cursor: pointer; font-weight: 600; }
+.file-entry__preview { margin-top: .75rem; text-align: center; }
+.file-entry__preview img, .file-entry video { display: block; width: 100%; max-height: 37.5rem; object-fit: contain; }
+.file-entry a:focus-visible, .file-entry--download:focus-visible, .file-entry summary:focus-visible, .file-library__collapse > summary:focus-visible { outline: 2px solid var(--csr43-light-color-accent); outline-offset: 2px; }
+.file-library__pagination { margin-block: 1.5rem; }
+.file-library__empty { display: flex; gap: .75rem; padding: var(--csr43-light-padding); color: var(--csr43-light-color-muted); border-radius: var(--csr43-light-radius); }
+.file-library__empty strong { color: var(--csr43-light-color-heading); }
+.file-library__empty p { margin: .25rem 0 0; }
