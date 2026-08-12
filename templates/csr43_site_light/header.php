@@ -51,20 +51,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 	);
 	?>
 
-	<?php
-		$APPLICATION->IncludeComponent(
-					"bitrix:main.include",
-					"",
-					array(
-						"AREA_FILE_SHOW" => "file",	// Показывать включаемую область
-						"AREA_FILE_SUFFIX" => "inc",	// Суффикс имени файла включаемой области
-						"COMPOSITE_FRAME_MODE" => "A",	// Голосование шаблона компонента по умолчанию
-						"COMPOSITE_FRAME_TYPE" => "AUTO",	// Содержимое компонента
-						"EDIT_TEMPLATE" => "",	// Шаблон области по умолчанию
-						"PATH" => SITE_TEMPLATE_PATH . "/include/schema_org.php"
-					)
-		);
-	?>
+	<?php include '/local/include/schema_org.php'; ?>
 
 	<!-- Предпочтительно SVG -->
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
