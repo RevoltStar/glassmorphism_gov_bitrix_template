@@ -82,30 +82,28 @@ const SITE_INFO = [
 
 const SITE_INFO_CONFIG = 'csr43_site_light';
 
-if (!function_exists('get_info') && !function_exists('get_info_absolute_url')) {
-    function get_info(string $key, mixed $default = null): mixed
-    {
-        if (array_key_exists($key, SITE_INFO)) {
-            return SITE_INFO[$key];
-        }
-
-        if (func_num_args() >= 2) {
-            return $default;
-        }
-
-        throw new OutOfBoundsException(
-            sprintf('Настройка сайта "%s" не определена.', $key)
-        );
+function get_info(string $key, mixed $default = null): mixed
+{
+    if (array_key_exists($key, SITE_INFO)) {
+        return SITE_INFO[$key];
     }
 
-    function get_info_absolute_url(string $key): string
-    {
-        $value = (string)get_info($key);
-
-        if (preg_match('~^https?://~i', $value)) {
-            return $value;
-        }
-
-        return rtrim((string)get_info('site_url'), '/') . '/' . ltrim($value, '/');
+    if (func_num_args() >= 2) {
+        return $default;
     }
+
+    throw new OutOfBoundsException(
+        sprintf('Настройка сайта "%s" не определена.', $key)
+    );
+}
+
+function get_info_absolute_url(string $key): string
+{
+    $value = (string)get_info($key);
+
+    if (preg_match('~^https?://~i', $value)) {
+        return $value;
+    }
+
+    return rtrim((string)get_info('site_url'), '/') . '/' . ltrim($value, '/');
 }
