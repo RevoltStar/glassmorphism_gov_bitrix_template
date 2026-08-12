@@ -14,6 +14,7 @@ $nationalProjectUrl = site_url(
 );
 $nationalProjectLogoUrl = site_template_image_url(get_info('national_project_logo', ''));
 $nationalProjectLogoAlt = site_plain_text(get_info('national_project_logo_alt', ''));
+$searchPath = site_url(get_info('search_path', ''), '');
 $isTitleExcludedPage = false;
 
 foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitlePage) {
@@ -53,9 +54,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 
 	<?php require dirname(__DIR__, 2) . '/include/schema_org.php'; ?>
 
-	<!-- Предпочтительно SVG -->
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-	<!-- Фолбэк для старых браузеров -->
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<?php
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-5.3.0.min.css");
@@ -63,26 +62,19 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-icons-1.11.1
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/fancybox5.css");
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/ui/light.css");
 
-$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/jquery-3.6.0.min.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/bootstrap-5.3.0.min.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/fancybox5.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/script.js");
 ?>
 	<?php $APPLICATION->ShowHead();?>
 
-		<?php /*
-<script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&position=bottom-
-left&initialState=collapsed&region=33000000000&platform=default_iframe"></script>
-*/
-?>
 </head>
 <body>
-	<a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+	<a href="#main-content" class="skip-link"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_SKIP_TO_CONTENT'))?></a>
 	<div id="panel">
 		<?php $APPLICATION->ShowPanel();?>
 	</div>
 <header class="header">
-<!-- Списки сайтов министерств (изначально скрыто) -->
 	<?php
 $APPLICATION->IncludeComponent(
     "bitrix:news.list", 
@@ -155,7 +147,6 @@ $APPLICATION->IncludeComponent(
     <div class="special-div">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Левая колонка -->
                 <div class="col-lg-6 col-md-12 mb-2 mb-lg-0">
                     <div class="d-flex justify-content-center justify-content-lg-start" role="button">
 						<button
@@ -167,73 +158,59 @@ $APPLICATION->IncludeComponent(
         					aria-controls="full-menu"
         					aria-expanded="false"
 							>
-	                            Сайты органов власти <?=htmlspecialcharsbx(site_plain_text(get_info('region_name_genitive', '')))?>
+	                            <?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_GOVERNMENT_SITES'))?> <?=htmlspecialcharsbx(site_plain_text(get_info('region_name_genitive', '')))?>
                         </button>
                     </div>
                 </div>
                 
-                <!-- Правая колонка -->
                 <div class="col-lg-6 col-md-12">
                     <div class="row g-2 align-items-center">
-                        <!-- Версия для слабовидящих -->
                         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-5">
                             <div class="d-flex justify-content-center justify-content-lg-end m-0 p-0">
 								<?php
-									/*$APPLICATION->IncludeComponent(
-										"vision:vision.special",
-										"main_2025_visionspecial",
-										Array(
-										),
-										false
-									);*/
 									$APPLICATION->IncludeComponent(
-										"csr43:bvi.version", // Пространство имен и имя компонента
-										".default",          // Имя шаблона
-										array()              // Параметры (пустой массив, так как их нет)
+										"csr43:bvi.version",
+										".default",
+										array()
 									);
 								?>
                             </div>
                         </div>
                         
-                        <!-- Поиск -->
                         <div class="col-xl-8 col-lg-7 col-md-6 col-sm-7">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" placeholder="Поиск..." aria-label="Поиск" id="searchInput">
-                                <button class="btn btn-primary" type="button" id="searchButton" aria-label="Найти">
+                            <?php if ($searchPath !== ''): ?>
+                            <form class="input-group input-group-sm" role="search" action="<?=htmlspecialcharsbx($searchPath)?>" method="get">
+                                <label class="visually-hidden" for="header-search-query"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_SEARCH_LABEL'))?></label>
+                                <input type="search" class="form-control" name="q" id="header-search-query" placeholder="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_SEARCH_PLACEHOLDER'))?>">
+                                <button class="btn btn-primary" type="submit">
                                     <i class="bi bi-search" aria-hidden="true"></i>
-                                    <span class="d-none d-sm-inline">Найти</span>
+                                    <span class="d-none d-sm-inline"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_SEARCH_SUBMIT'))?></span>
                                 </button>
-                            </div>
+                            </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<!-- Лого и меню -->
 <div class="logo-menu-div">
     <div class="container">
         <div class="row align-items-center py-3">
-            <!-- Логотипы и название -->
             <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3 mb-md-0">
                 <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start text-center text-md-start">
-                    <!-- Логотипы и название -->
                     <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 mb-2 mb-md-0 align-items-center">
-                        <!-- Общая ссылка для логотипа ЦСР и названия -->
-                        <a href="/" id="header-main-link" title="Вернуться на Главную" class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
-                            <!-- Логотип ЦСР -->
+                        <a href="/" id="header-main-link" title="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_HOME_LINK_TITLE'))?>" class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
                             <?php if ($headerLogoUrl !== ''): ?>
                                 <div class="flex-shrink-0">
                                     <img class="logo-header img-fluid"
                                          src="<?=htmlspecialcharsbx($headerLogoUrl)?>"
                                          alt="<?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>"
-                                         style="max-height: 80px;"
                                          loading="lazy"
                                          decoding="async">
                                 </div>
                             <?php endif; ?>
                             
-                            <!-- Название организации -->
                             <div class="flex-grow-1 text-dark">
                                 <div class="organization-name">
                                     <strong class="d-block fs-6 fs-md-5">
@@ -246,12 +223,11 @@ $APPLICATION->IncludeComponent(
                             </div>
                         </a>
 
-                        <!-- Логотип национального проекта (скрывается на мобильных) -->
                         <?php if ($nationalProjectLogoUrl !== ''): ?>
                             <?php if ($nationalProjectUrl !== ''): ?>
                                 <a target="_blank"
                                    rel="noopener noreferrer"
-                                   title="Перейти на страницу национального проекта"
+                                   title="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NATIONAL_PROJECT_TITLE'))?>"
                                    href="<?=htmlspecialcharsbx($nationalProjectUrl)?>"
                                    class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
                             <?php endif; ?>
@@ -259,7 +235,6 @@ $APPLICATION->IncludeComponent(
                                 <img class="logo-header img-fluid"
                                      src="<?=htmlspecialcharsbx($nationalProjectLogoUrl)?>"
                                      alt="<?=htmlspecialcharsbx($nationalProjectLogoAlt)?>"
-                                     style="max-height: 80px;"
                                      loading="lazy"
                                      decoding="async">
                             </div>
@@ -271,7 +246,6 @@ $APPLICATION->IncludeComponent(
                 </div>
             </div>
             
-            <!-- Меню -->
             <div class="col-xl-6 col-lg-6 col-md-12 col-12">
 				<div class="d-flex justify-content-center justify-content-lg-end">
                     <div class="navbar navbar-expand-lg p-0">
@@ -295,7 +269,8 @@ $APPLICATION->IncludeComponent(
         </div>
     </div>
 </div>
-<nav class="breadcrumb-section" aria-label="Хлебные крошки" <?php if ($isHomePage):?>style="display:none;"<?php endif?>>
+<?php if (!$isHomePage): ?>
+<nav class="breadcrumb-section" aria-label="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_BREADCRUMBS_LABEL'))?>">
 	<div class="container">
 		<?php
 			$APPLICATION->IncludeComponent(
@@ -310,6 +285,7 @@ $APPLICATION->IncludeComponent(
 		?>
 	</div>
 </nav>
+<?php endif; ?>
 
 </header>
 		<main id="main-content"<?php if (!$isHomePage):?> class="container"<?php endif?>>

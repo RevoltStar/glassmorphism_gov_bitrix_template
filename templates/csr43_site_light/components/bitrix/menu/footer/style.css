@@ -1,0 +1,15 @@
+.footer-menu__link {
+    color: var(--csr43-light-footer-muted);
+    text-decoration: none;
+    transition: color var(--csr43-light-transition-duration) ease;
+}
+
+.footer-menu__link:hover,
+.footer-menu__link:focus-visible {
+    color: var(--csr43-light-footer-text);
+}
+
+.footer-menu__link:focus-visible {
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
+}

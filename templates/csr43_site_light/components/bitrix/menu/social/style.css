@@ -1,0 +1,27 @@
+.social-menu__link {
+    display: inline-flex;
+    border-radius: var(--csr43-light-icon-radius);
+    transition: opacity var(--csr43-light-transition-duration) ease;
+}
+
+.social-menu__link:hover {
+    opacity: 1;
+}
+
+.social-menu__link:focus-visible {
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
+}
+
+.social-menu__icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+
+.social-menu__link:hover .social-menu__icon,
+.social-menu__link:focus-visible .social-menu__icon {
+    opacity: 1;
+}

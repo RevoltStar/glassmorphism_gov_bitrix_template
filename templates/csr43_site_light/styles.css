@@ -1,20 +1,18 @@
-/* Задаем для html, чтобы использовать единицы rem */
 html {
-  font-size: 100%; /* Это обычно 16px по умолчанию в браузерах */
+  font-size: 100%;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 1.125rem; /* 18px / 16px = 1.125 */
-  line-height: 1.6; /* Можно чуть больше, например 1.6 */
-  color: #333;
-  /*overflow-x:hidden;*/
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--csr43-light-color-text);
 }
-/*Шапка*/
+
 .special-div{
-	background-color: #f8f9fa;
+    background-color: var(--csr43-light-bg-subtle);
     padding: 10px 0;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid var(--csr43-light-border);
 }
 @media (max-width: 576px) {
     .special-div {
@@ -23,9 +21,9 @@ body {
 }
 
 .logo-menu-div {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e9ecef;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--csr43-light-bg);
+    border-bottom: 1px solid var(--csr43-light-border);
+    box-shadow: var(--csr43-light-shadow);
 }
 
 .logo-header {
@@ -42,20 +40,15 @@ body {
     line-height: 1.2;
 }
 
-/* Кастомные размеры шрифта */
 .fs-7 {
     font-size: 0.875rem;
 }
 
-/* Адаптивные стили */
 @media (max-width: 768px) {
     .logo-menu-div {
         padding: 15px 0;
     }
     
-    .organization-name {
-        /*text-align: center;*/
-    }
 }
 
 @media (max-width: 576px) {
@@ -86,25 +79,18 @@ body {
 }
 
 .breadcrumb-section {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+    background-color: var(--csr43-light-bg-subtle);
+    border-bottom: 1px solid var(--csr43-light-border);
     padding: 12px 0;
 }
 
 
-/*Подвал*/
-
-/* Добавьте в ваш CSS */
 .footer-text-muted {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--csr43-light-footer-muted) !important;
 }
 
 .footer-text-muted:hover {
-    color: #ffffff !important;
-}
-
-.footer {
-    /*background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);*/
+    color: var(--csr43-light-footer-text) !important;
 }
 
 .footer-logo {
@@ -114,15 +100,13 @@ body {
 }
 
 .footer a:hover {
-    color: #ffffff !important;
-    transition: color 0.3s ease;
+    color: var(--csr43-light-footer-text) !important;
 }
 
 .footer .bi {
     font-size: 1.5rem;
 }
 
-/* Адаптивные стили */
 @media (max-width: 768px) {
     .footer {
         text-align: center;
@@ -162,7 +146,6 @@ body {
     }
 }
 
-/* Стили для очень маленьких экранов */
 @media (max-width: 400px) {
     .footer .row .col-md-6 {
         text-align: center !important;
@@ -179,15 +162,13 @@ body {
     }
 }
 
-/*Основной контент*/
 main{
 	min-height: 500px;
 }
 
-/*Скрытая ссылка для лучшей доступности*/
 .skip-link {
     position: absolute;
-    clip: rect(0 0 0 0); /* Стандартный способ скрытия для доступности */
+    clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
     width: 1px;
@@ -203,18 +184,16 @@ main{
     clip-path: none;
     height: auto;
     width: auto;
-    background: #0056b3;
-    color: white;
+    background: var(--csr43-light-color-accent);
+    color: var(--csr43-light-footer-text);
     padding: 12px 16px;
     z-index: 10000;
 }
 
-/*Название страницы (для НЕ главной)*/
 .page-name{
 	margin-top: 1.5rem;
 }
 
-/* Триггеры Fancybox */
 .gallery-media {
     position: relative;
 }
@@ -226,8 +205,11 @@ main{
     z-index: 1;
     cursor: pointer;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.7);
-    transition: all 0.2s ease;
+    background: var(--csr43-light-bg);
+    opacity: 0.8;
+    transition:
+        opacity var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease;
 }
 
 .gallery-expand-button i {
@@ -236,12 +218,19 @@ main{
 }
 
 .gallery-expand-button:hover {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.gallery-expand-button:focus-visible,
+.gallery-item-link:focus-visible,
+#header-main-link:focus-visible {
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
 }
 
 .gallery-expand-button .bi-arrows-angle-expand {
-    color: #333;
+    color: var(--csr43-light-color-text);
     font-size: 16px;
 }
 
@@ -250,16 +239,15 @@ main{
     position: relative;
     cursor: pointer;
 }
+@media (prefers-reduced-motion: reduce) {
+    .logo-header,
+    #header-main-link .organization-name,
+    .gallery-expand-button {
+        transition: none;
+    }
 
-
-.footer-social-icon{
- filter: brightness(0) invert(1); /* Белые иконки на темном фоне */
-    opacity: 0.8; /* Немного прозрачности */
-    transition: all 0.3s ease;
-height: 40px;
-width: 40px;
-}
-.footer-social-icon:hover{
- opacity: 1;
-    filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+    .logo-header:hover,
+    #header-main-link .organization-name:hover {
+        transform: none;
+    }
 }

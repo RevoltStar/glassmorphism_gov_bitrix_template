@@ -3,9 +3,11 @@
     --csr43-light-color-text: #374151;
     --csr43-light-color-muted: #64748b;
     --csr43-light-color-accent: #0d6efd;
+    --csr43-light-color-accent-hover: #0b5ed7;
 
     --csr43-light-bg: #fff;
     --csr43-light-bg-hover: #f8fafc;
+    --csr43-light-bg-subtle: #f8f9fa;
     --csr43-light-border: #dee2e6;
     --csr43-light-border-hover: #9ca3af;
     --csr43-light-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
@@ -13,10 +15,22 @@
     --csr43-light-radius: 12px;
     --csr43-light-padding: 20px;
     --csr43-light-transition-duration: 0.2s;
+    --csr43-light-focus-ring-color: rgba(13, 110, 253, 0.35);
+    --csr43-light-focus-ring: 3px solid var(--csr43-light-focus-ring-color);
+    --csr43-light-focus-offset: 3px;
 
     --csr43-light-icon-size: 56px;
     --csr43-light-icon-radius: 10px;
     --csr43-light-icon-font-size: 26px;
+    --csr43-light-icon-bg: #f1f5f9;
+    --csr43-light-icon-bg-hover: #fff;
+
+    --csr43-light-badge-color: #0b5ed7;
+    --csr43-light-badge-bg: #eff6ff;
+    --csr43-light-badge-border: #bfdbfe;
+
+    --csr43-light-footer-text: #fff;
+    --csr43-light-footer-muted: rgba(255, 255, 255, 0.72);
 }
 
 .csr43-light-surface,
@@ -52,8 +66,8 @@
 }
 
 .csr43-light-card--interactive:focus-visible {
-    outline: 3px solid rgba(13, 110, 253, 0.25);
-    outline-offset: 3px;
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
 }
 
 .csr43-light-icon {
@@ -65,7 +79,7 @@
     height: var(--csr43-light-icon-size);
     color: var(--csr43-light-color-accent);
     font-size: var(--csr43-light-icon-font-size);
-    background: #f1f5f9;
+    background: var(--csr43-light-icon-bg);
     border: 1px solid var(--csr43-light-border);
     border-radius: var(--csr43-light-icon-radius);
     transition:
@@ -78,15 +92,15 @@
 .csr43-light-card--interactive:focus-visible .csr43-light-icon,
 .csr43-light-card--interactive:focus-within .csr43-light-icon {
     color: var(--csr43-light-color-heading);
-    background: #fff;
+    background: var(--csr43-light-icon-bg-hover);
     border-color: var(--csr43-light-border-hover);
 }
 
 .badge.csr43-light-badge {
-    color: var(--csr43-light-color-accent);
+    color: var(--csr43-light-badge-color);
     white-space: normal;
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
+    background: var(--csr43-light-badge-bg);
+    border: 1px solid var(--csr43-light-badge-border);
 }
 
 .csr43-light-badge--block {
@@ -96,7 +110,9 @@
 
 @media (prefers-reduced-motion: reduce) {
     .csr43-light-card--interactive,
-    .csr43-light-icon {
+    .csr43-light-icon,
+    .footer-menu__link,
+    .social-menu__link {
         transition-duration: 0.01ms;
     }
 }
