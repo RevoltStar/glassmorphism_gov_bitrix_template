@@ -298,7 +298,7 @@ $APPLICATION->IncludeComponent(
 		<?php
 			$APPLICATION->IncludeComponent(
 				"bitrix:breadcrumb",
-				"main_2025_breadcrumb",
+				"breadcrumb",
 				Array(
 					"START_FROM" => "0", 
 					"PATH" => "", 
