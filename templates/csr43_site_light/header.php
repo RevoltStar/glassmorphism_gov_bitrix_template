@@ -51,7 +51,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
 	);
 	?>
 
-	<?php include '/local/include/schema_org.php'; ?>
+	<?php require dirname(__DIR__, 2) . '/include/schema_org.php'; ?>
 
 	<!-- Предпочтительно SVG -->
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">

@@ -59,7 +59,7 @@ foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitl
     	get_canonical_link(["PAGEN_1", "PAGEN_2", "q"])
 	);
 	?>
-	<?php include '/local/include/schema_org.php'; ?>
+	<?php require dirname(__DIR__, 2) . '/include/schema_org.php'; ?>
 
 	<?php  $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-5.3.0.min.css"); ?>
 	<?php  $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/bootstrap-5.3.0.min.js"); ?>
