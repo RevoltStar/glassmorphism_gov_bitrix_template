@@ -1,0 +1,12 @@
+<?php
+$MESS['CSR43_LIGHT_NEWSDETAIL_UNCATEGORIZED'] = 'Без рубрики';
+$MESS['CSR43_LIGHT_NEWSDETAIL_MATERIALS'] = 'Материалы';
+$MESS['CSR43_LIGHT_NEWSDETAIL_FILES'] = 'Приложенные файлы';
+$MESS['CSR43_LIGHT_NEWSDETAIL_NAVIGATION'] = 'Навигация по новостям';
+$MESS['CSR43_LIGHT_NEWSDETAIL_PREV'] = 'К более актуальной новости';
+$MESS['CSR43_LIGHT_NEWSDETAIL_NEXT'] = 'К предыдущей новости';
+$MESS['CSR43_LIGHT_NEWSDETAIL_OPEN'] = 'Открыть: #NAME#';
+$MESS['CSR43_LIGHT_NEWSDETAIL_DOWNLOAD'] = 'Скачать файл: #NAME#';
+$MESS['CSR43_LIGHT_NEWSDETAIL_VIEWS'] = 'просмотров';
+$MESS['CSR43_LIGHT_NEWSDETAIL_DETAIL_IMAGE'] = 'детальное изображение';
+$MESS['CSR43_LIGHT_NEWSDETAIL_PREVIEW_IMAGE'] = 'анонс';

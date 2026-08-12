@@ -21,9 +21,10 @@ $json = json_encode(
     | JSON_HEX_AMP
     | JSON_HEX_APOS
     | JSON_HEX_QUOT
+    | JSON_INVALID_UTF8_SUBSTITUTE
 );
 
-if ($json === false) {
+if (!is_string($json)) {
     AddMessage2Log(
         'Не удалось сформировать JSON-LD для новости: '
         . json_last_error_msg(),
