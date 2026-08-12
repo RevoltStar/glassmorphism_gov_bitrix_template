@@ -1,55 +1,45 @@
 <?php
-$excludedPages = [
-    '/',
-    '/news',
-    '/news/',
-    '/contacts', 
-    '/contacts/'
-];
-
-$currentPage = $APPLICATION->GetCurPage();
-$isExcludedPage = false;
-
-// Особый случай для корневой страницы
-if ($currentPage === '/') {
-    $isExcludedPage = in_array('/', $excludedPages);
-} else {
-    // Проверяем, начинается ли текущая страница с любого из префиксов
-    foreach ($excludedPages as $excluded) {
-        // Для исключения "/" проверяем отдельно, чтобы не совпало с любым путем
-        if ($excluded === '/') {
-            continue; // "/" уже обработали выше
-        }
-        
-        // Убираем закрывающий слэш для сравнения (если есть)
-        $excludedClean = rtrim($excluded, '/');
-        $currentPageClean = rtrim($currentPage, '/');
-        
-        // Проверяем, начинается ли текущая страница с исключенного префикса
-        if (str_starts_with($currentPageClean, $excludedClean)) {
-            $isExcludedPage = true;
-            break;
-        }
-    }
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
 }
+
+$excludedPages = get_info('layout_excluded_pages', []);
+$currentPage = site_string($APPLICATION->GetCurPage(), '/');
+$isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
 $is404Error = defined('ERROR_404');
+$footerLogoUrl = site_template_image_url(get_info('logo', ''));
+$footerPhoneUrl = site_url(
+    'tel:' . site_string(get_info('phone_e164', '')),
+    '#',
+    ['tel'],
+    false
+);
+$footerEmailUrl = site_url(
+    'mailto:' . site_string(get_info('email', '')),
+    '#',
+    ['mailto'],
+    false
+);
+$privacyPolicyUrl = site_url(get_info('privacy_policy_path', ''), '#');
+$footerMenu1Title = site_plain_text(get_info('menu_footer_1_title', 'Разделы'));
+$footerMenu2Title = site_plain_text(get_info('menu_footer_2_title', 'Информация'));
 
 if (!$isExcludedPage && !$is404Error): ?>
     </div> <!-- Закрывающий для col-lg-8 -->
     <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
-        <?$APPLICATION->IncludeComponent(
+        <?php $APPLICATION->IncludeComponent(
             "bitrix:menu",
             "main_2025_sidemenu",
             Array(
                 "ALLOW_MULTI_SELECT" => "Y",
-                "CHILD_MENU_TYPE" => "right",
+                "CHILD_MENU_TYPE" => site_menu_type(get_info('menu_side_child_type', 'right'), 'right'),
                 "DELAY" => "N",
                 "MAX_LEVEL" => "1",
                 "MENU_CACHE_GET_VARS" => "",
                 "MENU_CACHE_TIME" => "3600",
                 "MENU_CACHE_TYPE" => "N",
                 "MENU_CACHE_USE_GROUPS" => "Y",
-                "ROOT_MENU_TYPE" => "right",
+                "ROOT_MENU_TYPE" => site_menu_type(get_info('menu_side_root_type', 'right'), 'right'),
                 "USE_EXT" => "Y"
             )
         );?>
@@ -73,7 +63,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 		?>
 <!-- Подвал -->
 <footer class="footer bg-dark text-light pb-5">
-					<?
+					<?php
 					$APPLICATION->IncludeComponent(
 					"bitrix:main.include",
 					"",
@@ -93,14 +83,24 @@ if (!$isExcludedPage && !$is404Error): ?>
             <!-- Логотип и описание -->
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 <div class="d-flex align-items-start mb-3">
-                    <img src="/images/logo_csr.png" alt="КОГБУ ЦСРИРиСУ" class="footer-logo me-3">
+                    <?php if ($footerLogoUrl !== ''): ?>
+                        <img src="<?=htmlspecialcharsbx($footerLogoUrl)?>"
+                             alt="<?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>"
+                             class="footer-logo me-3"
+                             loading="lazy"
+                             decoding="async">
+                    <?php endif; ?>
                     <div>
-                        <h5 class="fw-bold mb-1">КОГБУ ЦСРИРиСУ</h5>
-                        <p class="small footer-text-muted mb-0">Центр стратегического развития информационных ресурсов и систем управления</p>
+                        <h5 class="fw-bold mb-1">
+                            <?=htmlspecialcharsbx(site_plain_text(get_info('org_short_name', '')))?>
+                        </h5>
+                        <p class="small footer-text-muted mb-0">
+                            <?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>
+                        </p>
                     </div>
                 </div>
                 <p class="small footer-text-muted mb-0">
-                    Обеспечиваем цифровую трансформацию государственных услуг Кировской области
+                    <?=htmlspecialcharsbx(site_plain_text(get_info('org_description', '')))?>
                 </p>
             </div>
 
@@ -109,103 +109,36 @@ if (!$isExcludedPage && !$is404Error): ?>
                 <h6 class="fw-bold mb-3">Контакты</h6>
                 <div class="mb-2">
                     <i class="bi bi-telephone me-2 text-primary"></i>
-                    <a href="tel:<?
-								$APPLICATION->IncludeComponent(
-    								"bitrix:main.include",
-    								"",
-    								array(
-        								"AREA_FILE_SHOW" => "file",
-        								"AREA_FILE_SUFFIX" => "inc",
-        								"COMPOSITE_FRAME_MODE" => "A",
-        								"COMPOSITE_FRAME_TYPE" => "AUTO",
-        								"EDIT_TEMPLATE" => "",
-        								"PATH" => SITE_TEMPLATE_PATH . "/include/phone_e164.php"
-    								)
-								);?>" class="text-decoration-none text-light"><?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH . "/include/phone.php"
-    																				)
-																				);
-					?></a>
+                    <a href="<?=htmlspecialcharsbx($footerPhoneUrl)?>" class="text-decoration-none text-light">
+                        <?=htmlspecialcharsbx(site_plain_text(get_info('phone', '')))?>
+                    </a>
                 </div>
                 <div class="mb-2">
                     <i class="bi bi-envelope me-2 text-primary"></i>
-                    <a href="mailto:<?
-									$APPLICATION->IncludeComponent(
-    									"bitrix:main.include",
-    									"",
-    									array(
-        									"AREA_FILE_SHOW" => "file",
-        									"AREA_FILE_SUFFIX" => "inc",
-        									"COMPOSITE_FRAME_MODE" => "A",
-        									"COMPOSITE_FRAME_TYPE" => "AUTO",
-        									"EDIT_TEMPLATE" => "",
-        									"PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
-    									)
-									);?>" class="text-decoration-none text-light"><?
-																				$APPLICATION->IncludeComponent(
-    																				"bitrix:main.include",
-    																				"",
-    																				array(
-        																				"AREA_FILE_SHOW" => "file",
-        																				"AREA_FILE_SUFFIX" => "inc",
-        																				"COMPOSITE_FRAME_MODE" => "A",
-        																				"COMPOSITE_FRAME_TYPE" => "AUTO",
-        																				"EDIT_TEMPLATE" => "",
-        																				"PATH" => SITE_TEMPLATE_PATH . "/include/email.php"
-    																				)
-																				);
-					?></a>
+                    <a href="<?=htmlspecialcharsbx($footerEmailUrl)?>" class="text-decoration-none text-light">
+                        <?=htmlspecialcharsbx(site_plain_text(get_info('email', '')))?>
+                    </a>
                 </div>
                 <div class="mb-2">
                     <i class="bi bi-geo-alt me-2 text-primary"></i>
-                    <span class="footer-text-muted"><?
-									$APPLICATION->IncludeComponent(
-    									"bitrix:main.include",
-    									"",
-    									array(
-        									"AREA_FILE_SHOW" => "file",
-        									"AREA_FILE_SUFFIX" => "inc",
-        									"COMPOSITE_FRAME_MODE" => "A",
-        									"COMPOSITE_FRAME_TYPE" => "AUTO",
-        									"EDIT_TEMPLATE" => "",
-        									"PATH" => SITE_TEMPLATE_PATH . "/include/postal.php"
-    									)
-									);?>, г. Киров, <?
-									$APPLICATION->IncludeComponent(
-    									"bitrix:main.include",
-    									"",
-    									array(
-        									"AREA_FILE_SHOW" => "file",
-        									"AREA_FILE_SUFFIX" => "inc",
-        									"COMPOSITE_FRAME_MODE" => "A",
-        									"COMPOSITE_FRAME_TYPE" => "AUTO",
-        									"EDIT_TEMPLATE" => "",
-        									"PATH" => SITE_TEMPLATE_PATH . "/include/address.php"
-    									)
-									);?></span>
+                    <span class="footer-text-muted">
+                        <?=htmlspecialcharsbx(site_plain_text(get_info('postal_code', '')))?>,
+                        <?=htmlspecialcharsbx(site_plain_text(get_info('address', '')))?>
+                    </span>
                 </div>
                 <div class="mb-2">
                     <i class="bi bi-clock me-2 text-primary"></i>
-                    <span class="footer-text-muted">Пн-Чт: 9:00-18:00</span>
+                    <span class="footer-text-muted"><?=htmlspecialcharsbx(site_plain_text(get_info('workdays_primary', '')))?></span>
                 </div>
 				<div class="mb-2">
                     <i class="bi bi-clock me-2 text-primary"></i>
-                    <span class="footer-text-muted">Пт: 9:00-17:00</span>
+                    <span class="footer-text-muted"><?=htmlspecialcharsbx(site_plain_text(get_info('workdays_secondary', '')))?></span>
                 </div>
             </div>
 
             <!-- Быстрые ссылки -->
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                <h6 class="fw-bold mb-3">Разделы</h6>
+                <h6 class="fw-bold mb-3"><?=htmlspecialcharsbx($footerMenu1Title)?></h6>
                 <ul class="list-unstyled">
                     <li class="mb-2">
                         <a href="/about/" class="text-decoration-none footer-text-muted small">Об учреждении</a>
@@ -227,7 +160,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 
             <!-- Дополнительная информация -->
             <div class="col-lg-2 col-md-6">
-                <h6 class="fw-bold mb-3">Информация</h6>
+                <h6 class="fw-bold mb-3"><?=htmlspecialcharsbx($footerMenu2Title)?></h6>
                 <ul class="list-unstyled">
                     <li class="mb-2">
                         <a href="/documents/" class="text-decoration-none footer-text-muted small">Документы</a>
@@ -236,7 +169,7 @@ if (!$isExcludedPage && !$is404Error): ?>
 						<a href="/directions/anti_corruption/" class="text-decoration-none footer-text-muted small">Противодействие коррупции</a>
                     </li>
                     <li class="mb-2">
-                        <a href="/documents/personal_data_processing_policies/" class="text-decoration-none footer-text-muted small">Политика конфиденциальности</a>
+                        <a href="<?=htmlspecialcharsbx($privacyPolicyUrl)?>" class="text-decoration-none footer-text-muted small">Политика конфиденциальности</a>
                     </li>
                     <li class="mb-2">
                         <a href="/sitemap/" class="text-decoration-none footer-text-muted small">Карта сайта</a>
@@ -251,7 +184,8 @@ if (!$isExcludedPage && !$is404Error): ?>
         <!-- Копирайт -->
         <div class="col-md-6 mb-2 mb-md-0">
            <p class="small footer-text-muted mb-0">
-    &copy; <?php echo date('Y'); ?> КОГБУ ЦСРИРиСУ. Все права защищены.
+    &copy; <?=htmlspecialcharsbx((string)get_info('copyright_year_from'))?>–<?=date('Y')?>
+    <?=htmlspecialcharsbx(site_plain_text(get_info('org_short_name', '')))?>. Все права защищены.
 </p>
         </div>
 
@@ -274,25 +208,24 @@ if (!$isExcludedPage && !$is404Error): ?>
 </div>
     </div>
 </footer>
-<?
+<?php
 
-$cookie_message = 
-"Сайт КОГБУ ЦСРИРиСУ использует файлы cookie для работы и аналитики. 
-<br><br>
-<a target=\"_blank\" href=\"/documents/personal_data_processing_policies/\">Политика обработки персональных данных</a>";
+$cookieMessage = site_plain_text(get_info('org_name', ''))
+    . ' использует файлы cookie для работы и аналитики.';
 
 $APPLICATION->IncludeComponent(
-	"cookie.manager",
+	"csr43:cookie.manager",
     ".default",
     array(
         "CACHE_TIME" => "86400",
         "CACHE_TYPE" => "A",
         "CHECK_TIMEOUT" => "3000",
         "EXPIRE_DAYS" => "365",
-        "MESSAGE" => $cookie_message,
+        "MESSAGE" => $cookieMessage,
+        "POLICY_URL" => $privacyPolicyUrl,
+        "POLICY_TEXT" => "Политика обработки персональных данных",
         "PRESETS" => "style4",
-        "SHOW_SETTINGS" => "Y", // Показывать настройки
-        "SHOW_PD_CONSENT" => "Y" // Показывать согласие на ПДн
+        "SHOW_SETTINGS" => "Y" // Показывать настройки
     )
 );
 ?>

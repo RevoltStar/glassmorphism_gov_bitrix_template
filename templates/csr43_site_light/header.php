@@ -1,21 +1,57 @@
-<?
-if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
-?><!DOCTYPE html>
-<html lang="<?=LANGUAGE_ID?>">
+}
+
+$currentPage = site_string($APPLICATION->GetCurPage(), '/');
+$isHomePage = $currentPage === '/';
+$headerLogoUrl = site_template_image_url(get_info('logo', ''));
+$nationalProjectUrl = site_url(
+    get_info('national_project_url', ''),
+    '',
+    ['http', 'https'],
+    false
+);
+$nationalProjectLogoUrl = site_template_image_url(get_info('national_project_logo', ''));
+$nationalProjectLogoAlt = site_plain_text(get_info('national_project_logo_alt', ''));
+$isTitleExcludedPage = false;
+
+foreach (site_string_list(get_info('title_excluded_pages', [])) as $excludedTitlePage) {
+    $includeTitle = str_starts_with($excludedTitlePage, '!');
+    $excludedTitlePage = $includeTitle ? substr($excludedTitlePage, 1) : $excludedTitlePage;
+    $excludeChildren = str_ends_with($excludedTitlePage, '/*');
+    $excludedTitlePath = $excludeChildren ? substr($excludedTitlePage, 0, -2) : $excludedTitlePage;
+    $excludedTitlePath = '/' . ltrim((string)parse_url($excludedTitlePath, PHP_URL_PATH), '/');
+    $excludedTitlePath = $excludedTitlePath === '/' ? '/' : rtrim($excludedTitlePath, '/');
+    $normalizedCurrentPage = '/' . ltrim((string)parse_url($currentPage, PHP_URL_PATH), '/');
+    $normalizedCurrentPage = $normalizedCurrentPage === '/' ? '/' : rtrim($normalizedCurrentPage, '/');
+
+    if (
+        (!$excludeChildren && $normalizedCurrentPage === $excludedTitlePath)
+        || (
+            $excludeChildren
+            && $excludedTitlePath !== '/'
+            && str_starts_with($normalizedCurrentPage, $excludedTitlePath . '/')
+        )
+    ) {
+        $isTitleExcludedPage = !$includeTitle;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="<?=htmlspecialcharsbx(site_string(LANGUAGE_ID))?>">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<?$APPLICATION->ShowHead();?>
 	<title><?php $APPLICATION->ShowTitle(); ?></title>
 
-	<?
+	<?php
 		$APPLICATION->SetPageProperty(
     	'canonical',
     	get_canonical_link(["PAGEN_1", "PAGEN_2"])
 	);
 	?>
 
-	<?
+	<?php
 		$APPLICATION->IncludeComponent(
 					"bitrix:main.include",
 					"",
@@ -27,25 +63,27 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 						"EDIT_TEMPLATE" => "",	// Шаблон области по умолчанию
 						"PATH" => SITE_TEMPLATE_PATH . "/include/schema_org.php"
 					)
-);
-				?>
+		);
+	?>
 
 	<!-- Предпочтительно SVG -->
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 	<!-- Фолбэк для старых браузеров -->
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
-	<?
+	<?php
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-5.3.0.min.css");
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/bootstrap-icons-1.11.1.min.css");
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/fancybox5.css");
+$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/ui/light.css");
 
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/jquery-3.6.0.min.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/bootstrap-5.3.0.min.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/fancybox5.js");
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/script.js");
 ?>
+	<?php $APPLICATION->ShowHead();?>
 
-	<?/*
+		<?php /*
 <script src="https://max.gosuslugi.ru/robot-max/iframe/boot/boot.js?saveState=true&position=bottom-
 left&initialState=collapsed&region=33000000000&platform=default_iframe"></script>
 */
@@ -58,7 +96,7 @@ left&initialState=collapsed&region=33000000000&platform=default_iframe"></script
 	</div>
 <header class="header">
 <!-- Списки сайтов министерств (изначально скрыто) -->
-	<?
+	<?php
 $APPLICATION->IncludeComponent(
     "bitrix:news.list", 
     "main_2025_informationresources", 
@@ -140,7 +178,7 @@ $APPLICATION->IncludeComponent(
         					aria-controls="full-menu"
         					aria-expanded="false"
 							>
-                            Сайты органов власти Кировской области
+	                            Сайты органов власти <?=htmlspecialcharsbx(site_plain_text(get_info('region_name_genitive', '')))?>
                         </button>
                     </div>
                 </div>
@@ -151,7 +189,7 @@ $APPLICATION->IncludeComponent(
                         <!-- Версия для слабовидящих -->
                         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-5">
                             <div class="d-flex justify-content-center justify-content-lg-end m-0 p-0">
-								<?
+								<?php
 									/*$APPLICATION->IncludeComponent(
 										"vision:vision.special",
 										"main_2025_visionspecial",
@@ -160,9 +198,9 @@ $APPLICATION->IncludeComponent(
 										false
 									);*/
 									$APPLICATION->IncludeComponent(
-    									"bvi.version", // Пространство имен и имя компонента
-    									".default",          // Имя шаблона
-    									array()              // Параметры (пустой массив, так как их нет)
+										"csr43:bvi.version", // Пространство имен и имя компонента
+										".default",          // Имя шаблона
+										array()              // Параметры (пустой массив, так как их нет)
 									);
 								?>
                             </div>
@@ -195,27 +233,51 @@ $APPLICATION->IncludeComponent(
                         <!-- Общая ссылка для логотипа ЦСР и названия -->
                         <a href="/" id="header-main-link" title="Вернуться на Главную" class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
                             <!-- Логотип ЦСР -->
-                            <div class="flex-shrink-0">
-                                <img class="logo-header img-fluid" src="/images/logo_csr.png" alt="КОГБУ ЦСРИРиСУ" style="max-height: 80px;" loading="lazy">
-                            </div>
+                            <?php if ($headerLogoUrl !== ''): ?>
+                                <div class="flex-shrink-0">
+                                    <img class="logo-header img-fluid"
+                                         src="<?=htmlspecialcharsbx($headerLogoUrl)?>"
+                                         alt="<?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>"
+                                         style="max-height: 80px;"
+                                         loading="lazy"
+                                         decoding="async">
+                                </div>
+                            <?php endif; ?>
                             
                             <!-- Название организации -->
                             <div class="flex-grow-1 text-dark">
                                 <div class="organization-name">
-                                    <strong class="d-block fs-6 fs-md-5">КОГБУ</strong>
-                                    <span class="d-block fs-7 fs-md-6">Центр стратегического развития</span>
-                                    <span class="d-block fs-7 fs-md-6">информационных ресурсов</span>
-                                    <span class="d-block fs-7 fs-md-6">и систем управления</span>
+                                    <strong class="d-block fs-6 fs-md-5">
+                                        <?=htmlspecialcharsbx(site_plain_text(get_info('org_short_name', '')))?>
+                                    </strong>
+                                    <span class="d-block fs-7 fs-md-6">
+                                        <?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>
+                                    </span>
                                 </div>
                             </div>
                         </a>
 
-                        <!-- Логотип Экономика данных (скрывается на мобильных) -->
-						<a target="_blank" title="Перейти на страницу проекта «Экономика данных»" href="https://digital.gov.ru/target/naczionalnyj-proekt-ekonomika-dannyh-i-czifrovaya-transformacziya-gosudarstva" class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
-							<div class="flex-shrink-0 d-none d-md-block">
-                            	<img class="logo-header img-fluid" src="/images/economics_of_data.png" alt="Национальный проект Экономика Данных" style="max-height: 80px;" loading="lazy">
-                        	</div>
-						</a>
+                        <!-- Логотип национального проекта (скрывается на мобильных) -->
+                        <?php if ($nationalProjectLogoUrl !== ''): ?>
+                            <?php if ($nationalProjectUrl !== ''): ?>
+                                <a target="_blank"
+                                   rel="noopener noreferrer"
+                                   title="Перейти на страницу национального проекта"
+                                   href="<?=htmlspecialcharsbx($nationalProjectUrl)?>"
+                                   class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
+                            <?php endif; ?>
+                            <div class="flex-shrink-0 d-none d-md-block">
+                                <img class="logo-header img-fluid"
+                                     src="<?=htmlspecialcharsbx($nationalProjectLogoUrl)?>"
+                                     alt="<?=htmlspecialcharsbx($nationalProjectLogoAlt)?>"
+                                     style="max-height: 80px;"
+                                     loading="lazy"
+                                     decoding="async">
+                            </div>
+                            <?php if ($nationalProjectUrl !== ''): ?>
+                                </a>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -224,11 +286,11 @@ $APPLICATION->IncludeComponent(
             <div class="col-xl-6 col-lg-6 col-md-12 col-12">
 				<div class="d-flex justify-content-center justify-content-lg-end">
                     <nav class="navbar navbar-expand-lg p-0" aria-label="Основная навигация сайта">
-						<?
-						$APPLICATION->IncludeComponent("bitrix:menu","main_2025_mainmenu",Array(
-							"ROOT_MENU_TYPE" => "top", 
-							"MAX_LEVEL" => "3", 
-							"CHILD_MENU_TYPE" => "right", 
+						<?php
+							$APPLICATION->IncludeComponent("bitrix:menu","main_2025_mainmenu",Array(
+								"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_top_root_type', 'top'), 'top'),
+								"MAX_LEVEL" => "3",
+								"CHILD_MENU_TYPE" => site_menu_type(get_info('menu_top_child_type', 'right'), 'right'),
 							"USE_EXT" => "Y",
 							"DELAY" => "N",
 							"ALLOW_MULTI_SELECT" => "Y",
@@ -244,16 +306,16 @@ $APPLICATION->IncludeComponent(
         </div>
     </div>
 </div>
-<nav class="breadcrumb-section" aria-label="Хлебные крошки" <?if ($APPLICATION->GetCurPage() == '/'):?>style="display:none;"<?endif?>>
+<nav class="breadcrumb-section" aria-label="Хлебные крошки" <?php if ($isHomePage):?>style="display:none;"<?php endif?>>
 	<div class="container">
-		<?
+		<?php
 			$APPLICATION->IncludeComponent(
 				"bitrix:breadcrumb",
 				"main_2025_breadcrumb",
 				Array(
 					"START_FROM" => "0", 
 					"PATH" => "", 
-					"SITE_ID" => "s1" 
+					"SITE_ID" => SITE_ID
 				)
 			);
 		?>
@@ -261,45 +323,14 @@ $APPLICATION->IncludeComponent(
 </nav>
 
 </header>
-	<main id="main-content" <?if ($APPLICATION->GetCurPage() != '/'):?> class="container" <?endif?>>
-		<?if ($APPLICATION->GetCurPage() != '/'):?>
-			<h1 class="page-name bvi-speech"><?=$APPLICATION->ShowTitle(false)?></h1>
-		<?endif?>
-		<?php
-			$excludedPages = [
-    '/',
-    '/news',
-    '/news/',
-    '/contacts', 
-    '/contacts/'
-];
-
-$currentPage = $APPLICATION->GetCurPage();
-$isExcludedPage = false;
-
-// Особый случай для корневой страницы
-if ($currentPage === '/') {
-    $isExcludedPage = in_array('/', $excludedPages);
-} else {
-    // Проверяем, начинается ли текущая страница с любого из префиксов
-    foreach ($excludedPages as $excluded) {
-        // Для исключения "/" проверяем отдельно, чтобы не совпало с любым путем
-        if ($excluded === '/') {
-            continue; // "/" уже обработали выше
-        }
-        
-        // Убираем закрывающий слэш для сравнения (если есть)
-        $excludedClean = rtrim($excluded, '/');
-        $currentPageClean = rtrim($currentPage, '/');
-        
-        // Проверяем, начинается ли текущая страница с исключенного префикса
-        if (str_starts_with($currentPageClean, $excludedClean)) {
-            $isExcludedPage = true;
-            break;
-        }
-    }
-}
-			$is404Error = defined('ERROR_404');
+		<main id="main-content"<?php if (!$isHomePage):?> class="container"<?php endif?>>
+			<?php if (!$isTitleExcludedPage): ?>
+				<h1 class="page-name bvi-speech"><?=$APPLICATION->ShowTitle(false)?></h1>
+			<?php endif; ?>
+			<?php
+				$excludedPages = get_info('layout_excluded_pages', []);
+				$isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
+				$is404Error = defined('ERROR_404');
 
 			if (!$isExcludedPage && !$is404Error): ?>
     			<div class="row mb-5">

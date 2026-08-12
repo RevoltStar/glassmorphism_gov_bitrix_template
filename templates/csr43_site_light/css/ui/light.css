@@ -1,0 +1,102 @@
+:root {
+    --csr43-light-color-heading: #1f2937;
+    --csr43-light-color-text: #374151;
+    --csr43-light-color-muted: #64748b;
+    --csr43-light-color-accent: #0d6efd;
+
+    --csr43-light-bg: #fff;
+    --csr43-light-bg-hover: #f8fafc;
+    --csr43-light-border: #dee2e6;
+    --csr43-light-border-hover: #9ca3af;
+    --csr43-light-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    --csr43-light-shadow-hover: 0 4px 14px rgba(15, 23, 42, 0.12);
+    --csr43-light-radius: 12px;
+    --csr43-light-padding: 20px;
+    --csr43-light-transition-duration: 0.2s;
+
+    --csr43-light-icon-size: 56px;
+    --csr43-light-icon-radius: 10px;
+    --csr43-light-icon-font-size: 26px;
+}
+
+.csr43-light-surface,
+.csr43-light-card {
+    background: var(--csr43-light-bg);
+    border: 1px solid var(--csr43-light-border);
+    box-shadow: var(--csr43-light-shadow);
+}
+
+.csr43-light-card {
+    padding: var(--csr43-light-padding);
+    color: var(--csr43-light-color-text);
+    border-radius: var(--csr43-light-radius);
+}
+
+.csr43-light-card--stretch {
+    height: 100%;
+}
+
+.csr43-light-card--interactive {
+    transition:
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease;
+}
+
+.csr43-light-card--interactive:hover,
+.csr43-light-card--interactive:focus-visible,
+.csr43-light-card--interactive:focus-within {
+    background: var(--csr43-light-bg-hover);
+    border-color: var(--csr43-light-border-hover);
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.csr43-light-card--interactive:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.25);
+    outline-offset: 3px;
+}
+
+.csr43-light-icon {
+    display: flex;
+    flex: 0 0 var(--csr43-light-icon-size);
+    align-items: center;
+    justify-content: center;
+    width: var(--csr43-light-icon-size);
+    height: var(--csr43-light-icon-size);
+    color: var(--csr43-light-color-accent);
+    font-size: var(--csr43-light-icon-font-size);
+    background: #f1f5f9;
+    border: 1px solid var(--csr43-light-border);
+    border-radius: var(--csr43-light-icon-radius);
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease;
+}
+
+.csr43-light-card--interactive:hover .csr43-light-icon,
+.csr43-light-card--interactive:focus-visible .csr43-light-icon,
+.csr43-light-card--interactive:focus-within .csr43-light-icon {
+    color: var(--csr43-light-color-heading);
+    background: #fff;
+    border-color: var(--csr43-light-border-hover);
+}
+
+.badge.csr43-light-badge {
+    color: var(--csr43-light-color-accent);
+    white-space: normal;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.csr43-light-badge--block {
+    width: 100%;
+    text-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .csr43-light-card--interactive,
+    .csr43-light-icon {
+        transition-duration: 0.01ms;
+    }
+}
