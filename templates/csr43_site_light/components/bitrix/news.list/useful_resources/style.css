@@ -1,0 +1,104 @@
+.useful-resources {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.useful-resources__item {
+    display: flex;
+    justify-content: center;
+}
+
+.useful-resources__banner {
+    display: grid;
+    width: 100%;
+    min-height: 8rem;
+    overflow: hidden;
+    color: var(--csr43-light-color-text);
+    text-decoration: none;
+    background: var(--csr43-light-bg-hover);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: calc(var(--csr43-light-radius) / 1.5);
+    box-shadow: var(--csr43-light-shadow);
+    place-items: center;
+    transition: border-color var(--csr43-light-transition-duration) ease, box-shadow var(--csr43-light-transition-duration) ease;
+}
+
+.useful-resources__banner:not(.useful-resources__banner--static):hover,
+.useful-resources__banner:not(.useful-resources__banner--static):focus-visible {
+    border-color: var(--csr43-light-color-accent);
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.useful-resources__banner:focus-visible {
+    outline: 2px solid var(--csr43-light-color-accent);
+    outline-offset: 3px;
+}
+
+.useful-resources__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.useful-resources--vertical .useful-resources__banner {
+    width: min(100%, 15.625rem);
+    height: 9.375rem;
+}
+
+.useful-resources--vertical .useful-resources__image {
+    height: 100%;
+    object-fit: cover;
+}
+
+.useful-resources__placeholder {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.useful-resources__placeholder .bi {
+    color: var(--csr43-light-color-muted);
+    font-size: 2rem;
+}
+
+.useful-resources__empty {
+    width: min(100%, 22rem);
+    margin-inline: auto;
+    padding: 1.5rem;
+    color: var(--csr43-light-color-text);
+    text-align: center;
+    border-radius: var(--csr43-light-radius);
+}
+
+.useful-resources__empty h2 {
+    margin: .75rem 0;
+    color: var(--csr43-light-color-heading);
+    font-size: 1.2rem;
+}
+
+.useful-resources__empty p {
+    margin: 0 0 .75rem;
+}
+
+.useful-resources__empty-icon {
+    color: var(--csr43-light-color-muted);
+    font-size: 3rem;
+}
+
+.useful-resources__empty-note {
+    color: var(--csr43-light-color-muted);
+    font-size: .875rem;
+}
+
+.useful-resources__pagination {
+    margin-block: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .useful-resources__banner {
+        transition: none;
+    }
+}
