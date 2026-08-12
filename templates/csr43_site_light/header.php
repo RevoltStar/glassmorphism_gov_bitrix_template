@@ -3,6 +3,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
+IncludeTemplateLangFile(__FILE__);
+
 $currentPage = site_string($APPLICATION->GetCurPage(), '/');
 $isHomePage = $currentPage === '/';
 $headerLogoUrl = site_template_image_url(get_info('logo', ''));
@@ -148,7 +150,7 @@ $APPLICATION->IncludeComponent(
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-12 mb-2 mb-lg-0">
-                    <div class="d-flex justify-content-center justify-content-lg-start" role="button">
+                    <div class="d-flex justify-content-center justify-content-lg-start">
 						<button
 							id="government_website_button"
 							type="button"

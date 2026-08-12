@@ -4,6 +4,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
+IncludeTemplateLangFile(__FILE__);
+
 $excludedPages = get_info('layout_excluded_pages', []);
 $currentPage = site_string($APPLICATION->GetCurPage(), '/');
 $isExcludedPage = site_path_is_excluded($currentPage, $excludedPages);
