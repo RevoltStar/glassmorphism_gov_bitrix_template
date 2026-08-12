@@ -7,6 +7,7 @@ $this->setFrameMode(true);
 $view = is_array($arResult['NEWS_LIST'] ?? null) ? $arResult['NEWS_LIST'] : [];
 $items = is_array($view['items'] ?? null) ? $view['items'] : [];
 $pagerHtml = site_string($view['pager_html'] ?? '');
+$showCounter = ($view['show_counter'] ?? false) === true;
 $galleryId = 'news-list-' . $this->randString();
 ?>
 <?php if (($view['show_top_pager'] ?? false) === true && $pagerHtml !== ''): ?>
@@ -24,7 +25,7 @@ $galleryId = 'news-list-' . $this->randString();
                 $name = site_string($item['name'] ?? '');
                 $detailUrl = site_url($item['detail_url'] ?? null, '');
                 $date = site_string($item['date'] ?? '');
-                $counter = max(0, (int)($item['show_counter'] ?? 0));
+                $counter = max(0, (int)($item['counter'] ?? 0));
                 $preview = site_string($item['preview_text'] ?? '');
                 $image = is_array($item['image'] ?? null) ? $item['image'] : null;
                 $categories = is_array($item['categories'] ?? null) ? $item['categories'] : [];
@@ -45,7 +46,7 @@ $galleryId = 'news-list-' . $this->randString();
                         <?php if ($categories !== []): ?><div class="news-card__categories">
                             <?php foreach ($categories as $category): ?><?php if (is_array($category) && ($categoryUrl = site_url($category['url'] ?? null, '')) !== ''): ?><a href="<?=htmlspecialcharsbx($categoryUrl)?>" class="badge csr43-light-badge news-card__category"><?=htmlspecialcharsbx(site_string($category['name'] ?? ''))?></a><?php endif; ?><?php endforeach; ?>
                         </div><?php endif; ?>
-                        <?php if ($date !== '' || $counter > 0): ?><div class="news-card__meta"><?php if ($date !== ''): ?><span><i class="bi bi-calendar3" aria-hidden="true"></i><?=htmlspecialcharsbx($date)?></span><?php endif; ?><?php if ($counter > 0): ?><span><i class="bi bi-eye" aria-hidden="true"></i><?=$counter?> <?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NEWS_VIEWS'))?></span><?php endif; ?></div><?php endif; ?>
+                        <?php if ($date !== '' || ($showCounter && $counter > 0)): ?><div class="news-card__meta"><?php if ($date !== ''): ?><span><i class="bi bi-calendar3" aria-hidden="true"></i><?=htmlspecialcharsbx($date)?></span><?php endif; ?><?php if ($showCounter && $counter > 0): ?><span><i class="bi bi-eye" aria-hidden="true"></i><?=$counter?> <?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NEWS_VIEWS'))?></span><?php endif; ?></div><?php endif; ?>
                         <?php if (($item['show_name'] ?? false) === true && $name !== ''): ?><h2 class="news-card__title"><?php if ($detailUrl !== ''): ?><a href="<?=htmlspecialcharsbx($detailUrl)?>"><?=htmlspecialcharsbx($name)?></a><?php else: ?><?=htmlspecialcharsbx($name)?><?php endif; ?></h2><?php endif; ?>
                         <?php if ($preview !== ''): ?><p class="news-card__preview"><?=htmlspecialcharsbx($preview)?></p><?php endif; ?>
                         <?php if ($detailUrl !== ''): ?><a href="<?=htmlspecialcharsbx($detailUrl)?>" class="news-card__more" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $name, GetMessage('CSR43_LIGHT_NEWS_READ_MORE_ARIA')))?>"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NEWS_READ_MORE'))?></a><?php endif; ?>

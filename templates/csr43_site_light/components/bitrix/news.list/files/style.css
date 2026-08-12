@@ -9,6 +9,8 @@
 .file-entry--download { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .75rem; align-items: center; color: var(--csr43-light-color-text); text-decoration: none; }
 .file-entry--download span { display: grid; overflow-wrap: anywhere; }
 .file-entry--download small { color: var(--csr43-light-color-muted); }
+.file-entry__meta { display: flex; gap: .4rem .65rem; margin-top: .4rem; color: var(--csr43-light-color-muted); font-size: .875rem; flex-wrap: wrap; }
+.file-entry__meta span + span::before { margin-right: .65rem; color: var(--csr43-light-border-hover); content: '·'; }
 .file-entry details summary, .file-library__collapse > summary { padding: .55rem; color: var(--csr43-light-color-accent); cursor: pointer; font-weight: 600; }
 .file-entry__preview { margin-top: .75rem; text-align: center; }
 .file-entry__preview img, .file-entry video { display: block; width: 100%; max-height: 37.5rem; object-fit: contain; }

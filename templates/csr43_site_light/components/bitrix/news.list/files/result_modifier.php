@@ -57,7 +57,21 @@ foreach (is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [] as $item
         $extension = strtolower((string)pathinfo(site_string($file['FILE_NAME'] ?? $filename), PATHINFO_EXTENSION));
         $type = isset($videoTypes[$extension]) ? 'video' : (in_array($extension, $imageExtensions, true) ? 'image' : 'download');
         $caption = site_plain_text($file['DESCRIPTION'] ?? '');
-        $files[] = ['id'=>$fileId,'type'=>$type,'url'=>$url,'name'=>$filename !== '' ? $filename : $name,'caption'=>$caption !== '' ? $caption : $name,'extension'=>$extension,'display_size'=>max(0,(int)($file['FILE_SIZE']??0)) > 0 ? site_plain_text(CFile::FormatSize((int)$file['FILE_SIZE'])) : '','width'=>max(0,(int)($file['WIDTH']??0)),'height'=>max(0,(int)($file['HEIGHT']??0)),'icon'=>$iconMap[$extension]??'bi-file-earmark','mime'=>$videoTypes[$extension]??''];
+        $fileSize = max(0, (int)($file['FILE_SIZE'] ?? 0));
+        $files[] = [
+            'id' => $fileId,
+            'type' => $type,
+            'url' => $url,
+            'display_name' => $name !== '' ? $name : $filename,
+            'filename' => $filename,
+            'caption' => $caption !== '' ? $caption : $name,
+            'extension' => $extension,
+            'display_size' => $fileSize > 0 ? site_plain_text(CFile::FormatSize($fileSize)) : '',
+            'width' => max(0, (int)($file['WIDTH'] ?? 0)),
+            'height' => max(0, (int)($file['HEIGHT'] ?? 0)),
+            'icon' => $iconMap[$extension] ?? 'bi-file-earmark',
+            'mime' => $videoTypes[$extension] ?? '',
+        ];
     }
     $view['items'][] = ['id'=>max(0,(int)($item['ID']??0)),'name'=>$name,'description'=>$description,'date'=>$date,'files'=>$files];
 }

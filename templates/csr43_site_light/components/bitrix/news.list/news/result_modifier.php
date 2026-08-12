@@ -5,8 +5,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 $arResult = is_array($arResult ?? null) ? $arResult : [];
 $arParams = is_array($arParams ?? null) ? $arParams : [];
+$showCounter = !empty($arResult['SHOW_COUNTER']);
 $view = [
     'items' => [],
+    'show_counter' => $showCounter,
     'pager_html' => site_safe_pagination_html($arResult['NAV_STRING'] ?? ''),
     'show_top_pager' => ($arParams['DISPLAY_TOP_PAGER'] ?? 'N') === 'Y',
     'show_bottom_pager' => ($arParams['DISPLAY_BOTTOM_PAGER'] ?? 'N') === 'Y',
@@ -70,7 +72,7 @@ foreach ($items as $item) {
         'show_name' => $showName,
         'detail_url' => site_url($item['DETAIL_PAGE_URL'] ?? null, ''),
         'date' => $date,
-        'show_counter' => max(0, (int)($item['SHOW_COUNTER'] ?? 0)),
+        'counter' => max(0, (int)($item['SHOW_COUNTER'] ?? 0)),
         'preview_text' => $showPreview ? $preview : '',
         'image' => $image,
         'categories' => $categories,
