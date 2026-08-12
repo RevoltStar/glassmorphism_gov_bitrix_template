@@ -1,0 +1,257 @@
+.vacancy {
+    min-width: 0;
+    color: var(--csr43-light-color-text);
+}
+
+.vacancy__navigation {
+    margin-bottom: 1.5rem;
+    padding: var(--csr43-light-padding);
+    border-radius: var(--csr43-light-radius);
+}
+
+.vacancy__navigation-list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.vacancy__navigation-link {
+    display: flex;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--csr43-light-color-heading);
+    background: var(--csr43-light-bg-hover);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: calc(var(--csr43-light-radius) * 0.75);
+    text-decoration: none;
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease;
+    overflow-wrap: anywhere;
+}
+
+.vacancy__navigation-link:hover,
+.vacancy__navigation-link:focus-visible {
+    color: var(--csr43-light-color-accent);
+    background: var(--csr43-light-bg);
+    border-color: var(--csr43-light-border-hover);
+}
+
+.vacancy__navigation-link:focus-visible,
+.vacancy__contacts-toggle:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.25);
+    outline-offset: 3px;
+}
+
+.vacancy__navigation-count {
+    flex: 0 0 auto;
+}
+
+.vacancy__section {
+    min-width: 0;
+    scroll-margin-top: 1rem;
+}
+
+.vacancy__section + .vacancy__section {
+    margin-top: 2rem;
+}
+
+.vacancy__section-title {
+    margin: 0 0 1rem;
+    color: var(--csr43-light-color-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.vacancy__list {
+    display: grid;
+    gap: 1.25rem;
+    min-width: 0;
+}
+
+.vacancy__card {
+    min-width: 0;
+}
+
+.vacancy__card-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.vacancy__heading {
+    min-width: 0;
+}
+
+.vacancy__title {
+    margin: 0;
+    color: var(--csr43-light-color-heading);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.vacancy__department {
+    margin: 0.4rem 0 0;
+    color: var(--csr43-light-color-muted);
+    overflow-wrap: anywhere;
+}
+
+.vacancy__badge {
+    display: inline-flex;
+    gap: 0.4rem;
+    flex: 0 0 auto;
+    padding: 0.4rem 0.65rem;
+    align-items: center;
+    border-radius: calc(var(--csr43-light-radius) / 2);
+}
+
+.vacancy__details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.vacancy__detail {
+    min-width: 0;
+    padding: 1rem;
+    background: var(--csr43-light-bg-hover);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: calc(var(--csr43-light-radius) * 0.75);
+}
+
+.vacancy__detail-title {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0 0 0.5rem;
+    align-items: center;
+    color: var(--csr43-light-color-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.vacancy__detail-title i {
+    flex: 0 0 auto;
+    color: var(--csr43-light-color-accent);
+}
+
+.vacancy__value,
+.vacancy__value-list {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.vacancy__value-list {
+    padding-left: 1.25rem;
+}
+
+.vacancy__value-list li + li {
+    margin-top: 0.35rem;
+}
+
+.vacancy__detail--salary .vacancy__value {
+    color: var(--csr43-light-color-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.vacancy__contacts {
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--csr43-light-border);
+}
+
+.vacancy__contacts-toggle {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.65rem 0.85rem;
+    align-items: center;
+    color: var(--csr43-light-color-accent);
+    border-radius: calc(var(--csr43-light-radius) * 0.65);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.vacancy__contacts-toggle:hover {
+    color: var(--csr43-light-color-heading);
+    background: var(--csr43-light-bg-hover);
+}
+
+.vacancy__contacts-body {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: var(--csr43-light-bg-hover);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: calc(var(--csr43-light-radius) * 0.75);
+}
+
+.vacancy__contact {
+    display: flex;
+    gap: 0.45rem;
+    min-width: 0;
+    margin: 0;
+    align-items: baseline;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
+}
+
+.vacancy__contact i {
+    color: var(--csr43-light-color-accent);
+}
+
+.vacancy__contact a {
+    color: var(--csr43-light-color-accent);
+    overflow-wrap: anywhere;
+}
+
+.vacancy__empty {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    padding: var(--csr43-light-padding);
+    align-items: center;
+    color: var(--csr43-light-color-muted);
+    border-radius: var(--csr43-light-radius);
+}
+
+@media (max-width: 767.98px) {
+    .vacancy__details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .vacancy__navigation,
+    .vacancy__card {
+        --csr43-light-padding: 1rem;
+    }
+
+    .vacancy__navigation-link,
+    .vacancy__card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .vacancy__navigation-count,
+    .vacancy__badge {
+        flex: initial;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vacancy__navigation-link {
+        transition-duration: 0.01ms;
+    }
+}
