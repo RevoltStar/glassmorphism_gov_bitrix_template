@@ -70,7 +70,8 @@ $propertyLines = static function (mixed $property) use ($plainText): array {
 
         $rawText = site_string($rawValue);
         $rawText = preg_replace('~<\s*br\s*/?\s*>|</\s*(?:li|p|div)\s*>~iu', "\n", $rawText);
-        $text = $plainText(is_string($rawText) ? $rawText : '');
+        $text = site_plain_text(is_string($rawText) ? $rawText : '');
+        $text = $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         if ($text === '') {
             continue;
         }
