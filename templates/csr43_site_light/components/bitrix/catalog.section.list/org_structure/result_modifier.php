@@ -94,7 +94,7 @@ if ($showEmployees && $iblockAvailable) {
         $elementSections[$elementId] = [];
     }
 
-    $propertiesByElementId = [];
+    $propertiesByElementId = array_fill_keys($elementIds, []);
     if ($elementIds !== []) {
         CIBlockElement::GetPropertyValuesArray(
             $propertiesByElementId,
