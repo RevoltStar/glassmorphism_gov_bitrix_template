@@ -1,6 +1,6 @@
 <?php
 $arTemplate = array (
-  'NAME' => 'Шаблон ЦСР 2025',
+  'NAME' => 'CSR43 Site Light',
   'DESCRIPTION' => '',
   'SORT' => '',
   'TYPE' => '',
