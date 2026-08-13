@@ -16,6 +16,12 @@ $nationalProjectUrl = site_url(
 );
 $nationalProjectLogoUrl = site_template_image_url(get_info('national_project_logo', ''));
 $nationalProjectLogoAlt = site_plain_text(get_info('national_project_logo_alt', ''));
+$headerOrgName = site_plain_text(get_info('header_org_name', get_info('org_short_name', '')));
+$headerOrgDetails = array_values(array_filter(
+    array_map('site_plain_text', site_string_list(get_info('header_org_details', []))),
+    static fn (string $value): bool => $value !== ''
+));
+$headerLogoAlt = site_plain_text(get_info('org_short_name', $headerOrgName));
 $searchPath = site_url(get_info('search_path', ''), '');
 $isTitleExcludedPage = false;
 
@@ -198,29 +204,25 @@ $APPLICATION->IncludeComponent(
     </div>
 <div class="logo-menu-div">
     <div class="container">
-        <div class="row align-items-center py-3">
-            <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3 mb-md-0">
-                <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start text-center text-md-start">
-                    <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 mb-2 mb-md-0 align-items-center">
-                        <a href="/" id="header-main-link" title="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_HOME_LINK_TITLE'))?>" class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
+        <div class="row align-items-center header-brand-row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3 mb-lg-0">
+                <div class="header-brand">
+                    <div class="header-brand__group">
+                        <a href="/" id="header-main-link" title="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_HOME_LINK_TITLE'))?>" class="header-brand__main text-decoration-none">
                             <?php if ($headerLogoUrl !== ''): ?>
-                                <div class="flex-shrink-0">
-                                    <img class="logo-header img-fluid"
+                                <div class="header-brand__logo-wrap">
+                                    <img class="logo-header logo-header--organization img-fluid"
                                          src="<?=htmlspecialcharsbx($headerLogoUrl)?>"
-                                         alt="<?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>"
+                                         alt="<?=htmlspecialcharsbx($headerLogoAlt)?>"
                                          loading="lazy"
                                          decoding="async">
                                 </div>
                             <?php endif; ?>
-                            
-                            <div class="flex-grow-1 text-dark">
+
+                            <div class="header-brand__text text-dark">
                                 <div class="organization-name">
-                                    <strong class="d-block fs-6 fs-md-5">
-                                        <?=htmlspecialcharsbx(site_plain_text(get_info('org_short_name', '')))?>
-                                    </strong>
-                                    <span class="d-block fs-7 fs-md-6">
-                                        <?=htmlspecialcharsbx(site_plain_text(get_info('org_full_name', '')))?>
-                                    </span>
+                                    <?php if ($headerOrgName !== ''): ?><strong class="organization-name__primary"><?=htmlspecialcharsbx($headerOrgName)?></strong><?php endif; ?>
+                                    <?php foreach ($headerOrgDetails as $headerOrgDetail): ?><span class="organization-name__detail"><?=htmlspecialcharsbx($headerOrgDetail)?></span><?php endforeach; ?>
                                 </div>
                             </div>
                         </a>
@@ -231,10 +233,10 @@ $APPLICATION->IncludeComponent(
                                    rel="noopener noreferrer"
                                    title="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NATIONAL_PROJECT_TITLE'))?>"
                                    href="<?=htmlspecialcharsbx($nationalProjectUrl)?>"
-                                   class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 align-items-center text-decoration-none">
+                                   class="header-brand__national-project text-decoration-none">
                             <?php endif; ?>
-                            <div class="flex-shrink-0 d-none d-md-block">
-                                <img class="logo-header img-fluid"
+                            <div class="header-brand__national-logo-wrap d-none d-md-block">
+                                <img class="logo-header logo-header--national-project img-fluid"
                                      src="<?=htmlspecialcharsbx($nationalProjectLogoUrl)?>"
                                      alt="<?=htmlspecialcharsbx($nationalProjectLogoAlt)?>"
                                      loading="lazy"
@@ -250,7 +252,7 @@ $APPLICATION->IncludeComponent(
             
             <div class="col-xl-6 col-lg-6 col-md-12 col-12">
 				<div class="d-flex justify-content-center justify-content-lg-end">
-                    <div class="navbar navbar-expand-lg p-0">
+                    <div class="navbar navbar-expand-lg p-0 w-100">
 						<?php
 							$APPLICATION->IncludeComponent("bitrix:menu","top",Array(
 								"ROOT_MENU_TYPE" => site_menu_type(get_info('menu_top_root_type', 'top'), 'top'),

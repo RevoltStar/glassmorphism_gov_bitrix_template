@@ -26,10 +26,47 @@ body {
     box-shadow: var(--csr43-light-shadow);
 }
 
+.header-brand-row {
+    padding-block: .65rem;
+}
+
+.header-brand,
+.header-brand__group,
+.header-brand__main {
+    display: flex;
+    align-items: center;
+}
+
+.header-brand__group {
+    gap: .85rem;
+}
+
+.header-brand__main {
+    min-width: 0;
+    gap: .75rem;
+}
+
+.header-brand__logo-wrap,
+.header-brand__national-logo-wrap {
+    flex: 0 0 auto;
+}
+
+.header-brand__national-project {
+    display: flex;
+    align-items: center;
+}
+
 .logo-header {
-    max-height: 80px;
     width: auto;
     transition: transform 0.2s ease;
+}
+
+.logo-header--organization {
+    max-height: 72px;
+}
+
+.logo-header--national-project {
+    max-height: 68px;
 }
 
 .logo-header:hover {
@@ -37,7 +74,24 @@ body {
 }
 
 .organization-name {
-    line-height: 1.2;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.organization-name__primary,
+.organization-name__detail {
+    display: block;
+}
+
+.organization-name__primary {
+    margin-bottom: .12rem;
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.organization-name__detail {
+    font-size: .78rem;
+    font-weight: 500;
 }
 
 .fs-7 {
@@ -46,26 +100,30 @@ body {
 
 @media (max-width: 768px) {
     .logo-menu-div {
-        padding: 15px 0;
+        padding: .25rem 0;
     }
-    
+
+    .header-brand,
+    .header-brand__group {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 576px) {
-    .logo-header {
+    .logo-header--organization {
         max-height: 60px;
     }
-    
-    .organization-name br {
-        display: none;
+
+    .header-brand__main {
+        gap: .6rem;
     }
-    
-    .organization-name span {
-        display: inline;
+
+    .organization-name {
+        white-space: normal;
     }
-    
-    .organization-name span:not(:last-child)::after {
-        content: " ";
+
+    .organization-name__detail {
+        font-size: .72rem;
     }
 }
 
