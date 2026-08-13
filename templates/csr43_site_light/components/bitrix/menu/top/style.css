@@ -1,6 +1,19 @@
 .top-menu { width: 100%; }
 .top-menu ul { margin: 0; padding: 0; list-style: none; }
-.top-menu__desktop-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35rem; }
+.top-menu__desktop-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+}
+
+.top-menu__desktop-list > .top-menu__item {
+    flex: 1 1 calc(20% - .35rem);
+    min-width: 0;
+}
+
+.top-menu__desktop-list > .top-menu__item:nth-last-child(-n + 3) {
+    flex-basis: calc(33.333% - .35rem);
+}
 .top-menu__item { position: relative; }
 .top-menu__link, .top-menu__text { display: flex; min-height: 2.5rem; align-items: center; justify-content: center; padding: .45rem .65rem; color: var(--csr43-light-color-text); font-size: .875rem; font-weight: 600; line-height: 1.2; text-align: center; text-decoration: none; background: var(--csr43-light-bg-hover); border: 1px solid var(--csr43-light-border); border-radius: calc(var(--csr43-light-radius) / 2); }
 .top-menu__desktop-toggle { width: 100%; font: inherit; }
