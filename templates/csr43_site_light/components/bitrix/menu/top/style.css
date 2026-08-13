@@ -37,6 +37,10 @@
 .top-menu__submenu-toggle[aria-expanded="true"] .bi { transform: rotate(180deg); }
 .top-menu__mobile-submenu { padding-left: 1rem !important; background: var(--csr43-light-bg-hover); }
 .top-menu [hidden] { display: none; }
+.top-menu__desktop-list > .top-menu__item > .top-menu__link,
+.top-menu__desktop-list > .top-menu__item > .top-menu__text {
+    white-space: nowrap;
+}
 @media (max-width: 61.999rem) { .top-menu__desktop { display: none; } .top-menu__open { display: inline-grid; place-items: center; } }
 @media (min-width: 62rem) { .top-menu__drawer, .top-menu__backdrop { display: none; } }
 @media (prefers-reduced-motion: reduce) { .top-menu *, .top-menu *::before, .top-menu *::after { transition: none; } }
