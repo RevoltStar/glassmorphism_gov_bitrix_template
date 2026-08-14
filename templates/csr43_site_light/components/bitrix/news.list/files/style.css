@@ -2,20 +2,70 @@
 .file-library__header { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--csr43-light-border); }
 .file-library__header h2, .file-card__header h3 { margin: 0; color: var(--csr43-light-color-heading); overflow-wrap: anywhere; }
 .file-library__header p, .file-card__header p { margin: .4rem 0 0; color: var(--csr43-light-color-muted); overflow-wrap: anywhere; }
-.file-library__items { display: grid; gap: 1rem; }
-.file-card__date { display: inline-flex; gap: .35rem; margin-top: .65rem; color: var(--csr43-light-color-muted); font-size: .9rem; }
-.file-card__files { display: grid; gap: .75rem; margin-top: 1rem; }
-.file-entry { padding: .85rem; background: var(--csr43-light-bg-hover); border: 1px solid var(--csr43-light-border); border-radius: calc(var(--csr43-light-radius) * .75); }
-.file-entry--download { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .75rem; align-items: center; color: var(--csr43-light-color-text); text-decoration: none; }
-.file-entry--download span { display: grid; overflow-wrap: anywhere; }
-.file-entry--download small { color: var(--csr43-light-color-muted); }
-.file-entry__meta { display: flex; gap: .4rem .65rem; margin-top: .4rem; color: var(--csr43-light-color-muted); font-size: .875rem; flex-wrap: wrap; }
+.file-card__header h3 { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.35; }
+.file-card__header p { line-height: 1.4; }
+.file-library__items { display: grid; gap: .85rem; }
+.file-card.csr43-light-card { --csr43-light-padding: clamp(1rem, 2vw, 1.125rem); }
+.file-card__date { display: inline-flex; gap: .35rem; margin-top: .5rem; color: var(--csr43-light-color-muted); font-size: .875rem; }
+.file-card__files { display: grid; gap: .55rem; margin-top: .7rem; }
+.file-entry { padding: .75rem; background: transparent; border: 1px solid var(--csr43-light-border); border-radius: calc(var(--csr43-light-radius) * .75); }
+.file-entry--download {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: .7rem;
+    align-items: center;
+    color: var(--csr43-light-color-text);
+    background: transparent;
+    box-shadow: none;
+    text-decoration: none;
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease,
+        transform var(--csr43-light-transition-duration) ease;
+}
+.file-entry--download:hover,
+.file-entry--download:focus-visible {
+    color: var(--csr43-light-color-heading);
+    background: var(--csr43-light-bg-hover);
+    border-color: var(--csr43-light-color-accent);
+    box-shadow: var(--csr43-light-shadow-hover);
+    transform: translateY(-2px);
+}
+.file-entry__content { display: grid; min-width: 0; overflow-wrap: anywhere; }
+.file-entry__action-label { color: var(--csr43-light-color-muted); font-size: .78rem; font-weight: 600; line-height: 1.2; }
+.file-entry__name { margin-top: .15rem; color: var(--csr43-light-color-heading); font-size: .975rem; line-height: 1.3; }
+.file-entry__type-icon { color: var(--csr43-light-color-accent); font-size: 1.2rem; transition: color var(--csr43-light-transition-duration) ease, transform var(--csr43-light-transition-duration) ease; }
+.file-entry__download-icon { --csr43-fixed-icon-font-size: 1rem; display: inline-flex; width: 2.25rem; height: 2.25rem; align-items: center; justify-content: center; color: var(--csr43-light-color-accent); background: var(--csr43-light-icon-bg); border: 1px solid var(--csr43-light-border); border-radius: var(--csr43-light-icon-radius); transition: color var(--csr43-light-transition-duration) ease, background-color var(--csr43-light-transition-duration) ease, border-color var(--csr43-light-transition-duration) ease, transform var(--csr43-light-transition-duration) ease; }
+.file-entry--download:hover .file-entry__type-icon,
+.file-entry--download:focus-visible .file-entry__type-icon { color: var(--csr43-light-color-accent-hover); transform: scale(1.06); }
+.file-entry--download:hover .file-entry__download-icon,
+.file-entry--download:focus-visible .file-entry__download-icon { color: var(--csr43-light-bg); background: var(--csr43-light-color-accent); border-color: var(--csr43-light-color-accent); transform: scale(1.05); }
+.file-entry__meta { display: flex; gap: .3rem .55rem; margin-top: .25rem; color: var(--csr43-light-color-muted); font-size: .825rem; flex-wrap: wrap; }
 .file-entry__meta span + span::before { margin-right: .65rem; color: var(--csr43-light-border-hover); content: '·'; }
 .file-entry details summary, .file-library__collapse > summary { padding: .55rem; color: var(--csr43-light-color-accent); cursor: pointer; font-weight: 600; }
 .file-entry__preview { margin-top: .75rem; text-align: center; }
 .file-entry__preview img, .file-entry video { display: block; width: 100%; max-height: 37.5rem; object-fit: contain; }
-.file-entry a:focus-visible, .file-entry--download:focus-visible, .file-entry summary:focus-visible, .file-library__collapse > summary:focus-visible { outline: 2px solid var(--csr43-light-color-accent); outline-offset: 2px; }
+.file-entry a:focus-visible, .file-entry--download:focus-visible, .file-entry summary:focus-visible, .file-library__collapse > summary:focus-visible { outline: var(--csr43-light-focus-ring); outline-offset: var(--csr43-light-focus-offset); }
 .file-library__pagination { margin-block: 1.5rem; }
 .file-library__empty { display: flex; gap: .75rem; padding: var(--csr43-light-padding); color: var(--csr43-light-color-muted); border-radius: var(--csr43-light-radius); }
 .file-library__empty strong { color: var(--csr43-light-color-heading); }
 .file-library__empty p { margin: .25rem 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    .file-entry--download,
+    .file-entry__type-icon,
+    .file-entry__download-icon {
+        transition-duration: .01ms;
+    }
+
+    .file-entry--download:hover,
+    .file-entry--download:focus-visible,
+    .file-entry--download:hover .file-entry__type-icon,
+    .file-entry--download:focus-visible .file-entry__type-icon,
+    .file-entry--download:hover .file-entry__download-icon,
+    .file-entry--download:focus-visible .file-entry__download-icon {
+        transform: none;
+    }
+}

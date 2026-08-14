@@ -4,6 +4,7 @@ $MESS['CSR43_LIGHT_FILES_TOGGLE'] = 'Показать или скрыть мат
 $MESS['CSR43_LIGHT_FILES_IMAGE'] = 'Изображение';
 $MESS['CSR43_LIGHT_FILES_SHOW_IMAGE'] = 'Показать изображение';
 $MESS['CSR43_LIGHT_FILES_SHOW_VIDEO'] = 'Показать видео';
+$MESS['CSR43_LIGHT_FILES_DOWNLOAD'] = 'Скачать файл';
 $MESS['CSR43_LIGHT_FILES_VIDEO_FALLBACK'] = 'Ваш браузер не поддерживает видео.';
 $MESS['CSR43_LIGHT_FILES_ENLARGE'] = 'Увеличить: #NAME#';
 $MESS['CSR43_LIGHT_FILES_EMPTY_TITLE'] = 'Документы не найдены';
