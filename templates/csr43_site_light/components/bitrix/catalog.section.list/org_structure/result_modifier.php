@@ -182,6 +182,11 @@ if ($showEmployees && $iblockAvailable) {
     }
 }
 
+foreach ($sections as $sectionId => $section) {
+    $employees = is_array($section['employees'] ?? null) ? $section['employees'] : [];
+    $sections[$sectionId]['has_large_employee_group'] = count($employees) >= 4;
+}
+
 $childrenByParentId = [];
 foreach ($sections as $sectionId => $section) {
     $parentId = isset($sections[$section['parent_id']]) && $section['parent_id'] !== $sectionId

@@ -17,15 +17,23 @@ $renderEmployees = static function (
     int $sectionId,
     string $instanceId,
     string $galleryId,
-    bool $isLeadership
+    bool $isLeadership,
+    bool $hasLargeEmployeeGroup
 ) use ($employeeLimit): string {
     $hiddenCount = max(0, count($employees) - $employeeLimit);
     $hiddenId = $instanceId . '-employees-' . $sectionId;
+    $gridClasses = ['org-structure__employees-grid'];
+    if ($isLeadership) {
+        $gridClasses[] = 'org-structure__employees-grid--leadership';
+    }
+    if ($hasLargeEmployeeGroup) {
+        $gridClasses[] = 'org-structure__employees-grid--large';
+    }
 
     ob_start();
     ?>
     <div class="org-structure__employees">
-        <div class="org-structure__employees-grid<?php if ($isLeadership): ?> org-structure__employees-grid--leadership<?php endif; ?>"
+        <div class="<?=htmlspecialcharsbx(implode(' ', $gridClasses))?>"
              id="<?=htmlspecialcharsbx($hiddenId)?>">
             <?php foreach ($employees as $index => $employee): ?>
                 <?php
@@ -166,6 +174,7 @@ $renderSections = static function (
             $anchorId = site_string($section['anchor_id'] ?? '');
             $depth = max(0, (int)($section['depth'] ?? 0));
             $isLeadership = ($section['is_leadership'] ?? false) === true;
+            $hasLargeEmployeeGroup = ($section['has_large_employee_group'] ?? false) === true;
             $employees = is_array($section['employees'] ?? null) ? $section['employees'] : [];
             $children = is_array($section['children'] ?? null) ? $section['children'] : [];
 
@@ -186,7 +195,14 @@ $renderSections = static function (
                         <h2 class="org-structure__section-title"><?=htmlspecialcharsbx($name)?></h2>
                     </header>
                     <?php if ($employees !== []): ?>
-                        <?=$renderEmployees($employees, $sectionId, $instanceId, $galleryId, $isLeadership)?>
+                        <?=$renderEmployees(
+                            $employees,
+                            $sectionId,
+                            $instanceId,
+                            $galleryId,
+                            $isLeadership,
+                            $hasLargeEmployeeGroup
+                        )?>
                     <?php endif; ?>
                     <?php if ($children !== []): ?>
                         <?=$renderSections($children, $componentTemplate, $instanceId, $galleryId, $editAction, $deleteAction)?>
@@ -202,7 +218,7 @@ $renderSections = static function (
 $instanceId = 'org-structure-' . $this->randString();
 ?>
 <?php if ($tree !== []): ?>
-    <div class="org-structure container py-4"
+    <div class="org-structure py-4"
          data-org-structure
          role="region"
          aria-label="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_ORG_LABEL'))?>">
