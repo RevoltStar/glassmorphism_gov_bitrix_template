@@ -76,12 +76,14 @@ $renderEmployees = static function (
                         </div>
                     <?php else: ?>
                         <div class="org-structure__employee-info">
-                            <h3 class="org-structure__employee-name"><?=htmlspecialcharsbx($position)?></h3>
-                            <?php if ($name !== ''): ?>
-                                <p class="org-structure__employee-position">
-                                    <?=htmlspecialcharsbx($name)?><?php if ($isActing): ?> <?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_ORG_ACTING'))?><?php endif; ?>
-                                </p>
-                            <?php endif; ?>
+                            <div class="org-structure__employee-main">
+                                <h3 class="org-structure__employee-name"><?=htmlspecialcharsbx($position)?></h3>
+                                <?php if ($name !== ''): ?>
+                                    <p class="org-structure__employee-position">
+                                        <?=htmlspecialcharsbx($name)?><?php if ($isActing): ?> <?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_ORG_ACTING'))?><?php endif; ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
                             <?php if ($phone !== '' || $cabinet !== '' || $address !== ''): ?>
                                 <ul class="org-structure__contacts">
                                     <?php if ($phone !== ''): ?>
