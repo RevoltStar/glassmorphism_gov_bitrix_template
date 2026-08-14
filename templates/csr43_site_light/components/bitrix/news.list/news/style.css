@@ -10,7 +10,7 @@
 .news-card__expand { position: absolute; top: .65rem; right: .65rem; z-index: 1; display: inline-flex; width: 2.5rem; height: 2.5rem; align-items: center; justify-content: center; color: var(--csr43-light-color-accent); background: var(--csr43-light-bg); border: 1px solid var(--csr43-light-border); border-radius: 50%; text-decoration: none; }
 .news-card__body { display: flex; min-width: 0; padding: var(--csr43-light-padding); flex: 1; flex-direction: column; }
 .news-card__categories, .news-card__meta { display: flex; gap: .5rem; margin-bottom: .75rem; flex-wrap: wrap; }
-.news-card__category { max-width: 100%; line-height: 1.35; text-align: left; text-decoration: none; white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; transition: color var(--csr43-light-transition-duration) ease, background-color var(--csr43-light-transition-duration) ease, border-color var(--csr43-light-transition-duration) ease; }
+.news-card__category { width: 100%; line-height: 1.35; text-align: left; text-decoration: none; white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; transition: color var(--csr43-light-transition-duration) ease, background-color var(--csr43-light-transition-duration) ease, border-color var(--csr43-light-transition-duration) ease; }
 .badge.csr43-light-badge.news-card__category:hover, .badge.csr43-light-badge.news-card__category:focus-visible { color: var(--csr43-light-bg); background: var(--csr43-light-color-accent-hover); border-color: var(--csr43-light-color-accent-hover); }
 .news-card__meta { color: var(--csr43-light-color-muted); font-size: .9rem; }
 .news-card__meta span { display: inline-flex; gap: .35rem; align-items: center; }
