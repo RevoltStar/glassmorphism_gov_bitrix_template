@@ -1,0 +1,89 @@
+.print-version-component{
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	/*opacity: 0.8;*/
+	z-index: 1;
+}
+/*
+.print-version-component:hover{
+	opacity: 1;
+}
+*/
+
+/* Стили для печатной версии */
+@media print {
+    /* Скрываем ненужные элементы */
+    .header,
+    .footer,
+    .sidebar,
+    .breadcrumb-section,
+    .navigation,
+    .print-version-btn,
+	.print-version-component,
+	.cube-3d-container, /*Кубик на главной*/
+	.carousel, /*Слайдер*/
+	#panel, /*Админ панель*/
+    .no-print {
+        display: none !important;
+    }
+    /* Настраиваем основные стили */
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        line-height: 1.4;
+        color: #000;
+        background: #fff !important;
+    }
+    
+    .container {
+        #width: 100% !important;
+        #max-width: 100% !important;
+        #margin: 0 !important;
+        #padding: 0 !important;
+    }
+    
+    a {
+        color: #000 !important;
+        text-decoration: underline !important;
+    }
+    
+    /* Убираем фоны */
+    * {
+        background: transparent !important;
+    }
+    
+    /* Настраиваем отступы */
+    h1, h2, h3, h4, h5, h6 {
+        #margin: 10pt 0 5pt 0;
+    }
+    
+    p {
+        #margin: 5pt 0;
+    }
+    
+    /* Добавляем URL после ссылок */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        color: #666;
+    }
+    
+    /* Исключения для ссылок, которые не нужно показывать */
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+	/*Перегружаем специфичные стили*/
+	/*Боковое меню*/
+    .side-menu a[href]:after {
+        content: " (" attr(href) ")" !important;
+        margin-left: 5px !important;
+        opacity: 1 !important;
+        transform: none !important;
+        color: #666 !important;
+        font-weight: normal !important;
+        font-size: 10pt !important;
+    }
+}
