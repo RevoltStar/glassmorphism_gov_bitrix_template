@@ -101,7 +101,6 @@
     white-space: normal;
     background: var(--csr43-light-badge-bg);
     border: 1px solid var(--csr43-light-badge-border);
-    width: 100%;
 }
 
 .csr43-light-badge--block {
