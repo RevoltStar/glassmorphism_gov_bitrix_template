@@ -15,7 +15,6 @@ $view = [
     'search_url' => site_url('/search/', ''),
 ];
 
-$showDate = ($arParams['DISPLAY_DATE'] ?? 'Y') === 'Y';
 $showName = ($arParams['DISPLAY_NAME'] ?? 'Y') === 'Y';
 $showPicture = ($arParams['DISPLAY_PICTURE'] ?? 'Y') === 'Y';
 $showPreview = ($arParams['DISPLAY_PREVIEW_TEXT'] ?? 'Y') === 'Y';
@@ -34,10 +33,12 @@ foreach ($items as $item) {
         $preview = rtrim(mb_substr($preview, 0, 150)) . '…';
     }
 
-    $date = '';
-    $dateTimestamp = strtotime(site_string($item['ACTIVE_FROM_X'] ?? $item['ACTIVE_FROM'] ?? ''));
-    if ($showDate && $dateTimestamp !== false) {
-        $date = date('d.m.Y', $dateTimestamp);
+    $date = site_plain_text($item['DISPLAY_ACTIVE_FROM'] ?? '');
+    if ($date === '') {
+        $dateTimestamp = strtotime(site_string($item['ACTIVE_FROM_X'] ?? $item['ACTIVE_FROM'] ?? ''));
+        if ($dateTimestamp !== false) {
+            $date = date('d.m.Y', $dateTimestamp);
+        }
     }
 
     $image = null;
