@@ -1,89 +1,234 @@
-.print-version-component{
-	position: fixed;
-	bottom: 15px;
-	right: 15px;
-	/*opacity: 0.8;*/
-	z-index: 1;
+.print-version {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 900;
+    max-width: calc(100vw - 2rem);
 }
-/*
-.print-version-component:hover{
-	opacity: 1;
-}
-*/
 
-/* Стили для печатной версии */
+.print-version__link {
+    display: inline-flex;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    padding: 0.65rem 0.9rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--csr43-light-color-heading);
+    background: var(--csr43-light-bg);
+    border: 1px solid var(--csr43-light-border);
+    border-radius: var(--csr43-light-radius);
+    box-shadow: var(--csr43-light-shadow);
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease;
+}
+
+.print-version--active .print-version__link {
+    color: var(--csr43-light-color-accent);
+}
+
+.print-version__link:hover {
+    color: var(--csr43-light-color-accent-hover);
+    background: var(--csr43-light-bg-hover);
+    border-color: var(--csr43-light-color-accent);
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.print-version__link:focus-visible {
+    color: var(--csr43-light-color-accent-hover);
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
+}
+
+.print-version__icon {
+    flex: 0 0 auto;
+    color: var(--csr43-light-color-accent);
+    font-size: 1.1rem;
+}
+
+@media (max-width: 575.98px) {
+    .print-version {
+        right: 0.75rem;
+        bottom: 0.75rem;
+        left: 0.75rem;
+        max-width: none;
+    }
+
+    .print-version__link {
+        display: flex;
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .print-version__link {
+        transition-duration: 0.01ms;
+    }
+}
+
+@page {
+    margin: 15mm;
+}
+
 @media print {
-    /* Скрываем ненужные элементы */
     .header,
-    .footer,
-    .sidebar,
     .breadcrumb-section,
-    .navigation,
-    .print-version-btn,
-	.print-version-component,
-	.cube-3d-container, /*Кубик на главной*/
-	.carousel, /*Слайдер*/
-	#panel, /*Админ панель*/
-    .no-print {
+    .site-layout__sidebar,
+    .footer,
+    .widget_cookie,
+    .government-sites,
+    .bvi-component-container,
+    .bvi-panel,
+    .bvi-link-fixed-top,
+    .bvi-speech-link,
+    .bx-core-adm-dialog,
+    .bx-core-popup-menu,
+    #bx-admin-prefix,
+    #panel,
+    .skip-link,
+    .print-version,
+    .csr43-pagination,
+    .newsdetail__navigation,
+    .vacancy__navigation,
+    .org-structure__more,
+    .gallery-expand-button,
+    .org-structure__photo-link,
+    .carousel-control-prev,
+    .carousel-control-next,
+    .fancybox__container,
+    [role='dialog'],
+    [role='button'],
+    .no-print,
+    form,
+    button,
+    audio,
+    video {
         display: none !important;
     }
-    /* Настраиваем основные стили */
+
+    html,
     body {
-        font-family: Arial, sans-serif;
-        font-size: 12pt;
-        line-height: 1.4;
-        color: #000;
+        width: auto !important;
+        min-width: 0 !important;
+        color: #000 !important;
         background: #fff !important;
     }
-    
-    .container {
-        #width: 100% !important;
-        #max-width: 100% !important;
-        #margin: 0 !important;
-        #padding: 0 !important;
-    }
-    
-    a {
-        color: #000 !important;
-        text-decoration: underline !important;
-    }
-    
-    /* Убираем фоны */
-    * {
-        background: transparent !important;
-    }
-    
-    /* Настраиваем отступы */
-    h1, h2, h3, h4, h5, h6 {
-        #margin: 10pt 0 5pt 0;
-    }
-    
-    p {
-        #margin: 5pt 0;
-    }
-    
-    /* Добавляем URL после ссылок */
-    a[href]:after {
-        content: " (" attr(href) ")";
-        font-size: 10pt;
-        color: #666;
-    }
-    
-    /* Исключения для ссылок, которые не нужно показывать */
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
+
+    body {
+        margin: 0 !important;
+        font-family: Arial, sans-serif;
+        font-size: 11pt;
+        line-height: 1.45;
     }
 
-	/*Перегружаем специфичные стили*/
-	/*Боковое меню*/
-    .side-menu a[href]:after {
-        content: " (" attr(href) ")" !important;
-        margin-left: 5px !important;
-        opacity: 1 !important;
-        transform: none !important;
-        color: #666 !important;
-        font-weight: normal !important;
-        font-size: 10pt !important;
+    #main-content,
+    #main-content.container {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #main-content > .row {
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .site-layout__content {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: none !important;
+    }
+
+    #main-content,
+    #main-content * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    #main-content *,
+    #main-content *::before,
+    #main-content *::after {
+        background-image: none !important;
+    }
+
+    #main-content .csr43-light-surface,
+    #main-content .csr43-light-card {
+        background-color: #fff !important;
+    }
+
+    #main-content a {
+        color: #000 !important;
+        text-decoration: underline;
+        text-underline-offset: 0.12em;
+    }
+
+    #main-content a[href]::after {
+        content: none !important;
+    }
+
+    #main-content img,
+    #main-content svg,
+    #main-content canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    #main-content table {
+        width: 100% !important;
+        border-collapse: collapse;
+    }
+
+    #main-content thead {
+        display: table-header-group;
+    }
+
+    #main-content tfoot {
+        display: table-footer-group;
+    }
+
+    #main-content .table-responsive,
+    #main-content [class*='table-wrapper'] {
+        overflow: visible !important;
+    }
+
+    #main-content h1,
+    #main-content h2,
+    #main-content h3,
+    #main-content h4,
+    #main-content h5,
+    #main-content h6 {
+        color: #000 !important;
+        break-after: avoid-page;
+    }
+
+    #main-content p,
+    #main-content li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    #main-content .csr43-light-card,
+    #main-content [class*='__card'],
+    #main-content figure,
+    #main-content table,
+    #main-content tr,
+    #main-content img,
+    #main-content blockquote,
+    #main-content pre,
+    #main-content details,
+    #main-content .file-entry {
+        break-inside: avoid-page;
+        page-break-inside: avoid;
     }
 }

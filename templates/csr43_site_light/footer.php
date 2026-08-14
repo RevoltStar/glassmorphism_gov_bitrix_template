@@ -31,7 +31,7 @@ $footerMenu2Title = site_plain_text(get_info('menu_footer_2_title', 'Инфор�
 
 if (!$isExcludedPage && !$is404Error): ?>
     </div>
-    <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
+    <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0 site-layout__sidebar">
         <?php $APPLICATION->IncludeComponent(
             'bitrix:menu',
             'side',
@@ -54,13 +54,12 @@ if (!$isExcludedPage && !$is404Error): ?>
 </main>
 
 <?php $APPLICATION->IncludeComponent(
-    'print.version',
-    '',
+    'csr43:print.version',
+    '.default',
     [
         'PAGE_URL' => '',
         'BUTTON_TEXT_PRINT' => GetMessage('CSR43_LIGHT_PRINT_VERSION'),
         'BUTTON_TEXT_NORMAL' => GetMessage('CSR43_LIGHT_NORMAL_VERSION'),
-        'BUTTON_CLASS' => 'btn btn-light border',
         'OPEN_IN_NEW_WINDOW' => 'N',
     ]
 ); ?>

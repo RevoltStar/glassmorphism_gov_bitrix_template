@@ -303,5 +303,5 @@ $APPLICATION->IncludeComponent(
 
 			if (!$isExcludedPage && !$is404Error): ?>
     			<div class="row mb-5">
-       	 			<div class="col-lg-8 order-2 order-lg-1">
+				<div class="col-lg-8 order-2 order-lg-1 site-layout__content">
 		<?php endif ?>

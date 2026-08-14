@@ -1,37 +1,102 @@
-// Обработка параметра print=Y
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const printParam = urlParams.get('print');
-    
-    if (printParam === 'Y') {
-		document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        	img.loading = 'eager';
-    	});
-		/*
-        // Добавляем стили для печати
-        const printStyles = `
-            @media print {
-                .header, .footer, .sidebar, .breadcrumbs, 
-                .navigation, .print-version-btn, .no-print {
-                    display: none !important;
-                }
-                body {
-                    font-size: 12pt;
-                    line-height: 1.4;
-                }
-                .container {
-                    width: 100% !important;
-                }
-            }
-        `;
+(function () {
+    'use strict';
 
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = printStyles;
-        document.head.appendChild(styleSheet);
-		*/
-        // Автоматически открываем диалог печати
-        setTimeout(function() {
-            window.print();
-        }, 500);
+    const stateKey = 'csr43PrintVersionState';
+    const state = window[stateKey] || {
+        eventsBound: false,
+        printRequested: false,
+    };
+    window[stateKey] = state;
+
+    function waitForDocumentLoad() {
+        if (document.readyState === 'complete') {
+            return Promise.resolve();
+        }
+
+        return new Promise(function (resolve) {
+            window.addEventListener('load', resolve, { once: true });
+        });
     }
-});
+
+    function waitForImage(image) {
+        image.loading = 'eager';
+
+        if (image.complete) {
+            if (typeof image.decode === 'function') {
+                return image.decode().catch(function () {});
+            }
+
+            return Promise.resolve();
+        }
+
+        return new Promise(function (resolve) {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+        }).then(function () {
+            if (typeof image.decode === 'function') {
+                return image.decode().catch(function () {});
+            }
+
+            return undefined;
+        });
+    }
+
+    function waitForLayout() {
+        return new Promise(function (resolve) {
+            window.requestAnimationFrame(function () {
+                window.requestAnimationFrame(resolve);
+            });
+        });
+    }
+
+    function waitForFonts() {
+        if (document.fonts && document.fonts.ready) {
+            return document.fonts.ready.catch(function () {});
+        }
+
+        return Promise.resolve();
+    }
+
+    function initPrintVersion() {
+        const control = document.querySelector('[data-print-version][data-print-mode="Y"]');
+        if (!control || state.printRequested) {
+            return;
+        }
+
+        state.printRequested = true;
+        waitForDocumentLoad()
+            .then(function () {
+                const content = document.getElementById('main-content') || document.body;
+                const images = Array.from(content.querySelectorAll('img'));
+
+                return Promise.all([
+                    Promise.all(images.map(waitForImage)),
+                    waitForFonts(),
+                ]);
+            })
+            .then(waitForLayout)
+            .then(function () {
+                window.print();
+            });
+    }
+
+    function bindEvents() {
+        if (state.eventsBound) {
+            return;
+        }
+
+        state.eventsBound = true;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPrintVersion, { once: true });
+        } else {
+            initPrintVersion();
+        }
+
+        if (window.BX && typeof window.BX.addCustomEvent === 'function') {
+            window.BX.addCustomEvent('onFrameDataReceived', initPrintVersion);
+        }
+    }
+
+    bindEvents();
+    initPrintVersion();
+}());

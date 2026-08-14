@@ -1,113 +1,84 @@
 <?php
-if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
+use Bitrix\Main\Context;
+use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Web\Uri;
+
+Loc::loadMessages(__FILE__);
 
 class PrintVersionComponent extends CBitrixComponent
 {
-    public function onPrepareComponentParams($arParams)
+    public function onPrepareComponentParams($arParams): array
     {
-        $arParams['PAGE_URL'] = trim($arParams['PAGE_URL']);
-        $arParams['BUTTON_TEXT_PRINT'] = trim($arParams['BUTTON_TEXT_PRINT']) ?: 'Версия для печати';
-        $arParams['BUTTON_TEXT_NORMAL'] = trim($arParams['BUTTON_TEXT_NORMAL']) ?: 'К обычной версии';
-        $arParams['BUTTON_CLASS'] = trim($arParams['BUTTON_CLASS']) ?: 'print-version-btn';
-        $arParams['OPEN_IN_NEW_WINDOW'] = $arParams['OPEN_IN_NEW_WINDOW'] === 'Y';
-        
-        return $arParams;
+        $arParams = is_array($arParams) ? $arParams : [];
+        $printText = site_plain_text($arParams['BUTTON_TEXT_PRINT'] ?? '');
+        $normalText = site_plain_text($arParams['BUTTON_TEXT_NORMAL'] ?? '');
+
+        return [
+            'PAGE_URL' => site_string($arParams['PAGE_URL'] ?? ''),
+            'BUTTON_TEXT_PRINT' => $printText !== ''
+                ? $printText
+                : site_plain_text(Loc::getMessage('CSR43_PRINT_VERSION_PRINT')),
+            'BUTTON_TEXT_NORMAL' => $normalText !== ''
+                ? $normalText
+                : site_plain_text(Loc::getMessage('CSR43_PRINT_VERSION_NORMAL')),
+            'BUTTON_CLASS' => site_css_classes($arParams['BUTTON_CLASS'] ?? ''),
+            'OPEN_IN_NEW_WINDOW' => ($arParams['OPEN_IN_NEW_WINDOW'] ?? 'N') === 'Y',
+        ];
     }
 
-    public function executeComponent()
+    public function executeComponent(): void
     {
-        if ($this->arParams['PAGE_URL'] === '') {
-            $this->arParams['PAGE_URL'] = $this->getCurrentPageUrl();
-        }
+        $isPrintMode = $this->isPrintMode();
+        $pageUrl = $this->resolvePageUrl();
 
-        // Определяем текущий режим
-        $this->arResult['IS_PRINT_MODE'] = $this->isPrintMode();
-        
-        // Генерируем соответствующий URL
-        $this->arResult['BUTTON_URL'] = $this->generateButtonUrl();
-        $this->arResult['BUTTON_TEXT'] = $this->getButtonText();
-        
+        $this->arResult['IS_PRINT_MODE'] = $isPrintMode;
+        $this->arResult['BUTTON_URL'] = $this->buildButtonUrl($pageUrl, $isPrintMode);
+        $this->arResult['BUTTON_TEXT'] = $isPrintMode
+            ? $this->arParams['BUTTON_TEXT_NORMAL']
+            : $this->arParams['BUTTON_TEXT_PRINT'];
+        $this->arResult['BUTTON_CLASS'] = $this->arParams['BUTTON_CLASS'];
+        $this->arResult['OPEN_IN_NEW_WINDOW'] = $this->arParams['OPEN_IN_NEW_WINDOW'];
+
         $this->includeComponentTemplate();
     }
 
-    private function getCurrentPageUrl()
+    private function isPrintMode(): bool
     {
-        $protocol = (CMain::IsHTTPS()) ? 'https' : 'http';
-        return $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $printParam = Context::getCurrent()->getRequest()->getQuery('print');
+
+        return site_string($printParam) === 'Y';
     }
 
-    private function isPrintMode()
+    private function resolvePageUrl(): string
     {
-        return isset($_GET['print']) && $_GET['print'] === 'Y';
+        $configuredUrl = site_url($this->arParams['PAGE_URL'] ?? '', '');
+        if ($configuredUrl !== '') {
+            return $configuredUrl;
+        }
+
+        $requestUri = Context::getCurrent()->getRequest()->getRequestUri();
+
+        return site_url($requestUri, '/');
     }
 
-    private function generateButtonUrl()
+    private function buildButtonUrl(string $pageUrl, bool $isPrintMode): string
     {
-        $url = $this->arParams['PAGE_URL'];
-        
-        if ($this->arResult['IS_PRINT_MODE']) {
-            // Удаляем параметр print из URL
-            return $this->removePrintParam($url);
-        } else {
-            // Добавляем параметр print=Y к URL
-            $separator = (strpos($url, '?') === false) ? '?' : '&';
-            return $url . $separator . 'print=Y';
-        }
-    }
+        try {
+            $uri = new Uri($pageUrl);
+            $uri->deleteParams(['print']);
 
-    private function removePrintParam($url)
-    {
-        // Разбираем URL на компоненты
-        $urlParts = parse_url($url);
-        
-        if (!isset($urlParts['query'])) {
-            return $url; // Нет параметров - возвращаем как есть
-        }
-        
-        // Разбираем параметры запроса
-        parse_str($urlParts['query'], $params);
-        
-        // Удаляем параметр print
-        unset($params['print']);
-        
-        // Собираем URL обратно
-        $newQuery = http_build_query($params);
-        $urlParts['query'] = $newQuery ?: null;
-        
-        return $this->buildUrl($urlParts);
-    }
+            if (!$isPrintMode) {
+                $uri->addParams(['print' => 'Y']);
+            }
 
-    private function buildUrl($parts)
-    {
-        $url = '';
-        
-        if (isset($parts['scheme'])) {
-            $url .= $parts['scheme'] . '://';
+            return site_url($uri->getUri(), '/');
+        } catch (Throwable) {
+            return '/';
         }
-        if (isset($parts['host'])) {
-            $url .= $parts['host'];
-        }
-        if (isset($parts['port'])) {
-            $url .= ':' . $parts['port'];
-        }
-        if (isset($parts['path'])) {
-            $url .= $parts['path'];
-        }
-        if (isset($parts['query'])) {
-            $url .= '?' . $parts['query'];
-        }
-        if (isset($parts['fragment'])) {
-            $url .= '#' . $parts['fragment'];
-        }
-        
-        return $url;
-    }
-
-    private function getButtonText()
-    {
-        return $this->arResult['IS_PRINT_MODE'] 
-            ? $this->arParams['BUTTON_TEXT_NORMAL']
-            : $this->arParams['BUTTON_TEXT_PRINT'];
     }
 }
-?>
