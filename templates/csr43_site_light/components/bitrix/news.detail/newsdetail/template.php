@@ -126,7 +126,7 @@ $galleryId = 'newsdetail-' . $this->randString();
             <?php endif; ?>
 
             <?php if (!empty($navigation['prev']) || !empty($navigation['next'])): ?>
-                <nav class="csr43-light-card newsdetail__navigation" aria-label="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NEWSDETAIL_NAVIGATION'))?>">
+                <nav class="newsdetail__navigation" aria-label="<?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_NEWSDETAIL_NAVIGATION'))?>">
                     <?php foreach (['prev' => 'CSR43_LIGHT_NEWSDETAIL_PREV', 'next' => 'CSR43_LIGHT_NEWSDETAIL_NEXT'] as $key => $message): ?>
                         <?php
                         $neighbor = is_array($navigation[$key] ?? null) ? $navigation[$key] : [];
