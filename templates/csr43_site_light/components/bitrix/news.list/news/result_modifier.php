@@ -6,12 +6,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 $arResult = is_array($arResult ?? null) ? $arResult : [];
 $arParams = is_array($arParams ?? null) ? $arParams : [];
 $showCounter = !empty($arResult['SHOW_COUNTER']);
+$displayTopPager = $arParams['DISPLAY_TOP_PAGER'] ?? false;
+$displayBottomPager = $arParams['DISPLAY_BOTTOM_PAGER'] ?? false;
 $view = [
     'items' => [],
     'show_counter' => $showCounter,
     'pager_html' => site_safe_pagination_html($arResult['NAV_STRING'] ?? ''),
-    'show_top_pager' => ($arParams['DISPLAY_TOP_PAGER'] ?? 'N') === 'Y',
-    'show_bottom_pager' => ($arParams['DISPLAY_BOTTOM_PAGER'] ?? 'N') === 'Y',
+    'show_top_pager' => $displayTopPager === true || $displayTopPager === 'Y',
+    'show_bottom_pager' => $displayBottomPager === true || $displayBottomPager === 'Y',
     'search_url' => site_url('/search/', ''),
 ];
 
