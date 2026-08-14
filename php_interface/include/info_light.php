@@ -70,9 +70,7 @@ const SITE_INFO = [
         '/contacts/',
     ],
     'title_excluded_pages' => [
-        '/',
-        '/news/*',
-        '!/news/category/*',
+        '/'
     ],
 
     'logo' => 'logo_csr.png',
