@@ -82,15 +82,18 @@
 
 .org-structure__employees-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 19rem));
     gap: 1rem;
+    align-items: start;
+    justify-content: start;
     min-width: 0;
 }
 
-.org-structure__employee {
+.org-structure__employee.csr43-light-card {
+    --csr43-light-padding: clamp(1rem, 1.5vw, 1.125rem);
+
     display: flex;
     min-width: 0;
-    height: 100%;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -103,7 +106,7 @@
 .org-structure__employee-photo {
     position: relative;
     width: min(100%, 15rem);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .org-structure__employee-image {
@@ -149,7 +152,7 @@
     --csr43-light-icon-radius: 50%;
     --csr43-light-icon-font-size: 3rem;
 
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .org-structure__employee-info,
@@ -176,8 +179,8 @@
 
 .org-structure__contacts {
     display: grid;
-    gap: 0.5rem;
-    margin: 1rem 0 0;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0;
     padding: 0;
     list-style: none;
     text-align: left;
