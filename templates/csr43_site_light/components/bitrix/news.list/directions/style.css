@@ -14,6 +14,19 @@
     text-decoration: none;
 }
 
+.directions-card.csr43-light-card--interactive {
+    transition:
+        background-color var(--csr43-light-transition-duration) ease,
+        border-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease,
+        transform var(--csr43-light-transition-duration) ease;
+}
+
+.directions-card.csr43-light-card--interactive:hover,
+.directions-card.csr43-light-card--interactive:focus-visible {
+    transform: translateY(-.25rem);
+}
+
 .directions-card__media {
     display: grid;
     width: clamp(7.5rem, 14vw, 9.375rem);
@@ -70,6 +83,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .directions-card.csr43-light-card--interactive {
+        transition: none;
+    }
+
+    .directions-card.csr43-light-card--interactive:hover,
+    .directions-card.csr43-light-card--interactive:focus-visible {
+        transform: none;
+    }
+
     .directions-card__media {
         transition: none;
     }
