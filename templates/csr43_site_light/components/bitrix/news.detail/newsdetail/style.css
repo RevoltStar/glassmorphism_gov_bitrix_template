@@ -329,7 +329,7 @@ a.newsdetail__category:focus-visible {
     padding: 0.75rem;
     align-items: center;
     color: var(--csr43-light-color-heading);
-    background: var(--csr43-light-bg-hover);
+    background: var(--csr43-light-bg);
     border: 1px solid var(--csr43-light-border);
     border-radius: calc(var(--csr43-light-radius) * 0.75);
     text-decoration: none;
@@ -376,9 +376,9 @@ a.newsdetail__category:focus-visible {
 .newsdetail__navigation-link:hover,
 .newsdetail__navigation-link:focus-visible {
     color: var(--csr43-light-color-heading);
-    background: var(--csr43-light-badge-bg);
+    background: var(--csr43-light-bg-hover);
     border-color: var(--csr43-light-border-hover);
-    box-shadow: var(--csr43-light-shadow);
+    box-shadow: var(--csr43-light-shadow-hover);
 }
 
 @media (max-width: 991.98px) {
