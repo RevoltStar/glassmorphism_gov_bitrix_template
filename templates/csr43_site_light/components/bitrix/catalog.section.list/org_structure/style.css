@@ -93,6 +93,7 @@
 .org-structure__employees-grid--leadership,
 .org-structure__employees-grid--large {
     grid-template-columns: repeat(2, minmax(16rem, 19rem));
+    justify-content: center;
 }
 
 .org-structure__employee.csr43-light-card {
