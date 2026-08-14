@@ -40,6 +40,7 @@ foreach ($sourceSections as $sourceSection) {
         'parent_id' => $parentId,
         'depth' => $depth,
         'name' => $name,
+        'is_leadership' => $name === 'Руководство',
         'anchor_id' => site_section_anchor_id($name, $sectionId),
         'edit_link' => site_string($sourceSection['EDIT_LINK'] ?? ''),
         'delete_link' => site_string($sourceSection['DELETE_LINK'] ?? ''),

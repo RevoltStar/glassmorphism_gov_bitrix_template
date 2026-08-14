@@ -16,7 +16,8 @@ $renderEmployees = static function (
     array $employees,
     int $sectionId,
     string $instanceId,
-    string $galleryId
+    string $galleryId,
+    bool $isLeadership
 ) use ($employeeLimit): string {
     $hiddenCount = max(0, count($employees) - $employeeLimit);
     $hiddenId = $instanceId . '-employees-' . $sectionId;
@@ -24,7 +25,8 @@ $renderEmployees = static function (
     ob_start();
     ?>
     <div class="org-structure__employees">
-        <div class="org-structure__employees-grid" id="<?=htmlspecialcharsbx($hiddenId)?>">
+        <div class="org-structure__employees-grid<?php if ($isLeadership): ?> org-structure__employees-grid--leadership<?php endif; ?>"
+             id="<?=htmlspecialcharsbx($hiddenId)?>">
             <?php foreach ($employees as $index => $employee): ?>
                 <?php
                 if (!is_array($employee)) {
@@ -163,6 +165,7 @@ $renderSections = static function (
             $name = site_string($section['name'] ?? '');
             $anchorId = site_string($section['anchor_id'] ?? '');
             $depth = max(0, (int)($section['depth'] ?? 0));
+            $isLeadership = ($section['is_leadership'] ?? false) === true;
             $employees = is_array($section['employees'] ?? null) ? $section['employees'] : [];
             $children = is_array($section['children'] ?? null) ? $section['children'] : [];
 
@@ -183,7 +186,7 @@ $renderSections = static function (
                         <h2 class="org-structure__section-title"><?=htmlspecialcharsbx($name)?></h2>
                     </header>
                     <?php if ($employees !== []): ?>
-                        <?=$renderEmployees($employees, $sectionId, $instanceId, $galleryId)?>
+                        <?=$renderEmployees($employees, $sectionId, $instanceId, $galleryId, $isLeadership)?>
                     <?php endif; ?>
                     <?php if ($children !== []): ?>
                         <?=$renderSections($children, $componentTemplate, $instanceId, $galleryId, $editAction, $deleteAction)?>

@@ -89,6 +89,10 @@
     min-width: 0;
 }
 
+.org-structure__employees-grid--leadership {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .org-structure__employee.csr43-light-card {
     --csr43-light-padding: clamp(1rem, 1.5vw, 1.125rem);
 
@@ -282,6 +286,12 @@
     border-radius: var(--csr43-light-radius);
 }
 
+@media (max-width: 991.98px) {
+    .org-structure__employees-grid--leadership {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 575.98px) {
     .org-structure {
         --org-structure-indent: 0.75rem;
@@ -299,6 +309,11 @@
     .org-structure__section-header,
     .org-structure__employee {
         --csr43-light-padding: 1rem;
+    }
+
+    .org-structure__employees-grid,
+    .org-structure__employees-grid--leadership {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
