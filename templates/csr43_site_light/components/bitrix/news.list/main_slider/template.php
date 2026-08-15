@@ -68,7 +68,7 @@ $carouselId = 'main-slider-' . $this->randString();
                                 <?php elseif (($item['preview_text'] ?? '') !== ''): ?>
                                     <p class="main-slider__description"><?=htmlspecialcharsbx(site_string($item['preview_text']))?></p>
                                 <?php endif; ?>
-                                <?php if ($url !== ''): ?><a href="<?=htmlspecialcharsbx($url)?>" class="btn main-slider__cta" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $name, GetMessage('CSR43_LIGHT_MAIN_SLIDER_MORE_ARIA')))?>"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_MAIN_SLIDER_MORE'))?></a><?php endif; ?>
+                                <?php if ($url !== ''): ?><a href="<?=htmlspecialcharsbx($url)?>" class="main-slider__cta" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $name, GetMessage('CSR43_LIGHT_MAIN_SLIDER_MORE_ARIA')))?>"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_MAIN_SLIDER_MORE'))?></a><?php endif; ?>
                             </div>
                         </div>
                     </div>
