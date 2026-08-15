@@ -46,8 +46,8 @@
 .main-slider__image--none { object-fit: none; }
 .main-slider__image--scale-down { object-fit: scale-down; }
 
-.main-slider__item:hover .main-slider__image,
-.main-slider__item:focus-within .main-slider__image {
+.main-slider:hover .main-slider__item.active .main-slider__image,
+.main-slider:focus-within .main-slider__item.active .main-slider__image {
     transform: scale(1.05);
 }
 
