@@ -24,7 +24,9 @@
 
 .popular-service__layout {
     display: grid;
-    grid-template-columns: 17rem minmax(0, 1fr);
+    grid-template-columns:
+        calc(var(--popular-service-cube-size) + 6rem)
+        minmax(0, 1fr);
     gap: clamp(1.25rem, 3vw, 2rem);
     align-items: center;
 }
@@ -32,9 +34,10 @@
 .popular-service__visual {
     display: grid;
     min-height: calc(var(--popular-service-cube-size) + 5rem);
-    overflow: clip;
+    overflow: visible;
     perspective: 62.5rem;
     place-items: center;
+    padding: 1.5rem;
 }
 
 .popular-service-cube {
