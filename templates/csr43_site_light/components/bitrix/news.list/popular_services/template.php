@@ -46,7 +46,7 @@ $faceIndexes = [0, 2, 1, 4, 3, 5];
                     <div class="popular-service__content">
                         <?php if (($item['preview_html'] ?? '') !== ''): ?><div class="popular-service__preview"><?=$item['preview_html']?></div><?php endif; ?>
                         <?php if ($url !== ''): ?>
-                            <a class="btn popular-service__cta" href="<?=htmlspecialcharsbx($url)?>" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $name, GetMessage('CSR43_LIGHT_POPULAR_SERVICES_CTA_ARIA')))?>"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_POPULAR_SERVICES_CTA'))?></a>
+                            <a class="popular-service__cta" href="<?=htmlspecialcharsbx($url)?>" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $name, GetMessage('CSR43_LIGHT_POPULAR_SERVICES_CTA_ARIA')))?>"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_POPULAR_SERVICES_CTA'))?></a>
                         <?php endif; ?>
                     </div>
                 </div>
