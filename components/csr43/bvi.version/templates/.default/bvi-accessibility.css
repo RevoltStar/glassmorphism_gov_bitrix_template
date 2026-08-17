@@ -204,6 +204,7 @@ html body .bvi-body[data-bvi-fontsize] .discussion-file__download > i:not(.bvi-n
 html body .bvi-body[data-bvi-fontsize] .document-download__icon > i:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-fontsize] .document-download__action > i:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-fontsize] .file-entry__download-icon:not(.bvi-no-styles),
+html body .bvi-body[data-bvi-fontsize] .file-entry__expand > i:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-fontsize] .file-library__accent-icon:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-fontsize] .file-library__empty-icon > i:not(.bvi-no-styles),
 html body .bvi-body[data-bvi-fontsize] .link-card__arrow > i:not(.bvi-no-styles),

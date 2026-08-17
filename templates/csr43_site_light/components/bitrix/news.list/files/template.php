@@ -56,7 +56,23 @@ $renderItems = static function (array $items, bool $showImages, string $galleryI
                         ?>
                         <?php if ($type === 'image'): ?>
                             <?php ob_start(); ?>
-                            <div class="file-entry__preview gallery-media"><a href="<?=htmlspecialcharsbx($url)?>" data-gallery-item data-fancybox="<?=htmlspecialcharsbx($galleryId)?>" data-gallery-caption="<?=htmlspecialcharsbx($caption)?>" data-type="image" aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $caption, GetMessage('CSR43_LIGHT_FILES_ENLARGE')))?>"><img src="<?=htmlspecialcharsbx($url)?>" alt="<?=htmlspecialcharsbx($caption)?>" loading="lazy" decoding="async"></a></div>
+                            <div class="file-entry__preview gallery-media">
+                                <a href="<?=htmlspecialcharsbx($url)?>"
+                                   class="file-entry__preview-link"
+                                   data-gallery-item
+                                   data-fancybox="<?=htmlspecialcharsbx($galleryId)?>"
+                                   data-gallery-caption="<?=htmlspecialcharsbx($caption)?>"
+                                   data-type="image"
+                                   aria-label="<?=htmlspecialcharsbx(str_replace('#NAME#', $caption, GetMessage('CSR43_LIGHT_FILES_ENLARGE')))?>">
+                                    <img src="<?=htmlspecialcharsbx($url)?>"
+                                         alt="<?=htmlspecialcharsbx($caption)?>"
+                                         loading="lazy"
+                                         decoding="async">
+                                    <span class="file-entry__expand" aria-hidden="true">
+                                        <i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+                            </div>
                             <?php $media = (string)ob_get_clean(); ?>
                             <div class="file-entry file-entry--image"><strong><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_FILES_IMAGE'))?></strong><?=$renderMetadata($file, true)?><?php if ($showImages): ?><?=$media?><?php else: ?><details><summary><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_FILES_SHOW_IMAGE'))?></summary><?=$media?></details><?php endif; ?></div>
                         <?php elseif ($type === 'video'): ?>
