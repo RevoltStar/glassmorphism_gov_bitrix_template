@@ -27,7 +27,7 @@ if (($arParams['SHOW_CATEGORY_FILTER'] ?? 'N') === 'Y') {
             'CACHE_TYPE' => 'A',
             'CACHE_TIME' => '36000000',
         ],
-        false
+        $component
     );
 }
 ?>
