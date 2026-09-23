@@ -38,6 +38,8 @@ $iconMap = ['pdf'=>'bi-filetype-pdf','doc'=>'bi-filetype-doc','docx'=>'bi-filety
 foreach (is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [] as $item) {
     if (!is_array($item)) { continue; }
     $name = site_plain_text($item['~NAME'] ?? $item['NAME'] ?? '');
+    $previewDescription = site_plain_text($item['~PREVIEW_TEXT'] ?? $item['PREVIEW_TEXT'] ?? '');
+    $fileDisplayName = $previewDescription !== '' ? $previewDescription : $name;
     $description = site_plain_text($item['~PREVIEW_TEXT'] ?? $item['PREVIEW_TEXT'] ?? $item['~DETAIL_TEXT'] ?? $item['DETAIL_TEXT'] ?? '');
     if (mb_strlen($description) > 150) { $description = rtrim(mb_substr($description, 0, 150)) . '…'; }
     $date = '';
@@ -62,7 +64,7 @@ foreach (is_array($arResult['ITEMS'] ?? null) ? $arResult['ITEMS'] : [] as $item
             'id' => $fileId,
             'type' => $type,
             'url' => $url,
-            'display_name' => $name !== '' ? $name : $filename,
+            'display_name' => $fileDisplayName,
             'filename' => $filename,
             'caption' => $caption !== '' ? $caption : $name,
             'extension' => $extension,

@@ -50,9 +50,7 @@ $renderItems = static function (array $items, bool $showImages, string $galleryI
                         if ($url === '') { continue; }
                         $type = site_string($file['type'] ?? 'download');
                         $caption = site_string($file['caption'] ?? '');
-                        $filename = site_string($file['filename'] ?? '');
                         $displayName = site_string($file['display_name'] ?? '');
-                        $actionName = $filename !== '' ? $filename : $displayName;
                         ?>
                         <?php if ($type === 'image'): ?>
                             <?php ob_start(); ?>
@@ -81,12 +79,12 @@ $renderItems = static function (array $items, bool $showImages, string $galleryI
                             <a href="<?=htmlspecialcharsbx($url)?>"
                                target="_blank"
                                rel="noopener noreferrer"
-                               class="file-entry file-entry--download">
+                                class="file-entry file-entry--download">
                                 <i class="bi <?=htmlspecialcharsbx(site_css_classes($file['icon'] ?? '', 'bi-file-earmark'))?> file-entry__type-icon"
                                    aria-hidden="true"></i>
                                 <div class="file-entry__content">
                                     <span class="file-entry__action-label"><?=htmlspecialcharsbx(GetMessage('CSR43_LIGHT_FILES_DOWNLOAD'))?></span>
-                                    <strong class="file-entry__name"><?=htmlspecialcharsbx($actionName)?></strong>
+                                    <strong class="file-entry__name"><?=htmlspecialcharsbx($displayName)?></strong>
                                     <?=$renderMetadata($file, false)?>
                                 </div>
                                 <i class="bi bi-download file-entry__download-icon" aria-hidden="true"></i>
