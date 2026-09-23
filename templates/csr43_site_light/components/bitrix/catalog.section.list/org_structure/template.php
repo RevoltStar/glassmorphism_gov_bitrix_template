@@ -20,9 +20,17 @@ $renderEmployees = static function (
     bool $isLeadership,
     bool $hasLargeEmployeeGroup
 ) use ($employeeLimit): string {
-    $hiddenCount = max(0, count($employees) - $employeeLimit);
+    $employeeCount = count($employees);
+    $hiddenCount = max(0, $employeeCount - $employeeLimit);
     $hiddenId = $instanceId . '-employees-' . $sectionId;
     $gridClasses = ['org-structure__employees-grid'];
+    if ($employeeCount === 1) {
+        $gridClasses[] = 'org-structure__employees-grid--single';
+    } elseif ($employeeCount === 2) {
+        $gridClasses[] = 'org-structure__employees-grid--pair';
+    } elseif ($employeeCount === 3) {
+        $gridClasses[] = 'org-structure__employees-grid--trio';
+    }
     if ($isLeadership) {
         $gridClasses[] = 'org-structure__employees-grid--leadership';
     }
@@ -50,8 +58,14 @@ $renderEmployees = static function (
                 $isVacant = ($employee['is_vacant'] ?? false) === true;
                 $isActing = ($employee['is_acting'] ?? false) === true;
                 $isInitiallyHidden = $index >= $employeeLimit;
+                $employeeClasses = ['csr43-light-card', 'org-structure__employee'];
+                if ($isVacant) {
+                    $employeeClasses[] = 'org-structure__employee--vacant';
+                } else {
+                    $employeeClasses[] = 'csr43-light-card--interactive';
+                }
                 ?>
-                <article class="csr43-light-card csr43-light-card--interactive org-structure__employee"
+                <article class="<?=htmlspecialcharsbx(implode(' ', $employeeClasses))?>"
                          <?php if ($isInitiallyHidden): ?>data-org-hidden-employee hidden<?php endif; ?>>
                     <?php if (!$isVacant && $imageUrl !== ''): ?>
                         <div class="org-structure__employee-photo gallery-media">
@@ -156,7 +170,8 @@ $renderSections = static function (
     string $instanceId,
     string $galleryId,
     string $editAction,
-    string $deleteAction
+    string $deleteAction,
+    int $visualLevel = 1
 ) use (&$renderSections, $renderEmployees): string {
     ob_start();
     ?>
@@ -177,6 +192,7 @@ $renderSections = static function (
             $hasLargeEmployeeGroup = ($section['has_large_employee_group'] ?? false) === true;
             $employees = is_array($section['employees'] ?? null) ? $section['employees'] : [];
             $children = is_array($section['children'] ?? null) ? $section['children'] : [];
+            $levelModifier = min(3, max(1, $visualLevel));
 
             $componentTemplate->AddEditAction($sectionId, site_string($section['edit_link'] ?? ''), $editAction);
             $componentTemplate->AddDeleteAction(
@@ -190,7 +206,7 @@ $renderSections = static function (
                 id="<?=htmlspecialcharsbx($componentTemplate->GetEditAreaId($sectionId))?>"
                 data-depth="<?=$depth?>">
                 <section class="org-structure__section"<?php if ($anchorId !== ''): ?> id="<?=htmlspecialcharsbx($anchorId)?>"<?php endif; ?>>
-                    <header class="csr43-light-surface org-structure__section-header">
+                    <header class="csr43-light-surface org-structure__section-header org-structure__section-header--level-<?=$levelModifier?>">
                         <i class="bi bi-diagram-3 org-structure__section-icon" aria-hidden="true"></i>
                         <h2 class="org-structure__section-title"><?=htmlspecialcharsbx($name)?></h2>
                     </header>
@@ -205,7 +221,7 @@ $renderSections = static function (
                         )?>
                     <?php endif; ?>
                     <?php if ($children !== []): ?>
-                        <?=$renderSections($children, $componentTemplate, $instanceId, $galleryId, $editAction, $deleteAction)?>
+                        <?=$renderSections($children, $componentTemplate, $instanceId, $galleryId, $editAction, $deleteAction, $levelModifier + 1)?>
                     <?php endif; ?>
                 </section>
             </li>
