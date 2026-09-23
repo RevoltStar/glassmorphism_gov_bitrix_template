@@ -51,6 +51,17 @@
                     submenu.hidden = expanded;
                 });
             });
+            const closeForDesktopLayout = () => {
+                if (window.getComputedStyle(openButton).display === 'none' && !drawer.hidden) {
+                    close(false);
+                }
+            };
+            if (typeof window.ResizeObserver === 'function') {
+                const layoutObserver = new window.ResizeObserver(closeForDesktopLayout);
+                layoutObserver.observe(root);
+            } else {
+                window.addEventListener('resize', closeForDesktopLayout);
+            }
             root.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && !drawer.hidden) {
                     event.preventDefault();
@@ -69,16 +80,6 @@
                 const drawer = root.querySelector('[data-top-menu-drawer]');
                 const closeButton = root.querySelector('[data-top-menu-close]');
                 if (drawer && !drawer.hidden && closeButton) { closeButton.click(); }
-            });
-        });
-        const desktopMedia = window.matchMedia('(min-width: 62rem)');
-        desktopMedia.addEventListener('change', (event) => {
-            if (!event.matches) { return; }
-            document.querySelectorAll('[data-top-menu]').forEach((root) => {
-                const drawer = root.querySelector('[data-top-menu-drawer]');
-                if (drawer && !drawer.hidden) {
-                    root.dispatchEvent(new CustomEvent('top-menu:close'));
-                }
             });
         });
         if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initializeTopMenus); }
