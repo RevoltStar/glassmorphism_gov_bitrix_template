@@ -21,8 +21,8 @@ $renderDesktop = static function (array $nodes, int $level = 1) use (&$renderDes
         $children = is_array($node['children'] ?? null) ? $node['children'] : [];
         $state = ($node['is_current'] ?? false) === true ? ' top-menu__item--current' : ((($node['is_in_active_path'] ?? false) === true) ? ' top-menu__item--active-path' : '');
         ?><li class="top-menu__item<?=$children !== [] ? ' top-menu__item--parent' : ''?><?=$state?>"><?php
-        if ($url !== ''): ?><a class="top-menu__link" href="<?=htmlspecialcharsbx($url)?>"<?php if (($node['is_current'] ?? false) === true): ?> aria-current="page"<?php endif; ?>><?=htmlspecialcharsbx($text)?></a><?php
-        elseif ($children !== []): ?><button type="button" class="top-menu__text top-menu__desktop-toggle"><?=htmlspecialcharsbx($text)?></button><?php
+        if ($url !== ''): ?><a class="top-menu__link" href="<?=htmlspecialcharsbx($url)?>"<?php if (($node['is_current'] ?? false) === true): ?> aria-current="page"<?php endif; ?>><?=htmlspecialcharsbx($text)?><?php if ($children !== []): ?><i class="bi bi-chevron-right top-menu__desktop-chevron" aria-hidden="true"></i><?php endif; ?></a><?php
+        elseif ($children !== []): ?><button type="button" class="top-menu__text top-menu__desktop-toggle"><?=htmlspecialcharsbx($text)?><i class="bi bi-chevron-right top-menu__desktop-chevron" aria-hidden="true"></i></button><?php
         else: ?><span class="top-menu__text"><?=htmlspecialcharsbx($text)?></span><?php endif;
         if ($children !== []) { $renderDesktop($children, $level + 1); }
         ?></li><?php

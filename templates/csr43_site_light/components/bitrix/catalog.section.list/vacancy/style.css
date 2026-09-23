@@ -45,8 +45,8 @@
 
 .vacancy__navigation-link:focus-visible,
 .vacancy__contacts-toggle:focus-visible {
-    outline: 3px solid rgba(13, 110, 253, 0.25);
-    outline-offset: 3px;
+    outline: var(--csr43-light-focus-ring);
+    outline-offset: var(--csr43-light-focus-offset);
 }
 
 .vacancy__navigation-count {
@@ -78,6 +78,20 @@
 
 .vacancy__card {
     min-width: 0;
+    transition:
+        border-color var(--csr43-light-transition-duration) ease,
+        box-shadow var(--csr43-light-transition-duration) ease,
+        transform var(--csr43-light-transition-duration) ease;
+}
+
+.vacancy__card:hover,
+.vacancy__card:focus-within {
+    border-color: var(--csr43-light-border-hover);
+    box-shadow: var(--csr43-light-shadow-hover);
+}
+
+.vacancy__card:hover {
+    transform: translateY(-2px);
 }
 
 .vacancy__card-header {
@@ -96,7 +110,13 @@
     color: var(--csr43-light-color-heading);
     font-size: clamp(1.1rem, 2vw, 1.35rem);
     line-height: 1.35;
+    transition: color var(--csr43-light-transition-duration) ease;
     overflow-wrap: anywhere;
+}
+
+.vacancy__card:hover .vacancy__title,
+.vacancy__card:focus-within .vacancy__title {
+    color: var(--csr43-light-color-accent);
 }
 
 .vacancy__department {
@@ -180,6 +200,9 @@
     border-radius: calc(var(--csr43-light-radius) * 0.65);
     cursor: pointer;
     font-weight: 600;
+    transition:
+        color var(--csr43-light-transition-duration) ease,
+        background-color var(--csr43-light-transition-duration) ease;
 }
 
 .vacancy__contacts-toggle:hover {
@@ -251,7 +274,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .vacancy__navigation-link {
+    .vacancy__navigation-link,
+    .vacancy__card,
+    .vacancy__title,
+    .vacancy__contacts-toggle {
         transition-duration: 0.01ms;
+    }
+
+    .vacancy__card:hover {
+        transform: none;
     }
 }

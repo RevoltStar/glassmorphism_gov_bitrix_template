@@ -26,13 +26,29 @@
 .top-menu__desktop-list > .top-menu__item:focus-within > .top-menu__link,
 .top-menu__desktop-list > .top-menu__item:focus-within > .top-menu__text { color: var(--csr43-light-color-accent); background: var(--csr43-light-badge-bg); }
 .top-menu__link:focus-visible, .top-menu button:focus-visible { outline: 2px solid var(--csr43-light-color-accent); outline-offset: 2px; }
-.top-menu__submenu { position: absolute; z-index: 20; top: 100%; left: 0; display: none; width: 13.75rem; padding: .5rem 0; background: var(--csr43-light-bg); border: 1px solid var(--csr43-light-border); border-radius: .5rem; box-shadow: var(--csr43-light-shadow-hover); animation: top-menu-submenu-reveal var(--csr43-light-transition-duration) ease; }
+.top-menu__desktop-chevron { flex: 0 0 auto; margin-left: .4rem; color: var(--csr43-light-color-muted); font-size: .7rem; transition: transform var(--csr43-light-transition-duration) ease; }
+.top-menu__desktop-list > .top-menu__item > .top-menu__link > .top-menu__desktop-chevron,
+.top-menu__desktop-list > .top-menu__item > .top-menu__text > .top-menu__desktop-chevron { transform: rotate(90deg); }
+.top-menu__submenu { position: absolute; z-index: 20; top: 100%; left: 0; display: none; box-sizing: border-box; width: clamp(17rem, 24vw, 20rem); max-height: min(70vh, 35rem); padding: .5rem 0; overflow-y: auto; overscroll-behavior: contain; background: var(--csr43-light-bg); border: 1px solid var(--csr43-light-border); border-radius: .5rem; box-shadow: var(--csr43-light-shadow-hover); animation: top-menu-submenu-reveal var(--csr43-light-transition-duration) ease; scrollbar-gutter: stable; }
+.top-menu__submenu--align-right { right: 0; left: auto; }
 .top-menu__submenu > .top-menu__item { width: 100%; border-bottom: 1px solid var(--csr43-light-bg-subtle); }
 .top-menu__submenu > .top-menu__item:last-child { border-bottom: 0; }
-.top-menu__submenu .top-menu__link, .top-menu__submenu .top-menu__text { min-height: auto; justify-content: flex-start; padding: .625rem 1rem; font-size: .8125rem; font-weight: 400; text-align: left; background: transparent; border-radius: 0; }
+.top-menu__submenu .top-menu__link, .top-menu__submenu .top-menu__text { min-height: auto; justify-content: flex-start; padding: .7rem 1rem; font-size: .8125rem; font-weight: 400; line-height: 1.35; text-align: left; background: transparent; border-radius: 0; }
+.top-menu__submenu .top-menu__item--parent > .top-menu__link > .top-menu__desktop-chevron,
+.top-menu__submenu .top-menu__item--parent > .top-menu__text > .top-menu__desktop-chevron { margin-left: auto; }
 .top-menu__submenu .top-menu__link:hover, .top-menu__submenu .top-menu__link:focus-visible { color: var(--csr43-light-color-accent); background: transparent; }
-.top-menu__submenu .top-menu__submenu { top: -.5rem; left: 100%; }
+.top-menu__submenu > .top-menu__item--current > .top-menu__link,
+.top-menu__submenu > .top-menu__item--current > .top-menu__text,
+.top-menu__submenu > .top-menu__item--active-path > .top-menu__link,
+.top-menu__submenu > .top-menu__item--active-path > .top-menu__text { color: var(--csr43-light-color-accent); font-weight: 600; background: var(--csr43-light-badge-bg); box-shadow: inset 3px 0 0 var(--csr43-light-color-accent); }
+.top-menu__submenu .top-menu__submenu { z-index: 21; top: -.5rem; left: calc(100% - .25rem); background: var(--csr43-light-bg-hover); box-shadow: var(--csr43-light-shadow); }
+.top-menu__submenu .top-menu__submenu .top-menu__link,
+.top-menu__submenu .top-menu__submenu .top-menu__text { font-size: .8rem; }
+.top-menu__submenu.top-menu__submenu--viewport-positioned { position: fixed; top: var(--top-menu-submenu-top); left: var(--top-menu-submenu-left); animation: none; }
+.top-menu__item--submenu-left > .top-menu__link > .top-menu__desktop-chevron,
+.top-menu__item--submenu-left > .top-menu__text > .top-menu__desktop-chevron { transform: rotate(180deg); }
 .top-menu__item:hover > .top-menu__submenu, .top-menu__item:focus-within > .top-menu__submenu { display: block; }
+.top-menu__item--submenu-dismissed > .top-menu__submenu { display: none; }
 @keyframes top-menu-submenu-reveal {
     from { opacity: 0; transform: translateY(-.3125rem); }
     to { opacity: 1; transform: translateY(0); }
